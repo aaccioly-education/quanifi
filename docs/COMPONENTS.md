@@ -118,6 +118,12 @@ built by *any* framework's builder runs on real QPUs through them.
 | `QiskitBellState` | Qiskit | Prepares and measures one of the four Bell states (H + CNOT + local flips); `bell.correlation` is the probability mass on the correlated pair (1.0 ideal). The canonical entanglement demo. |
 | `QiskitTeleportation` | Qiskit | Teleports `Rz(Phi)Ry(Theta)\|0>` from qubit 0 to qubit 2 using a Bell pair, a mid-circuit Bell measurement, and classically conditioned corrections (dynamic circuit). Self-verifying: `teleport.fidelity = P(target = 0)`, ideally 1.0. |
 | `QiskitQuantumHelloWorld` | Qiskit | Runs a GHZ-state circuit and writes the measurement bitstring to the FlowFile content — the smoke-test processor. |
+| `QrispBernsteinVazirani` | Qrisp | Recovers a hidden bit string with the Bernstein--Vazirani algorithm. |
+| `QrispDeutschJozsa` | Qrisp | Classifies a configured oracle as constant or balanced. |
+| `QrispSwapTest` | Qrisp | Estimates the overlap between two quantum states. |
+| `QrispTruthTableSynthesis` | Qrisp | Synthesizes a reversible oracle from a classical truth table. |
+| `QrispTypeEncoder` | Qrisp | Encodes typed classical values into Qrisp quantum variables. |
+| `QrispQCCSDAnsatz` | Qrisp | Builds a QCCSD chemistry ansatz for downstream VQE components. |
 
 ## Hamiltonians & problem encoders
 
@@ -129,6 +135,9 @@ built by *any* framework's builder runs on real QPUs through them.
 | `MaxCutProblem` | Encodes a weighted graph (JSON edge list, e.g. `[[0,1],[1,2,0.5]]`) as the MaxCut Ising Hamiltonian in the framework-neutral wire format. The minimum eigenvalue equals `-max_cut`, so QAOA results read in cut units. No Pauli strings required. |
 | `QuboToHamiltonian` | Encodes a QUBO matrix (JSON 2D array; minimize `x^T Q x` over binary `x`) as the equivalent Ising Hamiltonian. The ground bitstring is the binary solution vector — the universal adapter for combinatorial problems (portfolio, scheduling, routing). |
 | `MoleculeHamiltonian` | Builds a molecular qubit Hamiltonian from a geometry string (e.g. `H 0 0 0; H 0 0 0.735`) using `pyscf` + OpenFermion (Jordan-Wigner). Emits the same framework-neutral format plus chemistry attributes (formula, bond distance, HF/FCI reference energies) so any `*VQE` solver can consume it. |
+| `MaxCliqueProblem` | Encodes maximum clique as a QUBO-derived Hamiltonian. |
+| `MaxIndependentSetProblem` | Encodes maximum independent set as a QUBO-derived Hamiltonian. |
+| `PortfolioRebalancingProblem` | Encodes a constrained portfolio-rebalancing objective for QAOA. |
 
 ## PennyLane QML lane
 
@@ -162,12 +171,6 @@ consensus flow, see if it's caught).
 | `QuantumDistributionOracle` | K-way oracle for degenerate/multi-peaked outputs (GHZ, W states) where top-1 voting is a coin flip: votes on **distribution similarity** instead, via pairwise Hellinger distance gated by a chi-squared homogeneity test across every branch pair sharing a slot key. Requires **Multiple Comparison Correction** (`none` / `holm` / `benjamini-hochberg`, no default — an unset value leaves the processor INVALID) to correct the per-pair p-values for the K(K-1)/2 tests a slot runs; `none` reproduces the original uncorrected `p < alpha` rule byte-for-byte. Emits `consensus.correction`, `consensus.pairwise_tests`, `consensus.significant_pairs_raw`, `consensus.significant_pairs_corrected` alongside the existing `consensus.*`/`assert.*` attributes. Ground truth is checked as expected **support** (a set of bitstrings), not a single winner, so a degenerate but correct output is not penalised. Shares `multiple_comparisons.py` with the version-matrix and mutation experiment scripts. |
 | `QuantumMutator` | Gate-level (Layer-A) mutation operator: reads a qasm2/qasm3 circuit, applies one syntactic mutation (`gate.add`, `gate.remove`, `gate.replace` same-arity, `rotation.perturb`, and `carry.break` — deletes a gate on the carry-out qubit named by `arithmetic.result_qubits`, so the fault only manifests on operand pairs that actually carry), emits the mutant with `mut.*` bookkeeping. Placed on one branch of a K-branch consensus flow so a killed mutant surfaces as a single-branch `DISAGREE`. |
 | `MutationScoreReport` | Aggregates per-case verdicts into a mutation survival rate, grouped by mutation operator, keyed on `test.run_id`. Excludes control rows from the score and reports control dissents (real cross-framework discrepancies) separately. |
-| `Generation2JobAdapter` | Audited blinding boundary for the Generation-2 experiment. Marginalises expanded hardware counts onto each implementation's result register and removes expected answers and mutation truth before oracle processing. |
-| `Generation2EnsembleBuilder` | Fail-closed constructor for Generation-2 clean and one-faulty-version ensembles. Requires exactly the three preregistered versions and rejects duplicate, incomplete, old-generation, or truth-bearing input. |
-| `Generation2PseudoOracle` | Reference-free modal-majority oracle used identically by NiFi and CLI. Emits `clean`, a localized `suspect`, or `abstain`; decisions carry a reproducible digest before truth is revealed. |
-| `Generation2TruthEvaluator` | Post-freeze unblinding stage. Joins decisions to the separately stored sealed truth and distinguishes correct localization, wrong attribution, misses, false alarms, clean decisions, and abstentions. |
-| `Generation2CalibrationEvaluator` | Evaluates complete 21-circuit qualification and 84-circuit clean-calibration jobs, enforcing aggregate case correctness and the preregistered 25/28 repeated-mode voter eligibility rule. Preparatory outputs remain outside confirmatory metrics. |
-| `Generation2Reporter` | Writes Generation-2 evaluation artifacts as provenance-preserving JSON, CSV, Markdown, and HTML files from one common record set. |
 
 ## Reporting & utility
 
