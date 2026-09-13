@@ -62,7 +62,7 @@ class BraketSimulator(FlowFileTransform):
     # Single-qubit noise channels exposed via the Noise Model property, named
     # to match braket.default_simulator.noise_operations. Class-level: these
     # are plain constants, not PropertyDescriptors (which must stay inside
-    # __init__ per this directory's AGENTS.md).
+    # __init__ so NiFi can discover the processor without loading the SDK).
     _NOISE_CHANNELS = frozenset(
         ["depolarizing", "bit_flip", "phase_flip", "amplitude_damping", "phase_damping"]
     )

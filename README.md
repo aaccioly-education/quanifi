@@ -10,8 +10,7 @@ contract and, where supported, OpenQASM 2.0.
 
 This repository contains framework code, tests, examples, and user-facing
 documentation. Research campaigns, paper-specific analysis, raw experimental
-results, internal development plans, and AI-assistant artifacts are maintained
-in separate private repositories.
+results, and internal development material are maintained separately.
 
 ## Layout
 
@@ -27,7 +26,7 @@ in separate private repositories.
 Create the environment with `uv sync`, then run:
 
 ```bash
-.venv/bin/python -m pytest --tb=short -q
+just test
 ```
 
 See `docs/README.md` for the documentation index.

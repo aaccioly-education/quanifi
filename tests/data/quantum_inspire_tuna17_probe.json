@@ -1,5 +1,5 @@
 {
-  "description": "Frozen record of a real armed Quantum Inspire run: a 2-qubit Grover search for marked state '10' (q0-left), 1024 shots on Tuna-17. See docs/planning/PLAN-grover-hw-matrix.md, 'Verified facts this plan rests on'.",
+  "description": "Frozen record of a real armed Quantum Inspire run: a 2-qubit Grover search for marked state '10' (q0-left), 1024 shots on Tuna-17.",
   "device": "Tuna-17",
   "shots": 1024,
   "marked_state_q0_left": "10",

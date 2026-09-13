@@ -363,7 +363,7 @@ live run) is the resume point.
      `Consensus Label = ${test.run_id}-${test.case_id}`) → `MutationScoreReport`.
    - **Acceptance:** an `iterations.offbyone` mutant row is killed (FAIL),
      `iterations.zero` is killed, the control row passes; survival report renders.
-   - Needs `flow.json.gz` edits — **back it up first** (AGENTS.md hard rule #6) —
+   - Needs `flow.json.gz` edits — **back it up first** —
      and a live NiFi. Good to do interactively, not blind.
 4. ~~**`QuantumMutator`** for Layer A (gate-level QASM)~~ **DONE** (§2 Layer A).
    Unlocks the single-branch DISAGREE path of §3. Canvas wiring is

@@ -8,12 +8,12 @@ small flow; processors that only make sense chained together (the three `*VQE`
 pipelines, Cirq's oracle+operator pair, the PennyLane QML lane, the comparison /
 assertion pair, …) are grouped into a single combined flow instead of one flow
 per processor — per the "category, not name" rule in
-[nifi_extensions/AGENTS.md](../../nifi_extensions/AGENTS.md).
+[CREATING_PROCESSORS.md](CREATING_PROCESSORS.md).
 
 > Companion docs: [CREATING_PROCESSORS.md](CREATING_PROCESSORS.md) (how
 > processors are built), [DATA_DRIVEN_TESTING.md](DATA_DRIVEN_TESTING.md) (the
 > attribute-externalization contract used in Flow 24), and
-> [HANDOFF.md](../planning/HANDOFF.md) (design rationale for VQE).
+> The VQE flow uses the shared Hamiltonian and ansatz attribute contracts.
 
 ## Before you start
 
@@ -286,7 +286,7 @@ algorithm-specific attributes (no separate simulator needed).
 ## Flow 9 — Qiskit VQE pipeline (one combined flow)
 
 **Components:** `QiskitHamiltonian` → `QiskitAnsatz` → `QiskitVQE` → `QuanifiReport`
-**Why one flow:** per `nifi_extensions/AGENTS.md` §"Variational pipeline", VQE
+**Why one flow:** VQE
 is *decomposed* — the Hamiltonian and ansatz stages are reusable building
 blocks, but `QiskitVQE` is a **strict solver** that refuses to run without both
 of them on the FlowFile (`failure` + `vqe.error` otherwise). Testing any one in

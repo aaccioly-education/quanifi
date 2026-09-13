@@ -9,8 +9,8 @@ which predates the amplitude-estimation, Braket, molecular-Hamiltonian, and
 differential/mutation-testing processors below.
 
 For the cross-processor attribute contracts (`circuit.*`, `sim.*`, `ae.*`,
-`vqe.*`, …) these components share, see the root [`AGENTS.md`](../AGENTS.md)
-and [`nifi_extensions/AGENTS.md`](../nifi_extensions/AGENTS.md).
+`vqe.*`, …) these components share, see
+[`guides/CREATING_PROCESSORS.md`](guides/CREATING_PROCESSORS.md).
 
 ## Circuit builders
 
@@ -193,5 +193,5 @@ consensus flow, see if it's caught).
 
 `nifi_extensions/` currently holds more processor modules than this table lists
 (the hardware batch submitters and pollers added in 2026-08 are documented in
-[`docs/planning/hardware_providers_roadmap.md`](planning/hardware_providers_roadmap.md)
+the provider-specific processor documentation
 rather than here).

@@ -428,7 +428,7 @@ def build(flow_path, replace=False):
 
     labels = [
         label(
-            "⬡  DATA-DRIVEN DIFFERENTIAL TESTING  —  added automatically  "
+            "⬡  DATA-DRIVEN DIFFERENTIAL TESTING  "
             "—  test table drives both frameworks; assertion checks Hellinger + ground truth",
             X0 - 60, Y_TOP - 320, 5400, 80, gid, MARK_STYLE),
         label(

@@ -6,7 +6,7 @@ Modeled on test_braket.py and test_qsharp.py. Covers: the simulator contract
 (sim.* attributes, counts JSON), seed reproducibility (noiseless AND with a
 noise model active), a noise model visibly degrading the Grover peak, a
 differential check against QiskitAerSimulator on non-palindromic marked
-states (the bit-order regression pin -- see AGENTS.md's "never emit raw
+states (the bit-order regression pin -- never emit raw
 framework-ordered keys" rule), an idle-qubit regression (a declared-but-
 untouched qubit must not silently vanish from the readout, mirroring the
 Braket ensure_full_register_measure fix), and cross-engine interop of the
