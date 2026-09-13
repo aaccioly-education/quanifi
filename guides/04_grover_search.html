@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 4: Grover's Search Algorithm — Visual Quantum Software Engineering</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo-group">
+      <div class="logo-badge">Q</div>
+      <div class="logo-title">Quanifi Guides</div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="01_introduction_to_quanifi.html">1. Intro to Quanifi</a>
+      <a href="02_deutsch_jozsa.html">2. Deutsch-Jozsa</a>
+      <a href="03_bernstein_vazirani.html">3. Bernstein-Vazirani</a>
+      <a href="04_grover_search.html" class="active">4. Grover's Search</a>
+      <a href="05_portfolio_optimization_qaoa.html">5. QAOA Portfolio</a>
+      <a href="06_disconnected_graph_decomposition.html">6. Graph Decomposition</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <h1>Module 4: Grover's Search Algorithm</h1>
+  <p class="lead">
+    Discover how quantum amplitude amplification searches unsorted databases and inverts hash functions in $O(\sqrt{N})$ queries — achieving a provable quadratic speedup over all classical algorithms.
+  </p>
+
+  <section>
+    <h2>1. The Problem: Searching an Unsorted Database</h2>
+    <p>
+      In classical software engineering, binary search requires a sorted array ($O(\log N)$). But what if the data is completely unsorted, or you are trying to invert a one-way cryptographic hash function:
+    </p>
+    <pre><code>def find_preimage(target_hash: str) -> str:
+    # We must find 'x' such that sha256(x) == target_hash
+    ...</code></pre>
+    <p>
+      For an unsorted keyspace of $N = 2^n$ elements:
+    </p>
+    <ul>
+      <li><strong>Classical Brute Force:</strong> You must test items one-by-one. On average, it requires $\frac{N}{2}$ checks, and in the worst case $N$ checks ($O(N)$ linear search).</li>
+      <li><strong>Grover's Algorithm:</strong> Finds the unique target item with high probability in roughly $\frac{\pi}{4}\sqrt{N}$ queries ($O(\sqrt{N})$ quadratic speedup).</li>
+    </ul>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Search Space ($N$)</th>
+          <th>Classical Linear Search ($N$)</th>
+          <th>Grover's Quantum Search ($\approx \frac{\pi}{4}\sqrt{N}$)</th>
+          <th>Quantum Speedup Factor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>$2^4 = 16$</td>
+          <td>$16\text{ queries}$</td>
+          <td>$3\text{ queries}$</td>
+          <td>$5\times$ faster</td>
+        </tr>
+        <tr>
+          <td>$2^8 = 256$</td>
+          <td>$256\text{ queries}$</td>
+          <td>$12\text{ queries}$</td>
+          <td>$21\times$ faster</td>
+        </tr>
+        <tr>
+          <td>$2^{20} \approx 1,000,000$</td>
+          <td>$1,000,000\text{ queries}$</td>
+          <td>$785\text{ queries}$</td>
+          <td>$1,273\times$ faster</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>2. How It Works: Amplitude Amplification</h2>
+    <p>
+      Grover does not magically "look at everything at once" and return the answer. Instead, it uses a two-step cycle repeated $R$ times that gradually amplifies the target's probability amplitude while suppressing all non-targets.
+    </p>
+
+    <div class="diagram-container">
+      <svg width="740" height="240" viewBox="0 0 740 240" xmlns="http://www.w3.org/2000/svg">
+        <!-- Stage 1: Uniform Superposition -->
+        <g transform="translate(20, 20)">
+          <text x="75" y="15" text-anchor="middle" font-weight="bold" font-size="12" fill="#0f172a">1. Superposition</text>
+          <!-- Bars -->
+          <rect x="20" y="80" width="20" height="70" fill="#94a3b8"/>
+          <rect x="50" y="80" width="20" height="70" fill="#94a3b8"/>
+          <rect x="80" y="80" width="20" height="70" fill="#3b82f6"/>
+          <rect x="110" y="80" width="20" height="70" fill="#94a3b8"/>
+          <!-- Average line -->
+          <line x1="10" y1="80" x2="140" y2="80" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="75" y="175" text-anchor="middle" font-size="11" fill="#64748b">All equal (1/√N)</text>
+        </g>
+
+        <!-- Arrow 1 -->
+        <path d="M 180 110 L 220 110" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="200" y="95" text-anchor="middle" font-size="11" font-weight="bold" fill="#0284c7">Oracle</text>
+
+        <!-- Stage 2: Oracle Phase Flip -->
+        <g transform="translate(230, 20)">
+          <text x="75" y="15" text-anchor="middle" font-weight="bold" font-size="12" fill="#0f172a">2. Phase Flip</text>
+          <!-- Bars -->
+          <rect x="20" y="80" width="20" height="70" fill="#94a3b8"/>
+          <rect x="50" y="80" width="20" height="70" fill="#94a3b8"/>
+          <rect x="80" y="150" width="20" height="70" fill="#8b5cf6"/>
+          <rect x="110" y="80" width="20" height="70" fill="#94a3b8"/>
+          <!-- Average line -->
+          <line x1="10" y1="100" x2="140" y2="100" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="75" y="235" text-anchor="middle" font-size="11" fill="#64748b">Target inverted (-)</text>
+        </g>
+
+        <!-- Arrow 2 -->
+        <path d="M 390 110 L 430 110" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="410" y="95" text-anchor="middle" font-size="11" font-weight="bold" fill="#0284c7">Diffusion</text>
+
+        <!-- Stage 3: Inversion about Average -->
+        <g transform="translate(440, 20)">
+          <text x="85" y="15" text-anchor="middle" font-weight="bold" font-size="12" fill="#0f172a">3. Inversion about Mean</text>
+          <!-- Bars -->
+          <rect x="20" y="120" width="20" height="30" fill="#94a3b8"/>
+          <rect x="50" y="120" width="20" height="30" fill="#94a3b8"/>
+          <rect x="80" y="30" width="25" height="120" fill="#10b981"/>
+          <rect x="115" y="120" width="20" height="30" fill="#94a3b8"/>
+          <!-- Average line -->
+          <line x1="10" y1="110" x2="155" y2="110" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="85" y="175" text-anchor="middle" font-size="11" font-weight="bold" fill="#059669">Target amplified!</text>
+        </g>
+
+        <!-- Baseline axes -->
+        <line x1="30" y1="170" x2="160" y2="170" stroke="#cbd5e1" stroke-width="1"/>
+        <line x1="240" y1="170" x2="370" y2="170" stroke="#cbd5e1" stroke-width="1"/>
+        <line x1="450" y1="170" x2="600" y2="170" stroke="#cbd5e1" stroke-width="1"/>
+
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#0284c7"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="diagram-caption">Figure 4.1: Geometric intuition of Grover's amplitude amplification step.</div>
+    </div>
+
+    <h3>The 3 Stages of Each Grover Iteration:</h3>
+    <ol>
+      <li>
+        <strong>Uniform Superposition:</strong> All $N$ basis states begin with identical positive amplitudes $\alpha_i = \frac{1}{\sqrt{N}}$.
+      </li>
+      <li>
+        <strong>The Phase Oracle ($O$):</strong> When passed through the oracle, the marked target state $\vert\omega\rangle$ is flipped negative:
+        $$\vert\omega\rangle \to -\vert\omega\rangle$$
+        All other $(N-1)$ unmarked states remain unchanged.
+      </li>
+      <li>
+        <strong>The Diffusion Operator ($D$ — Inversion About the Mean):</strong>
+        Every amplitude $\alpha_i$ is reflected across the average amplitude $\mu$:
+        $$\alpha_i^{\text{new}} = 2\mu - \alpha_i$$
+        Because the target amplitude was negative, reflecting it across the mean $\mu$ causes its height to <strong>leap high above the rest</strong>, while the unmarked states sink downwards!
+      </li>
+    </ol>
+
+    <div class="callout warning">
+      <div class="callout-title">
+        <span>⚠️</span> Beware of "Overcooking": The Periodic Trap
+      </div>
+      <div class="callout-content">
+        <p>
+          Unlike classical algorithms where running more iterations always gets you closer to an answer, Grover's search rotates the quantum state vector in 2D Hilbert space like the hands of a clock.
+          The optimal iteration count is:
+          $$R \approx \left\lfloor \frac{\pi}{4}\sqrt{N} \right\rfloor$$
+          If you continue past $R$, the vector rotates <em>past</em> the target, and the probability begins decreasing back toward zero!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Running Grover's Search in Quanifi</h2>
+    <p>
+      In Quanifi, Grover's search is implemented with native multi-framework support. You can construct and simulate Grover circuits with <strong>Qiskit</strong>, <strong>Cirq</strong>, or <strong>Qrisp</strong> using the exact same pipeline topology.
+    </p>
+
+    <h3>The Pipeline Structure:</h3>
+    <div class="diagram-container">
+      <svg width="740" height="150" viewBox="0 0 740 150" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="30" width="180" height="90" rx="8" fill="#f8fafc" stroke="#0284c7" stroke-width="2"/>
+        <text x="120" y="65" text-anchor="middle" font-weight="bold" font-size="13" fill="#0f172a">Grover — Trigger</text>
+        <text x="120" y="90" text-anchor="middle" font-size="11" fill="#64748b">GenerateFlowFile</text>
+
+        <path d="M 210 75 L 280 75" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <rect x="280" y="30" width="220" height="90" rx="8" fill="#f8fafc" stroke="#8b5cf6" stroke-width="2"/>
+        <text x="390" y="65" text-anchor="middle" font-weight="bold" font-size="13" fill="#0f172a">QiskitGroverSearch</text>
+        <text x="390" y="90" text-anchor="middle" font-size="11" fill="#64748b">Marked State: '11'</text>
+
+        <path d="M 500 75 L 570 75" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <rect x="570" y="30" width="150" height="90" rx="8" fill="#f8fafc" stroke="#10b981" stroke-width="2"/>
+        <text x="645" y="65" text-anchor="middle" font-weight="bold" font-size="13" fill="#0f172a">Grover — Report</text>
+        <text x="645" y="90" text-anchor="middle" font-size="11" fill="#64748b">QuanifiReport</text>
+      </svg>
+      <div class="diagram-caption">Figure 4.2: Decoupled Grover Search execution and reporting pipeline.</div>
+    </div>
+
+    <h3>Configuring <code>QiskitGroverSearch</code>:</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Default</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Marked State</strong></td>
+          <td><code>11</code></td>
+          <td>The binary bitstring to search for. The string length determines the number of qubits ($n$).</td>
+        </tr>
+        <tr>
+          <td><strong>Num Iterations</strong></td>
+          <td><code>1</code></td>
+          <td>Number of oracle + diffusion cycles to apply ($R$).</td>
+        </tr>
+        <tr>
+          <td><strong>Shots</strong></td>
+          <td><code>1024</code></td>
+          <td>Total times to sample measurement readout.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>4. Reading and Interpreting Results</h2>
+    <p>
+      When Grover finishes, the terminal <code>QuanifiReport</code> generates a report card showing the measurement probability distribution.
+    </p>
+
+    <h3>Expected Probability vs Number of Iterations:</h3>
+    <p>
+      For a 2-qubit system ($N=4$) with target <code>11</code>:
+    </p>
+    <ul>
+      <li>Optimal iteration count: $R = \left\lfloor \frac{\pi}{4}\sqrt{4} \right\rfloor = \left\lfloor \frac{\pi}{2} \right\rfloor = 1$ iteration.</li>
+      <li>For $R=1$, the target probability is <strong>exactly 100%</strong> in a fault-free simulator!</li>
+      <li>Every single one of the 1024 shots will measure <code>11</code>.</li>
+    </ul>
+
+    <p>
+      For larger qubit sizes ($n \ge 3$), the probability does not hit exactly 1.0, but peaks close to $1 - \frac{1}{N}$.
+    </p>
+  </section>
+
+  <!-- Hands-on Exercise -->
+  <section class="exercise-box">
+    <span class="exercise-badge">Hands-on Exercise 4.1</span>
+    <h3 class="exercise-title">Calculating Optimal Iterations and the Overcooking Effect</h3>
+    <p>
+      Suppose you are configuring a 3-qubit Grover pipeline ($n=3$) searching for the target bitstring <code>101</code> among $N = 2^3 = 8$ items.
+    </p>
+    <p><strong>Questions:</strong></p>
+    <ol>
+      <li>Calculate the theoretical optimal number of iterations $R_{\text{opt}} \approx \left\lfloor \frac{\pi}{4}\sqrt{N} \right\rfloor$ for $N=8$.</li>
+      <li>If you run the algorithm with only <strong>$R = 1$</strong> iteration, will the target probability be higher or lower than at $R_{\text{opt}}$?</li>
+      <li>If an operator mistakenly sets <strong>$R = 4$</strong> iterations, what will happen to the measurement probability of <code>101</code>?</li>
+    </ol>
+
+    <details class="solution-accordion">
+      <summary>👉 Click to Reveal Exercise Solution &amp; Explanation</summary>
+      <div class="solution-content">
+        <h4>Solution:</h4>
+        <ol>
+          <li>
+            <strong>Optimal Iteration Calculation:</strong>
+            $$R_{\text{opt}} \approx \left\lfloor \frac{\pi}{4}\sqrt{8} \right\rfloor \approx \lfloor 0.7853 \times 2.8284 \rfloor = \lfloor 2.22 \rfloor = 2\text{ iterations}$$
+            Applying <strong>$R = 2$</strong> iterations maximizes the probability of measuring <code>101</code> at approximately <strong>$94.5\%$</strong>!
+          </li>
+          <li>
+            <strong>At $R = 1$ iteration (Under-rotated):</strong>
+            The state has only completed one rotation. The probability of measuring <code>101</code> is approximately <strong>$78.1\%$</strong>. While significantly higher than random guess ($12.5\%$), it has not yet reached its peak.
+          </li>
+          <li>
+            <strong>At $R = 4$ iterations (Overcooked / Over-rotated):</strong>
+            Because amplitude amplification is periodic like a sine wave $\sin^2((2R+1)\theta)$, running 4 iterations rotates the state vector past the target state! The probability of measuring <code>101</code> plummets down to approximately <strong>$16.5\%$</strong> (barely above a random guess).
+            <br><br>
+            <em>Engineering Rule:</em> In quantum pipelines, never use a "more iterations is better" heuristic. Always calculate and tune $R$ strictly based on the search space size $\sqrt{N}$.
+          </li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <div class="guide-nav-footer">
+    <a href="03_bernstein_vazirani.html" class="guide-nav-button">
+      <span class="nav-sub">&larr; Previous</span>
+      <span class="nav-title">3. Bernstein-Vazirani Algorithm</span>
+    </a>
+    <a href="05_portfolio_optimization_qaoa.html" class="guide-nav-button">
+      <span class="nav-sub">Next Module &rarr;</span>
+      <span class="nav-title">5. QAOA Portfolio Optimization</span>
+    </a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  &copy; 2026 Quanifi Project. Designed for Quantum Software Engineering with Apache NiFi.
+</footer>
+
+</body>
+</html>

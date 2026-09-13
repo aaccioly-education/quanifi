@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: quanifi
+      POSTGRES_USER: quanifi
+      POSTGRES_PASSWORD: local-only-password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quanifi"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+    volumes:
+      - quanifi-postgres:/var/lib/postgresql/data
+
+  web:
+    build: .
+    command: gunicorn web.config.wsgi:application --bind 0.0.0.0:8080 --reload
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://quanifi:local-only-password@db:5432/quanifi
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
+      DJANGO_DEBUG: "true"
+      DJANGO_SECRET_KEY: local-only-development-key
+      QUANIFI_ADMIN_EMAIL: admin@example.com
+      REPORT_INGESTION_TOKEN: local-ingestion-token
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+
+volumes:
+  quanifi-postgres:

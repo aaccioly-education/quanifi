@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ report.flow_name }} · Quanifi{% endblock %}
+{% block content %}
+<h1>{{ report.flow_name }}</h1>
+<p class="muted">{{ report.report_type }}</p>
+<div class="card">
+  <table>
+    <thead><tr><th>Triggered</th><th>Received</th><th>Status</th><th>Framework / backend</th><th>Run</th></tr></thead>
+    <tbody>
+    {% for run in report.runs.all %}
+      <tr>
+        <td>{{ run.source_timestamp|default:"Not recorded" }}</td>
+        <td>{{ run.created_at }}</td>
+        <td>{{ run.status }}</td>
+        <td>{{ run.framework }} / {{ run.backend }}</td>
+        <td><a href="{% url 'reports:run_detail' run.pk %}">View</a></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">No runs.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

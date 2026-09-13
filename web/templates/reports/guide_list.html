@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Guides · Quanifi{% endblock %}
+{% block content %}
+<h1>Guides</h1>
+<form class="card" method="get">
+  <input name="q" value="{{ request.GET.q }}" placeholder="Guide title">
+  <button type="submit">Filter</button>
+</form>
+<div class="grid">
+{% for guide in guides %}
+  <article class="card">
+    <div class="title-row"><span class="eyebrow">Guide</span><span class="pill">{{ guide.content_type }}</span></div>
+    <h2><a href="{% url 'reports:document_detail' guide.kind guide.slug %}">{{ guide.title }}</a></h2>
+    <p class="muted">Updated {{ guide.generated_at|default:guide.updated_at }} · {{ guide.size_bytes|filesizeformat }}</p>
+    <p class="muted">{{ guide.source_path }}</p>
+  </article>
+{% empty %}
+  <p class="card">No guides have been published yet. Run <code>just publish-guides</code>.</p>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ document.title }} · Quanifi{% endblock %}
+{% block content %}
+<p><a href="{% if document.kind == 'guide' %}{% url 'reports:guide_list' %}{% else %}{% url 'reports:list' %}{% endif %}">← {{ document.get_kind_display }}s</a></p>
+<div class="title-row"><h1>{{ document.title }}</h1><span class="pill">{{ document.content_type }}</span></div>
+<section class="card metadata">
+  <div><span class="muted">Triggered</span><strong>{{ document.triggered_at|default:"Not recorded" }}</strong></div>
+  <div><span class="muted">Generated</span><strong>{{ document.generated_at|default:"Unknown" }}</strong></div>
+  <div><span class="muted">Published</span><strong>{{ document.updated_at }}</strong></div>
+  <div><span class="muted">Source</span><strong>{{ document.source_path }}</strong></div>
+  <div><span class="muted">Size</span><strong>{{ document.size_bytes|filesizeformat }}</strong></div>
+  <div><span class="muted">Checksum</span><strong title="{{ document.checksum }}">{{ document.checksum|truncatechars:16 }}</strong></div>
+</section>
+{% if document.content_type == 'text/html' %}
+  <iframe class="document-frame" sandbox src="{% url 'reports:document_content' document.kind document.slug %}" title="{{ document.title }}"></iframe>
+{% else %}
+  <pre class="card">{{ document.content }}</pre>
+{% endif %}
+{% if document.metadata %}
+<section class="card"><h2>Metadata</h2><table>{% for key, value in document.metadata.items %}<tr><th>{{ key }}</th><td>{{ value }}</td></tr>{% endfor %}</table></section>
+{% endif %}
+{% endblock %}

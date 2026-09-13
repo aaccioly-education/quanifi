@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quanifi Beginner's Guide — Visual Quantum Software Engineering</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo-group">
+      <div class="logo-badge">Q</div>
+      <div class="logo-title">Quanifi Guides</div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Overview</a>
+      <a href="01_introduction_to_quanifi.html">1. Intro to Quanifi</a>
+      <a href="02_deutsch_jozsa.html">2. Deutsch-Jozsa</a>
+      <a href="03_bernstein_vazirani.html">3. Bernstein-Vazirani</a>
+      <a href="04_grover_search.html">4. Grover's Search</a>
+      <a href="05_portfolio_optimization_qaoa.html">5. QAOA Portfolio</a>
+      <a href="06_disconnected_graph_decomposition.html">6. Graph Decomposition</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1>Visual Quantum Software Engineering</h1>
+    <p class="lead">
+      Learn how to compose, test, execute, and monitor quantum algorithms using Apache NiFi dataflows — written specifically for software engineers without a physics background.
+    </p>
+  </section>
+
+  <section>
+    <h2>Why Quantum Computing Needs Flow-Based Pipelines</h2>
+    <p>
+      In conventional quantum software development, researchers and engineers write monolithic Python scripts or Jupyter Notebooks using libraries like Qiskit, Cirq, or Pennylane. While effective for small prototypes, this approach introduces severe friction in software engineering environments:
+    </p>
+    <ul>
+      <li><strong>Vendor Lock-in:</strong> Quantum algorithms get tightly coupled to one framework's API. Porting from Qiskit to Cirq or Qrisp requires complete circuit rewrites.</li>
+      <li><strong>Zero Observability:</strong> You cannot easily see where circuits are queued, inspect intermediate compiled representations, or handle hardware timeouts.</li>
+      <li><strong>Hard-to-Test Oracles:</strong> Quantum oracles (functions tested by algorithms) are hardcoded into scripts rather than decoupled as interchangeable components.</li>
+    </ul>
+    <p>
+      <strong>Quanifi</strong> solves this by marrying <strong>Apache NiFi</strong> (a battle-tested enterprise dataflow engine) with quantum compilation and execution engines. Quantum circuits, Hamiltonians, and measurement histograms become standard <strong>FlowFiles</strong> moving through visual, decoupled processor pipelines.
+    </p>
+
+    <div class="callout software-analogy">
+      <div class="callout-title">
+        <span>💡</span> The Software Engineering Analogy: Microservices & Streams
+      </div>
+      <div class="callout-content">
+        <p>
+          Think of Quanifi like an event-driven microservices architecture or an ETL data pipeline. Rather than calling a monolithic <code>run_algorithm()</code> function, you chain discrete workers: a <em>Trigger</em> fires an event, an <em>Encoder</em> formats the problem, a <em>Quantum Engine</em> constructs and runs the unitary circuit, and a <em>Reporter</em> verifies the output.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Learning Curriculum</h2>
+    <p>
+      Explore our step-by-step guides. Each tutorial breaks down the quantum mathematics into intuitive computational concepts, guides you through running the flow on the live Quanifi canvas, shows you how to interpret the output reports, and finishes with a hands-on exercise with solutions.
+    </p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-num">Module 01</div>
+        <h3 class="card-title">Introduction to Quanifi</h3>
+        <p class="card-desc">
+          Understand the Quanifi architecture, FlowFile wire contracts, how OpenQASM flows between processors, and how to navigate the NiFi canvas.
+        </p>
+        <a href="01_introduction_to_quanifi.html" class="card-link">Start Module 1 &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div class="card-num">Module 02</div>
+        <h3 class="card-title">Deutsch-Jozsa Algorithm</h3>
+        <p class="card-desc">
+          Determine whether a black-box boolean function is constant or balanced in a single evaluation ($O(1)$) using quantum phase kickback.
+        </p>
+        <a href="02_deutsch_jozsa.html" class="card-link">Start Module 2 &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div class="card-num">Module 03</div>
+        <h3 class="card-title">Bernstein-Vazirani Algorithm</h3>
+        <p class="card-desc">
+          Recover an unknown $n$-bit secret bitmask $s$ in exactly 1 query ($O(1)$) compared to $n$ queries in classical computing.
+        </p>
+        <a href="03_bernstein_vazirani.html" class="card-link">Start Module 3 &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div class="card-num">Module 04</div>
+        <h3 class="card-title">Grover's Search Algorithm</h3>
+        <p class="card-desc">
+          Search unsorted data and invert hash functions with quadratic speedup ($O(\sqrt{N})$) using amplitude amplification and diffusion operators.
+        </p>
+        <a href="04_grover_search.html" class="card-link">Start Module 4 &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div class="card-num">Module 05</div>
+        <h3 class="card-title">QAOA &amp; Constrained Optimization</h3>
+        <p class="card-desc">
+          Go beyond textbook circuits with modern hybrid variational algorithms. Solve financial portfolio optimization under hard budget constraints using particle-preserving XY mixers.
+        </p>
+        <a href="05_portfolio_optimization_qaoa.html" class="card-link">Start Module 5 &rarr;</a>
+      </div>
+
+      <div class="card">
+        <div class="card-num">Module 06</div>
+        <h3 class="card-title">Graph Decomposition &amp; MIS (Classiq)</h3>
+        <p class="card-desc">
+          Solve Maximum Independent Set on large networks by decomposing disconnected components into parallel quantum lanes using NiFi's Scatter-Gather pattern.
+        </p>
+        <a href="06_disconnected_graph_decomposition.html" class="card-link">Start Module 6 &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Quanifi Canvas Preview</h2>
+    <p>
+      Here is a snapshot of the live Quanifi process group containing decoupled quantum algorithm pipelines running side-by-side in NiFi:
+    </p>
+    <div class="diagram-container">
+      <img src="img/overview.png" alt="Quanifi Canvas Overview" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+      <div class="diagram-caption">Figure 1: Decoupled quantum algorithmic pipelines on the Apache NiFi canvas.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Quick Reference: Accessing Your NiFi Instance</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Instance</th>
+          <th>Port / URL</th>
+          <th>Credentials</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>NiFi 2.11 (Textbook & Qrisp)</strong></td>
+          <td><a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a></td>
+          <td><code>admin</code> / <code>quanifiadmin123</code></td>
+          <td>Hosts textbook quantum algorithms (Deutsch-Jozsa, Bernstein-Vazirani, Grover, QAOA, VQE).</td>
+        </tr>
+        <tr>
+          <td><strong>NiFi 2.9 (Hardware Campaign)</strong></td>
+          <td><a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a></td>
+          <td>Single user authorizer</td>
+          <td>Hosts generation-2 multi-backend hardware campaigns (IBM Heron, IQM).</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="guide-nav-footer">
+    <div></div>
+    <a href="01_introduction_to_quanifi.html" class="guide-nav-button">
+      <span class="nav-sub">Next Module</span>
+      <span class="nav-title">1. Introduction to Quanifi &rarr;</span>
+    </a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  &copy; 2026 Quanifi Project. Designed for Quantum Software Engineering with Apache NiFi.
+</footer>
+
+</body>
+</html>

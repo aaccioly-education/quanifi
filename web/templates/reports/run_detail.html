@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ run.report.flow_name }} run · Quanifi{% endblock %}
+{% block content %}
+<p><a href="{% url 'reports:detail' run.report.pk %}">← {{ run.report.flow_name }}</a></p>
+<h1>Report run</h1>
+<div class="card metadata">
+  <div><span class="muted">Triggered</span><strong>{{ run.source_timestamp|default:"Not recorded" }}</strong></div>
+  <div><span class="muted">Received</span><strong>{{ run.created_at }}</strong></div>
+  <div><span class="muted">Status</span><strong>{{ run.status }}</strong></div>
+  <div><span class="muted">Type</span><strong>{{ run.report.report_type }}</strong></div>
+</div>
+<section class="card"><h2>Attributes</h2><pre>{{ run.attributes|pprint }}</pre></section>
+{% if run.payload != None %}<section class="card"><h2>Payload</h2><pre>{{ run.payload|pprint }}</pre></section>{% endif %}
+{% if run.raw_payload %}<section class="card"><h2>Raw payload</h2><pre>{{ run.raw_payload }}</pre></section>{% endif %}
+{% endblock %}

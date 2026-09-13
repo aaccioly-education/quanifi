@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Reports</h1>
+<form class="card" method="get">
+  <input name="q" value="{{ query }}" placeholder="Report title, filename, or flow">
+  <input name="type" value="{{ request.GET.type }}" placeholder="Report type">
+  <button type="submit">Search</button>
+  {% if query or report_type %}<a href="{% url 'reports:list' %}">Clear</a>{% endif %}
+</form>
+<h2>Published report files</h2>
+<div class="card table-wrap">
+<table>
+  <thead><tr><th>Report</th><th>Triggered</th><th>Generated</th><th>Published</th><th>Size</th><th></th></tr></thead>
+  <tbody>
+{% for document in published_reports %}
+  <tr>
+    <td><strong><a href="{% url 'reports:document_detail' document.kind document.slug %}">{{ document.title }}</a></strong><br><span class="muted">{{ document.metadata.filename|default:document.source_path }}</span></td>
+    <td>{{ document.triggered_at|default:"Not recorded" }}</td>
+    <td>{{ document.generated_at|default:"Unknown" }}</td>
+    <td>{{ document.updated_at }}</td>
+    <td>{{ document.size_bytes|filesizeformat }}</td>
+    <td><a href="{% url 'reports:document_detail' document.kind document.slug %}">View</a></td>
+  </tr>
+{% empty %}
+  <tr><td colspan="6">No published reports match your search.</td></tr>
+{% endfor %}
+  </tbody>
+</table>
+</div>
+{% if published_reports.paginator.num_pages > 1 %}
+<nav class="pagination" aria-label="Published report pages">
+  {% if published_reports.has_previous %}<a href="?q={{ query|urlencode }}&type={{ report_type|urlencode }}&page={{ published_reports.previous_page_number }}">← Previous</a>{% endif %}
+  <span>Page {{ published_reports.number }} of {{ published_reports.paginator.num_pages }} · {{ published_reports.paginator.count }} reports</span>
+  {% if published_reports.has_next %}<a href="?q={{ query|urlencode }}&type={{ report_type|urlencode }}&page={{ published_reports.next_page_number }}">Next →</a>{% endif %}
+</nav>
+{% endif %}
+
+<h2>Live NiFi report runs</h2>
+<div class="card table-wrap">
+<table>
+  <thead><tr><th>Flow</th><th>Type</th><th>Runs</th><th>Last received</th><th></th></tr></thead>
+  <tbody>
+{% for report in reports %}
+  <tr><td><strong>{{ report.flow_name }}</strong></td><td>{{ report.report_type }}</td><td>{{ report.run_count }}</td><td>{{ report.last_received|default:"—" }}</td><td><a href="{% url 'reports:detail' report.pk %}">View runs</a></td></tr>
+{% empty %}
+  <tr><td colspan="5">No live reports match your search.</td></tr>
+{% endfor %}
+  </tbody>
+</table>
+</div>
+{% if reports.paginator.num_pages > 1 %}
+<nav class="pagination" aria-label="Live report pages">
+  {% if reports.has_previous %}<a href="?q={{ query|urlencode }}&type={{ report_type|urlencode }}&live_page={{ reports.previous_page_number }}">← Previous</a>{% endif %}
+  <span>Page {{ reports.number }} of {{ reports.paginator.num_pages }} · {{ reports.paginator.count }} flows</span>
+  {% if reports.has_next %}<a href="?q={{ query|urlencode }}&type={{ report_type|urlencode }}&live_page={{ reports.next_page_number }}">Next →</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

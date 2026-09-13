@@ -1,0 +1,1062 @@
+{
+ "Qualification — IBM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   1520.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   1840.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2200.0
+  ],
+  "Qualification Eligibility": [
+   832.0,
+   2520.0
+  ],
+  "Preparatory Reports": [
+   1240.0,
+   2824.0
+  ],
+  "Layout Filename": [
+   1648.0,
+   2520.0
+  ],
+  "Layout Content": [
+   1648.0,
+   2760.0
+  ],
+  "Publish Layout": [
+   1648.0,
+   3000.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   1840.0
+  ]
+ },
+ "Calibration — IBM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   2240.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   2560.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2920.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm) — repeat 2": [
+   0.0,
+   1240.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm) — repeat 3": [
+   0.0,
+   1480.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm) — repeat 4": [
+   0.0,
+   1720.0
+  ],
+  "Arithmetic HW — Cirq (qft) — repeat 2": [
+   1504.0,
+   1240.0
+  ],
+  "Arithmetic HW — Cirq (qft) — repeat 3": [
+   1504.0,
+   1480.0
+  ],
+  "Arithmetic HW — Cirq (qft) — repeat 4": [
+   1504.0,
+   1720.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder) — repeat 2": [
+   864.0,
+   1240.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder) — repeat 3": [
+   864.0,
+   1480.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder) — repeat 4": [
+   864.0,
+   1720.0
+  ],
+  "Calibration Eligibility": [
+   832.0,
+   3240.0
+  ],
+  "Preparatory Reports": [
+   1240.0,
+   3544.0
+  ],
+  "Fetch Layout": [
+   1200.0,
+   -112.0
+  ],
+  "Hoist Layout": [
+   1200.0,
+   60.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   2560.0
+  ]
+ },
+ "Qualification — IQM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   1520.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   1840.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2200.0
+  ],
+  "Qualification Eligibility": [
+   832.0,
+   2520.0
+  ],
+  "Preparatory Reports": [
+   1240.0,
+   2824.0
+  ],
+  "Layout Filename": [
+   1648.0,
+   2520.0
+  ],
+  "Layout Content": [
+   1648.0,
+   2760.0
+  ],
+  "Publish Layout": [
+   1648.0,
+   3000.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   1840.0
+  ]
+ },
+ "Calibration — IQM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   2240.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   2560.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2920.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm) — repeat 2": [
+   0.0,
+   1240.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm) — repeat 3": [
+   0.0,
+   1480.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm) — repeat 4": [
+   0.0,
+   1720.0
+  ],
+  "Arithmetic HW — Cirq (qft) — repeat 2": [
+   1504.0,
+   1240.0
+  ],
+  "Arithmetic HW — Cirq (qft) — repeat 3": [
+   1504.0,
+   1480.0
+  ],
+  "Arithmetic HW — Cirq (qft) — repeat 4": [
+   1504.0,
+   1720.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder) — repeat 2": [
+   864.0,
+   1240.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder) — repeat 3": [
+   864.0,
+   1480.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder) — repeat 4": [
+   864.0,
+   1720.0
+  ],
+  "Calibration Eligibility": [
+   832.0,
+   3240.0
+  ],
+  "Preparatory Reports": [
+   1240.0,
+   3544.0
+  ],
+  "Fetch Layout": [
+   1200.0,
+   -112.0
+  ],
+  "Hoist Layout": [
+   1200.0,
+   60.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   2560.0
+  ]
+ },
+ "carry.break — IBM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Mark Control": [
+   0.0,
+   1300.0
+  ],
+  "Arithmetic HW — Mark Mutant": [
+   1900.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null Selector": [
+   864.0,
+   1300.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 0": [
+   600.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 1": [
+   600.0,
+   1780.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 0": [
+   1050.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 1": [
+   1050.0,
+   1780.0
+  ],
+  "Mutate carry.break @first": [
+   1504.0,
+   1300.0
+  ],
+  "Mutate carry.break @middle": [
+   1504.0,
+   1540.0
+  ],
+  "Mutate carry.break @last": [
+   1504.0,
+   1780.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   2300.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   2620.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2980.0
+  ],
+  "Strip Truth": [
+   832.0,
+   3300.0
+  ],
+  "Strict Ensembles": [
+   832.0,
+   3540.0
+  ],
+  "Blinded Modal Oracle": [
+   832.0,
+   3780.0
+  ],
+  "Decision Filename": [
+   832.0,
+   4020.0
+  ],
+  "Persist Frozen Decision": [
+   832.0,
+   4260.0
+  ],
+  "Truth Join": [
+   832.0,
+   4500.0
+  ],
+  "JSON CSV MD HTML Reports": [
+   1240.0,
+   4804.0
+  ],
+  "Fetch Layout": [
+   1200.0,
+   -112.0
+  ],
+  "Hoist Layout": [
+   1200.0,
+   60.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   2620.0
+  ]
+ },
+ "carry.break — IQM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Mark Control": [
+   0.0,
+   1300.0
+  ],
+  "Arithmetic HW — Mark Mutant": [
+   1900.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null Selector": [
+   864.0,
+   1300.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 0": [
+   600.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 1": [
+   600.0,
+   1780.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 0": [
+   1050.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 1": [
+   1050.0,
+   1780.0
+  ],
+  "Mutate carry.break @first": [
+   1504.0,
+   1300.0
+  ],
+  "Mutate carry.break @middle": [
+   1504.0,
+   1540.0
+  ],
+  "Mutate carry.break @last": [
+   1504.0,
+   1780.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   2300.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   2620.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2980.0
+  ],
+  "Strip Truth": [
+   832.0,
+   3300.0
+  ],
+  "Strict Ensembles": [
+   832.0,
+   3540.0
+  ],
+  "Blinded Modal Oracle": [
+   832.0,
+   3780.0
+  ],
+  "Decision Filename": [
+   832.0,
+   4020.0
+  ],
+  "Persist Frozen Decision": [
+   832.0,
+   4260.0
+  ],
+  "Truth Join": [
+   832.0,
+   4500.0
+  ],
+  "JSON CSV MD HTML Reports": [
+   1240.0,
+   4804.0
+  ],
+  "Fetch Layout": [
+   1200.0,
+   -112.0
+  ],
+  "Hoist Layout": [
+   1200.0,
+   60.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   2620.0
+  ]
+ },
+ "gate.remove — IBM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Mark Control": [
+   0.0,
+   1300.0
+  ],
+  "Arithmetic HW — Mark Mutant": [
+   1900.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null Selector": [
+   864.0,
+   1300.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 0": [
+   600.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 1": [
+   600.0,
+   1780.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 0": [
+   1050.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 1": [
+   1050.0,
+   1780.0
+  ],
+  "Mutate gate.remove @first": [
+   1504.0,
+   1300.0
+  ],
+  "Mutate gate.remove @middle": [
+   1504.0,
+   1540.0
+  ],
+  "Mutate gate.remove @last": [
+   1504.0,
+   1780.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   2300.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   2620.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2980.0
+  ],
+  "Strip Truth": [
+   832.0,
+   3300.0
+  ],
+  "Strict Ensembles": [
+   832.0,
+   3540.0
+  ],
+  "Blinded Modal Oracle": [
+   832.0,
+   3780.0
+  ],
+  "Decision Filename": [
+   832.0,
+   4020.0
+  ],
+  "Persist Frozen Decision": [
+   832.0,
+   4260.0
+  ],
+  "Truth Join": [
+   832.0,
+   4500.0
+  ],
+  "JSON CSV MD HTML Reports": [
+   1240.0,
+   4804.0
+  ],
+  "Fetch Layout": [
+   1200.0,
+   -112.0
+  ],
+  "Hoist Layout": [
+   1200.0,
+   60.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   2620.0
+  ]
+ },
+ "gate.remove — IQM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Mark Control": [
+   0.0,
+   1300.0
+  ],
+  "Arithmetic HW — Mark Mutant": [
+   1900.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null Selector": [
+   864.0,
+   1300.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 0": [
+   600.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 1": [
+   600.0,
+   1780.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 0": [
+   1050.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 1": [
+   1050.0,
+   1780.0
+  ],
+  "Mutate gate.remove @first": [
+   1504.0,
+   1300.0
+  ],
+  "Mutate gate.remove @middle": [
+   1504.0,
+   1540.0
+  ],
+  "Mutate gate.remove @last": [
+   1504.0,
+   1780.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   2300.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   2620.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2980.0
+  ],
+  "Strip Truth": [
+   832.0,
+   3300.0
+  ],
+  "Strict Ensembles": [
+   832.0,
+   3540.0
+  ],
+  "Blinded Modal Oracle": [
+   832.0,
+   3780.0
+  ],
+  "Decision Filename": [
+   832.0,
+   4020.0
+  ],
+  "Persist Frozen Decision": [
+   832.0,
+   4260.0
+  ],
+  "Truth Join": [
+   832.0,
+   4500.0
+  ],
+  "JSON CSV MD HTML Reports": [
+   1240.0,
+   4804.0
+  ],
+  "Fetch Layout": [
+   1200.0,
+   -112.0
+  ],
+  "Hoist Layout": [
+   1200.0,
+   60.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   2620.0
+  ]
+ },
+ "rotation.perturb — IBM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Mark Control": [
+   0.0,
+   1300.0
+  ],
+  "Arithmetic HW — Mark Mutant": [
+   1900.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null Selector": [
+   864.0,
+   1300.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 0": [
+   600.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 1": [
+   600.0,
+   1780.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 0": [
+   1050.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 1": [
+   1050.0,
+   1780.0
+  ],
+  "Mutate rotation.perturb @first": [
+   1504.0,
+   1300.0
+  ],
+  "Mutate rotation.perturb @middle": [
+   1504.0,
+   1540.0
+  ],
+  "Mutate rotation.perturb @last": [
+   1504.0,
+   1780.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   2300.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   2620.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2980.0
+  ],
+  "Strip Truth": [
+   832.0,
+   3300.0
+  ],
+  "Strict Ensembles": [
+   832.0,
+   3540.0
+  ],
+  "Blinded Modal Oracle": [
+   832.0,
+   3780.0
+  ],
+  "Decision Filename": [
+   832.0,
+   4020.0
+  ],
+  "Persist Frozen Decision": [
+   832.0,
+   4260.0
+  ],
+  "Truth Join": [
+   832.0,
+   4500.0
+  ],
+  "JSON CSV MD HTML Reports": [
+   1240.0,
+   4804.0
+  ],
+  "Fetch Layout": [
+   1200.0,
+   -112.0
+  ],
+  "Hoist Layout": [
+   1200.0,
+   60.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   2620.0
+  ]
+ },
+ "rotation.perturb — IQM": {
+  "Arithmetic HW — Trigger": [
+   720.0,
+   -112.0
+  ],
+  "Arithmetic HW — Test Cases": [
+   720.0,
+   208.0
+  ],
+  "Arithmetic HW — SplitJson": [
+   720.0,
+   440.0
+  ],
+  "Arithmetic HW — Hoist Case Fields": [
+   720.0,
+   696.0
+  ],
+  "Arithmetic HW — Mark Control": [
+   0.0,
+   1300.0
+  ],
+  "Arithmetic HW — Mark Mutant": [
+   1900.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null Selector": [
+   864.0,
+   1300.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 0": [
+   600.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 0+0 Copy 1": [
+   600.0,
+   1780.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 0": [
+   1050.0,
+   1540.0
+  ],
+  "Arithmetic HW — Null 3+1 Copy 1": [
+   1050.0,
+   1780.0
+  ],
+  "Mutate rotation.perturb @first": [
+   1504.0,
+   1300.0
+  ],
+  "Mutate rotation.perturb @middle": [
+   1504.0,
+   1540.0
+  ],
+  "Mutate rotation.perturb @last": [
+   1504.0,
+   1780.0
+  ],
+  "Arithmetic HW — Qiskit (cdkm)": [
+   0.0,
+   1000.0
+  ],
+  "Arithmetic HW — Cirq (qft)": [
+   1504.0,
+   1000.0
+  ],
+  "Arithmetic HW — PennyLane (semiadder)": [
+   864.0,
+   1000.0
+  ],
+  "Arithmetic HW — Batch Submitter (PREFLIGHT)": [
+   728.0,
+   2300.0
+  ],
+  "Arithmetic HW — Poller": [
+   296.0,
+   2620.0
+  ],
+  "Arithmetic HW — Expand Batch": [
+   832.0,
+   2980.0
+  ],
+  "Strip Truth": [
+   832.0,
+   3300.0
+  ],
+  "Strict Ensembles": [
+   832.0,
+   3540.0
+  ],
+  "Blinded Modal Oracle": [
+   832.0,
+   3780.0
+  ],
+  "Decision Filename": [
+   832.0,
+   4020.0
+  ],
+  "Persist Frozen Decision": [
+   832.0,
+   4260.0
+  ],
+  "Truth Join": [
+   832.0,
+   4500.0
+  ],
+  "JSON CSV MD HTML Reports": [
+   1240.0,
+   4804.0
+  ],
+  "Fetch Layout": [
+   1200.0,
+   -112.0
+  ],
+  "Hoist Layout": [
+   1200.0,
+   60.0
+  ],
+  "Preflight Cost Report": [
+   1480.0,
+   2620.0
+  ]
+ }
+}
