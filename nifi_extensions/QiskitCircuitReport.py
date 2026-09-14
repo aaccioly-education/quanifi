@@ -71,7 +71,7 @@ class QiskitCircuitReport(FlowFileTransform):
             name="Reports Directory",
             description="Folder where HTML report files are written. Shared across all CircuitReport instances.",
             required=True,
-            default_value="~/projects/quanifi/reports",
+            default_value="reports",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.flow_name = PropertyDescriptor(

@@ -2,8 +2,8 @@
 # Foreground NiFi bootstrap owned by the scoped launchd job from `just nifi-start`.
 set -euo pipefail
 
-repo_root="~/projects/quanifi"
-nifi_home="~/projects/nifi-2.9.0"
+repo_root="$(cd "$(dirname "$0")/.." && pwd)"
+nifi_home="${NIFI_HOME:?Set NIFI_HOME to the NiFi installation directory}"
 env_file="${1:-.env}"
 
 if [ -f "$repo_root/.env" ]; then

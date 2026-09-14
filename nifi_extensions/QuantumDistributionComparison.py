@@ -211,7 +211,7 @@ class QuantumDistributionComparison(FlowFileTransform):
             name="Reports Directory",
             description="Folder where the HTML comparison report is written.",
             required=True,
-            default_value="~/projects/quanifi/reports",
+            default_value="reports",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.flow_name = PropertyDescriptor(
@@ -231,7 +231,7 @@ class QuantumDistributionComparison(FlowFileTransform):
                 "FlowFile arrivals.  Must be writable by NiFi."
             ),
             required=True,
-            default_value="~/projects/quanifi/reports/tmp/quanifi_compare_state",
+            default_value="reports/tmp/quanifi_compare_state",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.comparison_label = PropertyDescriptor(

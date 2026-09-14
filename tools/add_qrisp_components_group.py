@@ -589,7 +589,7 @@ def main():
     parser.add_argument(
         "--flow",
         type=Path,
-        default=Path("~/projects/nifi/nifi-2.11.0/conf/flow.json.gz"),
+        required=True,
         help="Target flow.json.gz path",
     )
     parser.add_argument(

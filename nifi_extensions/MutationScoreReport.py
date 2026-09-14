@@ -134,7 +134,7 @@ class MutationScoreReport(FlowFileTransform):
             name="Reports Directory",
             description="Folder where the HTML survival-rate report and JSON state sidecar are written.",
             required=True,
-            default_value="~/projects/quanifi/reports",
+            default_value="reports",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.flow_name = PropertyDescriptor(

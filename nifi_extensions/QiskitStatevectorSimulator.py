@@ -128,7 +128,7 @@ class QiskitStatevectorSimulator(FlowFileTransform):
             name="Reports Directory",
             description="Folder where the HTML statevector report is written.",
             required=True,
-            default_value="~/projects/quanifi/reports",
+            default_value="reports",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.flow_name = PropertyDescriptor(

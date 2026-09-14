@@ -8,12 +8,13 @@ Idempotent guard: refuses to run twice (checks for the pink header label).
 """
 import gzip
 import json
-import sys
 import uuid
+import argparse
+from pathlib import Path
 
-FLOW = "~/projects/nifi-2.9.0/conf/flow.json.gz"
+FLOW = None
 GROUP = "22f0b342-2baf-3551-b141-115bd78a1933"
-REPORTS_DIR = "~/projects/quanifi/reports"
+REPORTS_DIR = "reports"
 HAM = "Z 0 + Z 1 + 0.5 X 0 X 1"
 
 PY_BUNDLE = {"group": "org.apache.nifi", "artifact": "python-extensions", "version": "0.1.0"}
@@ -80,8 +81,8 @@ def label(x, y, w, h, text, style):
             "componentType": "LABEL", "groupIdentifier": GROUP}
 
 
-def main():
-    with gzip.open(FLOW) as f:
+def main(flow):
+    with gzip.open(flow) as f:
         d = json.load(f)
     rg = d["rootGroup"]
 
@@ -147,7 +148,7 @@ def main():
         print("ABORT: duplicate identifiers:", dupes)
         return 2
 
-    with gzip.open(FLOW, "wt", encoding="utf-8") as f:
+    with gzip.open(flow, "wt", encoding="utf-8") as f:
         json.dump(d, f)
 
     print("Added: 5 processors, 4 connections, 2 labels.")
@@ -157,4 +158,7 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--conf", required=True, type=Path,
+                        help="Path to the target NiFi conf/flow.json.gz")
+    raise SystemExit(main(parser.parse_args().conf))

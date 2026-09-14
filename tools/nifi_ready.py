@@ -286,11 +286,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--log", default="~/projects/nifi-2.9.0/"
-                                         "logs/nifi-app.log",
+    parser.add_argument("--log", required=True,
                         help="nifi-app.log to watch during phase 1")
-    parser.add_argument("--flow", default="~/projects/nifi-2.9.0/"
-                                          "conf/flow.json.gz",
+    parser.add_argument("--flow", required=True,
                         help="offline flow used to derive the expected Python count")
     parser.add_argument("--start-inode", type=int, default=0,
                         help="log inode captured immediately before nifi.sh start")

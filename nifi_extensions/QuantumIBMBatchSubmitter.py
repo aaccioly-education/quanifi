@@ -211,7 +211,7 @@ class QuantumIBMBatchSubmitter(FlowFileTransform):
             "detect. Cost scales with the INVERSE SQUARE of this, so halving it "
             "quadruples the shots.", "0.10", None, True)
         self.state_dir = prop("State Directory", "Partial-batch storage.",
-                              "~/projects/quanifi/reports/tmp/quanifi_ibm_batch_state",
+                              "reports/tmp/quanifi_ibm_batch_state",
                               StandardValidators.NON_EMPTY_VALIDATOR)
         self.manifest_dir = prop(
             "Manifest Directory",
@@ -220,7 +220,7 @@ class QuantumIBMBatchSubmitter(FlowFileTransform):
             "without it a job can only be re-read by solving the ordering back "
             "out of the counts. The archived copy also carries the submitted "
             "OpenQASM, which the FlowFile copy does not.",
-            "~/projects/quanifi/experiments/results/generation2/manifests",
+            "reports/manifests",
             StandardValidators.NON_EMPTY_VALIDATOR)
         self.fixed_layout = prop(
             "Fixed Layout",

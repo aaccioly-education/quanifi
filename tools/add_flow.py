@@ -5,7 +5,7 @@ Programmatically adds a processor chain to a NiFi flow.json.gz.
 Usage:
     python3 add_flow.py [--conf /path/to/conf/flow.json.gz]
 
-Default target: ~/projects/nifi-2.9.0/conf/flow.json.gz
+Pass the target NiFi ``conf/flow.json.gz`` with ``--conf``.
 NiFi must be stopped before running this script. Changes take effect on restart.
 
 To add a different chain, edit the FLOW_CHAIN list at the bottom.
@@ -218,7 +218,7 @@ def add_chain(flow_path, chain_spec, start_x, start_y, h_gap=536.0):
 # Flow definition
 # ---------------------------------------------------------------------------
 
-REPORTS_DIR = "~/projects/quanifi/reports"
+REPORTS_DIR = "reports"
 
 QISKIT_GROVER_CHAIN = [
     {
@@ -264,7 +264,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Add a processor chain to a NiFi flow.json.gz")
     parser.add_argument(
         "--conf",
-        default="~/projects/nifi-2.9.0/conf/flow.json.gz",
+        required=True,
         help="Path to NiFi conf/flow.json.gz",
     )
     parser.add_argument("--x", type=float, default=456.0,  help="Start X position")

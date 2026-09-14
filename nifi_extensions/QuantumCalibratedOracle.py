@@ -208,7 +208,7 @@ class QuantumCalibratedOracle(FlowFileTransform):
             name="Reports Directory",
             description="Folder where the HTML report is written.",
             required=True,
-            default_value="~/projects/quanifi/reports",
+            default_value="reports",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.flow_name = PropertyDescriptor(
@@ -226,7 +226,7 @@ class QuantumCalibratedOracle(FlowFileTransform):
                 "batch metadata, so a hardware run can be replayed offline."
             ),
             required=True,
-            default_value="~/projects/quanifi/reports/raw-hardware-batches",
+            default_value="reports/raw-hardware-batches",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
             expression_language_scope=ExpressionLanguageScope.FLOWFILE_ATTRIBUTES,
         )

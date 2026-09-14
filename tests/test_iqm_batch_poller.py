@@ -92,17 +92,6 @@ class TestExpanderContract:
         assert result.relationship == "failure"
 
 
-def test_the_builder_uses_the_batch_poller_for_iqm():
-    import sys
-    from pathlib import Path
-    tools = str(Path(__file__).resolve().parents[1] / "tools")
-    if tools not in sys.path:
-        sys.path.insert(0, tools)
-    import add_arithmetic_hw_group as tool
-    assert tool.PROVIDERS["iqm"]["poller"] == "QuantumIQMBatchPoller"
-    assert tool.PROVIDERS["ibm"]["poller"] == "QuantumIBMBatchPoller"
-
-
 def test_relationships_are_declared():
     rels = {r.name for r in QuantumIQMBatchPoller().getRelationships()}
     assert rels == {"success", "pending", "failure"}

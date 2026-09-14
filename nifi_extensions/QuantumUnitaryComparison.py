@@ -55,7 +55,7 @@ class QuantumUnitaryComparison(FlowFileTransform):
                 "FlowFile arrivals. Must be writable by NiFi."
             ),
             required=True,
-            default_value="~/projects/quanifi/reports/tmp/quanifi_unitary_state",
+            default_value="reports/tmp/quanifi_unitary_state",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.comparison_label = PropertyDescriptor(

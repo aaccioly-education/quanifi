@@ -346,7 +346,7 @@ class QuantumIQMBatchSubmitter(FlowFileTransform):
             name="State Directory",
             description="Where partial batches are buffered between FlowFiles.",
             required=True,
-            default_value="~/projects/quanifi/reports/tmp/quanifi_batch_state",
+            default_value="reports/tmp/quanifi_batch_state",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.manifest_dir = PropertyDescriptor(
@@ -355,8 +355,7 @@ class QuantumIQMBatchSubmitter(FlowFileTransform):
                          "<job_id>.json. It is the only record of which circuit "
                          "produced which result."),
             required=True,
-            default_value=("~/projects/quanifi/experiments/results"
-                           "/generation2/manifests"),
+            default_value="reports/manifests",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.slot_ttl = PropertyDescriptor(

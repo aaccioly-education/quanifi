@@ -48,7 +48,7 @@ from datetime import datetime
 
 NIFI_BUNDLE   = {"group": "org.apache.nifi", "artifact": "nifi-standard-nar", "version": "2.9.0"}
 PYTHON_BUNDLE = {"group": "org.apache.nifi", "artifact": "python-extensions",  "version": "0.1.0"}
-REPORTS_DIR   = "~/projects/quanifi/reports"
+REPORTS_DIR   = "reports"
 
 # Purple — visually distinct from existing blue/teal banners on the canvas.
 MARK_STYLE = {"background-color": "#4a148c", "border-color": "#ce93d8",
@@ -477,7 +477,8 @@ def build(flow_path, replace=False):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--conf", default="~/projects/nifi-2.9.0/conf/flow.json.gz")
+    ap.add_argument("--conf", required=True,
+                    help="Path to the target NiFi conf/flow.json.gz")
     ap.add_argument("--replace", action="store_true",
                     help="Remove existing data-driven flow (Y>=5000) before adding")
     args = ap.parse_args()

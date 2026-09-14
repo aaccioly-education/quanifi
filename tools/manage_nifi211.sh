@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-NIFI_HOME="~/projects/nifi/nifi-2.11.0"
+NIFI_HOME="${NIFI_HOME:?Set NIFI_HOME to the NiFi installation directory}"
 BASE_URL="https://127.0.0.1:8446/nifi-api"
-QUANIFI_DIR="~/projects/quanifi"
+QUANIFI_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 mine_jvm() {
     for pid in $({ pgrep -f "org.apache.nifi" || true; }); do

@@ -17,12 +17,12 @@ per processor — per the "category, not name" rule in
 
 ## Before you start
 
-1. **Start NiFi** (`~/projects/nifi-2.9.0/`) and open the canvas in
+1. **Start NiFi** from your local installation and open the canvas in
    a browser (`https://localhost:8443/nifi` or whatever your `nifi.properties`
    sets).
 2. **Reports directory** — most flows end in `QuanifiReport` /
    `QiskitCircuitReport` / `QiskitStatevectorSimulator`, which append HTML "run
-   cards" to files under `~/projects/quanifi/reports/`. Make sure
+   cards" to files under `reports/`. Make sure
    that directory (and `reports/tmp/` for the comparison processors' pairing
    state) exists and is writable by the NiFi process. Open the resulting
    `.html` files directly in a browser and refresh after each run — new cards
@@ -100,13 +100,13 @@ that most Qiskit/Cirq flows below reuse, plus the Grover-specific HTML report.
 3. **`QiskitCircuitReport`**
    | Property | Value |
    |---|---|
-   | Reports Directory | `~/projects/quanifi/reports` |
+   | Reports Directory | `reports` |
    | Flow Name | `qiskit-grover` |
 
    Auto-terminate `success` (it's the terminal node).
 
 4. Start all three. Open
-   `~/projects/quanifi/reports/qiskit-grover.html` — you should see
+   `reports/qiskit-grover.html` — you should see
    a card with the circuit diagram (QASM3), the marked state/iteration count,
    and a measurement-count bar chart dominated by `11`.
 
@@ -242,7 +242,7 @@ self-reporting terminal node, unlike the shot-based simulators above).
 2. **`QiskitStatevectorSimulator`**
    | Property | Value |
    |---|---|
-   | Reports Directory | `~/projects/quanifi/reports` |
+   | Reports Directory | `reports` |
    | Flow Name | `qiskit-statevector` |
    | Probability Threshold | `0.001` |
    | Max States | `32` |
@@ -745,7 +745,7 @@ exercising `QuanifiUnitary`'s Qiskit→Cirq qubit-order normalisation
 4. **`QuantumUnitaryComparison`**
    | Property | Value |
    |---|---|
-   | State Directory | `~/projects/quanifi/reports/tmp/quanifi_unitary_state` |
+   | State Directory | `reports/tmp/quanifi_unitary_state` |
    | Comparison Label | `grover-2q-equiv` |
    | Framework Label | `${unitary.source_format}` (default — auto-detects `qasm3` vs `cirq_json`) |
    | Tolerance | `1e-9` |
@@ -790,9 +790,9 @@ comparison upstream means hand-crafting `compare.*` attributes yourself.
    **`QuantumDistributionComparison`** instance.
    | Property | Value |
    |---|---|
-   | Reports Directory | `~/projects/quanifi/reports` |
+   | Reports Directory | `reports` |
    | Flow Name | `grover-qiskit-vs-cirq` |
-   | State Directory | `~/projects/quanifi/reports/tmp/quanifi_compare_state` |
+   | State Directory | `reports/tmp/quanifi_compare_state` |
    | Comparison Label | `grover-comparison` |
    | Framework Label | `${grover.framework}` (default; falls back to
    auto-labels `run-1`/`run-2` since these simulator FlowFiles don't actually
@@ -809,7 +809,7 @@ comparison upstream means hand-crafting `compare.*` attributes yourself.
    |---|---|
    | Hellinger Threshold | `0.10` |
    | Check Ground Truth | `true` |
-   | Reports Directory | `~/projects/quanifi/reports` |
+   | Reports Directory | `reports` |
    | Flow Name | `grover-qiskit-vs-cirq` |
 
    It overrides the default relationships entirely — there is **no**

@@ -163,7 +163,7 @@ class QuantumConsensusOracle(FlowFileTransform):
             name="Reports Directory",
             description="Folder where the HTML consensus report is written.",
             required=True,
-            default_value="~/projects/quanifi/reports",
+            default_value="reports",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.flow_name = PropertyDescriptor(
@@ -177,7 +177,7 @@ class QuantumConsensusOracle(FlowFileTransform):
             name="State Directory",
             description="Directory where partial slots are buffered between branch arrivals.",
             required=True,
-            default_value="~/projects/quanifi/reports/tmp/quanifi_consensus_state",
+            default_value="reports/tmp/quanifi_consensus_state",
             validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         )
         self.consensus_label = PropertyDescriptor(

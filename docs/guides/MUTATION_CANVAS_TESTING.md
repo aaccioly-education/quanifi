@@ -65,7 +65,7 @@ Details → Attributes) wherever you want to read `assert.verdict`,
    missing properties, NiFi is reusing the venv/property cache from when it was
    first placed — a plain restart won't refresh it. Wipe the cache, then restart:
    ```
-   rm -rf ~/projects/nifi-2.9.0/work/python/extensions/<ProcessorName>/
+   rm -rf "$NIFI_HOME/work/python/extensions/<ProcessorName>/"
    ```
 2. `reports/` exists (it does). The processors auto-create their `tmp/…` state
    dirs.
@@ -211,9 +211,9 @@ ground-truth check before fanning out.
 **QuantumConsensusOracle**
 | Property | Value |
 |---|---|
-| Reports Directory | `~/projects/quanifi/reports` |
+| Reports Directory | `reports` |
 | Flow Name | `datadriven-grover` |
-| State Directory | `~/projects/quanifi/reports/tmp/quanifi_consensus_state` |
+| State Directory | `reports/tmp/quanifi_consensus_state` |
 | Consensus Label | `${test.run_id}-${test.case_id}` |
 | Expected Branches | `1` |
 | Branch Label | `${sim.framework:replaceEmpty(${grover.framework})}` |
@@ -301,7 +301,7 @@ trustworthy.
 | Property | Value |
 |---|---|
 | Verdict Attribute | `assert.verdict` |
-| Reports Directory | `~/projects/quanifi/reports` |
+| Reports Directory | `reports` |
 | Flow Name | `datadriven-grover` |
 
 Wiring: oracle `pass` **and** `fail` → `MutationScoreReport`. Its `success` →
@@ -317,7 +317,7 @@ FlowFile's attributes into `logs/nifi-app.log`):
 | Attributes to Log | *(empty = log all)* |
 
 Auto-terminate its `success`. Watch with
-`tail -f ~/projects/nifi-2.9.0/logs/nifi-app.log`.
+`tail -f "$NIFI_HOME/logs/nifi-app.log"`.
 
 **Verify Stage 5:** Run Once. `reports/datadriven-grover-mutation.html` renders.
 With no mutation, every row is treated as a control: `mutation.controls = 2`,
