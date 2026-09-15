@@ -27,7 +27,7 @@ dependencies = [
     "psycopg[binary]>=3.2,<3.3",
     "whitenoise>=6.9,<7",
     "openquantum-sdk", # exploratory Open Quantum (Rigetti) side-study; see generation2/openquantum.py
-    "pyquil>=4.18", # PyquilSimulator / PyquilGroverCircuit (Rigetti Forest SDK, pure-Python PyQVM)
+    "pyquil>=4.18", # pyQuil component family (local circuits, PyQVM and variational solvers)
     "qiskit-quantuminspire>=0.18.2",
     "quantuminspire>=4.0.0",
 ]

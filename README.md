@@ -23,10 +23,16 @@ results, and internal development material are maintained separately.
 
 ## Development
 
-Create the environment with `uv sync`, then run:
+Create the development environment with `uv sync --frozen --extra dev --extra iqm --python 3.12`, then run:
 
 ```bash
 just test
 ```
 
 See `docs/README.md` for the documentation index.
+
+## pyQuil examples
+
+[Grover, VQE and QAOA canvases](demo/pyquil/index.html) demonstrate the modular
+pyQuil components. See the [processor guide](docs/guides/PYQUIL_COMPONENTS.md)
+for import instructions, properties and local execution.

@@ -31,15 +31,9 @@ explicitly, rather than re-deriving it from what the gates touch, is what
 lets PyquilSimulator declare a full-width `ro` register and measure every
 qubit regardless of whether the translated program ever gates it.
 
-Translating OUT of pyquil (``to_qasm2``): the inverse direction, but
-deliberately narrow -- it covers exactly the gate set PyquilGroverCircuit
-emits (H, X, Z, RZ, CNOT, CCNOT) and raises on anything else rather than
-silently mis-emitting. Only standard `qelib1.inc` gate names are used (`h`,
-`x`, `z`, `rz`, `cx`, `ccx`); no gate is ever redefined inline, so every
-downstream QASM consumer in this repo (Qiskit-, Cirq-, Qrisp-, and
-PennyLane-based engines all ultimately parse via Qiskit's importer, which
-ships its own `qelib1.inc`) sees the same standard semantics pyquil itself
-used to build the circuit.
+Translating OUT of pyquil (``to_qasm2``): emit the explicit standard-gate
+subset used by the native builders. Reject gate modifiers, unresolved parameters
+and non-gate instructions rather than silently changing their meaning.
 """
 
 # Universal basis whose every member is a native Quil gate (cx as CNOT).
@@ -47,7 +41,20 @@ QUIL_SAFE_BASIS = ["h", "cx", "rz", "x"]
 
 # The narrow, explicit gate set to_qasm2 is willing to emit. Anything else
 # raises rather than risk emitting QASM that silently means something else.
-_QASM2_SUPPORTED_GATES = {"H", "X", "Z", "RZ", "CNOT", "CCNOT"}
+_QASM2_SUPPORTED_GATES = {
+    "H",
+    "X",
+    "Y",
+    "Z",
+    "RX",
+    "RY",
+    "RZ",
+    "PHASE",
+    "CPHASE",
+    "CNOT",
+    "CCNOT",
+    "SWAP",
+}
 
 
 def to_quil_program(fmt, source):
@@ -68,16 +75,17 @@ def to_quil_program(fmt, source):
         circuit = qasm3.loads(source)
     elif fmt == "qasm2":
         circuit = qasm2.loads(
-            source, custom_instructions=qasm2.LEGACY_CUSTOM_INSTRUCTIONS)
+            source, custom_instructions=qasm2.LEGACY_CUSTOM_INSTRUCTIONS
+        )
     else:
         raise ValueError(
             "Unsupported circuit.format '{}'. Pyquil processors accept "
             "qasm2 or qasm3; set Output Format on the upstream circuit "
-            "processor.".format(fmt))
+            "processor.".format(fmt)
+        )
 
     circuit.remove_final_measurements()
-    circuit = transpile(
-        circuit, basis_gates=QUIL_SAFE_BASIS, optimization_level=0)
+    circuit = transpile(circuit, basis_gates=QUIL_SAFE_BASIS, optimization_level=0)
 
     lines = []
     for instruction in circuit.data:
@@ -101,9 +109,11 @@ def to_quil_program(fmt, source):
             # attention, not the caller's input.
             raise ValueError(
                 "Unexpected gate '{}' survived transpiling to the "
-                "Quil-safe basis {}".format(name, QUIL_SAFE_BASIS))
+                "Quil-safe basis {}".format(name, QUIL_SAFE_BASIS)
+            )
 
     from pyquil import Program
+
     program = Program("\n".join(lines)) if lines else Program()
     program.num_qubits = circuit.num_qubits
     return program
@@ -112,9 +122,8 @@ def to_quil_program(fmt, source):
 def to_qasm2(program):
     """Translate a pyquil Program into OpenQASM 2.0 text.
 
-    Covers only H, X, Z, RZ, CNOT, CCNOT -- the gate set PyquilGroverCircuit
-    emits -- and raises ValueError on anything else rather than emit
-    something wrong. Emits only standard qelib1.inc gate names; no gate
+    Covers the standard gates in _QASM2_SUPPORTED_GATES and rejects
+    modifiers, symbolic angles, and non-gate instructions. Emits only standard qelib1.inc gate names; no gate
     definitions are shipped inline.
     """
     from pyquil.quilbase import Gate
@@ -123,6 +132,9 @@ def to_qasm2(program):
     if num_qubits is None:
         touched = program.get_qubit_indices()
         num_qubits = (max(touched) + 1) if touched else 0
+
+    if not isinstance(num_qubits, int) or num_qubits < 1:
+        raise ValueError("Program must declare at least one qubit")
 
     lines = [
         "OPENQASM 2.0;",
@@ -139,24 +151,32 @@ def to_qasm2(program):
             # enforces.
             raise ValueError(
                 "to_qasm2 only supports gate-only Programs; found a "
-                "non-gate instruction: {}".format(instr))
+                "non-gate instruction: {}".format(instr)
+            )
         name = instr.name
+        if instr.modifiers:
+            raise ValueError("to_qasm2 does not support gate modifiers")
         if name not in _QASM2_SUPPORTED_GATES:
-            raise ValueError(
-                "to_qasm2 does not support Quil gate '{}'; only {} are "
-                "supported.".format(name, sorted(_QASM2_SUPPORTED_GATES)))
+            raise ValueError(f"to_qasm2 does not support Quil gate '{name}'")
         qs = [q.index for q in instr.qubits]
-        if name == "H":
-            lines.append("h q[{}];".format(qs[0]))
-        elif name == "X":
-            lines.append("x q[{}];".format(qs[0]))
-        elif name == "Z":
-            lines.append("z q[{}];".format(qs[0]))
-        elif name == "RZ":
-            theta = float(instr.params[0].real)
-            lines.append("rz({!r}) q[{}];".format(theta, qs[0]))
-        elif name == "CNOT":
-            lines.append("cx q[{}],q[{}];".format(qs[0], qs[1]))
-        elif name == "CCNOT":
-            lines.append("ccx q[{}],q[{}],q[{}];".format(qs[0], qs[1], qs[2]))
+        if any(q < 0 or q >= num_qubits for q in qs):
+            raise ValueError("Gate qubit outside declared register")
+        args = ",".join(f"q[{q}]" for q in qs)
+        mapped = {"CNOT": "cx", "CCNOT": "ccx", "PHASE": "u1", "CPHASE": "cu1"}.get(
+            name, name.lower()
+        )
+        if name == "SWAP":
+            a, b = qs
+            lines.extend(
+                [f"cx q[{a}],q[{b}];", f"cx q[{b}],q[{a}];", f"cx q[{a}],q[{b}];"]
+            )
+        elif name in {"RX", "RY", "RZ", "PHASE", "CPHASE"}:
+            import math
+
+            theta = complex(instr.params[0])
+            if theta.imag or not math.isfinite(theta.real):
+                raise ValueError("Gate angle must be finite and real")
+            lines.append(f"{mapped}({theta.real!r}) {args};")
+        else:
+            lines.append(f"{mapped} {args};")
     return "\n".join(lines) + "\n"

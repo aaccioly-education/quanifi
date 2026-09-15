@@ -1,8 +1,8 @@
 # Quanifi documentation
 
 This directory contains documentation for users and framework contributors.
-Research plans, experiment protocols, internal handoffs, and generated study
-reports are maintained in separate repositories.
+Research plans, experiment protocols and generated study reports are maintained
+in separate repositories. Framework implementation handoffs are under `development/`.
 
 ## Reference
 
@@ -13,6 +13,7 @@ reports are maintained in separate repositories.
 - [Developer guide](guides/DEVELOPER_GUIDE.md)
 - [Creating processors](guides/CREATING_PROCESSORS.md)
 - [Configuring flows on the NiFi canvas](guides/NIFI_FLOW_CONFIGURATION_GUIDE.md)
+- [pyQuil components and example canvases](guides/PYQUIL_COMPONENTS.md)
 - [Interchangeable Grover components](guides/INTERCHANGEABLE_GROVER_FLOW.md)
 - [Data-driven testing](guides/DATA_DRIVEN_TESTING.md)
 - [Mutation testing](guides/MUTATION_TESTING.md)

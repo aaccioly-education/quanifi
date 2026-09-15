@@ -1,0 +1,43 @@
+{
+  "description": "Oracle \u2192 amplification \u2192 measurement. Target 10 has probability 1.",
+  "stages": [
+    {
+      "processor": "PyquilPhaseOracle",
+      "properties": {
+        "Marked State": "10"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "PyquilGroverOperator",
+      "properties": {
+        "Num Iterations": "1"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "PyquilSimulator",
+      "properties": {
+        "Shots": "256",
+        "Random Seed": "42"
+      },
+      "relationship": "success"
+    }
+  ],
+  "counts": {
+    "10": 256
+  },
+  "attributes": {
+    "sim.shots": "256",
+    "sim.top_result": "10",
+    "sim.top_probability": "1.0000",
+    "sim.framework": "pyquil",
+    "sim.component": "PyquilSimulator",
+    "sim.backend": "PyQVM",
+    "sim.bit_order": "q0_left",
+    "run.seed": "42",
+    "sim.error": "",
+    "sim.noise_model": "none",
+    "sim.noise_params": ""
+  }
+}

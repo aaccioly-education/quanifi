@@ -1,0 +1,1430 @@
+{
+  "flowContents": {
+    "identifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+    "instanceIdentifier": "e2b15de3-9524-5371-a298-677b10e17f8c",
+    "name": "pyQuil \u2014 Grover, VQE and QAOA",
+    "componentType": "PROCESS_GROUP",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "comments": "Native pyQuil example flows. Start downstream processors, then Run Once each trigger. Failure funnels retain failed FlowFiles.",
+    "processors": [
+      {
+        "identifier": "7b7483f6-3351-5448-8c85-6e3a78c34c36",
+        "instanceIdentifier": "b04c8c57-2d78-53d6-9e93-c22040de6da6",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "Start Modular Grover",
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 0,
+          "y": 90
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.9.0"
+        },
+        "properties": {
+          "File Size": "0B",
+          "Batch Size": "1",
+          "Data Format": "Text",
+          "Unique FlowFiles": "false"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "1 min",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "7a876d44-b258-5a7e-885e-d17515474b7c",
+        "instanceIdentifier": "952aab24-7ba0-5277-8779-fd55a90c5171",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "PyquilPhaseOracle",
+        "type": "PyquilPhaseOracle",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 470,
+          "y": 90
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Marked State": "10"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "7920b2ba-cad8-5085-b3c3-42723b5a556a",
+        "instanceIdentifier": "bc84c06a-9e01-519d-9b43-0f7a9ff4fc9f",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "PyquilGroverOperator",
+        "type": "PyquilGroverOperator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 90
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Num Iterations": "1"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "7b876695-7057-5000-b62f-4ecbcf63dba8",
+        "instanceIdentifier": "b71c1c6e-0426-56fa-98bd-77f8f5ccd1b2",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "PyquilSimulator",
+        "type": "PyquilSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 90
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Shots": "256",
+          "Noise Model": "none",
+          "Error Probability": "0.01",
+          "Random Seed": "42"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "d10f8be3-3ab0-550f-b8bd-0c9f64e9f081",
+        "instanceIdentifier": "4d7adc65-a992-5084-b58c-dfeb65818290",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "QuanifiReport",
+        "type": "QuanifiReport",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1880,
+          "y": 90
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.3.1"
+        },
+        "properties": {
+          "Reports Directory": "reports/pyquil",
+          "Flow Name": "pyquil-grover",
+          "Output Mode": "Local HTML",
+          "Reports API Timeout Seconds": "10"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original",
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "eaffabc2-c2fe-5eaa-84c3-9a715de8a516",
+        "instanceIdentifier": "eb21ae67-550d-5759-82db-2fcaa6d7e4f0",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "Start Variational eigensolver",
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 0,
+          "y": 590
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.9.0"
+        },
+        "properties": {
+          "File Size": "0B",
+          "Batch Size": "1",
+          "Data Format": "Text",
+          "Unique FlowFiles": "false"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "1 min",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "3b56deb2-87b8-5306-90d4-d18fb96e321c",
+        "instanceIdentifier": "de83f113-305e-5cf4-a5b5-dbee73d151ee",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "QiskitHamiltonian",
+        "type": "QiskitHamiltonian",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 470,
+          "y": 590
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Hamiltonian": "Z0 + 0.5 X0",
+          "Num Qubits": "1"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "690497c7-4405-55b7-8b5d-fe988035784d",
+        "instanceIdentifier": "c2a73006-edd7-567f-ac98-bbccf05a3308",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "PyquilAnsatz",
+        "type": "PyquilAnsatz",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 590
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Output Mode": "attach",
+          "Num Qubits": "2",
+          "Reps": "0",
+          "Rotations": "ry",
+          "Entanglement": "linear",
+          "Parameters": "zeros"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "8c88fac5-0e7b-59cd-b621-069ff8a52cb5",
+        "instanceIdentifier": "33dd8a5d-ddc2-5270-ac1c-8545f9c9c994",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "PyquilVQE",
+        "type": "PyquilVQE",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 590
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Optimizer": "L_BFGS_B",
+          "Max Iterations": "100",
+          "Shots": "256",
+          "Initial Parameters": "[2]",
+          "Random Seed": "42"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "5c032204-35e0-51df-b372-ed7721e78bc8",
+        "instanceIdentifier": "1361527f-9d36-5ac3-933d-4d32bc3e0a9d",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "QuanifiReport",
+        "type": "QuanifiReport",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1880,
+          "y": 590
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.3.1"
+        },
+        "properties": {
+          "Reports Directory": "reports/pyquil",
+          "Flow Name": "pyquil-vqe",
+          "Output Mode": "Local HTML",
+          "Reports API Timeout Seconds": "10"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original",
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "93ac4541-4bfc-50e0-96dd-36b53c0b98c2",
+        "instanceIdentifier": "445b8e7a-52bf-5ed7-86eb-b5366401a993",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "Start QAOA for a two-node cut",
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 0,
+          "y": 1090
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.9.0"
+        },
+        "properties": {
+          "File Size": "0B",
+          "Batch Size": "1",
+          "Data Format": "Text",
+          "Unique FlowFiles": "false"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "1 min",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "3ce22f12-8974-54ea-8d27-0e6c35f7d083",
+        "instanceIdentifier": "d6294efe-843a-5c7f-a539-5ccaf9ad935b",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "QiskitHamiltonian",
+        "type": "QiskitHamiltonian",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 470,
+          "y": 1090
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Hamiltonian": "-0.5 + 0.5 Z0 Z1",
+          "Num Qubits": "2"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "de2e7f1b-cc67-5e19-8730-66ce9491eb0b",
+        "instanceIdentifier": "d83e4e76-4bea-5f65-947c-f51f71ebccd4",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "PyquilQAOA",
+        "type": "PyquilQAOA",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 1090
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Layers": "1",
+          "Optimizer": "L_BFGS_B",
+          "Max Iterations": "100",
+          "Shots": "256",
+          "Initial Parameters": "[-0.3,1]",
+          "Random Seed": "42"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "142a8f65-6fac-5bbb-9d4c-743c159ca6b9",
+        "instanceIdentifier": "b455d029-1ce9-5395-8ce5-cb39cf469303",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "QuanifiReport",
+        "type": "QuanifiReport",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 1090
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.3.1"
+        },
+        "properties": {
+          "Reports Directory": "reports/pyquil",
+          "Flow Name": "pyquil-qaoa",
+          "Output Mode": "Local HTML",
+          "Reports API Timeout Seconds": "10"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original",
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      }
+    ],
+    "connections": [
+      {
+        "identifier": "d8de717e-86c3-5be0-9ae1-be5b8f657864",
+        "instanceIdentifier": "bed2a16b-957b-54db-8daa-f4940a84e626",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "7b7483f6-3351-5448-8c85-6e3a78c34c36",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Start Modular Grover",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b04c8c57-2d78-53d6-9e93-c22040de6da6"
+        },
+        "destination": {
+          "id": "7a876d44-b258-5a7e-885e-d17515474b7c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilPhaseOracle",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "952aab24-7ba0-5277-8779-fd55a90c5171"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "ef505e49-ffeb-56c2-8f3b-9406f0e36f89",
+        "instanceIdentifier": "6a868cd5-96d7-551a-947a-c5a363c00b83",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "7a876d44-b258-5a7e-885e-d17515474b7c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilPhaseOracle",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "952aab24-7ba0-5277-8779-fd55a90c5171"
+        },
+        "destination": {
+          "id": "7920b2ba-cad8-5085-b3c3-42723b5a556a",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilGroverOperator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "bc84c06a-9e01-519d-9b43-0f7a9ff4fc9f"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "1f77858f-ed87-5845-a152-2607537a49aa",
+        "instanceIdentifier": "83bd5404-15ba-5c96-8bf8-be2f11929f8e",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "7920b2ba-cad8-5085-b3c3-42723b5a556a",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilGroverOperator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "bc84c06a-9e01-519d-9b43-0f7a9ff4fc9f"
+        },
+        "destination": {
+          "id": "7b876695-7057-5000-b62f-4ecbcf63dba8",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b71c1c6e-0426-56fa-98bd-77f8f5ccd1b2"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "e0490bb2-e765-5d0a-9a51-ba390292b3f2",
+        "instanceIdentifier": "1fa8c6a0-4329-5afb-8cae-02287adc2962",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "7b876695-7057-5000-b62f-4ecbcf63dba8",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b71c1c6e-0426-56fa-98bd-77f8f5ccd1b2"
+        },
+        "destination": {
+          "id": "d10f8be3-3ab0-550f-b8bd-0c9f64e9f081",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "4d7adc65-a992-5084-b58c-dfeb65818290"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "f9a1e088-6819-5d16-8481-005fa12cd962",
+        "instanceIdentifier": "7dbdc7a7-fb71-5e5d-8469-6da20d982fd6",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "7a876d44-b258-5a7e-885e-d17515474b7c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilPhaseOracle",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "952aab24-7ba0-5277-8779-fd55a90c5171"
+        },
+        "destination": {
+          "id": "b6d7278d-e53c-5e2e-9bbd-54e11dee2d9c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Modular Grover failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "39ebbf74-b8b6-5e1c-b498-426607e7ad07"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "1edf046f-084f-5a40-b7c4-c8ded366fad1",
+        "instanceIdentifier": "d77213f8-a4e7-5d97-88be-3308c5096404",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "7920b2ba-cad8-5085-b3c3-42723b5a556a",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilGroverOperator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "bc84c06a-9e01-519d-9b43-0f7a9ff4fc9f"
+        },
+        "destination": {
+          "id": "b6d7278d-e53c-5e2e-9bbd-54e11dee2d9c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Modular Grover failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "39ebbf74-b8b6-5e1c-b498-426607e7ad07"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "35e0b1e3-8fa4-599a-8c6e-7082bb7f7eb4",
+        "instanceIdentifier": "64215888-62b6-5778-89df-f54480a384ca",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "7b876695-7057-5000-b62f-4ecbcf63dba8",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b71c1c6e-0426-56fa-98bd-77f8f5ccd1b2"
+        },
+        "destination": {
+          "id": "b6d7278d-e53c-5e2e-9bbd-54e11dee2d9c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Modular Grover failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "39ebbf74-b8b6-5e1c-b498-426607e7ad07"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "8d16b07e-9c20-5fc6-b791-e88d2a821656",
+        "instanceIdentifier": "1aee5d18-4a33-5a11-b374-af95f3740b49",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "d10f8be3-3ab0-550f-b8bd-0c9f64e9f081",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "4d7adc65-a992-5084-b58c-dfeb65818290"
+        },
+        "destination": {
+          "id": "b6d7278d-e53c-5e2e-9bbd-54e11dee2d9c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Modular Grover failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "39ebbf74-b8b6-5e1c-b498-426607e7ad07"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "5b6448b2-64be-5705-abd6-c0bfe044d8a5",
+        "instanceIdentifier": "fbe97a7a-05ce-53c1-9c91-5e5c0eb32a89",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "eaffabc2-c2fe-5eaa-84c3-9a715de8a516",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Start Variational eigensolver",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "eb21ae67-550d-5759-82db-2fcaa6d7e4f0"
+        },
+        "destination": {
+          "id": "3b56deb2-87b8-5306-90d4-d18fb96e321c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "de83f113-305e-5cf4-a5b5-dbee73d151ee"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "04ed4abd-094a-5bbd-8639-f5629ca017c4",
+        "instanceIdentifier": "f32d5306-bb6d-50c6-9505-313b76661e7c",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "3b56deb2-87b8-5306-90d4-d18fb96e321c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "de83f113-305e-5cf4-a5b5-dbee73d151ee"
+        },
+        "destination": {
+          "id": "690497c7-4405-55b7-8b5d-fe988035784d",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilAnsatz",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c2a73006-edd7-567f-ac98-bbccf05a3308"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "a7322b40-5b3e-5dc6-90ce-377dee8a7794",
+        "instanceIdentifier": "962ecac7-0a03-5d27-af43-c5c378b63d22",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "690497c7-4405-55b7-8b5d-fe988035784d",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilAnsatz",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c2a73006-edd7-567f-ac98-bbccf05a3308"
+        },
+        "destination": {
+          "id": "8c88fac5-0e7b-59cd-b621-069ff8a52cb5",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilVQE",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "33dd8a5d-ddc2-5270-ac1c-8545f9c9c994"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "cfbf78d0-639c-5138-bf5f-0d854a249daf",
+        "instanceIdentifier": "fb7d23f4-3286-526d-a6f4-da3afc4fdb8e",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "8c88fac5-0e7b-59cd-b621-069ff8a52cb5",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilVQE",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "33dd8a5d-ddc2-5270-ac1c-8545f9c9c994"
+        },
+        "destination": {
+          "id": "5c032204-35e0-51df-b372-ed7721e78bc8",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "1361527f-9d36-5ac3-933d-4d32bc3e0a9d"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "f0ff7999-2c24-540b-826f-e9b975f425b1",
+        "instanceIdentifier": "871f8b1d-6707-57fa-9fd4-f3c96f04d374",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "3b56deb2-87b8-5306-90d4-d18fb96e321c",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "de83f113-305e-5cf4-a5b5-dbee73d151ee"
+        },
+        "destination": {
+          "id": "78efee8a-89c3-556a-88a9-001d298db8d4",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Variational eigensolver failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "277e04bf-74d3-5686-b936-a81d5faa0bb3"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "c22021c6-0b71-56b6-b7a6-042f0c23189f",
+        "instanceIdentifier": "41d9595f-5a69-518f-ae85-ed7c5f9fb005",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "690497c7-4405-55b7-8b5d-fe988035784d",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilAnsatz",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c2a73006-edd7-567f-ac98-bbccf05a3308"
+        },
+        "destination": {
+          "id": "78efee8a-89c3-556a-88a9-001d298db8d4",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Variational eigensolver failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "277e04bf-74d3-5686-b936-a81d5faa0bb3"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "63ced479-07c1-5d66-b5e2-f08d05b52b71",
+        "instanceIdentifier": "5ad1c8a4-b618-54f3-ac44-699390151c9f",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "8c88fac5-0e7b-59cd-b621-069ff8a52cb5",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilVQE",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "33dd8a5d-ddc2-5270-ac1c-8545f9c9c994"
+        },
+        "destination": {
+          "id": "78efee8a-89c3-556a-88a9-001d298db8d4",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Variational eigensolver failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "277e04bf-74d3-5686-b936-a81d5faa0bb3"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "b60b75e5-e83d-5a90-8895-f08cecd6844b",
+        "instanceIdentifier": "cca8bca8-8a26-58ad-925e-d79d9ab11e3b",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "5c032204-35e0-51df-b372-ed7721e78bc8",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "1361527f-9d36-5ac3-933d-4d32bc3e0a9d"
+        },
+        "destination": {
+          "id": "78efee8a-89c3-556a-88a9-001d298db8d4",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Variational eigensolver failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "277e04bf-74d3-5686-b936-a81d5faa0bb3"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "31d18983-3ae7-55e1-8fdd-ca23df197ca8",
+        "instanceIdentifier": "76271526-1f85-5086-9060-fc245a17ea1a",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "93ac4541-4bfc-50e0-96dd-36b53c0b98c2",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "Start QAOA for a two-node cut",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "445b8e7a-52bf-5ed7-86eb-b5366401a993"
+        },
+        "destination": {
+          "id": "3ce22f12-8974-54ea-8d27-0e6c35f7d083",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "d6294efe-843a-5c7f-a539-5ccaf9ad935b"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "6b13bcf7-79b4-5548-a428-048459243300",
+        "instanceIdentifier": "168396d8-b74e-5ff5-9bc0-310919b25d2d",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "3ce22f12-8974-54ea-8d27-0e6c35f7d083",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "d6294efe-843a-5c7f-a539-5ccaf9ad935b"
+        },
+        "destination": {
+          "id": "de2e7f1b-cc67-5e19-8730-66ce9491eb0b",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilQAOA",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "d83e4e76-4bea-5f65-947c-f51f71ebccd4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "92c6f0aa-248d-58e4-866a-316a20e09d48",
+        "instanceIdentifier": "18870f0b-816d-5e8c-b33b-b6d9118bb8c3",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "de2e7f1b-cc67-5e19-8730-66ce9491eb0b",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilQAOA",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "d83e4e76-4bea-5f65-947c-f51f71ebccd4"
+        },
+        "destination": {
+          "id": "142a8f65-6fac-5bbb-9d4c-743c159ca6b9",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b455d029-1ce9-5395-8ce5-cb39cf469303"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "a9bfbe00-37f3-5d16-a00f-5c1899a93d28",
+        "instanceIdentifier": "ea921ebb-f07d-527c-a8b6-a835cbfc5a5c",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "3ce22f12-8974-54ea-8d27-0e6c35f7d083",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "d6294efe-843a-5c7f-a539-5ccaf9ad935b"
+        },
+        "destination": {
+          "id": "be662aeb-52ef-504a-84b3-eaf77676b8c2",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QAOA for a two-node cut failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "acb8efb0-1409-54aa-b7b8-7c36a94f150b"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "8ce606a9-10cf-5168-9c28-417e12c90cc9",
+        "instanceIdentifier": "e3b69487-f7e9-57a9-ac71-816d1731d7cc",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "de2e7f1b-cc67-5e19-8730-66ce9491eb0b",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilQAOA",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "d83e4e76-4bea-5f65-947c-f51f71ebccd4"
+        },
+        "destination": {
+          "id": "be662aeb-52ef-504a-84b3-eaf77676b8c2",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QAOA for a two-node cut failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "acb8efb0-1409-54aa-b7b8-7c36a94f150b"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "829707cd-f438-5586-9407-ece249000222",
+        "instanceIdentifier": "94e7efcb-8311-53ad-9aa8-d1de117bd452",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "142a8f65-6fac-5bbb-9d4c-743c159ca6b9",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b455d029-1ce9-5395-8ce5-cb39cf469303"
+        },
+        "destination": {
+          "id": "be662aeb-52ef-504a-84b3-eaf77676b8c2",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QAOA for a two-node cut failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "acb8efb0-1409-54aa-b7b8-7c36a94f150b"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      }
+    ],
+    "labels": [
+      {
+        "identifier": "bf38f891-4529-59ac-a9e5-3683e79e5e1b",
+        "instanceIdentifier": "9b2ba476-60eb-5b1e-b0ce-cc8618c75132",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "LABEL",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 0,
+        "width": 2200,
+        "height": 65,
+        "label": "Modular Grover \u2014 Oracle \u2192 amplification \u2192 measurement. Target 10 has probability 1.",
+        "style": {
+          "background-color": "#eaf2ff",
+          "font-size": "18px"
+        }
+      },
+      {
+        "identifier": "2d86bcf3-c899-5ce3-b698-05dfa5ddc70b",
+        "instanceIdentifier": "a43364a7-7ff1-5a47-9688-9fe758d17a40",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "LABEL",
+        "position": {
+          "x": 0,
+          "y": 500
+        },
+        "zIndex": 0,
+        "width": 2200,
+        "height": 65,
+        "label": "Variational eigensolver \u2014 Hamiltonian \u2192 reusable trial state \u2192 optimization. Ground energy \u2212\u221a1.25 \u2248 \u22121.118034.",
+        "style": {
+          "background-color": "#eaf2ff",
+          "font-size": "18px"
+        }
+      },
+      {
+        "identifier": "d0f641a8-edc5-5f2d-b11e-98114679db43",
+        "instanceIdentifier": "02acf076-4bd2-540d-b7c0-7e26558aae9c",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "LABEL",
+        "position": {
+          "x": 0,
+          "y": 1000
+        },
+        "zIndex": 0,
+        "width": 2200,
+        "height": 65,
+        "label": "QAOA for a two-node cut \u2014 Minimize \u2212\u00bd + \u00bd Z0 Z1. The two cut states 01 and 10 have energy \u22121.",
+        "style": {
+          "background-color": "#eaf2ff",
+          "font-size": "18px"
+        }
+      }
+    ],
+    "funnels": [
+      {
+        "identifier": "b6d7278d-e53c-5e2e-9bbd-54e11dee2d9c",
+        "instanceIdentifier": "39ebbf74-b8b6-5e1c-b498-426607e7ad07",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "FUNNEL",
+        "name": "Modular Grover failures",
+        "position": {
+          "x": 940,
+          "y": 310
+        }
+      },
+      {
+        "identifier": "78efee8a-89c3-556a-88a9-001d298db8d4",
+        "instanceIdentifier": "277e04bf-74d3-5686-b936-a81d5faa0bb3",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "FUNNEL",
+        "name": "Variational eigensolver failures",
+        "position": {
+          "x": 940,
+          "y": 810
+        }
+      },
+      {
+        "identifier": "be662aeb-52ef-504a-84b3-eaf77676b8c2",
+        "instanceIdentifier": "acb8efb0-1409-54aa-b7b8-7c36a94f150b",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "FUNNEL",
+        "name": "QAOA for a two-node cut failures",
+        "position": {
+          "x": 940,
+          "y": 1310
+        }
+      }
+    ],
+    "processGroups": [],
+    "remoteProcessGroups": [],
+    "inputPorts": [],
+    "outputPorts": [],
+    "controllerServices": [],
+    "scheduledState": "ENABLED",
+    "defaultFlowFileExpiration": "0 sec",
+    "defaultBackPressureObjectThreshold": 1000,
+    "defaultBackPressureDataSizeThreshold": "100 MB",
+    "flowFileConcurrency": "UNBOUNDED",
+    "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+    "executionEngine": "INHERITED"
+  },
+  "flowEncodingVersion": "1.0",
+  "parameterContexts": {},
+  "externalControllerServices": {},
+  "parameterProviders": {}
+}

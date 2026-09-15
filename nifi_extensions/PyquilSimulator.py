@@ -11,7 +11,11 @@ from collections import Counter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from nifiapi.flowfiletransform import FlowFileTransform, FlowFileTransformResult
-from nifiapi.properties import PropertyDescriptor, StandardValidators, ExpressionLanguageScope
+from nifiapi.properties import (
+    PropertyDescriptor,
+    StandardValidators,
+    ExpressionLanguageScope,
+)
 from nifiapi.__jvm__ import JvmHolder
 
 
@@ -32,7 +36,7 @@ class PyquilSimulator(FlowFileTransform):
     """
 
     class Java:
-        implements = ['org.apache.nifi.python.processor.FlowFileTransform']
+        implements = ["org.apache.nifi.python.processor.FlowFileTransform"]
 
     class ProcessorDetails:
         version = "0.1.0"
@@ -46,15 +50,19 @@ class PyquilSimulator(FlowFileTransform):
             "channels via PyQVM's ReferenceDensitySimulator."
         )
         tags = ["quantum", "pyquil", "rigetti", "simulation", "measurement", "noise"]
-        dependencies = ["pyquil>=4.18", "qiskit>=2.0.0,<2.5", "qiskit-qasm3-import>=0.6"]
+        dependencies = [
+            "pyquil>=4.18",
+            "qiskit>=2.0.0,<2.5",
+            "qiskit-qasm3-import>=0.6",
+        ]
 
     def __init__(self, **kwargs):
-        JvmHolder.jvm = kwargs.get('jvm')
+        JvmHolder.jvm = kwargs.get("jvm")
         super().__init__()
 
         self.shots = PropertyDescriptor(
             name="Shots",
-            description="Number of times to sample the circuit.",
+            description="Number of samples (1..1000000). Local simulation supports up to 16 ideal or 8 noisy qubits.",
             required=True,
             default_value="1024",
             validators=[StandardValidators.POSITIVE_INTEGER_VALIDATOR],
@@ -77,8 +85,13 @@ class PyquilSimulator(FlowFileTransform):
             required=True,
             default_value="none",
             allowable_values=[
-                "none", "relaxation", "dephasing", "depolarizing",
-                "phase_flip", "bit_flip", "bitphase_flip",
+                "none",
+                "relaxation",
+                "dephasing",
+                "depolarizing",
+                "phase_flip",
+                "bit_flip",
+                "bitphase_flip",
             ],
             expression_language_scope=ExpressionLanguageScope.FLOWFILE_ATTRIBUTES,
         )
@@ -106,17 +119,17 @@ class PyquilSimulator(FlowFileTransform):
             .getValue()
         )
 
-    def _fail(self, message):
+    def _fail(self, message, flowfile):
         self.logger.error("PyquilSimulator: " + message)
         return FlowFileTransformResult(
             relationship="failure",
-            contents=b"",
+            contents=bytes(flowfile.getContentsAsBytes()),
             attributes={"sim.error": message},
         )
 
     def _build_noise(self, context, flowFile, kind):
         if kind == "none":
-            return None, {"sim.noise_model": "none"}
+            return None, {"sim.noise_model": "none", "sim.noise_params": ""}
 
         p = float(self._prop(context, self.error_probability, flowFile) or 0.0)
         if not 0.0 <= p <= 1.0:
@@ -134,10 +147,16 @@ class PyquilSimulator(FlowFileTransform):
         try:
             from quil_qasm import to_quil_program
 
-            shots = int(self._prop(context, self.shots, flowFile))
+            from pyquil_components import integer
+
+            shots = integer(
+                self._prop(context, self.shots, flowFile), "Shots", maximum=1_000_000
+            )
             seed_raw = (self._prop(context, self.random_seed, flowFile) or "").strip()
             seed = int(seed_raw) if seed_raw else None
-            noise_kind = (self._prop(context, self.noise_model, flowFile) or "none").strip()
+            noise_kind = (
+                self._prop(context, self.noise_model, flowFile) or "none"
+            ).strip()
 
             fmt = flowFile.getAttribute("circuit.format")
             if not fmt:
@@ -145,7 +164,11 @@ class PyquilSimulator(FlowFileTransform):
             raw = bytes(flowFile.getContentsAsBytes()).decode("utf-8")
 
             program = to_quil_program(fmt, raw)
-            num_qubits = program.num_qubits
+            num_qubits = integer(
+                program.num_qubits,
+                "Simulation qubits",
+                maximum=16 if noise_kind == "none" else 8,
+            )
 
             noise, noise_attrs = self._build_noise(context, flowFile, noise_kind)
 
@@ -177,9 +200,7 @@ class PyquilSimulator(FlowFileTransform):
             # gate) and measuring every qubit explicitly is what stops an
             # idle qubit from silently vanishing, the same bug documented
             # for Braket at tests/test_braket.py:105.
-            counts = Counter(
-                "".join(str(int(bit)) for bit in row) for row in readout
-            )
+            counts = Counter("".join(str(int(bit)) for bit in row) for row in readout)
             if not counts:
                 raise ValueError("PyQVM simulation returned no measurement results")
 
@@ -202,9 +223,10 @@ class PyquilSimulator(FlowFileTransform):
                     "sim.bit_order": "q0_left",
                     "report.type": "simulation",
                     "perf.elapsed_seconds": "{:.4f}".format(elapsed),
-                    **({"run.seed": str(seed)} if seed is not None else {}),
+                    "run.seed": str(seed) if seed is not None else "",
+                    "sim.error": "",
                     **noise_attrs,
                 },
             )
         except Exception as exc:
-            return self._fail(str(exc))
+            return self._fail(str(exc), flowFile)

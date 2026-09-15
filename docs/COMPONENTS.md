@@ -67,9 +67,21 @@ For the cross-processor attribute contracts (`circuit.*`, `sim.*`, `ae.*`,
 
 ### pyquil (Rigetti)
 
+Ten processors, including the simulator listed below. See the
+[pyQuil guide](guides/PYQUIL_COMPONENTS.md) for properties, wire formats,
+limits, example canvases and exact-energy versus shot-sampling semantics.
+
 | Component | Description |
 |---|---|
-| `PyquilGroverCircuit` | Builds a Grover search circuit directly in pyquil primitives (Program/H/X/CNOT/RZ) — an independent N-version implementation, not translated from Qiskit or Cirq. pyquil ships no multi-controlled-Z helper, so it is hand-decomposed (native CZ/CCZ identities for n≤3, an exact ancilla-free Walsh-Hadamard phase-polynomial construction for n≥4). Emitted as OpenQASM 2.0 via `quil_qasm.to_qasm2`, the interchange format every other engine in this repo accepts. |
+| `PyquilGroverCircuit` | Existing complete native Grover builder, now sharing the oracle/diffuser implementation with the modular processors. Outputs unmeasured qasm2; 1–8 qubits and 0–100 iterations. |
+| `PyquilPhaseOracle` | Native bitstring phase oracle, without state preparation. Connect to the Grover operator; q0-left targets. |
+| `PyquilGroverOperator` | Accepts a qasm2/qasm3 oracle, prepares the uniform state and repeats oracle plus native diffuser. Connect to any compatible simulator. |
+| `PyquilAnsatz` | RY or RY/RZ trial-state recipe with CNOT entanglers. Attach mode preserves a Hamiltonian for VQE; circuit mode emits a bound qasm2 circuit. |
+| `PyquilExpectation` | Exact local pyQuil expectation of a Hermitian Pauli sum on an incoming circuit; emits expectation JSON, not counts. |
+| `PyquilVQE` | Optimizes an upstream pyQuil ansatz recipe against the shared Hamiltonian format using exact local expectations and SciPy. Emits final counts and optimal qasm2 metadata. |
+| `PyquilQAOACircuit` | Explicit-angle QAOA cost/mixer circuit for I/Z objectives; preserves the cost in hamiltonian.json for independent expectation evaluation. |
+| `PyquilQAOA` | Local QAOA minimizer reusing the same native circuit builder; reports convergence, energy, best sampled state and a classical reference. |
+| `PyquilQFT` | Forward/inverse Fourier transform, optionally appended to an incoming circuit, with optional bit-reversal swaps. |
 
 ## Simulators
 
@@ -180,21 +192,11 @@ consensus flow, see if it's caught).
 | `QuanifiUnitary` | Computes the 2ⁿ×2ⁿ unitary matrix of a circuit, written as JSON. Connects any circuit builder to a downstream consumer such as `QuantumUnitaryComparison`. Normalises Qiskit circuits to Cirq qubit-ordering so unitaries are directly comparable across frameworks. |
 | `QiskitCircuitReport` | **Deprecated** — use `QuanifiReport`. Legacy Qiskit-only reporter (SVG circuit diagram, QASM 3 source, counts bar chart). Kept only for backward compatibility with existing saved flows. |
 
-## Summary
+## Catalogue coverage
 
-| Category | Count |
-|---|---|
-| Circuit builders | 28 (Qiskit 10, Cirq 9, Qrisp 6, PennyLane 2, pyquil 1) |
-| Simulators | 8 |
-| Hardware execution | 2 |
-| Algorithms (all-in-one solvers) | 18 |
-| Hamiltonians & problem encoders | 6 |
-| PennyLane QML lane | 5 (2 shared with Circuit builders above, 3 unique) |
-| Differential & mutation-testing infrastructure | 9 |
-| Reporting & utility | 3 |
-| **Total processors documented here** | **75** |
-
-`nifi_extensions/` currently holds more processor modules than this table lists
-(the hardware batch submitters and pollers added in 2026-08 are documented in
-the provider-specific processor documentation
-rather than here).
+This reference groups processors by their user-facing role. Some components
+appear in more than one section. For the current complete inventory, including
+hardware batch processors, use `tools/add_all_components_group.py --help` and its
+processor discovery function; discovery reads the actual classes and declared
+versions from `nifi_extensions/` rather than relying on a manually maintained
+summary count.

@@ -1,0 +1,63 @@
+{
+  "description": "Hamiltonian \u2192 reusable trial state \u2192 optimization. Ground energy \u2212\u221a1.25 \u2248 \u22121.118034.",
+  "stages": [
+    {
+      "processor": "QiskitHamiltonian",
+      "properties": {
+        "Hamiltonian": "Z0 + 0.5 X0",
+        "Num Qubits": "1"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "PyquilAnsatz",
+      "properties": {
+        "Output Mode": "attach",
+        "Reps": "0",
+        "Rotations": "ry"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "PyquilVQE",
+      "properties": {
+        "Optimizer": "L_BFGS_B",
+        "Max Iterations": "100",
+        "Initial Parameters": "[2]",
+        "Shots": "256",
+        "Random Seed": "42"
+      },
+      "relationship": "success"
+    }
+  ],
+  "counts": {
+    "1": 244,
+    "0": 12
+  },
+  "attributes": {
+    "vqe.ansatz_type": "ry",
+    "vqe.framework": "pyquil",
+    "vqe.optimal_value": "-1.118033988749895",
+    "vqe.optimal_parameters": "[3.605240257731008]",
+    "vqe.cost_function_evals": "12",
+    "vqe.max_iterations": "100",
+    "vqe.converged": "true",
+    "vqe.optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+    "vqe.optimizer": "L_BFGS_B",
+    "vqe.num_qubits": "1",
+    "vqe.shots": "256",
+    "vqe.energy_method": "exact_statevector",
+    "vqe.error": "",
+    "sim.shots": "256",
+    "sim.top_result": "1",
+    "sim.top_probability": "0.953125",
+    "sim.framework": "pyquil",
+    "sim.component": "PyquilVQE",
+    "sim.backend": "NumpyWavefunctionSimulator",
+    "sim.bit_order": "q0_left",
+    "sim.noise_model": "none",
+    "sim.noise_params": "",
+    "sim.error": "",
+    "run.seed": "42"
+  }
+}
