@@ -1,0 +1,12 @@
+# Report-browser development overlay (not part of the quick start):
+#   docker compose -f compose.yaml -f compose.web-dev.yaml --profile web up
+# Reloads Django code from the checkout. Only web/ and manage.py are mounted, so
+# the image's collected static files under /app/var/static stay visible.
+services:
+  web:
+    command: ["gunicorn", "web.config.wsgi:application", "--bind", "0.0.0.0:8080", "--reload"]
+    environment:
+      DJANGO_DEBUG: "true"
+    volumes:
+      - ./web:/app/web
+      - ./manage.py:/app/manage.py:ro

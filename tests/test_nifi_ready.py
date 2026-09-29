@@ -69,6 +69,22 @@ def test_read_new_log_resets_offset_after_rotation(tmp_path):
     assert offset == path.stat().st_size
 
 
+def test_read_new_log_drains_rotated_file(tmp_path):
+    path = tmp_path / "nifi-app.log"
+    path.write_text("old\n", encoding="utf-8")
+    inode, offset = path.stat().st_ino, path.stat().st_size
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write("tail\n")
+    path.rename(tmp_path / "nifi-app_x.log")
+    path.write_text("new\n", encoding="utf-8")
+
+    lines, new_inode, new_offset = nifi_ready.read_new_log(path, inode, offset)
+
+    assert lines == ["tail\n", "new\n"]
+    assert new_inode == path.stat().st_ino
+    assert new_offset == path.stat().st_size
+
+
 def test_categorize_processor_valid():
     proc = {"component": {"validationStatus": "VALID"}}
     cat, details = nifi_ready.categorize_processor(proc)

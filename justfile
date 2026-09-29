@@ -21,3 +21,9 @@ qaoa-examples:
 
 docs:
     {{python}} tools/generate_docs_site.py
+
+grover-examples:
+    {{python}} tools/build_grover_examples.py --run
+
+quickstart-smoke:
+    {{python}} tools/quickstart_smoke.py

@@ -1,35 +1,119 @@
+# Quanifi quick start.
+#   docker compose up                               NiFi + the Grover 3x3 demo canvas
+#   docker compose --profile web up                 + the report browser (Django + Postgres)
+#   docker compose --profile test run --rm test     pytest for the shipped processors
+# Every published port binds 127.0.0.1 and is configurable with the QUANIFI_*
+# variables (shell or a .env file here). No container_name and no image name on
+# purpose: the Compose project name (directory name or COMPOSE_PROJECT_NAME)
+# keeps two checkouts apart. See docs/guides/DOCKER_QUICKSTART.md.
+
 services:
+  nifi:
+    build:
+      context: .
+      dockerfile: docker/nifi/Dockerfile
+      target: runtime
+      args:
+        QUANIFI_PROCESSORS: ${QUANIFI_PROCESSORS:-docker/processors.txt}
+        QUANIFI_CANVAS: ${QUANIFI_CANVAS-demo/grover/grover-3x3.json}
+        QUANIFI_PREBAKE: ${QUANIFI_PREBAKE:-true}
+    init: true
+    restart: on-failure:5
+    stop_grace_period: 60s
+    ports:
+      - "127.0.0.1:${QUANIFI_NIFI_PORT:-8443}:8443"
+    environment:
+      SINGLE_USER_CREDENTIALS_USERNAME: ${QUANIFI_NIFI_USERNAME:-admin}
+      SINGLE_USER_CREDENTIALS_PASSWORD: ${QUANIFI_NIFI_PASSWORD:-quanifi-demo-password}
+      # The image seeds conf/flow.json.gz itself (see entrypoint.sh), so NiFi
+      # never takes its normal first-boot path that auto-generates this key
+      # together with an empty flow; it instead finds an existing flow with a
+      # blank key and refuses to start ("Migration Required for blank
+      # Sensitive Properties Key"). start.sh only ever sets this from the env
+      # var below (it does not generate one itself), so a default is supplied
+      # here. The demo has no credentials or sensitive processor properties,
+      # so a fixed default is fine, same posture as the NiFi login above.
+      NIFI_SENSITIVE_PROPS_KEY: ${QUANIFI_SENSITIVE_PROPS_KEY:-quanifi-quickstart-demo-key}
+      NIFI_WEB_PROXY_HOST: localhost:${QUANIFI_NIFI_PORT:-8443},127.0.0.1:${QUANIFI_NIFI_PORT:-8443}
+      NIFI_JVM_HEAP_INIT: ${QUANIFI_NIFI_HEAP:-1g}
+      NIFI_JVM_HEAP_MAX: ${QUANIFI_NIFI_HEAP:-1g}
+      QUANIFI_NIFI_PORT: ${QUANIFI_NIFI_PORT:-8443}
+      QUANIFI_AUTO_RECOVER: ${QUANIFI_AUTO_RECOVER:-true}
+      QUANIFI_AUTO_RESUME: ${QUANIFI_AUTO_RESUME:-false}
+      QUANIFI_MAX_RECOVERIES: ${QUANIFI_MAX_RECOVERIES:-3}
+      QUANIFI_STALL_SECONDS: ${QUANIFI_STALL_SECONDS:-240}
+    volumes:
+      - nifi-conf:/opt/nifi/nifi-current/conf
+      - nifi-state:/opt/nifi/nifi-current/state
+      - nifi-logs:/opt/nifi/nifi-current/logs
+      - nifi-database-repository:/opt/nifi/nifi-current/database_repository
+      - nifi-flowfile-repository:/opt/nifi/nifi-current/flowfile_repository
+      - nifi-content-repository:/opt/nifi/nifi-current/content_repository
+      - nifi-provenance-repository:/opt/nifi/nifi-current/provenance_repository
+      - nifi-python-extensions:/opt/nifi/nifi-current/python_extensions
+      - nifi-nar-extensions:/opt/nifi/nifi-current/nar_extensions
+      - ${QUANIFI_REPORTS_DIR:-./reports}:/opt/nifi/nifi-current/reports
+
+  test:
+    profiles: ["test"]
+    build:
+      context: .
+      dockerfile: docker/nifi/Dockerfile
+      target: test
+      args:
+        QUANIFI_PROCESSORS: ${QUANIFI_PROCESSORS:-docker/processors.txt}
+        QUANIFI_CANVAS: ${QUANIFI_CANVAS-demo/grover/grover-3x3.json}
+
   db:
+    profiles: ["web"]
     image: postgres:16-alpine
     environment:
       POSTGRES_DB: quanifi
       POSTGRES_USER: quanifi
-      POSTGRES_PASSWORD: local-only-password
+      POSTGRES_PASSWORD: ${QUANIFI_DB_PASSWORD:-local-only-password}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U quanifi"]
       interval: 2s
       timeout: 3s
       retries: 15
     volumes:
-      - quanifi-postgres:/var/lib/postgresql/data
+      - web-postgres:/var/lib/postgresql/data
 
   web:
-    build: .
-    command: gunicorn web.config.wsgi:application --bind 0.0.0.0:8080 --reload
+    profiles: ["web"]
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
     depends_on:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://quanifi:local-only-password@db:5432/quanifi
-      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
-      DJANGO_DEBUG: "true"
-      DJANGO_SECRET_KEY: local-only-development-key
-      QUANIFI_ADMIN_EMAIL: admin@example.com
-      REPORT_INGESTION_TOKEN: local-ingestion-token
+      DATABASE_URL: postgresql://quanifi:${QUANIFI_DB_PASSWORD:-local-only-password}@db:5432/quanifi
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,web
+      DJANGO_DEBUG: "false"
+      DJANGO_SECURE_SSL_REDIRECT: "false"
+      DJANGO_SECURE_COOKIES: "false"
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-local-only-development-key}
+      QUANIFI_ADMIN_EMAIL: ${QUANIFI_ADMIN_EMAIL:-admin@example.com}
+      QUANIFI_ADMIN_PASSWORD: ${QUANIFI_ADMIN_PASSWORD:-quanifi-demo-password}
+      REPORT_INGESTION_TOKEN: ${REPORT_INGESTION_TOKEN:-local-ingestion-token}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/health/', timeout=3).status == 200 else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
     ports:
-      - "8080:8080"
-    volumes:
-      - .:/app
+      - "127.0.0.1:${QUANIFI_WEB_PORT:-8080}:8080"
 
 volumes:
-  quanifi-postgres:
+  nifi-conf:
+  nifi-state:
+  nifi-logs:
+  nifi-database-repository:
+  nifi-flowfile-repository:
+  nifi-content-repository:
+  nifi-provenance-repository:
+  nifi-python-extensions:
+  nifi-nar-extensions:
+  web-postgres:

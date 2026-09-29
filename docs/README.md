@@ -10,6 +10,7 @@ in separate repositories.
 
 ## Framework guides
 
+- [Docker quick start](guides/DOCKER_QUICKSTART.md)
 - [Developer guide](guides/DEVELOPER_GUIDE.md)
 - [Creating processors](guides/CREATING_PROCESSORS.md)
 - [Configuring flows on the NiFi canvas](guides/NIFI_FLOW_CONFIGURATION_GUIDE.md)

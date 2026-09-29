@@ -1,16 +1,38 @@
-.git
-.venv
-__pycache__
-*.pyc
-.pytest_cache
-reports
-reports-archive
-experiments
-frameworks
-target_github_projects
-nifi_extensions
-tests
-docs
-*.txt
-!web/requirements.txt
-.env*
+# Build-context ALLOWLIST for every image built from this repository.
+# This working tree holds provider credentials (IBM / IQM / Open Quantum key and
+# token files) whose names follow no single pattern, so the context starts empty
+# and only the paths below are sent to the builder. Add a path only if an image
+# COPYs it. Audit: docs/guides/DOCKER_QUICKSTART.md, "What goes into the images".
+*
+
+!docker/
+!nifi_extensions/*.py
+!tools/_harness.py
+!tools/build_grover_examples.py
+!tools/nifi_ready.py
+!tools/quickstart_smoke.py
+!tests/*.py
+!demo/
+!web/
+!manage.py
+!pyproject.toml
+!uv.lock
+!LICENSE
+!NOTICE
+
+# Never send these, even from inside an allowed directory.
+**/__pycache__
+**/*.py[cod]
+**/.DS_Store
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.jks
+**/*token*.txt
+**/*token*.json
+**/*key*.json
+**/api_key*
+**/*credential*
+**/db.sqlite3

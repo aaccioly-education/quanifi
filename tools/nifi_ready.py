@@ -126,20 +126,72 @@ def python_processor_count(flow_path):
     )
 
 
+def _rotated_remainder(path, inode, offset):
+    """Return the unread tail of the file that used to live at `path` before
+    an hourly rotation moved it aside (NiFi renames it to
+    nifi-app_<date>_<HH>.<i>.log, uncompressed, in the same directory).
+
+    The old file's new name is not known here, so it is found by inode: scan
+    the log directory for a regular file, other than `path` itself, whose
+    inode matches. Returns its lines from `offset` onward, or [] if no such
+    file is found (already rotated away further, e.g. by external cleanup).
+    """
+    directory = os.path.dirname(os.path.abspath(path)) or "."
+    target_path = os.path.abspath(path)
+    try:
+        entries = list(os.scandir(directory))
+    except OSError:
+        return []
+    for entry in entries:
+        if os.path.abspath(entry.path) == target_path:
+            continue
+        try:
+            if not entry.is_file(follow_symlinks=False):
+                continue
+            if entry.inode() != inode:
+                continue
+        except OSError:
+            continue
+        try:
+            with open(entry.path, "r", encoding="utf-8", errors="replace") as handle:
+                handle.seek(offset)
+                return handle.readlines()
+        except OSError:
+            return []
+    return []
+
+
 def read_new_log(path, inode, offset):
-    """Read only records written by this start, tolerating log rotation."""
+    """Read only records written by this start, tolerating log rotation.
+
+    NiFi rolls nifi-app.log hourly to nifi-app_<date>_<HH>.<i>.log,
+    uncompressed, starting a fresh file at `path`. Naively reopening `path`
+    from offset 0 after such a rotation silently drops every line written to
+    the old file between the last read and the rotation. When the inode at
+    `path` changes and the caller already had a real inode (not 0, the
+    "no log yet" sentinel), first drain the remainder of the rotated-away
+    file via `_rotated_remainder` (found by inode, since its new name is
+    unknown here), then continue reading the new file from its start.
+    A same-inode shrink (truncation) is still treated as a fresh file with no
+    drain, unchanged from before rotation support was added.
+    """
     try:
         current_inode = os.stat(path).st_ino
         size = os.path.getsize(path)
     except OSError:
         return [], inode, offset
-    if current_inode != inode or size < offset:
+    rotated = []
+    if current_inode != inode:
+        if inode:
+            rotated = _rotated_remainder(path, inode, offset)
+        inode, offset = current_inode, 0
+    elif size < offset:
         inode, offset = current_inode, 0
     with open(path, "r", encoding="utf-8", errors="replace") as handle:
         handle.seek(offset)
         lines = handle.readlines()
         offset = handle.tell()
-    return lines, inode, offset
+    return rotated + lines, inode, offset
 
 
 def wait_for_quiet(path, quiet_seconds, deadline, expected_loaded,

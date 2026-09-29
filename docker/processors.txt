@@ -1,0 +1,13 @@
+# Processors baked into the quickstart image, one class name per line.
+# The Docker build copies exactly these (plus the helper modules they import)
+# and pre-installs their Python dependencies. Select another list with
+#   QUANIFI_PROCESSORS=path/to/list.txt docker compose build   (path inside the repo)
+# or every processor with QUANIFI_PROCESSORS=all (set QUANIFI_PREBAKE=false then).
+QiskitGroverCircuit
+CirqGroverCircuit
+QrispGroverCircuit
+QiskitAerSimulator
+CirqSimulator
+QrispSimulator
+QuantumConsensusOracle
+QuanifiReport

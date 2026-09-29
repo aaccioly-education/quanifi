@@ -125,6 +125,29 @@ Again expect the `110` peak with `sim.top_result = 110`, now with
 
 ---
 
+## Qrisp builder and the 3×3 matrix
+
+`QrispGroverCircuit` (0.1.0) is Qrisp's row of this builder matrix: the same
+`Marked State` / `Num Iterations` / `Output Format` properties as the other
+three builders, qasm2 output only. It is built from Qrisp's `tag_state` phase
+oracle and `grovers_alg` diffuser rather than a hand-written oracle circuit.
+
+The one thing to know before touching it: **Qrisp's `tag_state` reads a
+binary string little-endian** — its rightmost character is qubit 0 — while
+every builder in this matrix types `Marked State` q0-left (qubit 0 is the
+leftmost character), so the processor tags the *reversed* string internally.
+Without that reversal, all three simulators would return the bit-reversed
+state for whatever target you typed. This is purely internal to the
+processor; `Marked State` behaves identically to the Qiskit, Cirq and
+PennyLane builders from the outside.
+
+This builder is the Qrisp row of the Docker quickstart's baked canvas — three
+builders (Qiskit, Cirq, Qrisp) times three simulators (Aer, Cirq, Qrisp) with
+a K=9 `QuantumConsensusOracle` vote and a `QuanifiReport` at the end. See
+[`docs/guides/DOCKER_QUICKSTART.md`](DOCKER_QUICKSTART.md) to run it with only
+Docker Desktop and `git` installed, or `tools/build_grover_examples.py --run`
+to run the same matrix headlessly against a local `.venv`.
+
 ## Differential testing in one canvas
 
 Run Flows A–C side by side into **separate** `QuanifiReport` flow names, or

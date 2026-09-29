@@ -1,0 +1,8 @@
+# Test modules run by `docker compose --profile test run --rm test`. Only
+# modules whose imports are satisfied by docker/processors.txt and its
+# dependencies belong here; everything else runs on the host (`just test`).
+tests/test_qrisp_grover_circuit.py
+tests/test_grover_examples.py
+tests/test_docker_quickstart.py
+tests/test_nifi_ready.py
+tests/test_consensus_oracle.py

@@ -12,6 +12,20 @@ This repository contains framework code, tests, examples, and user-facing
 documentation. Research campaigns, paper-specific analysis, raw experimental
 results, and internal development material are maintained separately.
 
+## Quick start (Docker)
+
+```bash
+git clone <this repo> quanifi
+cd quanifi
+docker compose up
+```
+
+Wait for `(healthy)` in `docker compose ps`, then open
+<https://localhost:8443/nifi> (accept the self-signed certificate) and log in
+with `admin` / `quanifi-demo-password`. See
+[`docs/guides/DOCKER_QUICKSTART.md`](docs/guides/DOCKER_QUICKSTART.md) for
+running the demo, configuration, the report browser and troubleshooting.
+
 ## Documentation
 
 Full interactive documentation, processor guides, and tutorials are published at:
@@ -33,6 +47,7 @@ Local markdown sources and HTML pages are located in [`docs/`](docs/) (see [`doc
 - `guides/`: introductory example flows
 - `demo/`: small example inputs and utilities
 - `web/`: optional report browser
+- `docker/`: container images (quickstart NiFi image, report browser)
 
 ## Development
 

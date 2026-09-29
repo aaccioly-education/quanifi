@@ -131,3 +131,8 @@ new_iqm_token_*.txt
 token*ibm*key*.json
 token*IBM*key*.json
 *ibm*api*key*.json
+
+# Docker quickstart output (bind-mounted into the NiFi container) and the
+# headless run of tools/build_grover_examples.py.
+reports/quickstart/
+reports/quickstart-local/

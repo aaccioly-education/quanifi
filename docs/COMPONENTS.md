@@ -61,8 +61,9 @@ For the cross-processor attribute contracts (`circuit.*`, `sim.*`, `ae.*`,
 | `QrispPhaseEstimation` | QPE using Qrisp's QPE primitive (`iter_spec=True`). Builtin unitaries T/S/Z; target register prepared in `\|1⟩`. Sets `qpe.top_phase`; exports the circuit as qasm2. |
 | `QrispQuantumArithmetic` | Arithmetic on Qrisp `QuantumFloat` registers (add / subtract / multiply, signed or unsigned). `Implementation` selects the adder: `default` (Qrisp's own operator overloading), or the named `cuccaro`, `fourier`, `gidney` (temporary-AND, measurement-based uncompute) and `qcla` (carry-lookahead) adders. The widest implementation choice of the three frameworks, which is why it supplies most of the algorithm families in the arithmetic study. |
 | `QrispQAOACircuit` | Fixed-angle QAOA builder (NxM row): Qrisp's `QAOAProblem` cost operator + mixer, without training, bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator. Qrisp's per-qubit registers are normalised to one qreg; the XY mixer is rebased to `{h,x,rx,ry,rz,cx}`. |
+| `QrispGroverCircuit` | Builds a Grover search circuit for a target bitstring with Qrisp's `tag_state` oracle and `grovers_alg` (fixed Num Iterations), emitted as portable OpenQASM 2.0 (one `qreg`, gates `{h,x,cx,rz}`) so any counts engine can run it. The Qrisp row of the Grover builder matrix (see the Docker quickstart); 1–8 qubits. |
 
-*(Qrisp has no standalone `GroverOperator`/`PhaseOracle`/`GroverCircuit` — see `QrispGroverSearch` under Algorithms.)*
+*(Qrisp has no standalone `GroverOperator`/`PhaseOracle`; `QrispGroverCircuit` builds the whole circuit, and `QrispGroverSearch` under Algorithms builds and runs it in one step.)*
 
 ### PennyLane (circuit-emitting)
 

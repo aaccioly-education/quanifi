@@ -1,0 +1,1585 @@
+{
+  "flowContents": {
+    "identifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+    "instanceIdentifier": "4f927954-4cdd-588a-91a7-40d0aa892b4c",
+    "name": "Quanifi quickstart — Grover 3×3",
+    "componentType": "PROCESS_GROUP",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "comments": "Quanifi quickstart: 3 Grover builders x 3 counts engines, a K=9 consensus vote and an HTML report. All components start STOPPED.",
+    "processors": [
+      {
+        "identifier": "d90e50dc-4cf1-5252-afa6-6854102f94c7",
+        "instanceIdentifier": "be51925b-1b0c-5a10-be5d-488c0aac9e31",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "Start Grover 3×3",
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 0,
+          "y": 350
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.9.0"
+        },
+        "properties": {
+          "File Size": "0B",
+          "Batch Size": "1",
+          "Data Format": "Text",
+          "Unique FlowFiles": "false",
+          "test.run_id": "${UUID()}",
+          "test.case_id": "grover-110",
+          "test.expected": "110"
+        },
+        "propertyDescriptors": {
+          "test.run_id": {
+            "name": "test.run_id",
+            "displayName": "test.run_id",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": true
+          },
+          "test.case_id": {
+            "name": "test.case_id",
+            "displayName": "test.case_id",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": true
+          },
+          "test.expected": {
+            "name": "test.expected",
+            "displayName": "test.expected",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": true
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "1 day",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "e7054b4f-c55f-5b92-92fc-f171160a263a",
+        "instanceIdentifier": "e76567f0-e758-5595-98c6-e08e2ea7aaed",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "QiskitGroverCircuit",
+        "type": "QiskitGroverCircuit",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 470,
+          "y": 90
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Marked State": "${test.expected}",
+          "Num Iterations": "2",
+          "Insert Barriers": "false",
+          "Output Format": "qasm2"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "0cd9ab16-9e07-5924-9b84-b171e72f1399",
+        "instanceIdentifier": "ce7a0851-e0d0-5682-b15a-cbd1faa22220",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "CirqGroverCircuit",
+        "type": "CirqGroverCircuit",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 470,
+          "y": 350
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Marked State": "${test.expected}",
+          "Num Iterations": "2",
+          "Insert Barriers": "false",
+          "Output Format": "qasm2"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "e5d3639f-2143-5cad-bddb-96fc1c7e39fb",
+        "instanceIdentifier": "872de9f9-e8b2-5a45-8011-d723c468bd96",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "QrispGroverCircuit",
+        "type": "QrispGroverCircuit",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 470,
+          "y": 610
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Marked State": "${test.expected}",
+          "Num Iterations": "2",
+          "Output Format": "qasm2"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "ff5a9a39-36cb-5d28-95e7-1df430e7312e",
+        "instanceIdentifier": "75bf5f46-3c7d-5ff6-a9c0-9e45c949f561",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "QiskitAerSimulator",
+        "type": "QiskitAerSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 90
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.2.0"
+        },
+        "properties": {
+          "Shots": "1024",
+          "Noise Model": "none",
+          "1-Qubit Error Rate": "0.001",
+          "2-Qubit Error Rate": "0.01",
+          "T1 (us)": "50",
+          "T2 (us)": "70",
+          "Gate Time (ns)": "100",
+          "Backend Name": "fake_manila",
+          "Readout Error Rate": "0.0",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "c3bb46bf-b92e-56de-9043-e54f4158e0de",
+        "instanceIdentifier": "785a4894-d54d-5cd4-a239-9d5c4cd4c8e8",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "CirqSimulator",
+        "type": "CirqSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 350
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.2.0"
+        },
+        "properties": {
+          "Shots": "1024",
+          "Noise Model": "none",
+          "Error Probability": "0.01",
+          "Damping Gamma": "0.05",
+          "Readout Error Rate": "0.0",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "4a4530ba-a7cb-5353-af41-fcf367e99ee6",
+        "instanceIdentifier": "c4abd301-72c5-51f5-845f-c8b5bb41d5ea",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "QrispSimulator",
+        "type": "QrispSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 610
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Shots": "1024",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "b60da247-fc82-5d9a-869c-04deb0d45bac",
+        "instanceIdentifier": "4ee6c641-beeb-5168-b76d-ad1d06840a7a",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "QuantumConsensusOracle",
+        "type": "QuantumConsensusOracle",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 350
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Slot TTL Seconds": "3600",
+          "Reports Directory": "reports/quickstart",
+          "Flow Name": "grover-3x3",
+          "State Directory": "reports/quickstart/tmp/consensus-state",
+          "Consensus Label": "${test.run_id}-${test.case_id}",
+          "Expected Branches": "9",
+          "Branch Label": "${builder.component} and ${sim.component}",
+          "Check Ground Truth": "true"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "waiting",
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "a7b62236-e0b2-50aa-85ee-b1f63a9b3e4b",
+        "instanceIdentifier": "c96358ac-1be6-5ed3-b160-68c113243859",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "QuanifiReport",
+        "type": "QuanifiReport",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1880,
+          "y": 90
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.3.1"
+        },
+        "properties": {
+          "Reports Directory": "reports/quickstart",
+          "Flow Name": "grover-3x3",
+          "Output Mode": "Local HTML",
+          "Reports API Timeout Seconds": "10"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "success",
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "b0b4b0bd-1d65-5286-9db0-90efa51c848d",
+        "instanceIdentifier": "1de4c1a0-cdc4-53bb-b7dc-8ce652206909",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "Verdict to JSON",
+        "type": "org.apache.nifi.processors.standard.AttributesToJSON",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1880,
+          "y": 610
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.9.0"
+        },
+        "properties": {
+          "Attributes List": "assert.verdict,assert.reason,consensus.branches,consensus.majority_top,consensus.majority_count,consensus.dissenters,consensus.max_hellinger,consensus.expected,consensus.branches_json,test.run_id,test.case_id,test.expected",
+          "Destination": "flowfile-content",
+          "Include Core Attributes": "false",
+          "JSON Handling Strategy": "NESTED",
+          "Pretty Print": "true"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "7cf703bd-bf83-569f-84b0-e55fb34e7a3a",
+        "instanceIdentifier": "01598034-7c8b-51cd-96e6-6ba0ec3e22dc",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "name": "Write verdict",
+        "type": "org.apache.nifi.processors.standard.PutFile",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 2350,
+          "y": 610
+        },
+        "comments": "Quanifi quickstart; right-click the group and choose Start.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.9.0"
+        },
+        "properties": {
+          "Directory": "reports/quickstart/results",
+          "Conflict Resolution Strategy": "replace",
+          "Create Missing Directories": "true"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      }
+    ],
+    "connections": [
+      {
+        "identifier": "aa820a56-e4bf-55d0-a698-e2fb52957da8",
+        "instanceIdentifier": "2d046870-eb4c-5e62-abac-7ea8d99d8665",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "d90e50dc-4cf1-5252-afa6-6854102f94c7",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Start Grover 3×3",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "be51925b-1b0c-5a10-be5d-488c0aac9e31"
+        },
+        "destination": {
+          "id": "e7054b4f-c55f-5b92-92fc-f171160a263a",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e76567f0-e758-5595-98c6-e08e2ea7aaed"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "5d5bb99d-b9b6-571d-b5b3-ccc5d94f491c",
+        "instanceIdentifier": "d0127fad-6b32-5687-9246-d060f05fb918",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "d90e50dc-4cf1-5252-afa6-6854102f94c7",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Start Grover 3×3",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "be51925b-1b0c-5a10-be5d-488c0aac9e31"
+        },
+        "destination": {
+          "id": "0cd9ab16-9e07-5924-9b84-b171e72f1399",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce7a0851-e0d0-5682-b15a-cbd1faa22220"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "98936346-3a23-570d-b2fc-9560ea9f716f",
+        "instanceIdentifier": "1762386d-6b07-5fc4-8ca5-205f398cc001",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "d90e50dc-4cf1-5252-afa6-6854102f94c7",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Start Grover 3×3",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "be51925b-1b0c-5a10-be5d-488c0aac9e31"
+        },
+        "destination": {
+          "id": "e5d3639f-2143-5cad-bddb-96fc1c7e39fb",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "872de9f9-e8b2-5a45-8011-d723c468bd96"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "91831ed8-52bf-5cde-ae27-048e8153410e",
+        "instanceIdentifier": "9ecf5ebb-b579-5996-8f0a-4a975b377ca2",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e7054b4f-c55f-5b92-92fc-f171160a263a",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e76567f0-e758-5595-98c6-e08e2ea7aaed"
+        },
+        "destination": {
+          "id": "ff5a9a39-36cb-5d28-95e7-1df430e7312e",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "75bf5f46-3c7d-5ff6-a9c0-9e45c949f561"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "7ca8040a-9186-5636-b926-169cad72c75b",
+        "instanceIdentifier": "d503dbb1-2ec8-5995-9219-593ce3ba6ac6",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e7054b4f-c55f-5b92-92fc-f171160a263a",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e76567f0-e758-5595-98c6-e08e2ea7aaed"
+        },
+        "destination": {
+          "id": "c3bb46bf-b92e-56de-9043-e54f4158e0de",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "785a4894-d54d-5cd4-a239-9d5c4cd4c8e8"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "0425ef29-9f30-5edd-8955-cc9686d408ec",
+        "instanceIdentifier": "13e0e300-47b3-5ad1-83d7-bfdef99eb2cb",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e7054b4f-c55f-5b92-92fc-f171160a263a",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e76567f0-e758-5595-98c6-e08e2ea7aaed"
+        },
+        "destination": {
+          "id": "4a4530ba-a7cb-5353-af41-fcf367e99ee6",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c4abd301-72c5-51f5-845f-c8b5bb41d5ea"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "c54ef3d4-69ed-52c6-abca-28b6752003f3",
+        "instanceIdentifier": "565af6fe-bf26-5aac-9fad-72acb0f7ab92",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "0cd9ab16-9e07-5924-9b84-b171e72f1399",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce7a0851-e0d0-5682-b15a-cbd1faa22220"
+        },
+        "destination": {
+          "id": "ff5a9a39-36cb-5d28-95e7-1df430e7312e",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "75bf5f46-3c7d-5ff6-a9c0-9e45c949f561"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "7d239002-ddb5-53d6-84ba-41872d356373",
+        "instanceIdentifier": "932fcf86-a05a-5a4e-af7b-9fcac1317545",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "0cd9ab16-9e07-5924-9b84-b171e72f1399",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce7a0851-e0d0-5682-b15a-cbd1faa22220"
+        },
+        "destination": {
+          "id": "c3bb46bf-b92e-56de-9043-e54f4158e0de",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "785a4894-d54d-5cd4-a239-9d5c4cd4c8e8"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "3af161aa-8217-5eec-bc36-ad4750e3711e",
+        "instanceIdentifier": "eb246f66-4b23-521b-af68-160985c9a806",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "0cd9ab16-9e07-5924-9b84-b171e72f1399",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce7a0851-e0d0-5682-b15a-cbd1faa22220"
+        },
+        "destination": {
+          "id": "4a4530ba-a7cb-5353-af41-fcf367e99ee6",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c4abd301-72c5-51f5-845f-c8b5bb41d5ea"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "dfde7d51-9f4b-502a-bd52-22f00968cec4",
+        "instanceIdentifier": "4f14dc61-af1f-501a-b293-1c88a93e1ec9",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e5d3639f-2143-5cad-bddb-96fc1c7e39fb",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "872de9f9-e8b2-5a45-8011-d723c468bd96"
+        },
+        "destination": {
+          "id": "ff5a9a39-36cb-5d28-95e7-1df430e7312e",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "75bf5f46-3c7d-5ff6-a9c0-9e45c949f561"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "d1b0e59e-de4d-57a4-bf21-a32314b9bde4",
+        "instanceIdentifier": "05f8ca22-4cba-53b8-9a70-14490620068e",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e5d3639f-2143-5cad-bddb-96fc1c7e39fb",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "872de9f9-e8b2-5a45-8011-d723c468bd96"
+        },
+        "destination": {
+          "id": "c3bb46bf-b92e-56de-9043-e54f4158e0de",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "785a4894-d54d-5cd4-a239-9d5c4cd4c8e8"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "cc9c37ab-db96-5002-a637-813fad47dc0a",
+        "instanceIdentifier": "68a60e23-7018-5e9d-8e3c-6db004c8c67c",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e5d3639f-2143-5cad-bddb-96fc1c7e39fb",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "872de9f9-e8b2-5a45-8011-d723c468bd96"
+        },
+        "destination": {
+          "id": "4a4530ba-a7cb-5353-af41-fcf367e99ee6",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c4abd301-72c5-51f5-845f-c8b5bb41d5ea"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "e2905721-ee43-5073-8d76-b8e5b181b163",
+        "instanceIdentifier": "da1d1562-e742-5af4-9faf-4350612b20fd",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "ff5a9a39-36cb-5d28-95e7-1df430e7312e",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "75bf5f46-3c7d-5ff6-a9c0-9e45c949f561"
+        },
+        "destination": {
+          "id": "b60da247-fc82-5d9a-869c-04deb0d45bac",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuantumConsensusOracle",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "4ee6c641-beeb-5168-b76d-ad1d06840a7a"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "e074f9a9-989d-5d73-b4ef-749122714679",
+        "instanceIdentifier": "5cbed1fe-1400-58bb-9a55-70a2128dae3f",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "ff5a9a39-36cb-5d28-95e7-1df430e7312e",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "75bf5f46-3c7d-5ff6-a9c0-9e45c949f561"
+        },
+        "destination": {
+          "id": "a7b62236-e0b2-50aa-85ee-b1f63a9b3e4b",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c96358ac-1be6-5ed3-b160-68c113243859"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "4a695eb3-835c-5a81-8193-ffd0626a35b7",
+        "instanceIdentifier": "625d908a-1f2a-558d-81ca-88a03ea41152",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "c3bb46bf-b92e-56de-9043-e54f4158e0de",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "785a4894-d54d-5cd4-a239-9d5c4cd4c8e8"
+        },
+        "destination": {
+          "id": "b60da247-fc82-5d9a-869c-04deb0d45bac",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuantumConsensusOracle",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "4ee6c641-beeb-5168-b76d-ad1d06840a7a"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "00a9d129-8028-55f4-b04b-81179312ed82",
+        "instanceIdentifier": "3fc78e4e-31d4-50b0-8f89-0fd6b05a86db",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "c3bb46bf-b92e-56de-9043-e54f4158e0de",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "785a4894-d54d-5cd4-a239-9d5c4cd4c8e8"
+        },
+        "destination": {
+          "id": "a7b62236-e0b2-50aa-85ee-b1f63a9b3e4b",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c96358ac-1be6-5ed3-b160-68c113243859"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "a1de5010-6530-5f4b-88fe-19c841c47f15",
+        "instanceIdentifier": "24c5ffc4-0053-50f5-83c0-846d33af0b36",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "4a4530ba-a7cb-5353-af41-fcf367e99ee6",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c4abd301-72c5-51f5-845f-c8b5bb41d5ea"
+        },
+        "destination": {
+          "id": "b60da247-fc82-5d9a-869c-04deb0d45bac",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuantumConsensusOracle",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "4ee6c641-beeb-5168-b76d-ad1d06840a7a"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "4975b954-c9f0-5abf-b466-ee883dfed00d",
+        "instanceIdentifier": "40989aa7-64de-5af7-b55f-bef9550153fd",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "4a4530ba-a7cb-5353-af41-fcf367e99ee6",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c4abd301-72c5-51f5-845f-c8b5bb41d5ea"
+        },
+        "destination": {
+          "id": "a7b62236-e0b2-50aa-85ee-b1f63a9b3e4b",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c96358ac-1be6-5ed3-b160-68c113243859"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "60602e55-3034-532f-9749-4692feaf1c10",
+        "instanceIdentifier": "9e634718-1f2a-5965-919d-a4fbbbce0642",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "pass,fail",
+        "source": {
+          "id": "b60da247-fc82-5d9a-869c-04deb0d45bac",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuantumConsensusOracle",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "4ee6c641-beeb-5168-b76d-ad1d06840a7a"
+        },
+        "destination": {
+          "id": "a7b62236-e0b2-50aa-85ee-b1f63a9b3e4b",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c96358ac-1be6-5ed3-b160-68c113243859"
+        },
+        "selectedRelationships": [
+          "pass",
+          "fail"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "3476a766-97ce-513a-a477-e2b3d4281cd7",
+        "instanceIdentifier": "c338db94-a918-58ae-9b18-54689174b1e4",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "pass,fail",
+        "source": {
+          "id": "b60da247-fc82-5d9a-869c-04deb0d45bac",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuantumConsensusOracle",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "4ee6c641-beeb-5168-b76d-ad1d06840a7a"
+        },
+        "destination": {
+          "id": "b0b4b0bd-1d65-5286-9db0-90efa51c848d",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Verdict to JSON",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "1de4c1a0-cdc4-53bb-b7dc-8ce652206909"
+        },
+        "selectedRelationships": [
+          "pass",
+          "fail"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "963cff4c-14cd-5243-a640-6288900fd273",
+        "instanceIdentifier": "e86e57f8-7f2d-5ed7-8fc9-025f7a728b20",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "b0b4b0bd-1d65-5286-9db0-90efa51c848d",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Verdict to JSON",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "1de4c1a0-cdc4-53bb-b7dc-8ce652206909"
+        },
+        "destination": {
+          "id": "7cf703bd-bf83-569f-84b0-e55fb34e7a3a",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Write verdict",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "01598034-7c8b-51cd-96e6-6ba0ec3e22dc"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "226f93a9-9f2e-581e-bc9c-4040b86c51b8",
+        "instanceIdentifier": "b7d515c1-fe91-5256-b4f9-eb933b183591",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "e7054b4f-c55f-5b92-92fc-f171160a263a",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e76567f0-e758-5595-98c6-e08e2ea7aaed"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "85ec7380-4212-5cd1-a645-ab2202f4f19f",
+        "instanceIdentifier": "69c6e1a7-37c0-59a8-ae2a-fa0c815f8657",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "0cd9ab16-9e07-5924-9b84-b171e72f1399",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce7a0851-e0d0-5682-b15a-cbd1faa22220"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "a5074eb9-6b25-57b7-9540-ba9f9fcfc233",
+        "instanceIdentifier": "0dac238e-aaa1-5a80-8cdc-848e6523e5a6",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "e5d3639f-2143-5cad-bddb-96fc1c7e39fb",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispGroverCircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "872de9f9-e8b2-5a45-8011-d723c468bd96"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "6192de71-1670-5e36-a7f1-84903591ae52",
+        "instanceIdentifier": "e008e57c-cce0-50e9-949c-b184709bdc6a",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "ff5a9a39-36cb-5d28-95e7-1df430e7312e",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "75bf5f46-3c7d-5ff6-a9c0-9e45c949f561"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "815fcb9b-b7ef-53ed-b2ac-b594a4fe1932",
+        "instanceIdentifier": "19ebd679-80d9-58af-8c80-52f5c24ed6ba",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "c3bb46bf-b92e-56de-9043-e54f4158e0de",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "785a4894-d54d-5cd4-a239-9d5c4cd4c8e8"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "e1edb526-7765-5302-ac47-b7cd2abb5081",
+        "instanceIdentifier": "0d5f034c-26b6-516f-96b9-7d941af057d5",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "4a4530ba-a7cb-5353-af41-fcf367e99ee6",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c4abd301-72c5-51f5-845f-c8b5bb41d5ea"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "b9bce5dc-667a-53c7-9380-e845678e8b05",
+        "instanceIdentifier": "ca199213-0fa4-5518-9441-fda134e783f8",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "b60da247-fc82-5d9a-869c-04deb0d45bac",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuantumConsensusOracle",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "4ee6c641-beeb-5168-b76d-ad1d06840a7a"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "1a69988e-83e7-59de-9ecc-ac1a4d3023ee",
+        "instanceIdentifier": "732c738c-0679-58df-979f-d0d40eaf626c",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "a7b62236-e0b2-50aa-85ee-b1f63a9b3e4b",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c96358ac-1be6-5ed3-b160-68c113243859"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "cb288aa7-865f-5100-b252-4e904334a4f8",
+        "instanceIdentifier": "aedffd54-3701-5ba5-b15a-404ed8e8db45",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "b0b4b0bd-1d65-5286-9db0-90efa51c848d",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Verdict to JSON",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "1de4c1a0-cdc4-53bb-b7dc-8ce652206909"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "cf8e632a-9c35-597f-a011-c866ea34e615",
+        "instanceIdentifier": "8e635cfc-ee64-5041-967c-1025d370dd2f",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "7cf703bd-bf83-569f-84b0-e55fb34e7a3a",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Write verdict",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "01598034-7c8b-51cd-96e6-6ba0ec3e22dc"
+        },
+        "destination": {
+          "id": "11def056-0cd4-53a3-af19-23eba11a7c84",
+          "groupId": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      }
+    ],
+    "labels": [
+      {
+        "identifier": "4a50b038-b5e2-5ac7-8353-af804c63ed95",
+        "instanceIdentifier": "404056a9-06c3-5955-8f18-41030b1a3e4e",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "LABEL",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 0,
+        "width": 2600,
+        "height": 65,
+        "label": "Grover 3×3 — three builders (Qiskit, Cirq, Qrisp) × three simulators (Aer, Cirq, Qrisp) over OpenQASM 2. Right-click the group → Start: the trigger fires once, QuantumConsensusOracle votes (expect PASS, every top |110⟩). Results: reports/quickstart/ on your host. Change the target in the trigger's test.expected property.",
+        "style": {
+          "background-color": "#eaf2ff",
+          "font-size": "18px"
+        }
+      }
+    ],
+    "funnels": [
+      {
+        "identifier": "11def056-0cd4-53a3-af19-23eba11a7c84",
+        "instanceIdentifier": "5defee52-8b17-50fb-9b5e-ed9d26225dc5",
+        "groupIdentifier": "99d29446-5e9a-5135-b20a-45f0e6177a94",
+        "componentType": "FUNNEL",
+        "name": "Failures (inspect the queue)",
+        "position": {
+          "x": 1410,
+          "y": 900
+        }
+      }
+    ],
+    "processGroups": [],
+    "remoteProcessGroups": [],
+    "inputPorts": [],
+    "outputPorts": [],
+    "controllerServices": [],
+    "scheduledState": "ENABLED",
+    "defaultFlowFileExpiration": "0 sec",
+    "defaultBackPressureObjectThreshold": 1000,
+    "defaultBackPressureDataSizeThreshold": "100 MB",
+    "flowFileConcurrency": "UNBOUNDED",
+    "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+    "executionEngine": "INHERITED"
+  },
+  "flowEncodingVersion": "1.0",
+  "parameterContexts": {},
+  "externalControllerServices": {},
+  "parameterProviders": {}
+}
