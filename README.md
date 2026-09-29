@@ -12,6 +12,19 @@ This repository contains framework code, tests, examples, and user-facing
 documentation. Research campaigns, paper-specific analysis, raw experimental
 results, and internal development material are maintained separately.
 
+## Documentation
+
+Full interactive documentation, processor guides, and tutorials are published at:
+**[https://saeg.github.io/quanifi/](https://saeg.github.io/quanifi/)**
+
+- **[Component Catalogue](https://saeg.github.io/quanifi/components.html)** — 69+ processors across Qiskit, Cirq, Qrisp, PennyLane, and pyQuil
+- **[Flow Configuration Guide](https://saeg.github.io/quanifi/guides/nifi-flow-configuration-guide.html)** — processor properties, contracts, and canvas design
+- **[Developer Guide](https://saeg.github.io/quanifi/guides/developer-guide.html)** — setup, development workflow, and testing
+- **[Interactive Tutorials](https://saeg.github.io/quanifi/tutorials/index.html)** — step-by-step algorithms (Deutsch-Jozsa, Grover, QAOA, etc.)
+- **[Canvas Screenshots Gallery](https://saeg.github.io/quanifi/screenshots/index.html)** — visual snapshots of all process groups
+
+Local markdown sources and HTML pages are located in [`docs/`](docs/) (see [`docs/README.md`](docs/README.md)).
+
 ## Layout
 
 - `nifi_extensions/`: reusable NiFi Python processors
