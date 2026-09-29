@@ -1,0 +1,77 @@
+{
+  "description": "Build the bound QrispQAOACircuit (RX mixer) at the N\u00d7M matrix's fixed angles, sample on CirqSimulator, then score it.",
+  "stages": [
+    {
+      "processor": "QrispHamiltonian",
+      "properties": {
+        "Hamiltonian": "-0.8 Z0 Z1 + 0.5 Z1 Z2 - 0.3 Z0 + 0.2",
+        "Num Qubits": "3"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "QrispQAOACircuit",
+      "properties": {
+        "Layers": "2",
+        "Betas": "[-0.67, -0.42]",
+        "Gammas": "[1.14, 1.27]"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "CirqSimulator",
+      "properties": {
+        "Shots": "1024",
+        "Random Seed": "11"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "QuantumQAOAEvaluator",
+      "properties": {},
+      "relationship": "success"
+    }
+  ],
+  "counts": {
+    "110": 406,
+    "001": 393,
+    "010": 81,
+    "101": 51,
+    "011": 33,
+    "111": 31,
+    "000": 16,
+    "100": 13
+  },
+  "attributes": {
+    "builder.framework": "qrisp",
+    "builder.component": "QrispQAOACircuit",
+    "qaoa.best_measurement": "001",
+    "qaoa.best_value": "-1.4000000000000001",
+    "qaoa.sampled_expectation": "-0.7375",
+    "qaoa.exact_minimum": "-1.4000000000000001",
+    "qaoa.exact_maximum": "1.8",
+    "qaoa.approximation_ratio": "1.0",
+    "qaoa.expectation_ratio": "0.79296875",
+    "qaoa.optimal_probability": "0.3837890625",
+    "qaoa.optimal_states": "[\"001\"]",
+    "qaoa.num_optimal_states": "1",
+    "qaoa.shots": "1024",
+    "qaoa.builder": "QrispQAOACircuit",
+    "qaoa.engine": "CirqSimulator",
+    "qaoa.evaluator": "QuantumQAOAEvaluator",
+    "qaoa.num_qubits": "3",
+    "qaoa.layers": "2",
+    "qaoa.betas": "[-0.67, -0.42]",
+    "qaoa.gammas": "[1.14, 1.27]",
+    "qaoa.mixer_type": "RX",
+    "qaoa.error": "",
+    "sim.shots": "1024",
+    "sim.top_result": "110",
+    "sim.top_probability": "0.3965",
+    "sim.framework": "cirq",
+    "sim.component": "CirqSimulator",
+    "sim.bit_order": "q0_left",
+    "run.seed": "11",
+    "sim.noise_model": "none"
+  }
+}

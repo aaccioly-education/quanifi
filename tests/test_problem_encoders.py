@@ -4,11 +4,13 @@ QiskitQAOA proving a user can go from raw data to a solved problem with no
 Pauli strings involved."""
 import json
 
-from conftest import MockContext, MockFlowFile, result_to_flowfile
+from conftest import MockContext, MockFlowFile, result_to_flowfile, result_to_flowfile_merged
 
 from MaxCutProblem import MaxCutProblem
 from QuboToHamiltonian import QuboToHamiltonian
 from QiskitQAOA import QiskitQAOA
+from QiskitAerSimulator import QiskitAerSimulator
+from QuantumQAOAEvaluator import QuantumQAOAEvaluator
 
 
 def wire_of(res):
@@ -40,9 +42,18 @@ class TestMaxCutProblem:
 
     def test_maxcut_feeds_qiskit_qaoa(self):
         ham = MaxCutProblem().transform(MockContext(), MockFlowFile())
-        res = QiskitQAOA().transform(MockContext(), result_to_flowfile(ham))
-        assert res.relationship == "success"
-        a = res.attributes
+        ham_ff = result_to_flowfile(ham)
+        res = QiskitQAOA().transform(
+            MockContext(**{"Random Seed": "11"}), ham_ff)
+        assert res.relationship == "success", res.attributes
+        merged = result_to_flowfile_merged(res, ham_ff)
+        engine_res = QiskitAerSimulator().transform(
+            MockContext(**{"Shots": "1024", "Random Seed": "11"}), merged)
+        assert engine_res.relationship == "success", engine_res.attributes
+        merged2 = result_to_flowfile_merged(engine_res, merged)
+        ev = QuantumQAOAEvaluator().transform(MockContext(), merged2)
+        assert ev.relationship == "success", ev.attributes
+        a = ev.attributes
         # triangle max cut = 2, so the exact minimum of H is -2
         assert abs(float(a["qaoa.exact_minimum"]) - (-2.0)) < 1e-9
         assert float(a["qaoa.approximation_ratio"]) >= 0.99
@@ -74,9 +85,18 @@ class TestQuboToHamiltonian:
 
     def test_qubo_feeds_qiskit_qaoa(self):
         ham = QuboToHamiltonian().transform(MockContext(), MockFlowFile())
-        res = QiskitQAOA().transform(MockContext(), result_to_flowfile(ham))
-        assert res.relationship == "success"
-        a = res.attributes
+        ham_ff = result_to_flowfile(ham)
+        res = QiskitQAOA().transform(
+            MockContext(**{"Random Seed": "11"}), ham_ff)
+        assert res.relationship == "success", res.attributes
+        merged = result_to_flowfile_merged(res, ham_ff)
+        engine_res = QiskitAerSimulator().transform(
+            MockContext(**{"Shots": "1024", "Random Seed": "11"}), merged)
+        assert engine_res.relationship == "success", engine_res.attributes
+        merged2 = result_to_flowfile_merged(engine_res, merged)
+        ev = QuantumQAOAEvaluator().transform(MockContext(), merged2)
+        assert ev.relationship == "success", ev.attributes
+        a = ev.attributes
         assert abs(float(a["qaoa.exact_minimum"]) - (-1.0)) < 1e-9
         assert a["qaoa.best_measurement"] in ("01", "10")
 

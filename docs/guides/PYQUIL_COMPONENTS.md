@@ -58,9 +58,9 @@ or successfully imported the flow.
 flowchart LR
   A[PyquilPhaseOracle] --> B[PyquilGroverOperator] --> C[PyquilSimulator]
   H[Hamiltonian producer] --> D[PyquilAnsatz: attach] --> E[PyquilVQE]
-  H --> F[PyquilQAOA]
+  H --> F[PyquilQAOA] --> K[Any simulator] --> L[QuantumQAOAEvaluator]
   H --> G[PyquilQAOACircuit] --> I[PyquilExpectation]
-  G --> J[Any compatible simulator]
+  G --> K
 ```
 
 Grover has three quantum stages: mark a state, prepare/amplify it, and sample it.
@@ -72,13 +72,21 @@ algorithm.
 VQE separates the Hamiltonian, trial-state recipe (ansatz), and solver. The
 classical optimization loop stays in the solver so its state is scoped to one
 FlowFile. It calls the same native builder exposed by `PyquilAnsatz` and the
-same expectation function exposed by `PyquilExpectation`.
+same expectation function exposed by `PyquilExpectation`. Unlike QAOA below,
+`PyquilVQE` still samples its own final counts (see "Output metadata").
 
 QAOA similarly shares its native construction between `PyquilQAOACircuit` and
-`PyquilQAOA`. Use the former to sweep explicit angles with data-driven tests,
-compare engines, or evaluate an observable; use the latter to optimize angles.
-Existing producers such as `QiskitHamiltonian` or `CirqHamiltonian` provide the
-framework-neutral Hamiltonian. No separate pyQuil Hamiltonian processor is needed.
+`PyquilQAOA` (both call `pyquil_components.qaoa`, via `pyquil_processor.qaoa_export`).
+Both are **train/build-only**: they emit the bound circuit as portable
+OpenQASM 2.0 and never sample. Use `PyquilQAOACircuit` to sweep explicit
+angles with data-driven tests, compare engines, or evaluate an observable;
+use `PyquilQAOA` to optimize angles. Either way, connect the output to any
+counts-emitting simulator (`PyquilSimulator` or any other framework's), then
+`QuantumQAOAEvaluator` to compute the sample-dependent QAOA metrics — see the
+[QAOA components guide](QAOA_COMPONENTS.md) for the full chain, property
+tables and the N×M example. Existing producers such as `QiskitHamiltonian` or
+`CirqHamiltonian` provide the framework-neutral Hamiltonian. No separate
+pyQuil Hamiltonian processor is needed.
 
 ## Processor reference
 
@@ -96,11 +104,18 @@ execution of an optimizer does not imply convergence; inspect `*.converged`.
 | `PyquilAnsatz` | Trigger → bound QASM2, or Hamiltonian → Hamiltonian + recipe | Output Mode (`circuit`), Num Qubits (`2`), Reps (`1`), Rotations (`ry_rz`), Entanglement (`linear`), Parameters (`zeros`) | `ansatz.error` |
 | `PyquilExpectation` | Circuit QASM2/3 + Hamiltonian property → expectation JSON | Hamiltonian (`${hamiltonian.json:replaceEmpty('Z0')}`) | `expectation.error` |
 | `PyquilVQE` | Hamiltonian + pyQuil recipe → counts JSON + VQE attributes | Solver properties below | `vqe.error` |
-| `PyquilQAOACircuit` | Diagonal Hamiltonian → bound QASM2 | Layers (`1`), Betas (`0.39269908169872414`), Gammas (`0.7853981633974483`) | `qaoa.error` |
-| `PyquilQAOA` | Diagonal Hamiltonian → counts JSON + QAOA attributes | Layers (`1`) plus solver properties | `qaoa.error` |
+| `PyquilQAOACircuit` | Diagonal Hamiltonian → bound QASM2 + builder attributes | Layers (`1`), Betas (`0.39269908169872414`), Gammas (`0.7853981633974483`) | `qaoa.error` |
+| `PyquilQAOA` | Diagonal Hamiltonian → trained, bound QASM2 + training attributes (`qaoa.optimal_parameters`, `qaoa.optimal_value`, …) | Layers (`2`), Optimizer/Max Iterations/Initial Parameters/Random Seed — see the [QAOA components guide](QAOA_COMPONENTS.md) | `qaoa.error` |
 | `PyquilQFT` | Trigger or circuit QASM2/3 → QFT QASM2 | Input Mode (`new`), Num Qubits (`2`), Inverse (`false`), Include Swaps (`true`) | `qft.error` |
 
-### Common solver properties
+### Common solver properties (`PyquilVQE`)
+
+These are `PyquilVQE`'s own properties; it is the only pyQuil solver that still
+samples its own final counts. `PyquilQAOA` shares the same optimizer mechanics
+(`minimize_energy` in `pyquil_processor.py`) but a different property set — no
+`Shots` (it trains only, and never samples), `Layers` instead of an ansatz
+recipe, and `Random Seed` is unset by default, not `42`. See the
+[QAOA components guide](QAOA_COMPONENTS.md) for `PyquilQAOA`'s exact properties.
 
 | Property | Default | Meaning |
 |---|---|---|
@@ -177,12 +192,18 @@ the negative cut: `-0.5 + 0.5 Z0 Z1` for one unweighted edge.
 is all betas followed by all gammas. The default circuit angles are an example
 setting, not a promise of optimality for an arbitrary cost.
 
-`qaoa.optimal_value` is the exact expectation at optimized parameters.
-`qaoa.best_measurement` and `qaoa.best_value` describe the lowest-cost **sampled**
-bitstring, which can differ from the most frequent result (`sim.top_result`).
-`qaoa.exact_minimum` is an enumerated classical reference; the sample-based ratio
-is `(Emax - Ebest)/(Emax - Emin)`, or 1 for a constant cost. It is not a claim of
-quantum advantage.
+`qaoa.optimal_value` is `PyquilQAOA`'s own exact expectation at its optimized
+parameters (`energy_method=exact_statevector`) — it comes straight from the
+solver, no simulator needed. Everything **sample-dependent** —
+`qaoa.best_measurement`, `qaoa.best_value` (the lowest-cost **sampled**
+bitstring, which can differ from the most frequent result, `sim.top_result`),
+`qaoa.sampled_expectation`, `qaoa.exact_minimum`/`exact_maximum`,
+`qaoa.approximation_ratio`, `qaoa.expectation_ratio` and `qaoa.optimal_probability`
+— comes from `QuantumQAOAEvaluator`, computed from whichever simulator's counts
+you connect downstream, not from `PyquilQAOA`/`PyquilQAOACircuit` themselves.
+`qaoa.exact_minimum`/`exact_maximum` are the evaluator's own enumerated
+classical reference; `approximation_ratio = (Emax - Ebest)/(Emax - Emin)`, or 1
+for a constant cost. None of this is a claim of quantum advantage.
 
 ### QFT convention
 
@@ -201,18 +222,27 @@ legacy component preserves its existing `builder.component=PyquilGrover` and
 `circuit.bit_order=canonical` alias. New components use `q0_left` explicitly.
 All displayed/sample bitstrings put qubit 0 on the left.
 
-VQE/QAOA emit **counts in content**; the optimized unmeasured circuit is stored in
-`circuit.qasm2`. To execute it on a different engine, use NiFi `ReplaceText`
-(Entire text, Always Replace) with replacement `${circuit.qasm2}` and retain
-`circuit.format=qasm2`. Do not send the counts content directly to a simulator.
-The solvers also emit `report.type=simulation` for `QuanifiReport`, `sim.*`,
-`run.seed`, and:
+`PyquilVQE` emits **counts in content**; the optimized unmeasured circuit is
+stored in `circuit.qasm2`. To execute it on a different engine, use NiFi
+`ReplaceText` (Entire text, Always Replace) with replacement `${circuit.qasm2}`
+and retain `circuit.format=qasm2`. Do not send the counts content directly to a
+simulator. `PyquilVQE` also emits `report.type=simulation` for `QuanifiReport`,
+`sim.*`, `run.seed`, and `vqe.*`: `framework`, `optimal_value`,
+`optimal_parameters`, `cost_function_evals`, `max_iterations`, `converged`,
+`optimizer_message`, `optimizer`, `num_qubits`, `shots`,
+`energy_method=exact_statevector`.
 
-- `vqe.*` / `qaoa.*`: `framework`, `optimal_value`, `optimal_parameters`,
-  `cost_function_evals`, `max_iterations`, `converged`, `optimizer_message`,
-  `optimizer`, `num_qubits`, `shots`, `energy_method=exact_statevector`.
-- `qaoa.*`: `layers`, `best_measurement`, `best_value`, `exact_minimum`,
-  `approximation_ratio`.
+`PyquilQAOA` and `PyquilQAOACircuit` are different: **content is the qasm2
+circuit itself**, not counts, and there is nothing to `ReplaceText` — connect
+their `success` relationship directly to any counts simulator. They emit
+`report.type=circuit`, no `sim.*` keys, and `qaoa.*`: `framework`,
+`layers`, `betas`, `gammas` (builder attributes, both processors), plus
+(`PyquilQAOA` only) `optimal_parameters`, `optimal_value`,
+`energy_method=exact_statevector`, `cost_function_evals`, `max_iterations`,
+`converged`, `optimizer_message`, `optimizer`, `seed`. The sample-dependent
+`qaoa.best_measurement`/`best_value`/`approximation_ratio`/etc. are not present
+until `QuantumQAOAEvaluator` runs downstream of a simulator — see the
+[QAOA components guide](QAOA_COMPONENTS.md).
 
 QASM import uses Qiskit solely to parse/rebase gates. Circuit construction and
 state evolution use pyQuil. No `get_qc`, remote `WavefunctionSimulator`, quilc

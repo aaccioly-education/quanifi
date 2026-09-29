@@ -62,5 +62,5 @@ packages = ["src", "generation2"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = [
-    "slow: tests that run real Qrisp simulation (deselect with '-m not slow')",
+    "slow: tests that run real Qrisp optimisation or long PyQVM sampling (deselect with '-m not slow')",
 ]

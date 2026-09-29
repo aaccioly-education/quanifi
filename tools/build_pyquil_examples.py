@@ -48,7 +48,7 @@ PIPELINES = [
     (
         "qaoa",
         "QAOA for a two-node cut",
-        "Minimize −½ + ½ Z0 Z1. The two cut states 01 and 10 have energy −1.",
+        "Minimize −½ + ½ Z0 Z1, sample the trained circuit, then score it. The two cut states 01 and 10 have energy −1.",
         [
             (
                 "QiskitHamiltonian",
@@ -61,10 +61,11 @@ PIPELINES = [
                     "Optimizer": "L_BFGS_B",
                     "Max Iterations": "100",
                     "Initial Parameters": "[-0.3,1]",
-                    "Shots": "256",
                     "Random Seed": "42",
                 },
             ),
+            ("PyquilSimulator", {"Shots": "256", "Random Seed": "42"}),
+            ("QuantumQAOAEvaluator", {}),
         ],
     ),
 ]
@@ -291,6 +292,7 @@ def execute(output):
             },
         }
         record["attributes"].pop("perf.elapsed_seconds", None)
+        record["attributes"].pop("qaoa.elapsed_seconds", None)
         source = attrs.get("circuit.qasm2")
         if source:
             (output / f"{key}.qasm").write_text(source)

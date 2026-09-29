@@ -1,0 +1,70 @@
+{
+  "description": "Build the bound PennylaneQAOACircuit at its default single-layer angles on the triangle MaxCut Hamiltonian, sample on QiskitAerSimulator, then score it.",
+  "stages": [
+    {
+      "processor": "MaxCutProblem",
+      "properties": {},
+      "relationship": "success"
+    },
+    {
+      "processor": "PennylaneQAOACircuit",
+      "properties": {},
+      "relationship": "success"
+    },
+    {
+      "processor": "QiskitAerSimulator",
+      "properties": {
+        "Shots": "1024",
+        "Random Seed": "11"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "QuantumQAOAEvaluator",
+      "properties": {},
+      "relationship": "success"
+    }
+  ],
+  "counts": {
+    "000": 430,
+    "111": 417,
+    "110": 37,
+    "001": 33,
+    "100": 31,
+    "010": 28,
+    "101": 25,
+    "011": 23
+  },
+  "attributes": {
+    "builder.framework": "pennylane",
+    "builder.component": "PennylaneQAOACircuit",
+    "qaoa.best_measurement": "001",
+    "qaoa.best_value": "-2.0",
+    "qaoa.sampled_expectation": "-0.345703125",
+    "qaoa.exact_minimum": "-2.0",
+    "qaoa.exact_maximum": "0.0",
+    "qaoa.approximation_ratio": "1.0",
+    "qaoa.expectation_ratio": "0.1728515625",
+    "qaoa.optimal_probability": "0.1728515625",
+    "qaoa.optimal_states": "[\"001\", \"010\", \"011\", \"100\", \"101\", \"110\"]",
+    "qaoa.num_optimal_states": "6",
+    "qaoa.shots": "1024",
+    "qaoa.builder": "PennylaneQAOACircuit",
+    "qaoa.engine": "QiskitAerSimulator",
+    "qaoa.evaluator": "QuantumQAOAEvaluator",
+    "qaoa.num_qubits": "3",
+    "qaoa.layers": "1",
+    "qaoa.betas": "[0.39269908169872414]",
+    "qaoa.gammas": "[0.7853981633974483]",
+    "qaoa.mixer_type": "RX",
+    "qaoa.error": "",
+    "sim.shots": "1024",
+    "sim.top_result": "000",
+    "sim.top_probability": "0.4199",
+    "sim.framework": "qiskit",
+    "sim.component": "QiskitAerSimulator",
+    "sim.bit_order": "q0_left",
+    "run.seed": "11",
+    "sim.noise_model": "none"
+  }
+}

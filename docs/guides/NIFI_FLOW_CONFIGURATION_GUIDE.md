@@ -880,10 +880,16 @@ solver consumes. Swapping the solver framework is a one-processor change.
 
 ## Flow 25 — MaxCut: graph edges → QAOA → report
 
-**Components:** `MaxCutProblem` → `QiskitQAOA` → `QuanifiReport`
+**Components:** `MaxCutProblem` → `QiskitQAOA` → `QiskitAerSimulator` →
+`QuantumQAOAEvaluator` → `QuanifiReport`
 **What it proves:** a user goes from an edge list to an optimal graph
 partition without writing a Hamiltonian: the encoder emits the MaxCut Ising
-operator whose minimum eigenvalue is exactly `-max_cut`.
+operator whose minimum eigenvalue is exactly `-max_cut`. `QiskitQAOA` only
+*trains* the circuit (0.2.0: it no longer samples, has no `Shots` property,
+and emits the trained circuit as qasm2 content); a simulator samples it, and
+`QuantumQAOAEvaluator` scores those samples against the exact reference. See
+the [QAOA components guide](QAOA_COMPONENTS.md) for the full chain and the
+0.1.0→0.2.0 migration.
 
 1. **`MaxCutProblem`**
    | Property | Value |
@@ -896,25 +902,36 @@ operator whose minimum eigenvalue is exactly `-max_cut`.
    property, which is what makes data-driven runs (Flow 24 style) work.
    Wire `success` → `QiskitQAOA`; auto-terminate `failure`.
 2. **`QiskitQAOA`** — defaults are fine (Layers `2`). Wire `success` →
-   `QuanifiReport`; auto-terminate `failure`.
-3. **`QuanifiReport`** — Flow Name = `maxcut-qaoa`. Auto-terminate `success`.
-4. Start all three. In `maxcut-qaoa.html` the QAOA panel shows
-   `qaoa.exact_minimum = -2.0` (the triangle's max cut is 2),
-   `qaoa.approximation_ratio ≥ 0.99`, and a `qaoa.best_measurement` that is
-   any 3-bit string except `000`/`111` (all balanced partitions of a triangle
-   cut 2 edges).
-5. Swap `QiskitQAOA` for `CirqQAOA`, `QrispQAOA`, or `PennylaneQAOA`: the
-   wire format is byte-identical, so no reconfiguration is needed.
+   `QiskitAerSimulator`; auto-terminate `failure`.
+3. **`QiskitAerSimulator`** — Shots `1024`, Random Seed `11` (for a
+   reproducible demo run). Wire `success` → `QuantumQAOAEvaluator`;
+   auto-terminate `failure`.
+4. **`QuantumQAOAEvaluator`** — no properties needed; `Hamiltonian` defaults
+   to `${hamiltonian.json}`, which rides through from `QiskitQAOA`'s output.
+   Wire `success` → `QuanifiReport`; auto-terminate `failure`.
+5. **`QuanifiReport`** — Flow Name = `maxcut-qaoa`. Auto-terminate `success`.
+6. Start all four. In `maxcut-qaoa.html` the QAOA panel now reflects the
+   *evaluator's* attributes: `qaoa.exact_minimum = -2.0` (the triangle's max
+   cut is 2), `qaoa.approximation_ratio ≥ 0.99`, and a
+   `qaoa.best_measurement` that is any 3-bit string except `000`/`111` (all
+   balanced partitions of a triangle cut 2 edges).
+7. Swap `QiskitQAOA` for `CirqQAOA`, `QrispQAOA`, `PennylaneQAOA` or
+   `PyquilQAOA`: the wire format is byte-identical, so no reconfiguration is
+   needed upstream. The downstream simulator is swappable too — any counts
+   engine (Aer, Cirq, Qrisp, PennyLane, Braket, QSharp, pyQuil) works with
+   any of the five solvers, since `QuantumQAOAEvaluator` is framework-neutral.
 
 ---
 
 ## Flow 26 — QUBO matrix → QAOA (framework-swappable)
 
-**Components:** `QuboToHamiltonian` → `QiskitQAOA` → `QuanifiReport`
+**Components:** `QuboToHamiltonian` → `QiskitQAOA` → `QiskitAerSimulator` →
+`QuantumQAOAEvaluator` → `QuanifiReport`
 **What it proves:** QUBO is the lingua franca of combinatorial optimization
 (portfolio selection, scheduling, routing all reduce to it); this one adapter
-makes any such problem solvable by every QAOA processor. The ground bitstring
-*is* the binary solution vector.
+makes any such problem solvable by every QAOA processor, sampled by any
+simulator and scored by one evaluator. The ground bitstring *is* the binary
+solution vector.
 
 1. **`QuboToHamiltonian`**
    | Property | Value |
@@ -924,11 +941,12 @@ makes any such problem solvable by every QAOA processor. The ground bitstring
    For this Q, `f(00) = 0`, `f(01) = f(10) = -1`, `f(11) = 0`: pick exactly
    one of the two variables. As with Flow 25, a JSON 2D array in the FlowFile
    content overrides the property. Wire `success` → `QiskitQAOA`.
-2. **`QiskitQAOA`** → **`QuanifiReport`** (Flow Name = `qubo-qaoa`), as in
-   Flow 25.
+2. **`QiskitQAOA`** → **`QiskitAerSimulator`** (Shots `1024`, Random Seed
+   `11`) → **`QuantumQAOAEvaluator`** → **`QuanifiReport`** (Flow Name =
+   `qubo-qaoa`), as in Flow 25.
 3. Expect `qaoa.exact_minimum = -1.0` and `qaoa.best_measurement` = `01` or
-   `10`. Read the bitstring left to right: character *i* is variable *i*
-   (`sim.bit_order = q0_left`).
+   `10`, both read from `QuantumQAOAEvaluator`'s output. Read the bitstring
+   left to right: character *i* is variable *i* (`sim.bit_order = q0_left`).
 
 ---
 
@@ -1219,6 +1237,57 @@ in the report.
 
 ---
 
+## Flow 35 — QAOA N×M: 5 builders × 7 engines
+
+**Components:** `QiskitHamiltonian` → 5 fixed-angle builders
+(`QiskitQAOACircuit`, `CirqQAOACircuit`, `PennylaneQAOACircuit`,
+`QrispQAOACircuit`, `PyquilQAOACircuit`) → each builder's `success` fanned
+out to all 7 simulators (`QiskitAerSimulator`, `CirqSimulator`,
+`QrispSimulator`, `PennylaneSimulator`, `BraketSimulator`, `QSharpSimulator`,
+`PyquilSimulator`) → one shared `QuantumQAOAEvaluator` → one shared
+`QuanifiReport`.
+**What it proves:** one qasm2 circuit, built by any of the five QAOA
+frameworks at the *same* explicit angles, runs unmodified on any of the
+seven counts engines and is scored by one framework-neutral evaluator — the
+35-cell matrix this whole extraction exists to enable. It is generated, not
+hand-built; see [`demo/qaoa/qaoa-nxm.json`](../../demo/qaoa/qaoa-nxm.json)
+and the "N×M flow" section of the
+[QAOA components guide](QAOA_COMPONENTS.md) for the full click path,
+regeneration command and every measured Hellinger distance.
+
+1. **`QiskitHamiltonian`** — Hamiltonian
+   `-0.8 Z0 Z1 + 0.5 Z1 Z2 - 0.3 Z0 + 0.2`, Num Qubits `3` (this is `H_NXM`;
+   its unique ground state is `001`, energy `-1.4`). Wire `success` to all
+   5 builders; auto-terminate `failure`.
+2. **Each builder** — Layers `2`, Betas `[-0.67, -0.42]`, Gammas
+   `[1.14, 1.27]` (identical across all 5, so every row builds the *same*
+   angles in its own framework). Wire each builder's `success` to all 7
+   simulators (35 connections total); auto-terminate `failure` on each.
+3. **Each simulator** — the 6 seedable engines use Shots `4096`, Random
+   Seed `11`; `BraketSimulator` uses Shots `4096` only (it has no seed
+   property — see "Known limitations" in the QAOA guide) and
+   `PyquilSimulator` uses Shots `256` (its PyQVM sampling cost is about
+   13.6 ms/shot; 4096 shots would take tens of seconds per cell). Wire each
+   simulator's `success` to the one shared `QuantumQAOAEvaluator`;
+   auto-terminate `failure`.
+4. **`QuantumQAOAEvaluator`** — no properties needed. Wire `success` →
+   `QuanifiReport`; auto-terminate `failure`.
+5. **`QuanifiReport`** — Flow Name = `qaoa-nxm`, Reports Directory =
+   `reports/qaoa`. Auto-terminate `success`.
+6. Start every processor except the trigger, then **Run Once** the
+   `QiskitHamiltonian` trigger. All 35 cells reach `qaoa.best_measurement
+   = "001"` and `qaoa.exact_minimum = -1.4`. Every seeded 4096-shot cell's
+   Hellinger distance to the exact distribution stays under 0.023 (measured
+   worst case 0.0187, on the seeded engines); the unseeded `BraketSimulator`
+   column varies run to run but stays within the plan's measured statistical
+   bound (0.9999-quantile 0.030, maximum observed 0.032 across 50000
+   trials) — never compare its saved value for exact equality.
+   `PyquilSimulator` cells (256 shots) stay under 0.044.
+7. This flow is intentionally 5×7 = 35 connections wide; import it as-is
+   from `demo/qaoa/qaoa-nxm.json` rather than click-building it by hand.
+
+---
+
 # Quick-reference: which flow exercises which processor
 
 | Processor | Flow(s) |
@@ -1265,8 +1334,10 @@ in the report.
 | QuantumTestCaseSource | 24 |
 | MaxCutProblem | 25 |
 | QuboToHamiltonian | 26 |
-| QiskitQAOA | 25, 26 |
-| CirqQAOA / QrispQAOA / PennylaneQAOA | 25, 26 (as swap-ins) |
+| QiskitQAOA | 25, 26 (train-only since 0.2.0; sampled by the next hop, `QiskitAerSimulator`), 35 (as swap-in for the N×M solver-equivalent row context) |
+| CirqQAOA / QrispQAOA / PennylaneQAOA / PyquilQAOA | 25, 26 (as swap-ins for the solver) |
+| QiskitQAOACircuit / CirqQAOACircuit / PennylaneQAOACircuit / QrispQAOACircuit / PyquilQAOACircuit | 35 |
+| QuantumQAOAEvaluator | 25, 26, 35 |
 | QiskitBellState | 27 |
 | QiskitTeleportation | 28 |
 | QrispShor | 29 |
@@ -1277,5 +1348,5 @@ in the report.
 | QrispIQMDevice | 34 |
 | IQMJobPoller | 34 |
 | PennylaneVariationalClassifier | 33 |
-| QuanifiReport | 3, 4, 5, 6, 7 (self-reporting peers aside), 8, 9, 10–15, 17–34 |
+| QuanifiReport | 3, 4, 5, 6, 7 (self-reporting peers aside), 8, 9, 10–15, 17–35 |
 </content>

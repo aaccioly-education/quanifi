@@ -1,0 +1,2847 @@
+{
+  "flowContents": {
+    "identifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+    "instanceIdentifier": "f0f7c136-af45-5cb4-a598-e496556b932b",
+    "name": "QAOA N\u00d7M \u2014 5 builders \u00d7 7 engines",
+    "componentType": "PROCESS_GROUP",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "comments": "One Hamiltonian, five fixed-angle QAOA builders (the NxM rows), seven counts engines (the NxM columns), one shared QuantumQAOAEvaluator and QuanifiReport. Start downstream processors, then Run Once the trigger. The single failure funnel retains failed FlowFiles from any of the 15 non-trigger processors.",
+    "processors": [
+      {
+        "identifier": "9776ce7b-4cef-5598-b3de-f9bfbcb584cc",
+        "instanceIdentifier": "76c06f64-b296-5eb0-b5ce-663e899229fa",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "Start QAOA N\u00d7M",
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 0,
+          "y": 90
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.9.0"
+        },
+        "properties": {
+          "File Size": "0B",
+          "Batch Size": "1",
+          "Data Format": "Text",
+          "Unique FlowFiles": "false"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "1 min",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "e61b4951-d8eb-539c-9c15-bf0ed05a3007",
+        "instanceIdentifier": "90ddaa51-753f-58fa-a752-96589b4003e8",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "QiskitHamiltonian",
+        "type": "QiskitHamiltonian",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 470,
+          "y": 90
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Hamiltonian": "-0.8 Z0 Z1 + 0.5 Z1 Z2 - 0.3 Z0 + 0.2",
+          "Num Qubits": "3"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+        "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "QiskitQAOACircuit",
+        "type": "QiskitQAOACircuit",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 90
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Layers": "2",
+          "Betas": "[-0.67, -0.42]",
+          "Gammas": "[1.14, 1.27]"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+        "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "CirqQAOACircuit",
+        "type": "CirqQAOACircuit",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 310
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Layers": "2",
+          "Betas": "[-0.67, -0.42]",
+          "Gammas": "[1.14, 1.27]"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+        "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "PennylaneQAOACircuit",
+        "type": "PennylaneQAOACircuit",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 530
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Layers": "2",
+          "Betas": "[-0.67, -0.42]",
+          "Gammas": "[1.14, 1.27]"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+        "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "QrispQAOACircuit",
+        "type": "QrispQAOACircuit",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 750
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Layers": "2",
+          "Betas": "[-0.67, -0.42]",
+          "Gammas": "[1.14, 1.27]",
+          "Mixer Type": "RX"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+        "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "PyquilQAOACircuit",
+        "type": "PyquilQAOACircuit",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 940,
+          "y": 970
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.2.0"
+        },
+        "properties": {
+          "Layers": "2",
+          "Betas": "[-0.67, -0.42]",
+          "Gammas": "[1.14, 1.27]"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "481f2568-f65c-5cf6-91be-7303a1adc954",
+        "instanceIdentifier": "3b0866c3-fc63-557e-8538-ab626ef68834",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "QiskitAerSimulator",
+        "type": "QiskitAerSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 90
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.2.0"
+        },
+        "properties": {
+          "Shots": "4096",
+          "Noise Model": "none",
+          "1-Qubit Error Rate": "0.001",
+          "2-Qubit Error Rate": "0.01",
+          "T1 (us)": "50",
+          "T2 (us)": "70",
+          "Gate Time (ns)": "100",
+          "Backend Name": "fake_manila",
+          "Readout Error Rate": "0.0",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "d317c4dd-0e85-5577-991e-3397e7a8936c",
+        "instanceIdentifier": "dcff4900-72e8-5c0e-825b-fa42d5e130d4",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "CirqSimulator",
+        "type": "CirqSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 310
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.2.0"
+        },
+        "properties": {
+          "Shots": "4096",
+          "Noise Model": "none",
+          "Error Probability": "0.01",
+          "Damping Gamma": "0.05",
+          "Readout Error Rate": "0.0",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "a51d90e2-20c3-5759-b359-9c4552dc9921",
+        "instanceIdentifier": "8f5aa64a-08be-58c6-b063-3772f71d38cf",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "QrispSimulator",
+        "type": "QrispSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 530
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Shots": "4096",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "997d05e7-7fab-5fe5-8eb5-300f4401a756",
+        "instanceIdentifier": "8f1670d5-7b23-5581-953e-9c278a01845d",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "PennylaneSimulator",
+        "type": "PennylaneSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 750
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Shots": "4096",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "0ce43566-a7e3-526f-9fff-d0148bd34291",
+        "instanceIdentifier": "9e27abc0-1c12-5afe-a785-afd365889e30",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "BraketSimulator",
+        "type": "BraketSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 970
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.2.0"
+        },
+        "properties": {
+          "Shots": "4096",
+          "Noise Model": "none",
+          "Error Probability": "0.01"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "bd0b545b-8a72-54b1-ac9e-80d9ce5cc29b",
+        "instanceIdentifier": "41a5752a-c80e-534f-972c-b626bef42bb0",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "QSharpSimulator",
+        "type": "QSharpSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 1190
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.2.0"
+        },
+        "properties": {
+          "Shots": "4096",
+          "Simulator Type": "sparse",
+          "Noise Model": "none",
+          "Error Probability": "0.01",
+          "Pauli X Probability": "0.001",
+          "Pauli Y Probability": "0.001",
+          "Pauli Z Probability": "0.001",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "ed900923-b358-57ee-ac70-3a4f1308ff23",
+        "instanceIdentifier": "e83f4314-c5d0-5f0b-b273-da5839b1372e",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "PyquilSimulator",
+        "type": "PyquilSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 1410
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Shots": "256",
+          "Noise Model": "none",
+          "Error Probability": "0.01",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "75450696-6646-5326-9c65-bfba994d4771",
+        "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "QuantumQAOAEvaluator",
+        "type": "QuantumQAOAEvaluator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1880,
+          "y": 750
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Hamiltonian": "${hamiltonian.json}"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "d583cb3a-e069-56e7-b988-5bd3dd3657b2",
+        "instanceIdentifier": "0b4162c8-2697-5fd3-a3af-74165923ad87",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "name": "QuanifiReport",
+        "type": "QuanifiReport",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 2350,
+          "y": 750
+        },
+        "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.3.1"
+        },
+        "properties": {
+          "Reports Directory": "reports/qaoa",
+          "Flow Name": "qaoa-nxm",
+          "Output Mode": "Local HTML",
+          "Reports API Timeout Seconds": "10"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original",
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      }
+    ],
+    "connections": [
+      {
+        "identifier": "1583dbe7-e098-57b2-8192-6a837b03f787",
+        "instanceIdentifier": "98d0e07a-845e-5d3d-9a9a-cdf9e37e3b21",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "9776ce7b-4cef-5598-b3de-f9bfbcb584cc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "Start QAOA N\u00d7M",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "76c06f64-b296-5eb0-b5ce-663e899229fa"
+        },
+        "destination": {
+          "id": "e61b4951-d8eb-539c-9c15-bf0ed05a3007",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "90ddaa51-753f-58fa-a752-96589b4003e8"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "f7599a3e-7034-54d2-8096-4a3509531b03",
+        "instanceIdentifier": "ddace034-85f3-582b-b25e-db0921b59e48",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e61b4951-d8eb-539c-9c15-bf0ed05a3007",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "90ddaa51-753f-58fa-a752-96589b4003e8"
+        },
+        "destination": {
+          "id": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "925b6407-c935-5de3-9061-4915b6710063",
+        "instanceIdentifier": "8054fc89-07cc-5d6b-83d1-fb2596bb6f01",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e61b4951-d8eb-539c-9c15-bf0ed05a3007",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "90ddaa51-753f-58fa-a752-96589b4003e8"
+        },
+        "destination": {
+          "id": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "d5334af2-af84-5a6d-8cc9-82e4b52e9743",
+        "instanceIdentifier": "1a5990b9-f582-552b-8c8f-5504073077dd",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e61b4951-d8eb-539c-9c15-bf0ed05a3007",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "90ddaa51-753f-58fa-a752-96589b4003e8"
+        },
+        "destination": {
+          "id": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "352c7705-0e0b-5eed-b810-8e0ee8b2893d",
+        "instanceIdentifier": "377f26dc-1ab0-53f4-8de8-6f7d7897cae6",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e61b4951-d8eb-539c-9c15-bf0ed05a3007",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "90ddaa51-753f-58fa-a752-96589b4003e8"
+        },
+        "destination": {
+          "id": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "fbdaa5aa-795b-5843-b5cb-65163d68bb4d",
+        "instanceIdentifier": "0f9e3efb-d481-5671-8060-9ebec099b36f",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "e61b4951-d8eb-539c-9c15-bf0ed05a3007",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "90ddaa51-753f-58fa-a752-96589b4003e8"
+        },
+        "destination": {
+          "id": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "d7d1f336-92b9-50af-9462-db788da23130",
+        "instanceIdentifier": "59965685-85bb-52f6-a476-18e23da7c2f0",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c"
+        },
+        "destination": {
+          "id": "481f2568-f65c-5cf6-91be-7303a1adc954",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "3b0866c3-fc63-557e-8538-ab626ef68834"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "0d62c0b9-5ea3-570a-9cb4-b05b0bbcec4a",
+        "instanceIdentifier": "09079bdb-84b0-500d-b37b-921f54e62ee8",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c"
+        },
+        "destination": {
+          "id": "d317c4dd-0e85-5577-991e-3397e7a8936c",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "dcff4900-72e8-5c0e-825b-fa42d5e130d4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "54d1cd64-8b87-5407-9bf4-99e3fd541467",
+        "instanceIdentifier": "eec562d8-4da0-567c-8dd2-7a5494e6a8e8",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c"
+        },
+        "destination": {
+          "id": "a51d90e2-20c3-5759-b359-9c4552dc9921",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f5aa64a-08be-58c6-b063-3772f71d38cf"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "0f8d75ff-851a-5f5e-bb48-e9fc68e9f071",
+        "instanceIdentifier": "27624c2c-7661-5684-bc60-adeb01197427",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c"
+        },
+        "destination": {
+          "id": "997d05e7-7fab-5fe5-8eb5-300f4401a756",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f1670d5-7b23-5581-953e-9c278a01845d"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "be2ef859-9bf9-5889-ab8c-46b246c8e71b",
+        "instanceIdentifier": "f9acc907-73ef-5d05-9092-7a45c089877c",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c"
+        },
+        "destination": {
+          "id": "0ce43566-a7e3-526f-9fff-d0148bd34291",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "BraketSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "9e27abc0-1c12-5afe-a785-afd365889e30"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "232eb319-5fb7-5d31-89f2-8f0b8f982f1d",
+        "instanceIdentifier": "4f14b537-fbee-5e42-b633-ef0b813c78a5",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c"
+        },
+        "destination": {
+          "id": "bd0b545b-8a72-54b1-ac9e-80d9ce5cc29b",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QSharpSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "41a5752a-c80e-534f-972c-b626bef42bb0"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "11372db9-1a97-55eb-bb26-d8bc58dadb50",
+        "instanceIdentifier": "5dff09c2-a58d-532b-a120-042e4fca65cf",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c"
+        },
+        "destination": {
+          "id": "ed900923-b358-57ee-ac70-3a4f1308ff23",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e83f4314-c5d0-5f0b-b273-da5839b1372e"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "369e8a9d-5eee-520a-b037-df9b5c490ab1",
+        "instanceIdentifier": "52070226-9b97-598d-9831-dc67f869c164",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b"
+        },
+        "destination": {
+          "id": "481f2568-f65c-5cf6-91be-7303a1adc954",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "3b0866c3-fc63-557e-8538-ab626ef68834"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "acb94bbb-39dd-5b8b-9753-42bbdc5b96ab",
+        "instanceIdentifier": "cc66c982-7fe8-5306-8a4d-e95482eb5b7d",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b"
+        },
+        "destination": {
+          "id": "d317c4dd-0e85-5577-991e-3397e7a8936c",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "dcff4900-72e8-5c0e-825b-fa42d5e130d4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "5844e506-8519-51e9-bcbe-1574da793756",
+        "instanceIdentifier": "407b2d20-9aa2-5588-8550-6cadcdce185d",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b"
+        },
+        "destination": {
+          "id": "a51d90e2-20c3-5759-b359-9c4552dc9921",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f5aa64a-08be-58c6-b063-3772f71d38cf"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "33383929-14c4-5039-9a2c-edbcfa5a9a64",
+        "instanceIdentifier": "4cd45695-2acb-5978-9c2d-2daeb1488059",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b"
+        },
+        "destination": {
+          "id": "997d05e7-7fab-5fe5-8eb5-300f4401a756",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f1670d5-7b23-5581-953e-9c278a01845d"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "30654984-95c1-5229-b3d1-b967310bfc22",
+        "instanceIdentifier": "e8874fdc-a3f2-5a9a-8c13-7d629118adb7",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b"
+        },
+        "destination": {
+          "id": "0ce43566-a7e3-526f-9fff-d0148bd34291",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "BraketSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "9e27abc0-1c12-5afe-a785-afd365889e30"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "ffcafbe4-4e6e-5da8-aaa1-f71a5f8a215b",
+        "instanceIdentifier": "f14107d8-7f1d-53d6-9808-4921873dd4c8",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b"
+        },
+        "destination": {
+          "id": "bd0b545b-8a72-54b1-ac9e-80d9ce5cc29b",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QSharpSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "41a5752a-c80e-534f-972c-b626bef42bb0"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "68f2fc14-83ec-5c19-ae1e-c2505cccff69",
+        "instanceIdentifier": "adde9fc4-7535-54a6-9459-f6ac303f5dcb",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b"
+        },
+        "destination": {
+          "id": "ed900923-b358-57ee-ac70-3a4f1308ff23",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e83f4314-c5d0-5f0b-b273-da5839b1372e"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "3fa92658-1c0e-57e6-9b41-d4e14752d26f",
+        "instanceIdentifier": "69e90c82-ae24-5def-9143-bdf867b712f5",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c"
+        },
+        "destination": {
+          "id": "481f2568-f65c-5cf6-91be-7303a1adc954",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "3b0866c3-fc63-557e-8538-ab626ef68834"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "c0495614-d11d-5536-b66d-c4498d8641ec",
+        "instanceIdentifier": "30e15492-944b-55eb-9be0-06160a0f6ceb",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c"
+        },
+        "destination": {
+          "id": "d317c4dd-0e85-5577-991e-3397e7a8936c",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "dcff4900-72e8-5c0e-825b-fa42d5e130d4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "12c048ee-40f7-5a78-b7f4-19b00938a2df",
+        "instanceIdentifier": "56985be7-797c-52d8-b885-c4925f3dfa84",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c"
+        },
+        "destination": {
+          "id": "a51d90e2-20c3-5759-b359-9c4552dc9921",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f5aa64a-08be-58c6-b063-3772f71d38cf"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "257642eb-f69c-5ff2-9832-8d92bdeb9b0e",
+        "instanceIdentifier": "690bdaac-6c5a-57ac-9d82-1adbdd534956",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c"
+        },
+        "destination": {
+          "id": "997d05e7-7fab-5fe5-8eb5-300f4401a756",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f1670d5-7b23-5581-953e-9c278a01845d"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "aa4b6dc8-8689-5cce-8e68-a6b7fbfd44e7",
+        "instanceIdentifier": "94b910c3-876c-5304-af9b-02e5b267a7fa",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c"
+        },
+        "destination": {
+          "id": "0ce43566-a7e3-526f-9fff-d0148bd34291",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "BraketSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "9e27abc0-1c12-5afe-a785-afd365889e30"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "b267c319-e79c-5a29-86c2-ff726f7bec5f",
+        "instanceIdentifier": "fea2c959-5227-570c-9905-ac9da5eafb1e",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c"
+        },
+        "destination": {
+          "id": "bd0b545b-8a72-54b1-ac9e-80d9ce5cc29b",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QSharpSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "41a5752a-c80e-534f-972c-b626bef42bb0"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "c7a0f04d-906c-5089-a223-65b9fb013f6e",
+        "instanceIdentifier": "ca972efb-a2be-5d69-a6e3-5e4fa064a7c1",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c"
+        },
+        "destination": {
+          "id": "ed900923-b358-57ee-ac70-3a4f1308ff23",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e83f4314-c5d0-5f0b-b273-da5839b1372e"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "b16180ee-9b7f-55ce-b0bc-4b55bfaea699",
+        "instanceIdentifier": "43767e0d-9ea7-5b92-9b20-2c394cbcf9d4",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67"
+        },
+        "destination": {
+          "id": "481f2568-f65c-5cf6-91be-7303a1adc954",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "3b0866c3-fc63-557e-8538-ab626ef68834"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "f9e02497-26d1-5793-a1e5-c95ef4ffa901",
+        "instanceIdentifier": "4ad52131-07b5-5b05-88dd-3a1716fa03dd",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67"
+        },
+        "destination": {
+          "id": "d317c4dd-0e85-5577-991e-3397e7a8936c",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "dcff4900-72e8-5c0e-825b-fa42d5e130d4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "9f21917b-f238-557d-aed8-200d39ec152b",
+        "instanceIdentifier": "e73242ed-d234-5685-9404-72a7a13d9f6e",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67"
+        },
+        "destination": {
+          "id": "a51d90e2-20c3-5759-b359-9c4552dc9921",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f5aa64a-08be-58c6-b063-3772f71d38cf"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "06dc5999-3baa-54db-8b55-c7756a0b0f34",
+        "instanceIdentifier": "6de23781-6a32-5d59-983a-9549be64edce",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67"
+        },
+        "destination": {
+          "id": "997d05e7-7fab-5fe5-8eb5-300f4401a756",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f1670d5-7b23-5581-953e-9c278a01845d"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "842d6b19-8deb-5465-abfb-fb89a720abb9",
+        "instanceIdentifier": "afd111b8-7df9-5bdd-9bf4-93402df5fca4",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67"
+        },
+        "destination": {
+          "id": "0ce43566-a7e3-526f-9fff-d0148bd34291",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "BraketSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "9e27abc0-1c12-5afe-a785-afd365889e30"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "8f58fa52-fbfd-5d65-974b-74248469cd7a",
+        "instanceIdentifier": "cc942479-2fbf-5730-8d89-06dddd778852",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67"
+        },
+        "destination": {
+          "id": "bd0b545b-8a72-54b1-ac9e-80d9ce5cc29b",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QSharpSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "41a5752a-c80e-534f-972c-b626bef42bb0"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "7bf7af97-fc9f-52c9-b4ae-7fe0685f1c7a",
+        "instanceIdentifier": "248aa601-c320-5c12-bbc8-c827f859ffa0",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67"
+        },
+        "destination": {
+          "id": "ed900923-b358-57ee-ac70-3a4f1308ff23",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e83f4314-c5d0-5f0b-b273-da5839b1372e"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "45ca86ab-e93a-5001-802b-82f9bf0887b3",
+        "instanceIdentifier": "031c0df0-e906-5665-b9a3-a98d8aa38979",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85"
+        },
+        "destination": {
+          "id": "481f2568-f65c-5cf6-91be-7303a1adc954",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "3b0866c3-fc63-557e-8538-ab626ef68834"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "0e52add1-3aa3-5cd4-8c40-7a48c83f564c",
+        "instanceIdentifier": "cc2da95a-3d3a-5221-bdce-948fef7183b8",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85"
+        },
+        "destination": {
+          "id": "d317c4dd-0e85-5577-991e-3397e7a8936c",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "dcff4900-72e8-5c0e-825b-fa42d5e130d4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "cbeeadd2-0f37-5a61-83da-4d368d63f2ab",
+        "instanceIdentifier": "69c2bb25-8f55-5ac2-9efd-e5cc36102d04",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85"
+        },
+        "destination": {
+          "id": "a51d90e2-20c3-5759-b359-9c4552dc9921",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f5aa64a-08be-58c6-b063-3772f71d38cf"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "99089438-436d-51b6-9f4f-36c14f576ca4",
+        "instanceIdentifier": "af059b3c-f56c-5ef1-ad63-18f87c0247ae",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85"
+        },
+        "destination": {
+          "id": "997d05e7-7fab-5fe5-8eb5-300f4401a756",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f1670d5-7b23-5581-953e-9c278a01845d"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "84c91548-bc39-5672-ade6-86a9f7d8c66d",
+        "instanceIdentifier": "9ffdf9e1-b9ed-5f6e-a15c-d7fa90bbf62a",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85"
+        },
+        "destination": {
+          "id": "0ce43566-a7e3-526f-9fff-d0148bd34291",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "BraketSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "9e27abc0-1c12-5afe-a785-afd365889e30"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "f0c76d5a-9f0b-514b-8db9-f4cb63a5057c",
+        "instanceIdentifier": "ab9f0610-e315-572b-a758-c9a1c5846ecd",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85"
+        },
+        "destination": {
+          "id": "bd0b545b-8a72-54b1-ac9e-80d9ce5cc29b",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QSharpSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "41a5752a-c80e-534f-972c-b626bef42bb0"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "9ece18fd-61e3-5b2f-b72b-13a6b23c0cb8",
+        "instanceIdentifier": "da35f4d8-93ea-562e-beee-72357e6c68fd",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85"
+        },
+        "destination": {
+          "id": "ed900923-b358-57ee-ac70-3a4f1308ff23",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e83f4314-c5d0-5f0b-b273-da5839b1372e"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "7ba95cd7-6c72-59b2-9d73-9f2d12e28992",
+        "instanceIdentifier": "565c6d61-dce0-54a6-843c-40da12ea8689",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "481f2568-f65c-5cf6-91be-7303a1adc954",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "3b0866c3-fc63-557e-8538-ab626ef68834"
+        },
+        "destination": {
+          "id": "75450696-6646-5326-9c65-bfba994d4771",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "8b7a21ac-9efe-55d0-8857-c8acfddb7cc4",
+        "instanceIdentifier": "5306f38a-7a78-5edb-bd91-ed9291143a30",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "d317c4dd-0e85-5577-991e-3397e7a8936c",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "dcff4900-72e8-5c0e-825b-fa42d5e130d4"
+        },
+        "destination": {
+          "id": "75450696-6646-5326-9c65-bfba994d4771",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "3cb19a5a-9f98-5e79-93d5-03e91f5064c7",
+        "instanceIdentifier": "51db67f2-a918-5bf0-be40-d199a04e6724",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "a51d90e2-20c3-5759-b359-9c4552dc9921",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f5aa64a-08be-58c6-b063-3772f71d38cf"
+        },
+        "destination": {
+          "id": "75450696-6646-5326-9c65-bfba994d4771",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "65e81209-5138-553a-96cc-0e31c06d0d7a",
+        "instanceIdentifier": "991d8574-8d3f-5ee0-92b0-1dc1db9b09f3",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "997d05e7-7fab-5fe5-8eb5-300f4401a756",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f1670d5-7b23-5581-953e-9c278a01845d"
+        },
+        "destination": {
+          "id": "75450696-6646-5326-9c65-bfba994d4771",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "bd2e9168-bd1f-5097-bc25-2298ffd74bb4",
+        "instanceIdentifier": "65e9501e-e8cf-59fc-9a9d-dd92a09ec6c6",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "0ce43566-a7e3-526f-9fff-d0148bd34291",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "BraketSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "9e27abc0-1c12-5afe-a785-afd365889e30"
+        },
+        "destination": {
+          "id": "75450696-6646-5326-9c65-bfba994d4771",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "d82a19b0-6a86-59d2-9947-54e2afbef0b0",
+        "instanceIdentifier": "5d1727af-4092-558c-aa06-2d23205fb0fe",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "bd0b545b-8a72-54b1-ac9e-80d9ce5cc29b",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QSharpSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "41a5752a-c80e-534f-972c-b626bef42bb0"
+        },
+        "destination": {
+          "id": "75450696-6646-5326-9c65-bfba994d4771",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "7f7a038b-c673-59e7-9c3c-9b8e0d47849d",
+        "instanceIdentifier": "bd628eb7-7b46-53dd-af07-929588a0be18",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "ed900923-b358-57ee-ac70-3a4f1308ff23",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e83f4314-c5d0-5f0b-b273-da5839b1372e"
+        },
+        "destination": {
+          "id": "75450696-6646-5326-9c65-bfba994d4771",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "67144f59-fc88-5fae-9166-4b2bf69de430",
+        "instanceIdentifier": "055b5093-8ef7-5e4d-92b3-be8a04f3505e",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "75450696-6646-5326-9c65-bfba994d4771",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4"
+        },
+        "destination": {
+          "id": "d583cb3a-e069-56e7-b988-5bd3dd3657b2",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "0b4162c8-2697-5fd3-a3af-74165923ad87"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "629f78f2-3d72-53d5-b3b7-83e702a4261f",
+        "instanceIdentifier": "6f9b1b8a-83d9-59a7-ac5e-7f730ee214c4",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "e61b4951-d8eb-539c-9c15-bf0ed05a3007",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitHamiltonian",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "90ddaa51-753f-58fa-a752-96589b4003e8"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "7ace24f5-3c63-5c14-9f1d-da856766dcfc",
+        "instanceIdentifier": "b89f62fd-86c3-5b0f-830a-7858ec21df6d",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "924c8390-89d4-5fd1-b995-83cca5100bfe",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e21b012e-c1d4-524e-a595-26a568f7e83c"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "30ae915e-b0a6-5b29-b09d-768b78b3cf39",
+        "instanceIdentifier": "5f997da9-5ef0-56e3-b9c1-1d9a942074e7",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "32e4d656-956d-5f86-bfee-19546ccb59bf",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "c360e727-2270-504b-a918-9ab05664841b"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "f2e8523c-446c-58ee-8b20-6084f6039ae9",
+        "instanceIdentifier": "ec4da88d-e034-5c50-b317-f2eb61f9a1d0",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "bca56f3d-b3d1-50a4-afc3-9ac352cd92f9",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b116daeb-425a-50fa-abb7-36c19ba2c53c"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "500b02a6-a866-57a5-9613-05f3908fb16f",
+        "instanceIdentifier": "b644165c-cfb6-5192-8f45-f53223733bb8",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "007d3f0a-eae9-506a-aeed-5275d32912dc",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ce9dd4a8-7858-516e-9831-f63338c40c67"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "64ccae2d-bd58-5be0-b94e-222e1e7c2b89",
+        "instanceIdentifier": "18c0b52f-8bf0-571d-a368-86d7c81c0ea1",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "675c0c2b-dba3-5cdc-9ae9-91ba3d279f4e",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilQAOACircuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "ad34dee8-fd69-5136-97bf-b73d0893ac85"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "4fdca121-71d9-5f6b-b388-eb64a92e54e7",
+        "instanceIdentifier": "9be9f827-f015-5c86-a62f-30c27351cf1c",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "481f2568-f65c-5cf6-91be-7303a1adc954",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QiskitAerSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "3b0866c3-fc63-557e-8538-ab626ef68834"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "f0217027-0c70-5282-bc28-b75cc4ccd9c2",
+        "instanceIdentifier": "54f239ad-d7c7-5b1d-b71c-36fe18b1e9c8",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "d317c4dd-0e85-5577-991e-3397e7a8936c",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "CirqSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "dcff4900-72e8-5c0e-825b-fa42d5e130d4"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "9426b821-875d-5854-93fe-8ce16b2948a6",
+        "instanceIdentifier": "b1c387d8-1239-56ea-89c8-a88acd3e8063",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "a51d90e2-20c3-5759-b359-9c4552dc9921",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QrispSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f5aa64a-08be-58c6-b063-3772f71d38cf"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "5660619f-700b-5935-bdd8-782f14cec157",
+        "instanceIdentifier": "5ebbdcc6-a914-5250-8928-7a4024b754d7",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "997d05e7-7fab-5fe5-8eb5-300f4401a756",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PennylaneSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "8f1670d5-7b23-5581-953e-9c278a01845d"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "7c473369-b15d-5975-b7be-b3196ca38fec",
+        "instanceIdentifier": "c1ef1c27-9fbf-5cd9-a433-1b1219932e3d",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "0ce43566-a7e3-526f-9fff-d0148bd34291",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "BraketSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "9e27abc0-1c12-5afe-a785-afd365889e30"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "3ba66a70-1c1e-5bbf-91c0-22dcac881ce5",
+        "instanceIdentifier": "d0e381a6-6fbb-518c-b830-0b343f163ae9",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "bd0b545b-8a72-54b1-ac9e-80d9ce5cc29b",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QSharpSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "41a5752a-c80e-534f-972c-b626bef42bb0"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "6474f5d2-f1b3-5fbc-b3b6-ed9e73640234",
+        "instanceIdentifier": "889842e5-03df-5ad2-8bd3-ea6b6c2cebe1",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "ed900923-b358-57ee-ac70-3a4f1308ff23",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "e83f4314-c5d0-5f0b-b273-da5839b1372e"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "18a61e05-e95c-52ec-bb2c-022b1beec22d",
+        "instanceIdentifier": "7f3aaac9-fc78-559c-982b-cb291d404325",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "75450696-6646-5326-9c65-bfba994d4771",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "04946173-5c12-53ec-ab67-438413dc9ae4"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "9ae6a0ab-ab0e-58cc-802c-468185199236",
+        "instanceIdentifier": "082eb351-4d3d-5e0d-8eea-794829efea5a",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "d583cb3a-e069-56e7-b988-5bd3dd3657b2",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "0b4162c8-2697-5fd3-a3af-74165923ad87"
+        },
+        "destination": {
+          "id": "125871e3-2b11-5903-8241-96e10fec3dc1",
+          "groupId": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+          "name": "QAOA N\u00d7M failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      }
+    ],
+    "labels": [
+      {
+        "identifier": "d76d7470-2454-5218-b60e-9b1b81731b7e",
+        "instanceIdentifier": "5789e1ed-ea52-514c-9eb7-ad461ea286c9",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "LABEL",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 0,
+        "width": 2350,
+        "height": 65,
+        "label": "QAOA N\u00d7M \u2014 5 builders \u00d7 7 engines: does every construction and every counts engine agree with the exact distribution?",
+        "style": {
+          "background-color": "#eaf2ff",
+          "font-size": "18px"
+        }
+      }
+    ],
+    "funnels": [
+      {
+        "identifier": "125871e3-2b11-5903-8241-96e10fec3dc1",
+        "instanceIdentifier": "36ad296d-a2bb-52dd-9c7e-059bf849ec06",
+        "groupIdentifier": "df1960d4-34a8-5b02-a8d1-457f12da5132",
+        "componentType": "FUNNEL",
+        "name": "QAOA N\u00d7M failures",
+        "position": {
+          "x": 940,
+          "y": 1710
+        }
+      }
+    ],
+    "processGroups": [],
+    "remoteProcessGroups": [],
+    "inputPorts": [],
+    "outputPorts": [],
+    "controllerServices": [],
+    "scheduledState": "ENABLED",
+    "defaultFlowFileExpiration": "0 sec",
+    "defaultBackPressureObjectThreshold": 1000,
+    "defaultBackPressureDataSizeThreshold": "100 MB",
+    "flowFileConcurrency": "UNBOUNDED",
+    "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+    "executionEngine": "INHERITED"
+  },
+  "flowEncodingVersion": "1.0",
+  "parameterContexts": {},
+  "externalControllerServices": {},
+  "parameterProviders": {}
+}

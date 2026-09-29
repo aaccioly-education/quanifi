@@ -1,0 +1,86 @@
+{
+  "description": "Train QrispQAOA with the Hamming-weight-preserving XY mixer on the default portfolio rebalancing Hamiltonian, sample on PennylaneSimulator, then score it.",
+  "stages": [
+    {
+      "processor": "PortfolioRebalancingProblem",
+      "properties": {},
+      "relationship": "success"
+    },
+    {
+      "processor": "QrispQAOA",
+      "properties": {
+        "Layers": "2",
+        "Mixer Type": "XY",
+        "Max Iterations": "100",
+        "Random Seed": "11"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "PennylaneSimulator",
+      "properties": {
+        "Shots": "1024",
+        "Random Seed": "11"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "QuantumQAOAEvaluator",
+      "properties": {},
+      "relationship": "success"
+    }
+  ],
+  "counts": {
+    "001": 322,
+    "110": 282,
+    "000": 137,
+    "111": 118,
+    "010": 67,
+    "101": 64,
+    "011": 24,
+    "100": 10
+  },
+  "attributes": {
+    "builder.framework": "qrisp",
+    "builder.component": "QrispQAOA",
+    "qaoa.best_measurement": "011",
+    "qaoa.best_value": "-0.2500000000000002",
+    "qaoa.sampled_expectation": "1.9183886718749996",
+    "qaoa.exact_minimum": "-0.2500000000000002",
+    "qaoa.exact_maximum": "8.0",
+    "qaoa.approximation_ratio": "1.0",
+    "qaoa.expectation_ratio": "0.7371650094696971",
+    "qaoa.optimal_probability": "0.0234375",
+    "qaoa.optimal_states": "[\"011\"]",
+    "qaoa.num_optimal_states": "1",
+    "qaoa.shots": "1024",
+    "qaoa.builder": "QrispQAOA",
+    "qaoa.engine": "PennylaneSimulator",
+    "qaoa.evaluator": "QuantumQAOAEvaluator",
+    "qaoa.num_qubits": "3",
+    "qaoa.layers": "2",
+    "qaoa.betas": "[0.848111676991986, 1.0826389107035608]",
+    "qaoa.gammas": "[0.22404837988621937, 1.7600962331606789]",
+    "qaoa.mixer_type": "XY",
+    "qaoa.error": "",
+    "qaoa.framework": "qrisp",
+    "qaoa.optimal_parameters": "[0.848111676991986, 1.0826389107035608, 0.22404837988621937, 1.7600962331606789]",
+    "qaoa.optimal_value": "1.83382615",
+    "qaoa.energy_method": "exact_probabilities",
+    "qaoa.energy_shots": "",
+    "qaoa.optimizer": "COBYLA",
+    "qaoa.max_iterations": "100",
+    "qaoa.cost_function_evals": "47",
+    "qaoa.num_iterations": "47",
+    "qaoa.converged": "true",
+    "qaoa.optimizer_message": "",
+    "qaoa.seed": "11",
+    "sim.shots": "1024",
+    "sim.top_result": "001",
+    "sim.top_probability": "0.3145",
+    "sim.framework": "pennylane",
+    "sim.component": "PennylaneSimulator",
+    "sim.bit_order": "q0_left",
+    "run.seed": "11"
+  }
+}

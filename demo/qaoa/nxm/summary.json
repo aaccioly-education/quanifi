@@ -1,0 +1,1045 @@
+[
+  {
+    "builder": "QiskitQAOACircuit",
+    "builder_framework": "qiskit",
+    "engine": "QiskitAerSimulator",
+    "engine_framework": "qiskit",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1600,
+      "110": 1545,
+      "010": 345,
+      "101": 205,
+      "111": 154,
+      "011": 111,
+      "000": 91,
+      "100": 45
+    },
+    "hellinger": 0.010291136047329588,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7408203125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.390625",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "QiskitQAOACircuit",
+    "builder_framework": "qiskit",
+    "engine": "CirqSimulator",
+    "engine_framework": "cirq",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "110": 1604,
+      "001": 1592,
+      "010": 353,
+      "101": 199,
+      "111": 133,
+      "000": 81,
+      "011": 80,
+      "100": 54
+    },
+    "hellinger": 0.017685596050703915,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.75556640625",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.388671875",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "QiskitQAOACircuit",
+    "builder_framework": "qiskit",
+    "engine": "QrispSimulator",
+    "engine_framework": "qrisp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "110": 1605,
+      "001": 1591,
+      "010": 353,
+      "101": 199,
+      "111": 133,
+      "000": 81,
+      "011": 80,
+      "100": 54
+    },
+    "hellinger": 0.017739717117671958,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7554199218750001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.388427734375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "QiskitQAOACircuit",
+    "builder_framework": "qiskit",
+    "engine": "PennylaneSimulator",
+    "engine_framework": "pennylane",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1635,
+      "110": 1542,
+      "010": 349,
+      "101": 203,
+      "111": 144,
+      "011": 87,
+      "000": 86,
+      "100": 50
+    },
+    "hellinger": 0.011997721529233698,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7572265625",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.399169921875",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "QiskitQAOACircuit",
+    "builder_framework": "qiskit",
+    "engine": "BraketSimulator",
+    "engine_framework": "braket",
+    "shots": "4096",
+    "seed": "",
+    "counts": {
+      "001": 1632,
+      "110": 1565,
+      "010": 337,
+      "101": 177,
+      "111": 139,
+      "011": 112,
+      "000": 84,
+      "100": 50
+    },
+    "hellinger": 0.012935229415580871,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7590820312500001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.3984375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "QiskitQAOACircuit",
+    "builder_framework": "qiskit",
+    "engine": "QSharpSimulator",
+    "engine_framework": "qsharp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1622,
+      "110": 1551,
+      "010": 328,
+      "101": 202,
+      "111": 166,
+      "000": 89,
+      "011": 75,
+      "100": 63
+    },
+    "hellinger": 0.018681485971499684,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7527832031250001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39599609375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "QiskitQAOACircuit",
+    "builder_framework": "qiskit",
+    "engine": "PyquilSimulator",
+    "engine_framework": "pyquil",
+    "shots": "256",
+    "seed": "11",
+    "counts": {
+      "110": 100,
+      "001": 98,
+      "010": 23,
+      "101": 10,
+      "111": 10,
+      "011": 6,
+      "100": 6,
+      "000": 3
+    },
+    "hellinger": 0.043915821144918404,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.72578125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.3828125",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "CirqQAOACircuit",
+    "builder_framework": "cirq",
+    "engine": "QiskitAerSimulator",
+    "engine_framework": "qiskit",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1600,
+      "110": 1545,
+      "010": 345,
+      "101": 205,
+      "111": 154,
+      "011": 111,
+      "000": 91,
+      "100": 45
+    },
+    "hellinger": 0.010291136047329588,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7408203125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.390625",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "CirqQAOACircuit",
+    "builder_framework": "cirq",
+    "engine": "CirqSimulator",
+    "engine_framework": "cirq",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1610,
+      "110": 1582,
+      "010": 328,
+      "101": 190,
+      "111": 133,
+      "011": 121,
+      "000": 81,
+      "100": 51
+    },
+    "hellinger": 0.015889397234010918,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.74970703125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39306640625",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "CirqQAOACircuit",
+    "builder_framework": "cirq",
+    "engine": "QrispSimulator",
+    "engine_framework": "qrisp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "110": 1605,
+      "001": 1591,
+      "010": 353,
+      "101": 199,
+      "111": 133,
+      "000": 81,
+      "011": 80,
+      "100": 54
+    },
+    "hellinger": 0.017739717117671958,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7554199218750001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.388427734375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "CirqQAOACircuit",
+    "builder_framework": "cirq",
+    "engine": "PennylaneSimulator",
+    "engine_framework": "pennylane",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1635,
+      "110": 1542,
+      "010": 349,
+      "101": 203,
+      "111": 144,
+      "011": 87,
+      "000": 86,
+      "100": 50
+    },
+    "hellinger": 0.011997721529233698,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7572265625",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.399169921875",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "CirqQAOACircuit",
+    "builder_framework": "cirq",
+    "engine": "BraketSimulator",
+    "engine_framework": "braket",
+    "shots": "4096",
+    "seed": "",
+    "counts": {
+      "001": 1649,
+      "110": 1575,
+      "010": 297,
+      "101": 191,
+      "111": 145,
+      "011": 117,
+      "000": 77,
+      "100": 45
+    },
+    "hellinger": 0.020593353225969113,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7658203125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.402587890625",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "CirqQAOACircuit",
+    "builder_framework": "cirq",
+    "engine": "QSharpSimulator",
+    "engine_framework": "qsharp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1622,
+      "110": 1551,
+      "010": 328,
+      "101": 202,
+      "111": 166,
+      "000": 89,
+      "011": 75,
+      "100": 63
+    },
+    "hellinger": 0.018681485971499684,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7527832031250001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39599609375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "CirqQAOACircuit",
+    "builder_framework": "cirq",
+    "engine": "PyquilSimulator",
+    "engine_framework": "pyquil",
+    "shots": "256",
+    "seed": "11",
+    "counts": {
+      "110": 100,
+      "001": 98,
+      "010": 23,
+      "101": 10,
+      "111": 10,
+      "011": 6,
+      "100": 6,
+      "000": 3
+    },
+    "hellinger": 0.043915821144918404,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.72578125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.3828125",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "PennylaneQAOACircuit",
+    "builder_framework": "pennylane",
+    "engine": "QiskitAerSimulator",
+    "engine_framework": "qiskit",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1600,
+      "110": 1545,
+      "010": 345,
+      "101": 205,
+      "111": 154,
+      "011": 111,
+      "000": 91,
+      "100": 45
+    },
+    "hellinger": 0.010291136047329588,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7408203125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.390625",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 15,
+      "rz": 12
+    },
+    "circuit.depth": "19"
+  },
+  {
+    "builder": "PennylaneQAOACircuit",
+    "builder_framework": "pennylane",
+    "engine": "CirqSimulator",
+    "engine_framework": "cirq",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "110": 1604,
+      "001": 1592,
+      "010": 353,
+      "101": 199,
+      "111": 133,
+      "000": 81,
+      "011": 80,
+      "100": 54
+    },
+    "hellinger": 0.017685596050703915,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.75556640625",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.388671875",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 15,
+      "rz": 12
+    },
+    "circuit.depth": "19"
+  },
+  {
+    "builder": "PennylaneQAOACircuit",
+    "builder_framework": "pennylane",
+    "engine": "QrispSimulator",
+    "engine_framework": "qrisp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "110": 1605,
+      "001": 1591,
+      "010": 353,
+      "101": 199,
+      "111": 133,
+      "000": 81,
+      "011": 80,
+      "100": 54
+    },
+    "hellinger": 0.017739717117671958,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7554199218750001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.388427734375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 15,
+      "rz": 12
+    },
+    "circuit.depth": "19"
+  },
+  {
+    "builder": "PennylaneQAOACircuit",
+    "builder_framework": "pennylane",
+    "engine": "PennylaneSimulator",
+    "engine_framework": "pennylane",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1635,
+      "110": 1542,
+      "010": 349,
+      "101": 203,
+      "111": 144,
+      "011": 87,
+      "000": 86,
+      "100": 50
+    },
+    "hellinger": 0.011997721529233698,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7572265625",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.399169921875",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 15,
+      "rz": 12
+    },
+    "circuit.depth": "19"
+  },
+  {
+    "builder": "PennylaneQAOACircuit",
+    "builder_framework": "pennylane",
+    "engine": "BraketSimulator",
+    "engine_framework": "braket",
+    "shots": "4096",
+    "seed": "",
+    "counts": {
+      "001": 1638,
+      "110": 1553,
+      "010": 343,
+      "101": 183,
+      "111": 162,
+      "000": 91,
+      "011": 87,
+      "100": 39
+    },
+    "hellinger": 0.01677024549332571,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7690429687500001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39990234375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 15,
+      "rz": 12
+    },
+    "circuit.depth": "19"
+  },
+  {
+    "builder": "PennylaneQAOACircuit",
+    "builder_framework": "pennylane",
+    "engine": "QSharpSimulator",
+    "engine_framework": "qsharp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1622,
+      "110": 1551,
+      "010": 328,
+      "101": 202,
+      "111": 166,
+      "000": 89,
+      "011": 75,
+      "100": 63
+    },
+    "hellinger": 0.018681485971499684,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7527832031250001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39599609375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 15,
+      "rz": 12
+    },
+    "circuit.depth": "19"
+  },
+  {
+    "builder": "PennylaneQAOACircuit",
+    "builder_framework": "pennylane",
+    "engine": "PyquilSimulator",
+    "engine_framework": "pyquil",
+    "shots": "256",
+    "seed": "11",
+    "counts": {
+      "110": 100,
+      "001": 98,
+      "010": 23,
+      "101": 10,
+      "111": 10,
+      "011": 6,
+      "100": 6,
+      "000": 3
+    },
+    "hellinger": 0.043915821144918404,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.72578125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.3828125",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 15,
+      "rz": 12
+    },
+    "circuit.depth": "19"
+  },
+  {
+    "builder": "QrispQAOACircuit",
+    "builder_framework": "qrisp",
+    "engine": "QiskitAerSimulator",
+    "engine_framework": "qiskit",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1600,
+      "110": 1545,
+      "010": 345,
+      "101": 205,
+      "111": 154,
+      "011": 111,
+      "000": 91,
+      "100": 45
+    },
+    "hellinger": 0.010291136047329588,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7408203125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.390625",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "16"
+  },
+  {
+    "builder": "QrispQAOACircuit",
+    "builder_framework": "qrisp",
+    "engine": "CirqSimulator",
+    "engine_framework": "cirq",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1610,
+      "110": 1582,
+      "010": 328,
+      "101": 190,
+      "111": 133,
+      "011": 121,
+      "000": 81,
+      "100": 51
+    },
+    "hellinger": 0.015889397234010918,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.74970703125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39306640625",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "16"
+  },
+  {
+    "builder": "QrispQAOACircuit",
+    "builder_framework": "qrisp",
+    "engine": "QrispSimulator",
+    "engine_framework": "qrisp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "110": 1605,
+      "001": 1591,
+      "010": 353,
+      "101": 199,
+      "111": 133,
+      "000": 81,
+      "011": 80,
+      "100": 54
+    },
+    "hellinger": 0.017739717117671958,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7554199218750001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.388427734375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "16"
+  },
+  {
+    "builder": "QrispQAOACircuit",
+    "builder_framework": "qrisp",
+    "engine": "PennylaneSimulator",
+    "engine_framework": "pennylane",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1635,
+      "110": 1542,
+      "010": 349,
+      "101": 203,
+      "111": 144,
+      "011": 87,
+      "000": 86,
+      "100": 50
+    },
+    "hellinger": 0.011997721529233698,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7572265625",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.399169921875",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "16"
+  },
+  {
+    "builder": "QrispQAOACircuit",
+    "builder_framework": "qrisp",
+    "engine": "BraketSimulator",
+    "engine_framework": "braket",
+    "shots": "4096",
+    "seed": "",
+    "counts": {
+      "001": 1627,
+      "110": 1588,
+      "010": 298,
+      "101": 200,
+      "111": 140,
+      "011": 106,
+      "000": 81,
+      "100": 56
+    },
+    "hellinger": 0.016348644135567893,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7580566406250001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.397216796875",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "16"
+  },
+  {
+    "builder": "QrispQAOACircuit",
+    "builder_framework": "qrisp",
+    "engine": "QSharpSimulator",
+    "engine_framework": "qsharp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1622,
+      "110": 1551,
+      "010": 328,
+      "101": 202,
+      "111": 166,
+      "000": 89,
+      "011": 75,
+      "100": 63
+    },
+    "hellinger": 0.018681485971499684,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7527832031250001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39599609375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "16"
+  },
+  {
+    "builder": "QrispQAOACircuit",
+    "builder_framework": "qrisp",
+    "engine": "PyquilSimulator",
+    "engine_framework": "pyquil",
+    "shots": "256",
+    "seed": "11",
+    "counts": {
+      "110": 100,
+      "001": 98,
+      "010": 23,
+      "101": 10,
+      "111": 10,
+      "011": 6,
+      "100": 6,
+      "000": 3
+    },
+    "hellinger": 0.043915821144918404,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.72578125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.3828125",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "16"
+  },
+  {
+    "builder": "PyquilQAOACircuit",
+    "builder_framework": "pyquil",
+    "engine": "QiskitAerSimulator",
+    "engine_framework": "qiskit",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1600,
+      "110": 1545,
+      "010": 345,
+      "101": 205,
+      "111": 154,
+      "011": 111,
+      "000": 91,
+      "100": 45
+    },
+    "hellinger": 0.010291136047329588,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7408203125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.390625",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "PyquilQAOACircuit",
+    "builder_framework": "pyquil",
+    "engine": "CirqSimulator",
+    "engine_framework": "cirq",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1610,
+      "110": 1582,
+      "010": 328,
+      "101": 190,
+      "111": 133,
+      "011": 121,
+      "000": 81,
+      "100": 51
+    },
+    "hellinger": 0.015889397234010918,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.74970703125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39306640625",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "PyquilQAOACircuit",
+    "builder_framework": "pyquil",
+    "engine": "QrispSimulator",
+    "engine_framework": "qrisp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "110": 1605,
+      "001": 1591,
+      "010": 353,
+      "101": 199,
+      "111": 133,
+      "000": 81,
+      "011": 80,
+      "100": 54
+    },
+    "hellinger": 0.017739717117671958,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7554199218750001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.388427734375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "PyquilQAOACircuit",
+    "builder_framework": "pyquil",
+    "engine": "PennylaneSimulator",
+    "engine_framework": "pennylane",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1635,
+      "110": 1542,
+      "010": 349,
+      "101": 203,
+      "111": 144,
+      "011": 87,
+      "000": 86,
+      "100": 50
+    },
+    "hellinger": 0.011997721529233698,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7572265625",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.399169921875",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "PyquilQAOACircuit",
+    "builder_framework": "pyquil",
+    "engine": "BraketSimulator",
+    "engine_framework": "braket",
+    "shots": "4096",
+    "seed": "",
+    "counts": {
+      "001": 1602,
+      "110": 1550,
+      "010": 310,
+      "101": 203,
+      "111": 164,
+      "011": 117,
+      "000": 90,
+      "100": 60
+    },
+    "hellinger": 0.014734156223175475,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7356445312500001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39111328125",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "PyquilQAOACircuit",
+    "builder_framework": "pyquil",
+    "engine": "QSharpSimulator",
+    "engine_framework": "qsharp",
+    "shots": "4096",
+    "seed": "11",
+    "counts": {
+      "001": 1622,
+      "110": 1551,
+      "010": 328,
+      "101": 202,
+      "111": 166,
+      "000": 89,
+      "011": 75,
+      "100": 63
+    },
+    "hellinger": 0.018681485971499684,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.7527832031250001",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.39599609375",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  },
+  {
+    "builder": "PyquilQAOACircuit",
+    "builder_framework": "pyquil",
+    "engine": "PyquilSimulator",
+    "engine_framework": "pyquil",
+    "shots": "256",
+    "seed": "11",
+    "counts": {
+      "110": 100,
+      "001": 98,
+      "010": 23,
+      "101": 10,
+      "111": 10,
+      "011": 6,
+      "100": 6,
+      "000": 3
+    },
+    "hellinger": 0.043915821144918404,
+    "qaoa.best_measurement": "001",
+    "sampled_expectation": "-0.72578125",
+    "approximation_ratio": "1.0",
+    "optimal_probability": "0.3828125",
+    "circuit.gate_counts": {
+      "cx": 8,
+      "h": 3,
+      "rx": 6,
+      "rz": 6
+    },
+    "circuit.depth": "15"
+  }
+]

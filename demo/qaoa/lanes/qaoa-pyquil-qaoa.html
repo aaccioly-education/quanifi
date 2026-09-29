@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quanifi &mdash; qaoa-pyquil-qaoa</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #ffffff;
+      color: #24292f;
+      margin: 0;
+      padding: 24px;
+    }
+    h1 {
+      color: #0969da;
+      font-size: 1.5rem;
+      border-bottom: 1px solid #d0d7de;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+    h3 {
+      color: #0969da;
+      font-size: 0.85rem;
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .run-card {
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .run-header {
+      background: #eaeef2;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #d0d7de;
+    }
+    .run-title { color: #0969da; font-weight: 600; font-size: 0.95rem; }
+    .run-time  { color: #8c959f; font-size: 0.82rem; font-family: monospace; }
+    .run-footer { display: flex; flex-wrap: wrap; gap: 16px; border-top: 1px solid #d0d7de; padding: 16px; }
+    .run-footer .panel { flex: 1 1 260px; min-width: 240px; }
+    .panel { padding: 16px; flex: 1; min-width: 0; }
+    table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid #d0d7de; }
+    th { color: #656d76; font-weight: 600; }
+    td:first-child { color: #656d76; font-family: monospace; font-size: 0.8rem; }
+    td:last-child  { color: #1f2328; font-family: monospace; }
+    .bar-chart { display: flex; flex-direction: column; gap: 8px; }
+    .bar-row   { display: flex; align-items: center; gap: 10px; }
+    .bar-label { font-family: monospace; color: #656d76; width: 56px; text-align: right;
+                 flex-shrink: 0; font-size: 0.82rem; }
+    .bar-track { flex: 1; background: #d0d7de; border-radius: 4px; height: 18px; overflow: hidden; }
+    .bar-count { font-family: monospace; color: #656d76; font-size: 0.78rem;
+                 width: 110px; flex-shrink: 0; }
+    .panel + .panel { border-left: 1px solid #d0d7de; }
+    .code-block {
+      background: #ffffff;
+      border: 1px solid #d8dee4;
+      border-radius: 6px;
+      padding: 14px;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.8rem;
+      color: #24292f;
+      margin: 0;
+      overflow-x: auto;
+      white-space: pre;
+      line-height: 1.65;
+    }
+    .bar-fill   { background: #0969da; height: 100%; border-radius: 4px; }
+    .bar-fill-a { background: #0969da; height: 100%; border-radius: 4px; }
+    .bar-fill-b { background: #1a7f37; height: 100%; border-radius: 4px; }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: monospace;
+    }
+    .badge-agree  { background: #dafbe1; color: #1a7f37; }
+    .badge-differ { background: #ffebe9; color: #cf222e; }
+    .badge-noise  { background: #fff8c5; color: #9a6700; }
+    .metric-val   { color: #1f2328 !important; }
+    .tag-a { color: #0969da; }
+    .tag-b { color: #1a7f37; }
+    .sv-table th, .sv-table td { padding: 5px 8px; }
+    .sv-table td { color: #1f2328; }
+    .sv-state { font-family: monospace; color: #656d76 !important; }
+    .sv-prob  { width: 160px; }
+    .sv-bar-row { display: flex; align-items: center; gap: 8px; }
+    .sv-bar-track { flex: 1; background: #d0d7de; border-radius: 3px; height: 12px; overflow: hidden; }
+    .sv-bar-fill  { background: #0969da; height: 100%; border-radius: 3px; }
+    .sv-pct    { font-family: monospace; font-size: 0.78rem; color: #656d76;
+                 width: 46px; text-align: right; flex-shrink: 0; }
+    .sv-amp    { font-family: monospace; font-size: 0.82rem; color: #1f2328 !important; }
+    .sv-phase  { font-family: monospace; font-size: 0.82rem; font-weight: 600; }
+    .note      { color: #8c959f; font-size: 0.78rem; margin-top: 10px; }
+    /* Circuit SVGs keep their natural width and scroll inside their panel
+       instead of bleeding over the neighbouring panels. */
+    .svg-scroll { overflow-x: auto; max-width: 100%; }
+    .svg-scroll svg { display: block; }
+    /* Footers with many panels wrap onto extra rows instead of squeezing
+       every panel into one narrow strip. */
+    .run-footer { flex-wrap: wrap; }
+    .run-footer .panel { flex: 1 1 340px; }
+  </style>
+</head>
+<body>
+  <h1>&#x269B; Quanifi &mdash; qaoa-pyquil-qaoa</h1>
+  <!-- RUNS_START -->
+<section class="run-card">
+  <header class="run-header">
+    <span class="run-title">2 qubits &middot; depth 5</span>
+    <span class="run-time">2026-09-28 20:35:44</span>
+  </header>
+  <div class="run-body"><div class="panel" style="min-width:0;overflow-x:auto"><h3>Circuit Diagram</h3><div class='svg-scroll' style='overflow:auto;max-width:100%;max-height:520px'><pre>Render error: &quot;The &#x27;pylatexenc&#x27; library is required to use &#x27;MatplotlibDrawer&#x27;. You can install it with &#x27;pip install pylatexenc&#x27;.&quot;</pre></div></div><div class="panel" style="min-width:0;overflow-x:auto"><h3>OpenQASM 2</h3><pre class='code-block' style='max-height:420px;overflow:auto'>OPENQASM 2.0;
+include &quot;qelib1.inc&quot;;
+qreg q[2];
+h q[0];
+h q[1];
+cx q[1],q[0];
+rz(1.57079632092598) q[0];
+cx q[1],q[0];
+rx(-0.7853981724435047) q[0];
+rx(-0.7853981724435047) q[1];
+</pre></div></div>
+  <div class="run-footer" style="flex-wrap:wrap"><div class="panel" style="flex:1 1 340px;min-width:0;overflow-x:auto"><h3>Measurement Counts</h3><div class='bar-chart'><div class="bar-row"><span class="bar-label">|01&#x27E9;</span><div class="bar-track"><div class="bar-fill" style="width:50.0%"></div></div><span class="bar-count">128&nbsp;(50.0%)</span></div>
+<div class="bar-row"><span class="bar-label">|10&#x27E9;</span><div class="bar-track"><div class="bar-fill" style="width:50.0%"></div></div><span class="bar-count">128&nbsp;(50.0%)</span></div>
+</div></div><div class="panel" style="flex:1 1 100%;min-width:0;overflow-x:auto"><h3>QAOA Result</h3><table><tr><th>Key</th><th>Value</th></tr><tr><td>qaoa.approximation_ratio</td><td>1.0</td></tr><tr><td>qaoa.best_measurement</td><td><span style='font-family:monospace;letter-spacing:0.15em'>01</span>&nbsp;<span style='color:#999;font-size:0.85em;white-space:nowrap'>(q0&thinsp;&rarr;&thinsp;q1)</span></td></tr><tr><td>qaoa.best_value</td><td>-1.0</td></tr><tr><td>qaoa.betas</td><td>[-0.39269908622175237]</td></tr><tr><td>qaoa.builder</td><td>PyquilQAOA</td></tr><tr><td>qaoa.converged</td><td>true</td></tr><tr><td>qaoa.cost_function_evals</td><td>30</td></tr><tr><td>qaoa.elapsed_seconds</td><td>0.0476</td></tr><tr><td>qaoa.energy_method</td><td>exact_statevector</td></tr><tr><td>qaoa.energy_shots</td><td></td></tr><tr><td>qaoa.engine</td><td>PyquilSimulator</td></tr><tr><td>qaoa.error</td><td></td></tr><tr><td>qaoa.evaluator</td><td>QuantumQAOAEvaluator</td></tr><tr><td>qaoa.exact_maximum</td><td>0.0</td></tr><tr><td>qaoa.exact_minimum</td><td>-1.0</td></tr><tr><td>qaoa.expectation_ratio</td><td>1.0</td></tr><tr><td>qaoa.framework</td><td>pyquil</td></tr><tr><td>qaoa.gammas</td><td>[1.57079632092598]</td></tr><tr><td>qaoa.layers</td><td>1</td></tr><tr><td>qaoa.max_iterations</td><td>100</td></tr><tr><td>qaoa.mixer_type</td><td>RX</td></tr><tr><td>qaoa.num_iterations</td><td>30</td></tr><tr><td>qaoa.num_optimal_states</td><td>2</td></tr><tr><td>qaoa.num_qubits</td><td>2</td></tr><tr><td>qaoa.optimal_parameters</td><td>[-0.39269908622175237, 1.57079632092598]</td></tr><tr><td>qaoa.optimal_probability</td><td>1.0</td></tr><tr><td>qaoa.optimal_states</td><td>[&quot;01&quot;, &quot;10&quot;]</td></tr><tr><td>qaoa.optimal_value</td><td>-0.9999999999999996</td></tr><tr><td>qaoa.optimizer</td><td>L_BFGS_B</td></tr><tr><td>qaoa.optimizer_message</td><td>CONVERGENCE: NORM OF PROJECTED GRADIENT &lt;= PGTOL</td></tr><tr><td>qaoa.sampled_expectation</td><td>-1.0</td></tr><tr><td>qaoa.seed</td><td>42</td></tr><tr><td>qaoa.shots</td><td>256</td></tr></table><p style='color:#999;font-size:0.85em;margin:4px 0 0'>Bitstrings read left&nbsp;&rarr;&nbsp;right: character <i>i</i> is qubit/node <i>i</i> (<code>sim.bit_order = q0_left</code>).</p></div><div class="panel" style="flex:1 1 340px;min-width:0;overflow-x:auto"><h3>Circuit Attributes</h3><table><tr><th>Key</th><th>Value</th></tr><tr><td>circuit.algorithm</td><td>qaoa</td></tr><tr><td>circuit.bit_order</td><td>q0_left</td></tr><tr><td>circuit.cirq_json</td><td></td></tr><tr><td>circuit.depth</td><td>5</td></tr><tr><td>circuit.error</td><td></td></tr><tr><td>circuit.format</td><td>qasm2</td></tr><tr><td>circuit.framework</td><td>pyquil</td></tr><tr><td>circuit.gate_count</td><td>7</td></tr><tr><td>circuit.gate_counts</td><td>{&quot;cx&quot;: 2, &quot;h&quot;: 2, &quot;rx&quot;: 2, &quot;rz&quot;: 1}</td></tr><tr><td>circuit.marked_state</td><td></td></tr><tr><td>circuit.nonlocal_gates</td><td>2</td></tr><tr><td>circuit.num_iterations</td><td></td></tr><tr><td>circuit.num_parameters</td><td>0</td></tr><tr><td>circuit.num_qubits</td><td>2</td></tr><tr><td>circuit.t_count</td><td>0</td></tr></table></div><div class="panel" style="flex:1 1 340px;min-width:0;overflow-x:auto"><h3>Simulation Attributes</h3><table><tr><th>Key</th><th>Value</th></tr><tr><td>sim.backend</td><td>PyQVM</td></tr><tr><td>sim.bit_order</td><td>q0_left</td></tr><tr><td>sim.component</td><td>PyquilSimulator</td></tr><tr><td>sim.error</td><td></td></tr><tr><td>sim.framework</td><td>pyquil</td></tr><tr><td>sim.shots</td><td>256</td></tr><tr><td>sim.top_probability</td><td>0.5000</td></tr><tr><td>sim.top_result</td><td>01</td></tr></table></div></div>
+</section>
+</body>
+</html>

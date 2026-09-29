@@ -11,7 +11,8 @@ import json
 
 import pytest
 
-from conftest import MockContext, MockFlowFile, result_to_flowfile
+from conftest import MockContext, MockFlowFile, result_to_flowfile, result_to_flowfile_merged
+import qaoa_reference as qref
 
 from QiskitPhaseOracle import QiskitPhaseOracle
 from QiskitGroverOperator import QiskitGroverOperator
@@ -201,12 +202,15 @@ class TestQPEDecodeCanonicalOrder:
 # QAOA family: best_measurement / counts keys are canonical too
 # ---------------------------------------------------------------------------
 
-class TestQAOACanonicalOrder:
+class TestQAOAChainCanonicalOrder:
     """H = Z0 - Z1 has the unique ground state q0=1, q1=0 → canonical '10'.
 
     Non-palindromic on purpose: a solver leaking its framework's native key
     order reports '01' instead. Also catches a mismatch between the sampled
     keys and the classical energy decode (the QrispQAOA mirror-training bug).
+    Every solver here has moved to the train-only contract: best_measurement
+    etc. come from QuantumQAOAEvaluator, downstream of the solver's own
+    circuit output.
     """
 
     def _ham_flowfile(self):
@@ -217,22 +221,109 @@ class TestQAOACanonicalOrder:
         )
         return result_to_flowfile(r)
 
-    @pytest.mark.parametrize("name", [
-        "QiskitQAOA", "CirqQAOA", "QrispQAOA", "PennylaneQAOA",
-    ])
+    @pytest.mark.parametrize("name", ["QiskitQAOA", "CirqQAOA", "PennylaneQAOA", "QrispQAOA"])
     def test_ground_state_reads_10(self, name):
         proc = getattr(__import__(name), name)()
+        ham_ff = self._ham_flowfile()
         r = proc.transform(
-            MockContext(**{"Layers": "2", "Max Iterations": "100"}),
-            self._ham_flowfile(),
+            MockContext(**{"Layers": "2", "Max Iterations": "100", "Random Seed": "7"}),
+            ham_ff,
         )
-        assert r.relationship == "success"
-        a = r.attributes
+        assert r.relationship == "success", r.attributes
+        merged = result_to_flowfile_merged(r, ham_ff)
+        _engine_res, _merged2, ev = qref.evaluate(
+            merged, "QiskitAerSimulator", {"Shots": "1024", "Random Seed": "7"}
+        )
+        assert ev.relationship == "success", ev.attributes
+        a = ev.attributes
         assert a["qaoa.best_measurement"] == "10"
         assert float(a["qaoa.best_value"]) == -2.0
-        assert a["sim.bit_order"] == "q0_left"
-        counts = json.loads(r.contents)
+        assert _engine_res.attributes["sim.top_result"] == "10"
+        assert float(a["qaoa.optimal_probability"]) >= 0.9
+        assert _engine_res.attributes["sim.bit_order"] == "q0_left"
+        counts = json.loads(_engine_res.contents)
         assert all(len(k) == 2 for k in counts)
+
+    def test_qrisp_trains_unmirrored_cost(self):
+        """Regression pin for the pre-0.2.0 QrispQAOA mirror-training bug
+        (verified fact 6): H = -Z0 + 0.3 Z1 has its unique minimum at
+        q0=0, q1=1 -> '01' (E=-1.3). The old code trained and reported the
+        bit-reversed Hamiltonian and put P(10)=0.687 on the wrong state.
+
+        The pin is on orientation, not optimizer quality.
+
+        Updated for M5f (the QrispQAOA seeded-reproducibility fix). Before
+        M5f, this test's own docstring recorded P('01') varying ~0.72-0.74
+        depending on which tests ran earlier in the same process, and
+        attributed that to "Qrisp's environment/global RNG state" leaking
+        across calls. M5f's own investigation (2026-09-28) found the more
+        precise mechanism: QrispQAOA's `Initial Parameters="random"` used to
+        draw its initial angles from the *global* NumPy RNG inside Qrisp's
+        `optimization_routine`, seeded here via `np.random.seed(seed)`; any
+        code running between that seed call and Qrisp's own draw (e.g.
+        another QrispQAOA FlowFile) could consume global RNG state and
+        change the draw. The fix draws the initial point itself from a
+        local `np.random.default_rng(seed)`, in Qrisp's own theta layout,
+        and always passes it explicitly, so Qrisp's global-RNG branch is
+        never reached.
+
+        With the fix, this exact scenario (H, Layers, Max Iterations,
+        Random Seed all as below, default Optimizer=COBYLA) was measured
+        18 times across 3 fresh processes, both "clean" (nothing else run
+        first) and "polluted" (24 unrelated QiskitQAOA/CirqQAOA/
+        PennylaneQAOA/QrispQAOA runs at 6 different seeds run first in the
+        same process): `qaoa.optimal_probability` was **exactly**
+        0.7158203125 (733/1024) every single time, `sim.top_result` was
+        '01' every time, and P(observed '10') was 0 or 1/1024 (0.0 or
+        ~0.001) every time -- exactly the state the old mirror-trained
+        circuit favoured (P=0.687). At that time `qaoa.optimal_value`
+        itself still showed residual ~1e-5-level jitter run to run (COBYLA
+        is not perfectly reentrant across separate scipy.optimize.minimize
+        calls in one process even given a byte-identical initial point),
+        which M5f attributed to a separate, pre-existing scipy/Qrisp
+        numerical characteristic unrelated to seeding and left out of
+        scope. M5g's investigation found the precise mechanism: Qrisp's
+        exact-probability backend itself differs by up to 1 ulp between
+        separately compiled circuits at the same theta, which COBYLA
+        chaotically amplifies; rounding the classical cost function's
+        returned energy to 12 decimals (`QrispQAOA.cl_cost_function`)
+        removes it. Re-measured after M5g (10 runs, clean and 4x
+        re-polluted): `qaoa.optimal_value` is now **exactly**
+        `-1.139336393364` every time too, not just the shot-derived
+        `optimal_probability`.
+
+        The pin below keeps some margin under the measured 0.7158203125
+        (rather than hard-pinning the exact fraction) so a harmless COBYLA
+        micro-jitter elsewhere can never flip it, while still strictly
+        discriminating the mirror bug (top/best must read '01', not '10',
+        and mass on the mirror state '10' must stay near zero).
+        """
+        from QrispQAOA import QrispQAOA
+        from QiskitHamiltonian import QiskitHamiltonian
+
+        r = QiskitHamiltonian().transform(
+            MockContext(**{"Hamiltonian": "-1 Z0 + 0.3 Z1", "Num Qubits": "0"}),
+            MockFlowFile(),
+        )
+        ham_ff = result_to_flowfile(r)
+        res = QrispQAOA().transform(
+            MockContext(**{"Layers": "2", "Max Iterations": "100", "Random Seed": "7"}),
+            ham_ff,
+        )
+        assert res.relationship == "success", res.attributes
+        merged = result_to_flowfile_merged(res, ham_ff)
+        engine_res, _merged2, ev = qref.evaluate(
+            merged, "QiskitAerSimulator", {"Shots": "1024", "Random Seed": "7"}
+        )
+        assert ev.relationship == "success", ev.attributes
+        assert engine_res.attributes["sim.top_result"] == "01"
+        assert ev.attributes["qaoa.best_measurement"] == "01"
+        counts = json.loads(engine_res.contents)
+        total = sum(counts.values())
+        assert counts.get("10", 0) / total <= 0.05  # old mirror bug: P(10) = 0.687
+        # Measured 0.7158203125 (733/1024), deterministically, in 18/18
+        # trials after the M5f fix (see docstring); 0.7 leaves margin.
+        assert float(ev.attributes["qaoa.optimal_probability"]) >= 0.7
 
 
 # ---------------------------------------------------------------------------

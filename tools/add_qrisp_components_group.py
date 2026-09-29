@@ -5,9 +5,13 @@ Generates complete, runnable pipelines for all 7 Qrisp processors:
   1. Deutsch-Jozsa: QrispDeutschJozsa (balanced vs constant test)
   2. Bernstein-Vazirani: QrispBernsteinVazirani (hidden string recovery)
   3. SWAP Test: QrispSwapTest (state overlap / fidelity)
-  4. Max Clique QAOA: MaxCliqueProblem -> QrispQAOA (RX mixer)
-  5. Max Independent Set QAOA: MaxIndependentSetProblem -> QrispQAOA (RX mixer)
-  6. Portfolio Rebalancing QAOA: PortfolioRebalancingProblem -> QrispQAOA (XY mixer)
+  4. Max Clique QAOA: MaxCliqueProblem -> QrispQAOA -> QrispSimulator ->
+     QuantumQAOAEvaluator (RX mixer; QrispQAOA trains and emits qasm2 only,
+     QrispSimulator samples it, QuantumQAOAEvaluator scores the counts)
+  5. Max Independent Set QAOA: MaxIndependentSetProblem -> QrispQAOA ->
+     QrispSimulator -> QuantumQAOAEvaluator (RX mixer)
+  6. Portfolio Rebalancing QAOA: PortfolioRebalancingProblem -> QrispQAOA ->
+     QrispSimulator -> QuantumQAOAEvaluator (XY mixer)
   7. Molecular VQE: QrispHamiltonian -> QrispQCCSDAnsatz -> QrispVQE (Hartree-Fock init)
 
 Usage:
@@ -33,7 +37,9 @@ GROUP_NAME = "Qrisp Components & Textbook Algorithms"
 GROUP_COMMENTS = (
     "Complete end-to-end pipelines demonstrating Qrisp-powered quantum algorithms "
     "and problem encoders: Deutsch-Jozsa, Bernstein-Vazirani, SWAP Test, Max Clique QAOA, "
-    "Max Independent Set QAOA, Portfolio Rebalancing QAOA, and Molecular VQE with QCCSD Ansatz."
+    "Max Independent Set QAOA, Portfolio Rebalancing QAOA, and Molecular VQE with QCCSD Ansatz. "
+    "The three QAOA pipelines chain QrispQAOA (train-only, emits qasm2) into QrispSimulator "
+    "(samples the trained circuit) into QuantumQAOAEvaluator (scores the counts)."
 )
 REPORTS_DIR = str(ROOT / "reports")
 
@@ -242,14 +248,33 @@ def build_pipeline_spec(nifi_version: str = "2.11.0"):
                 {
                     "name": "Qrisp QAOA (MaxClique)",
                     "type": "QrispQAOA",
-                    "bundle": py_bundle,
+                    "bundle": {**py_bundle, "version": "0.2.0"},
                     "properties": {
                         "Layers": "1",
                         "Mixer Type": "RX",
                         "Optimizer": "COBYLA",
                         "Max Iterations": "15",
-                        "Shots": "1024",
+                        "Random Seed": "11",
                     },
+                    "auto_terminate": ["failure"],
+                    "sched": "0 sec",
+                },
+                {
+                    "name": "MaxClique — Qrisp Simulator",
+                    "type": "QrispSimulator",
+                    "bundle": py_bundle,
+                    "properties": {
+                        "Shots": "1024",
+                        "Random Seed": "11",
+                    },
+                    "auto_terminate": ["failure"],
+                    "sched": "0 sec",
+                },
+                {
+                    "name": "MaxClique — QAOA Evaluator",
+                    "type": "QuantumQAOAEvaluator",
+                    "bundle": py_bundle,
+                    "properties": {},
                     "auto_terminate": ["failure"],
                     "sched": "0 sec",
                 },
@@ -294,14 +319,33 @@ def build_pipeline_spec(nifi_version: str = "2.11.0"):
                 {
                     "name": "Qrisp QAOA (MIS)",
                     "type": "QrispQAOA",
-                    "bundle": py_bundle,
+                    "bundle": {**py_bundle, "version": "0.2.0"},
                     "properties": {
                         "Layers": "1",
                         "Mixer Type": "RX",
                         "Optimizer": "COBYLA",
                         "Max Iterations": "15",
-                        "Shots": "1024",
+                        "Random Seed": "11",
                     },
+                    "auto_terminate": ["failure"],
+                    "sched": "0 sec",
+                },
+                {
+                    "name": "MIS — Qrisp Simulator",
+                    "type": "QrispSimulator",
+                    "bundle": py_bundle,
+                    "properties": {
+                        "Shots": "1024",
+                        "Random Seed": "11",
+                    },
+                    "auto_terminate": ["failure"],
+                    "sched": "0 sec",
+                },
+                {
+                    "name": "MIS — QAOA Evaluator",
+                    "type": "QuantumQAOAEvaluator",
+                    "bundle": py_bundle,
+                    "properties": {},
                     "auto_terminate": ["failure"],
                     "sched": "0 sec",
                 },
@@ -349,14 +393,33 @@ def build_pipeline_spec(nifi_version: str = "2.11.0"):
                 {
                     "name": "Qrisp QAOA (Portfolio XY)",
                     "type": "QrispQAOA",
-                    "bundle": py_bundle,
+                    "bundle": {**py_bundle, "version": "0.2.0"},
                     "properties": {
                         "Layers": "1",
                         "Mixer Type": "XY",
                         "Optimizer": "COBYLA",
                         "Max Iterations": "15",
-                        "Shots": "1024",
+                        "Random Seed": "11",
                     },
+                    "auto_terminate": ["failure"],
+                    "sched": "0 sec",
+                },
+                {
+                    "name": "Portfolio — Qrisp Simulator",
+                    "type": "QrispSimulator",
+                    "bundle": py_bundle,
+                    "properties": {
+                        "Shots": "1024",
+                        "Random Seed": "11",
+                    },
+                    "auto_terminate": ["failure"],
+                    "sched": "0 sec",
+                },
+                {
+                    "name": "Portfolio — QAOA Evaluator",
+                    "type": "QuantumQAOAEvaluator",
+                    "bundle": py_bundle,
+                    "properties": {},
                     "auto_terminate": ["failure"],
                     "sched": "0 sec",
                 },

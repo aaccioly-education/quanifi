@@ -36,3 +36,11 @@ See `docs/README.md` for the documentation index.
 [Grover, VQE and QAOA canvases](demo/pyquil/index.html) demonstrate the modular
 pyQuil components. See the [processor guide](docs/guides/PYQUIL_COMPONENTS.md)
 for import instructions, properties and local execution.
+
+## QAOA examples
+
+[Ten single-processor lanes and a 5×7 N×M matrix](demo/qaoa/index.html) cover
+every `<Fw>QAOA` solver and `<Fw>QAOACircuit` builder against every counts
+simulator. See the [QAOA components guide](docs/guides/QAOA_COMPONENTS.md)
+for the chain, property tables, attribute contracts and the 0.1.0→0.2.0
+migration notes.

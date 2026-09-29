@@ -1,11 +1,14 @@
 import json
 import pytest
 
+import qaoa_contract as qc
 from MaxCliqueProblem import MaxCliqueProblem
 from MaxIndependentSetProblem import MaxIndependentSetProblem
 from PortfolioRebalancingProblem import PortfolioRebalancingProblem
 from QrispQAOA import QrispQAOA
-from conftest import MockContext, MockFlowFile, result_to_flowfile
+from QrispSimulator import QrispSimulator
+from QuantumQAOAEvaluator import QuantumQAOAEvaluator
+from conftest import MockContext, MockFlowFile, result_to_flowfile, result_to_flowfile_merged
 
 
 class TestMaxCliqueProblem:
@@ -31,7 +34,6 @@ class TestMaxCliqueProblem:
             "Layers": "2",
             "Optimizer": "COBYLA",
             "Max Iterations": "50",
-            "Shots": "512",
             "Initial Parameters": "zeros",
             "Mixer Type": "RX",
         })
@@ -76,13 +78,25 @@ class TestMaxIndependentSetProblem:
             "Layers": "2",
             "Optimizer": "COBYLA",
             "Max Iterations": "50",
-            "Shots": "512",
             "Initial Parameters": "zeros",
             "Mixer Type": "RX",
         })
-        qaoa_res = qaoa.transform(qaoa_ctx, result_to_flowfile(res))
+        ham_ff = result_to_flowfile(res)
+        qaoa_res = qaoa.transform(qaoa_ctx, ham_ff)
         assert qaoa_res.relationship == "success"
         assert qaoa_res.attributes["qaoa.num_qubits"] == "3"
+
+        # Chain -> QrispSimulator -> QuantumQAOAEvaluator: the MIS ground
+        # state on the 0-1-2 path graph is {0, 2}, bitstring '101', E=-2.
+        merged = result_to_flowfile_merged(qaoa_res, ham_ff)
+        engine_res = QrispSimulator().transform(
+            MockContext(**{"Shots": "1024", "Random Seed": "3"}), merged)
+        assert engine_res.relationship == "success", engine_res.attributes
+        merged2 = result_to_flowfile_merged(engine_res, merged)
+        ev = QuantumQAOAEvaluator().transform(MockContext(), merged2)
+        assert ev.relationship == "success", ev.attributes
+        assert abs(float(ev.attributes["qaoa.exact_minimum"]) - (-2.0)) < 1e-9
+        assert ev.attributes["qaoa.best_measurement"] == "101"
 
 
 class TestPortfolioRebalancingProblem:
@@ -109,10 +123,11 @@ class TestPortfolioRebalancingProblem:
             "Layers": "1",
             "Optimizer": "COBYLA",
             "Max Iterations": "30",
-            "Shots": "256",
             "Initial Parameters": "zeros",
             "Mixer Type": "XY",
         })
         qaoa_res = qaoa.transform(qaoa_ctx, result_to_flowfile(res))
         assert qaoa_res.relationship == "success"
         assert qaoa_res.attributes["qaoa.mixer_type"] == "XY"
+        profile = qc.qasm2_profile(qaoa_res.contents.decode("utf-8"))
+        assert profile["num_qubits"] == 3

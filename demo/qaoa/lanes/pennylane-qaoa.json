@@ -1,0 +1,90 @@
+{
+  "description": "Train PennylaneQAOA on a 3-node path-graph Max Independent Set Hamiltonian, sample on QSharpSimulator, then score it.",
+  "stages": [
+    {
+      "processor": "MaxIndependentSetProblem",
+      "properties": {
+        "Edges": "[[0, 1], [1, 2]]",
+        "Penalty Factor": "2.0"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "PennylaneQAOA",
+      "properties": {
+        "Layers": "2",
+        "Max Iterations": "150",
+        "Random Seed": "11"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "QSharpSimulator",
+      "properties": {
+        "Shots": "1024",
+        "Random Seed": "11"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "QuantumQAOAEvaluator",
+      "properties": {},
+      "relationship": "success"
+    }
+  ],
+  "counts": {
+    "101": 458,
+    "010": 234,
+    "100": 145,
+    "001": 117,
+    "110": 22,
+    "000": 21,
+    "011": 17,
+    "111": 10
+  },
+  "attributes": {
+    "builder.framework": "pennylane",
+    "builder.component": "PennylaneQAOA",
+    "qaoa.best_measurement": "101",
+    "qaoa.best_value": "-2.0",
+    "qaoa.sampled_expectation": "-1.369140625",
+    "qaoa.exact_minimum": "-2.0",
+    "qaoa.exact_maximum": "1.0",
+    "qaoa.approximation_ratio": "1.0",
+    "qaoa.expectation_ratio": "0.7897135416666666",
+    "qaoa.optimal_probability": "0.447265625",
+    "qaoa.optimal_states": "[\"101\"]",
+    "qaoa.num_optimal_states": "1",
+    "qaoa.shots": "1024",
+    "qaoa.builder": "PennylaneQAOA",
+    "qaoa.engine": "QSharpSimulator",
+    "qaoa.evaluator": "QuantumQAOAEvaluator",
+    "qaoa.num_qubits": "3",
+    "qaoa.layers": "2",
+    "qaoa.betas": "[-2.65330025474401, 0.8779804764629047]",
+    "qaoa.gammas": "[2.158159942523036, -2.532770336030652]",
+    "qaoa.mixer_type": "RX",
+    "qaoa.error": "",
+    "qaoa.framework": "pennylane",
+    "qaoa.optimal_parameters": "[-2.65330025474401, 0.8779804764629047, 2.158159942523036, -2.532770336030652]",
+    "qaoa.optimal_value": "-1.3903318225617671",
+    "qaoa.energy_method": "exact_statevector",
+    "qaoa.energy_shots": "",
+    "qaoa.optimizer": "COBYLA",
+    "qaoa.max_iterations": "150",
+    "qaoa.cost_function_evals": "150",
+    "qaoa.num_iterations": "150",
+    "qaoa.converged": "false",
+    "qaoa.optimizer_message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
+    "qaoa.seed": "11",
+    "sim.shots": "1024",
+    "sim.top_result": "101",
+    "sim.top_probability": "0.4473",
+    "sim.framework": "qsharp",
+    "sim.component": "QSharpSimulator",
+    "sim.backend": "sparse",
+    "sim.bit_order": "q0_left",
+    "run.seed": "11",
+    "sim.noise_model": "none"
+  }
+}

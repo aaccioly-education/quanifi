@@ -1,0 +1,80 @@
+{
+  "description": "Build the bound PyquilQAOACircuit at its default single-layer angles on the 4-node Max Clique Hamiltonian, sample on QrispSimulator, then score it.",
+  "stages": [
+    {
+      "processor": "MaxCliqueProblem",
+      "properties": {
+        "Edges": "[[0, 1], [1, 2], [2, 0], [2, 3]]",
+        "Penalty Factor": "2.0"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "PyquilQAOACircuit",
+      "properties": {},
+      "relationship": "success"
+    },
+    {
+      "processor": "QrispSimulator",
+      "properties": {
+        "Shots": "1024",
+        "Random Seed": "11"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "QuantumQAOAEvaluator",
+      "properties": {},
+      "relationship": "success"
+    }
+  ],
+  "counts": {
+    "1101": 218,
+    "0000": 193,
+    "0101": 125,
+    "1001": 113,
+    "1111": 88,
+    "0010": 77,
+    "1000": 38,
+    "0111": 34,
+    "1011": 33,
+    "0001": 31,
+    "0100": 25,
+    "1010": 18,
+    "0110": 12,
+    "0011": 10,
+    "1100": 8,
+    "1110": 1
+  },
+  "attributes": {
+    "builder.framework": "pyquil",
+    "builder.component": "PyquilQAOACircuit",
+    "qaoa.best_measurement": "1110",
+    "qaoa.best_value": "-3.0",
+    "qaoa.sampled_expectation": "-0.1162109375",
+    "qaoa.exact_minimum": "-3.0",
+    "qaoa.exact_maximum": "1.0",
+    "qaoa.approximation_ratio": "1.0",
+    "qaoa.expectation_ratio": "0.279052734375",
+    "qaoa.optimal_probability": "0.0009765625",
+    "qaoa.optimal_states": "[\"1110\"]",
+    "qaoa.num_optimal_states": "1",
+    "qaoa.shots": "1024",
+    "qaoa.builder": "PyquilQAOACircuit",
+    "qaoa.engine": "QrispSimulator",
+    "qaoa.evaluator": "QuantumQAOAEvaluator",
+    "qaoa.num_qubits": "4",
+    "qaoa.layers": "1",
+    "qaoa.betas": "[0.39269908169872414]",
+    "qaoa.gammas": "[0.7853981633974483]",
+    "qaoa.mixer_type": "RX",
+    "qaoa.error": "",
+    "sim.shots": "1024",
+    "sim.top_result": "1101",
+    "sim.top_probability": "0.2129",
+    "sim.framework": "qrisp",
+    "sim.component": "QrispSimulator",
+    "sim.bit_order": "q0_left",
+    "run.seed": "11"
+  }
+}

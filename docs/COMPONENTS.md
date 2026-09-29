@@ -3,7 +3,12 @@
 Every NiFi processor Quanifi ships, one row each, generated from each
 processor's own `ProcessorDetails.description` in
 [`nifi_extensions/`](../nifi_extensions/) (69 processors as of 2026-07-04;
-`pauli_dsl.py` and `reporting.py` are shared helper modules, not processors).
+`pauli_dsl.py` and `reporting.py` are shared helper modules, not processors,
+as are the QAOA chain's `qaoa_contract.py` (attribute contract, validation,
+portable-qasm2 profile) and its per-framework circuit constructors
+`qiskit_qaoa.py`, `cirq_qaoa.py`, `pennylane_qaoa.py` and `qrisp_qaoa.py` —
+see the [QAOA components guide](guides/QAOA_COMPONENTS.md) for the full
+chain, property tables and N×M flow).
 This supersedes the "Processors" section in the root [README.md](../README.md),
 which predates the amplitude-estimation, Braket, molecular-Hamiltonian, and
 differential/mutation-testing processors below.
@@ -28,6 +33,7 @@ For the cross-processor attribute contracts (`circuit.*`, `sim.*`, `ae.*`,
 | `QiskitQFTCircuit` | Applies the Quantum Fourier Transform or its inverse. Standalone creates a fresh n-qubit QFT circuit; compose mode appends it to an existing circuit. |
 | `QiskitPhaseEstimation` | Builds a QPE circuit using Qiskit's `PhaseEstimation` library block. Standalone demos a builtin unitary (T/S/Z); compose mode loads the unitary from the FlowFile. |
 | `QiskitQuantumArithmetic` | Builds a reversible arithmetic circuit (`a + b`) from Qiskit's adder library — `cdkm` (Cuccaro ripple-carry), `vbe` (VBE ripple-carry), or `draper` (Fourier-basis) — with the operands encoded into the input registers and no measurement. Publishes the `arithmetic.*` contract (expected result, expected result bits, result-qubit indices) so an oracle can score the run against the classical answer. |
+| `QiskitQAOACircuit` | Fixed-angle QAOA builder (NxM row): `qiskit.circuit.library.qaoa_ansatz` bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator. |
 
 ### Cirq
 
@@ -42,6 +48,7 @@ For the cross-processor attribute contracts (`circuit.*`, `sim.*`, `ae.*`,
 | `CirqQFTCircuit` | Applies the QFT (or inverse) using Cirq's built-in `cirq.qft`. Standalone or compose (appends to an existing circuit). |
 | `CirqPhaseEstimation` | QPE using Cirq: X on target → H on phase register → controlled-U^(2^k) → inverse QFT. Standalone uses a builtin Z-rotation (T/S/Z) as U; compose mode uses the incoming circuit as U. |
 | `CirqQuantumArithmetic` | Builds `a + b` in Cirq as either a hand-written Cuccaro MAJ/UMA ripple-carry adder (`ripple_carry`) or a Fourier-basis adder (`qft`), emitting qasm2 on the same `arithmetic.*` contract as the Qiskit and Qrisp builders. Cirq ships no high-level adder, so this is a reuse artifact in the same sense as `CirqGroverOperator`: the algorithm is transcribed, not imported. |
+| `CirqQAOACircuit` | Fixed-angle QAOA builder (NxM row): the hand-rolled sympy-parameterised cost/mixer ladder (`cirq_qaoa.py`) bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator. |
 
 ### Qrisp
 
@@ -53,6 +60,7 @@ For the cross-processor attribute contracts (`circuit.*`, `sim.*`, `ae.*`,
 | `QrispQFTCircuit` | Applies the QFT (or inverse) using Qrisp's built-in QFT primitive, output as qasm2. |
 | `QrispPhaseEstimation` | QPE using Qrisp's QPE primitive (`iter_spec=True`). Builtin unitaries T/S/Z; target register prepared in `\|1⟩`. Sets `qpe.top_phase`; exports the circuit as qasm2. |
 | `QrispQuantumArithmetic` | Arithmetic on Qrisp `QuantumFloat` registers (add / subtract / multiply, signed or unsigned). `Implementation` selects the adder: `default` (Qrisp's own operator overloading), or the named `cuccaro`, `fourier`, `gidney` (temporary-AND, measurement-based uncompute) and `qcla` (carry-lookahead) adders. The widest implementation choice of the three frameworks, which is why it supplies most of the algorithm families in the arithmetic study. |
+| `QrispQAOACircuit` | Fixed-angle QAOA builder (NxM row): Qrisp's `QAOAProblem` cost operator + mixer, without training, bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator. Qrisp's per-qubit registers are normalised to one qreg; the XY mixer is rebased to `{h,x,rx,ry,rz,cx}`. |
 
 *(Qrisp has no standalone `GroverOperator`/`PhaseOracle`/`GroverCircuit` — see `QrispGroverSearch` under Algorithms.)*
 
@@ -64,6 +72,7 @@ For the cross-processor attribute contracts (`circuit.*`, `sim.*`, `ae.*`,
 | `PennylaneVariationalAnsatz` | Builds a PennyLane variational ansatz (`StronglyEntanglingLayers` or `BasicEntanglerLayers`) with reproducible seeded weights, emitted as OpenQASM 2.0. Standalone or appended after an embedding to compose a full QML model circuit. |
 | `PennylaneGroverCircuit` | Builds a Grover search circuit for a target bitstring with `qml.GroverOperator`, emitted as OpenQASM 2.0. The third builder in the N-M version matrix: for the 4-qubit case it emits 88 two-qubit gates against Qiskit's 56 and Cirq's 112, so the three are bit-identical on simulators but should separate on hardware. |
 | `PennylaneQuantumArithmetic` | Builds `a + b` with PennyLane's `qml.OutAdder`, on the same `arithmetic.*` contract as the Qiskit, Cirq and Qrisp builders. Alone among the four it is **out-of-place**: the sum lands in its own `(n+1)`-wide register rather than over B, because `OutAdder` is PennyLane's only native quantum+quantum adder. It is the confirmatory experiment's third framework lane, chosen because its circuit is built from *wires* rather than operand values and is therefore identical for every operand pair — the property every Qrisp adder lacks. |
+| `PennylaneQAOACircuit` | Fixed-angle QAOA builder (NxM row): `qml.qaoa` `cost_layer`/`mixer_layer` bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator. The RX mixer is exported as `h.rz.h`; `circuit.global_phase_dropped` records whether a `gphase` statement was stripped. |
 
 ### pyquil (Rigetti)
 
@@ -79,8 +88,8 @@ limits, example canvases and exact-energy versus shot-sampling semantics.
 | `PyquilAnsatz` | RY or RY/RZ trial-state recipe with CNOT entanglers. Attach mode preserves a Hamiltonian for VQE; circuit mode emits a bound qasm2 circuit. |
 | `PyquilExpectation` | Exact local pyQuil expectation of a Hermitian Pauli sum on an incoming circuit; emits expectation JSON, not counts. |
 | `PyquilVQE` | Optimizes an upstream pyQuil ansatz recipe against the shared Hamiltonian format using exact local expectations and SciPy. Emits final counts and optimal qasm2 metadata. |
-| `PyquilQAOACircuit` | Explicit-angle QAOA cost/mixer circuit for I/Z objectives; preserves the cost in hamiltonian.json for independent expectation evaluation. |
-| `PyquilQAOA` | Local QAOA minimizer reusing the same native circuit builder; reports convergence, energy, best sampled state and a classical reference. |
+| `PyquilQAOACircuit` | Fixed-angle QAOA builder (NxM row): the native `pyquil_components.qaoa` program bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator. |
+| `PyquilQAOA` | Optimise-only: trains against the exact local expectation objective with `scipy`, reusing the same native `pyquil_components.qaoa` circuit builder as `PyquilQAOACircuit`, and emits the trained, bound circuit as portable qasm2 plus `qaoa.optimal_parameters`. It does not sample; connect any counts simulator, then `QuantumQAOAEvaluator`. See the [QAOA components guide](guides/QAOA_COMPONENTS.md) (VQE-only content in the [pyQuil guide](guides/PYQUIL_COMPONENTS.md) still applies to `PyquilVQE`). |
 | `PyquilQFT` | Forward/inverse Fourier transform, optionally appended to an incoming circuit, with optional bit-reversal swaps. |
 
 ## Simulators
@@ -117,10 +126,10 @@ built by *any* framework's builder runs on real QPUs through them.
 | `QiskitVQE` | Qiskit | Variational Quantum Eigensolver: reads a Hamiltonian and an ansatz, minimises energy with a classical optimizer. Emits `vqe.*` results. |
 | `CirqVQE` | Cirq | Hand-rolled VQE: simulates a sympy-parameterised ansatz, computes the Hamiltonian expectation from the statevector, minimises with `scipy.optimize`. Strict solver — requires upstream Hamiltonian + ansatz. |
 | `QrispVQE` | Qrisp | VQE via Qrisp's `VQEProblem`: trains the ansatz spec with the chosen optimizer, emits `vqe.*` results. |
-| `QiskitQAOA` | Qiskit | QAOA via `qiskit_algorithms.QAOA`: optimizes the p-layer ansatz against a diagonal cost Hamiltonian, emits `qaoa.*` results (optimal value, best bitstring, approximation ratio). |
-| `CirqQAOA` | Cirq | Hand-rolled QAOA: alternating `exp(-i·gamma·H)` cost layers and Rx mixer layers, optimized with `scipy`. |
-| `QrispQAOA` | Qrisp | QAOA via Qrisp's `QAOAProblem`. |
-| `PennylaneQAOA` | PennyLane | QAOA via `qml.qaoa` layers with analytic expectations on `default.qubit`, optimized with `scipy`. |
+| `QiskitQAOA` | Qiskit | Optimise-only: trains the p-layer ansatz via `qiskit_algorithms.QAOA` against a diagonal cost Hamiltonian (objective sampled via a seeded `StatevectorSampler`, 1024 shots) and emits the trained, bound circuit as portable qasm2 plus `qaoa.optimal_parameters`. It does not sample; connect any counts simulator, then `QuantumQAOAEvaluator`. See the [QAOA components guide](guides/QAOA_COMPONENTS.md). |
+| `CirqQAOA` | Cirq | Optimise-only: alternating `exp(-i·gamma·H)` cost layers and Rx mixer layers, trained against the exact statevector objective with `scipy`, and emits the trained, bound circuit as portable qasm2 plus `qaoa.optimal_parameters`. Connect any counts simulator, then `QuantumQAOAEvaluator`. |
+| `QrispQAOA` | Qrisp | Optimise-only: trains via Qrisp's `QAOAProblem.optimization_routine` (exact, Qrisp-rounded probabilities) and emits the trained, bound circuit as portable qasm2 plus `qaoa.optimal_parameters`. Connect any counts simulator, then `QuantumQAOAEvaluator`. |
+| `PennylaneQAOA` | PennyLane | Optimise-only: `qml.qaoa` cost/mixer layers with analytic expectations on `default.qubit`, trained with `scipy`, and emits the trained, bound circuit as portable qasm2 plus `qaoa.optimal_parameters`. Connect any counts simulator, then `QuantumQAOAEvaluator`. |
 | `QiskitAmplitudeEstimation` | Qiskit | QAE on a Bernoulli problem (`A = Ry(2·asin(√p))`) via `qiskit-algorithms`. `canonical` = QPE-based grid estimate + MLE refinement; `iterative` = epsilon-convergent, no phase register. Emits `ae.*`. |
 | `CirqAmplitudeEstimation` | Cirq | Canonical QPE-based QAE built from Cirq primitives, same Bernoulli problem. Emits `ae.*`. |
 | `QrispAmplitudeEstimation` | Qrisp | QAE via Qrisp's native IQAE, converging to `Epsilon Target` at confidence `Alpha`. Emits `ae.*`. |
@@ -183,6 +192,7 @@ consensus flow, see if it's caught).
 | `QuantumDistributionOracle` | K-way oracle for degenerate/multi-peaked outputs (GHZ, W states) where top-1 voting is a coin flip: votes on **distribution similarity** instead, via pairwise Hellinger distance gated by a chi-squared homogeneity test across every branch pair sharing a slot key. Requires **Multiple Comparison Correction** (`none` / `holm` / `benjamini-hochberg`, no default — an unset value leaves the processor INVALID) to correct the per-pair p-values for the K(K-1)/2 tests a slot runs; `none` reproduces the original uncorrected `p < alpha` rule byte-for-byte. Emits `consensus.correction`, `consensus.pairwise_tests`, `consensus.significant_pairs_raw`, `consensus.significant_pairs_corrected` alongside the existing `consensus.*`/`assert.*` attributes. Ground truth is checked as expected **support** (a set of bitstrings), not a single winner, so a degenerate but correct output is not penalised. Shares `multiple_comparisons.py` with the version-matrix and mutation experiment scripts. |
 | `QuantumMutator` | Gate-level (Layer-A) mutation operator: reads a qasm2/qasm3 circuit, applies one syntactic mutation (`gate.add`, `gate.remove`, `gate.replace` same-arity, `rotation.perturb`, and `carry.break` — deletes a gate on the carry-out qubit named by `arithmetic.result_qubits`, so the fault only manifests on operand pairs that actually carry), emits the mutant with `mut.*` bookkeeping. Placed on one branch of a K-branch consensus flow so a killed mutant surfaces as a single-branch `DISAGREE`. |
 | `MutationScoreReport` | Aggregates per-case verdicts into a mutation survival rate, grouped by mutation operator, keyed on `test.run_id`. Excludes control rows from the score and reports control dissents (real cross-framework discrepancies) separately. |
+| `QuantumQAOAEvaluator` | Framework-neutral QAOA scoring: reads q0_left counts from any simulator plus the cost Hamiltonian (`hamiltonian.json` from any QAOA builder/solver, or the Hamiltonian property) and emits `qaoa.best_measurement`, `best_value`, `sampled_expectation`, `exact_minimum/maximum`, `approximation_ratio`, `expectation_ratio`, `optimal_probability` and the builder/engine of the cell. Counts pass through for QuanifiReport. |
 
 ## Reporting & utility
 

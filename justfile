@@ -15,3 +15,6 @@ lint:
     {{python}} -m ruff check nifi_extensions tests tools web
 
 check: lint test
+
+qaoa-examples:
+    {{python}} tools/build_qaoa_examples.py --run --nxm

@@ -1,5 +1,5 @@
 {
-  "description": "Minimize \u2212\u00bd + \u00bd Z0 Z1. The two cut states 01 and 10 have energy \u22121.",
+  "description": "Minimize \u2212\u00bd + \u00bd Z0 Z1, sample the trained circuit, then score it. The two cut states 01 and 10 have energy \u22121.",
   "stages": [
     {
       "processor": "QiskitHamiltonian",
@@ -16,44 +16,71 @@
         "Optimizer": "L_BFGS_B",
         "Max Iterations": "100",
         "Initial Parameters": "[-0.3,1]",
+        "Random Seed": "42"
+      },
+      "relationship": "success"
+    },
+    {
+      "processor": "PyquilSimulator",
+      "properties": {
         "Shots": "256",
         "Random Seed": "42"
       },
       "relationship": "success"
+    },
+    {
+      "processor": "QuantumQAOAEvaluator",
+      "properties": {},
+      "relationship": "success"
     }
   ],
   "counts": {
-    "01": 130,
-    "10": 126
+    "01": 128,
+    "10": 128
   },
   "attributes": {
-    "qaoa.layers": "1",
-    "qaoa.framework": "pyquil",
-    "qaoa.optimal_value": "-0.9999999999999996",
-    "qaoa.optimal_parameters": "[-0.39269908622175237, 1.57079632092598]",
-    "qaoa.cost_function_evals": "30",
-    "qaoa.max_iterations": "100",
-    "qaoa.converged": "true",
-    "qaoa.optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
-    "qaoa.optimizer": "L_BFGS_B",
-    "qaoa.num_qubits": "2",
-    "qaoa.shots": "256",
-    "qaoa.energy_method": "exact_statevector",
-    "qaoa.error": "",
-    "sim.shots": "256",
-    "sim.top_result": "01",
-    "sim.top_probability": "0.5078125",
-    "sim.framework": "pyquil",
-    "sim.component": "PyquilQAOA",
-    "sim.backend": "NumpyWavefunctionSimulator",
-    "sim.bit_order": "q0_left",
-    "sim.noise_model": "none",
-    "sim.noise_params": "",
-    "sim.error": "",
-    "run.seed": "42",
     "qaoa.best_measurement": "01",
     "qaoa.best_value": "-1.0",
+    "qaoa.sampled_expectation": "-1.0",
     "qaoa.exact_minimum": "-1.0",
-    "qaoa.approximation_ratio": "1.0"
+    "qaoa.exact_maximum": "0.0",
+    "qaoa.approximation_ratio": "1.0",
+    "qaoa.expectation_ratio": "1.0",
+    "qaoa.optimal_probability": "1.0",
+    "qaoa.optimal_states": "[\"01\", \"10\"]",
+    "qaoa.num_optimal_states": "2",
+    "qaoa.shots": "256",
+    "qaoa.builder": "PyquilQAOA",
+    "qaoa.engine": "PyquilSimulator",
+    "qaoa.evaluator": "QuantumQAOAEvaluator",
+    "qaoa.num_qubits": "2",
+    "qaoa.layers": "1",
+    "qaoa.betas": "[-0.39269908622175237]",
+    "qaoa.gammas": "[1.57079632092598]",
+    "qaoa.mixer_type": "RX",
+    "qaoa.error": "",
+    "qaoa.framework": "pyquil",
+    "qaoa.optimal_parameters": "[-0.39269908622175237, 1.57079632092598]",
+    "qaoa.optimal_value": "-0.9999999999999996",
+    "qaoa.energy_method": "exact_statevector",
+    "qaoa.energy_shots": "",
+    "qaoa.optimizer": "L_BFGS_B",
+    "qaoa.max_iterations": "100",
+    "qaoa.cost_function_evals": "30",
+    "qaoa.num_iterations": "30",
+    "qaoa.converged": "true",
+    "qaoa.optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+    "qaoa.seed": "42",
+    "sim.shots": "256",
+    "sim.top_result": "01",
+    "sim.top_probability": "0.5000",
+    "sim.framework": "pyquil",
+    "sim.component": "PyquilSimulator",
+    "sim.backend": "PyQVM",
+    "sim.bit_order": "q0_left",
+    "run.seed": "42",
+    "sim.error": "",
+    "sim.noise_model": "none",
+    "sim.noise_params": ""
   }
 }

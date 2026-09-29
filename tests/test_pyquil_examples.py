@@ -57,9 +57,13 @@ def test_run_canvas_examples_and_generate_reports(tmp_path):
     assert float(results["vqe"]["attributes"]["vqe.optimal_value"]) == pytest.approx(
         -1.11803398875, abs=1e-7
     )
-    assert float(results["qaoa"]["attributes"]["qaoa.optimal_value"]) == pytest.approx(
-        -1, abs=1e-7
-    )
+    qaoa_attrs = results["qaoa"]["attributes"]
+    assert float(qaoa_attrs["qaoa.optimal_value"]) == pytest.approx(-1, abs=1e-7)
+    assert qaoa_attrs["qaoa.best_value"] == "-1.0"
+    assert qaoa_attrs["qaoa.approximation_ratio"] == "1.0"
+    qaoa_counts = results["qaoa"]["counts"]
+    assert set(qaoa_counts) <= {"01", "10"}
+    assert sum(qaoa_counts.values()) == 256
     for key, record in results.items():
         saved = json.loads((ROOT / "demo/pyquil" / f"{key}.json").read_text())
         assert record == saved

@@ -134,10 +134,10 @@
 
     <div class="diagram-container">
       <img src="img/portfolio_qaoa_canvas.png" alt="Portfolio QAOA Canvas Pipeline" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
-      <div class="diagram-caption">Figure 5.1: Decoupled Portfolio Rebalancing QAOA pipeline on the NiFi canvas.</div>
+      <div class="diagram-caption">Figure 5.1: Decoupled Portfolio Rebalancing QAOA pipeline on the NiFi canvas. This screenshot predates the 0.2.0 QAOA extraction below: it shows <code>QrispQAOA</code> sampling and reporting directly. Since 0.2.0, <code>QrispQAOA</code> trains only and emits a circuit; a simulator and <code>QuantumQAOAEvaluator</code> now sit between it and the report, per the 6-stage pipeline described next.</div>
     </div>
 
-    <h3>The 4 Decoupled Stages:</h3>
+    <h3>The 6 Decoupled Stages:</h3>
     <ol class="step-list">
       <li class="step-item">
         <div class="step-number">1</div>
@@ -160,15 +160,29 @@
         <div class="step-body">
           <div class="step-title">Variational Quantum Solver (QrispQAOA)</div>
           <p>
-            Consumes the Hamiltonian. Configured with <strong><code>Mixer Type = XY</code></strong> and <strong><code>Optimizer = COBYLA</code></strong>. It initializes the $K$-hot subspace, constructs the parameterized cost and mixer unitary layers $U(C, \gamma) U(M, \beta)$, and optimizes the angles in a loop.
+            Consumes the Hamiltonian. Configured with <strong><code>Mixer Type = XY</code></strong> and <strong><code>Optimizer = COBYLA</code></strong>. It initializes the $K$-hot subspace, constructs the parameterized cost and mixer unitary layers $U(C, \gamma) U(M, \beta)$, and optimizes the angles in a loop. Since 0.2.0 it <strong>trains and emits the trained circuit as OpenQASM 2.0</strong> — it no longer samples or has a <code>Shots</code> property.
           </p>
         </div>
       </li>
       <li class="step-item">
         <div class="step-number">4</div>
         <div class="step-body">
+          <div class="step-title">A Simulator (e.g. PennylaneSimulator)</div>
+          <p>Any counts-emitting simulator can sample the trained circuit — the example canvas uses <code>PennylaneSimulator</code>, but any of the seven counts engines works.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number">5</div>
+        <div class="step-body">
+          <div class="step-title">Framework-Neutral Scorer (QuantumQAOAEvaluator)</div>
+          <p>Reads the sampled counts plus the cost Hamiltonian (carried through as <code>hamiltonian.json</code>) and computes every sample-dependent QAOA metric: best measurement, approximation ratio, and the rest of the <code>qaoa.*</code> panel.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number">6</div>
+        <div class="step-body">
           <div class="step-title">Automated Reporter (QuanifiReport)</div>
-          <p>Receives the sampled measurement distribution and writes the interactive audit card to <code>reports/qrisp-qaoa-portfolio.html</code>.</p>
+          <p>Receives the counts and the evaluator's attributes and writes the interactive audit card to <code>reports/qrisp-qaoa-portfolio.html</code>.</p>
         </div>
       </li>
     </ol>
@@ -177,9 +191,15 @@
   <section>
     <h2>6. How to Read and Interpret the Results</h2>
     <p>
-      Trigger the flow in NiFi (or run <code>tools/test_canvas_qrisp_flows.py</code>) and open the generated report:
+      Trigger the flow in NiFi, or regenerate the local example canvas and reports with:
+    </p>
+    <pre><code>.venv/bin/python tools/build_qaoa_examples.py --run</code></pre>
+    <p>
+      (the <code>qrisp-qaoa</code> lane covers this pipeline) and open the generated report:
     </p>
     <pre><code>open reports/qrisp-qaoa-portfolio.html</code></pre>
+
+    <p>The table below is a real measured run of the <code>qrisp-qaoa</code> lane (<code>demo/qaoa/lanes/qrisp-qaoa.json</code>), Layers <code>2</code>, Random Seed <code>11</code>, sampled by <code>PennylaneSimulator</code> at 1024 shots:</p>
 
     <table class="data-table">
       <thead>
@@ -192,28 +212,38 @@
       <tbody>
         <tr>
           <td><code>sim.top_result</code></td>
-          <td><code>110</code> (or <code>011</code>)</td>
-          <td>The binary vector of chosen assets. Exactly $K=2$ bits are set to <code>1</code>!</td>
+          <td><code>001</code></td>
+          <td>The most frequently sampled binary vector of chosen assets — can differ from the lowest-energy one below, since it is the sampled mode, not the minimum.</td>
+        </tr>
+        <tr>
+          <td><code>qaoa.best_measurement</code></td>
+          <td><code>011</code></td>
+          <td>The observed bitstring with the lowest cost, from <code>QuantumQAOAEvaluator</code> — the actual portfolio recommendation.</td>
         </tr>
         <tr>
           <td><code>qaoa.mixer_type</code></td>
           <td><code>XY</code></td>
-          <td>Confirms subspace preservation mixer was applied.</td>
+          <td>Confirms the subspace-preservation mixer was applied.</td>
         </tr>
         <tr>
           <td><code>qaoa.optimal_value</code></td>
-          <td><code>-0.290000</code></td>
-          <td>The minimized objective cost found by COBYLA.</td>
+          <td><code>1.83382615</code></td>
+          <td>The minimized objective cost found by COBYLA (Qrisp's exact, rounded objective — see the <a href="../docs/guides/QAOA_COMPONENTS.md">QAOA components guide</a>'s energy-rounding note).</td>
         </tr>
         <tr>
-          <td><code>qaoa.iterations</code></td>
-          <td><code>15</code></td>
-          <td>Number of variational optimizer evaluations.</td>
+          <td><code>qaoa.cost_function_evals</code></td>
+          <td><code>47</code></td>
+          <td>Number of variational optimizer evaluations (this replaces the old, removed <code>qaoa.iterations</code> attribute).</td>
+        </tr>
+        <tr>
+          <td><code>qaoa.approximation_ratio</code></td>
+          <td><code>1.0</code></td>
+          <td>From <code>QuantumQAOAEvaluator</code>: the sampled best measurement reached the true minimum energy of this 3-asset instance.</td>
         </tr>
         <tr>
           <td><code>sim.shots</code></td>
           <td><code>1024</code></td>
-          <td>Statistical sampling size.</td>
+          <td>Statistical sampling size — now comes from the simulator stage, not the solver.</td>
         </tr>
       </tbody>
     </table>

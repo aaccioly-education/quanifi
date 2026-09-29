@@ -526,6 +526,42 @@ class TestQuanifiReportQAOA:
         assert "QAOA Result" not in html
         assert "qaoa.optimal_value" not in html
 
+    def test_evaluator_output_renders_qaoa_panel(self, tmp_path):
+        """Real chain: Hamiltonian -> fixed-angle builder -> engine ->
+        QuantumQAOAEvaluator -> QuanifiReport. The evaluator (not the builder
+        or the engine) is what supplies the qaoa.* keys the panel renders."""
+        from conftest import result_to_flowfile_merged
+        from QiskitHamiltonian import QiskitHamiltonian
+        from PyquilQAOACircuit import PyquilQAOACircuit
+        from QiskitAerSimulator import QiskitAerSimulator
+        from QuantumQAOAEvaluator import QuantumQAOAEvaluator
+
+        ham = QiskitHamiltonian().transform(
+            MockContext(**{"Hamiltonian": "Z0 - Z1", "Num Qubits": "0"}), MockFlowFile())
+        assert ham.relationship == "success"
+        ham_ff = result_to_flowfile_merged(ham, MockFlowFile())
+
+        built = PyquilQAOACircuit().transform(MockContext(), ham_ff)
+        assert built.relationship == "success", built.attributes
+        built_ff = result_to_flowfile_merged(built, ham_ff)
+
+        sim = QiskitAerSimulator().transform(
+            MockContext(**{"Shots": "1024", "Random Seed": "11"}), built_ff)
+        assert sim.relationship == "success", sim.attributes
+        sim_ff = result_to_flowfile_merged(sim, built_ff)
+
+        ev = QuantumQAOAEvaluator().transform(MockContext(), sim_ff)
+        assert ev.relationship == "success", ev.attributes
+        ev_ff = result_to_flowfile_merged(ev, sim_ff)
+
+        ctx = MockContext(**{"Reports Directory": str(tmp_path), "Flow Name": "qaoa-eval"})
+        r = QuanifiReport().transform(ctx, ev_ff)
+        assert r.relationship == "success"
+        html = (tmp_path / "qaoa-eval.html").read_text()
+        assert "QAOA Result" in html
+        assert "qaoa.expectation_ratio" in html
+        assert "q0_left" in html
+
 
 # ---------------------------------------------------------------------------
 # QuanifiReport — generic derived-result decoder (Sampler algorithms: QPE, …)

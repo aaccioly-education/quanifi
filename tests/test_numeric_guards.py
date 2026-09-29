@@ -77,10 +77,10 @@ class TestSolverNumericGuards:
         })
         _assert_failure(proc.transform(ctx, ff), "qaoa.error")
 
-    def test_pennylane_qaoa_bad_shots(self):
+    def test_pennylane_qaoa_bad_seed(self):
         from PennylaneQAOA import PennylaneQAOA
         proc = PennylaneQAOA()
-        ctx = MockContext(Shots="lots")
+        ctx = MockContext(**{"Random Seed": "lots"})
         ff = MockFlowFile(content=b"Z0 + Z1", attributes={
             "hamiltonian.format": "sparse_pauli_op_json",
             "hamiltonian.num_qubits": "2",
@@ -121,6 +121,29 @@ class TestBuilderNumericGuards:
             **{"Molecule Geometry": "H 0 0 0; H 0 0 0.74", "Charge": "neutral"}
         )
         _assert_failure(proc.transform(ctx, MockFlowFile()), "hamiltonian.error")
+
+    @staticmethod
+    def _qaoa_hamiltonian_flowfile():
+        """A valid Hamiltonian FlowFile, so a bad Layers/Betas value is what
+        fails -- not the (unrelated) missing-Hamiltonian check that runs
+        first in every QAOA builder."""
+        from QiskitHamiltonian import QiskitHamiltonian
+        res = QiskitHamiltonian().transform(
+            MockContext(**{"Hamiltonian": "Z0 - Z1", "Num Qubits": "0"}), MockFlowFile())
+        assert res.relationship == "success"
+        return MockFlowFile(content=res.contents, attributes=res.attributes)
+
+    def test_qiskit_qaoa_circuit_bad_layers(self):
+        from QiskitQAOACircuit import QiskitQAOACircuit
+        proc = QiskitQAOACircuit()
+        ctx = MockContext(**{"Layers": "two"})
+        _assert_failure(proc.transform(ctx, self._qaoa_hamiltonian_flowfile()), "qaoa.error")
+
+    def test_cirq_qaoa_circuit_bad_betas(self):
+        from CirqQAOACircuit import CirqQAOACircuit
+        proc = CirqQAOACircuit()
+        ctx = MockContext(**{"Betas": "abc"})
+        _assert_failure(proc.transform(ctx, self._qaoa_hamiltonian_flowfile()), "qaoa.error")
 
 
 class TestAmplitudeEstimationGuards:

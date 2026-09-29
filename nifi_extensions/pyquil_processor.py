@@ -92,6 +92,18 @@ def read_circuit(flowfile):
     return program
 
 
+def qaoa_export(terms, n, betas, gammas):
+    """Returns ``(qasm2_source, text_diagram)`` for the native pyQuil QAOA
+    program. Used by both ``PyquilQAOACircuit`` (fixed angles) and
+    ``PyquilQAOA`` (trained angles), so the two stay byte-identical for the
+    same terms/angles."""
+    from pyquil_components import qaoa
+    from quil_qasm import to_qasm2
+
+    program = qaoa(terms, n, betas, gammas)
+    return to_qasm2(program), str(program)
+
+
 def read_hamiltonian(flowfile):
     if flowfile.getAttribute("hamiltonian.format") != "sparse_pauli_op_json":
         raise ValueError("Expected upstream hamiltonian.format=sparse_pauli_op_json")
@@ -134,10 +146,40 @@ SOLVER_SPECS = [
 ]
 
 
-def solve(props, flowfile, kind, build, num_parameters, terms, n, extra=None):
+def minimize_energy(build, point, terms, optimizer, maxiter):
+    """Runs scipy.optimize.minimize against the exact pyQuil local-expectation
+    objective for ``terms``, starting from ``point``. Shared by ``solve``
+    (PyquilVQE) and the PyquilQAOA solver, so both stay on exactly the same
+    optimizer plumbing and error messages.
+
+    Returns ``(point, result, started)``: the optimizer's final parameters
+    (validated finite-length via ``angles``), the raw scipy ``OptimizeResult``
+    and the ``time.perf_counter()`` timestamp taken just before ``minimize``
+    was called (so callers can report elapsed time consistently).
+    """
     import numpy as np
     from scipy.optimize import minimize
-    from pyquil_components import angles, expectation, sample
+    from pyquil_components import angles, expectation
+
+    methods = {"COBYLA": "COBYLA", "POWELL": "Powell", "L_BFGS_B": "L-BFGS-B"}
+    if optimizer not in methods:
+        raise ValueError("Unsupported Optimizer")
+    started = time.perf_counter()
+    result = minimize(
+        lambda values: expectation(build(values), terms),
+        point,
+        method=methods[optimizer],
+        options={"maxiter": maxiter},
+    )
+    point = angles(result.x, len(point), "Optimal Parameters")
+    if not np.isfinite(result.fun):
+        raise ValueError("Optimizer returned a nonfinite energy")
+    return point, result, started
+
+
+def solve(props, flowfile, kind, build, num_parameters, terms, n, extra=None):
+    import numpy as np
+    from pyquil_components import angles, sample
 
     maxiter = integer(props["Max Iterations"], "Max Iterations", maximum=10000)
     shots = integer(props["Shots"], "Shots", maximum=1_000_000)
@@ -152,16 +194,9 @@ def solve(props, flowfile, kind, build, num_parameters, terms, n, extra=None):
         point = np.zeros(num_parameters)
     else:
         point = angles(initial, num_parameters, "Initial Parameters")
-    started = time.perf_counter()
-    result = minimize(
-        lambda values: expectation(build(values), terms),
-        point,
-        method=methods[props["Optimizer"]],
-        options={"maxiter": maxiter},
+    point, result, started = minimize_energy(
+        build, point, terms, props["Optimizer"], maxiter
     )
-    point = angles(result.x, num_parameters, "Optimal Parameters")
-    if not np.isfinite(result.fun):
-        raise ValueError("Optimizer returned a nonfinite energy")
     program = build(point)
     counts = sample(program, shots, seed)
     output = circuit_result(program, f"Pyquil{kind.upper()}", kind, extra)
@@ -196,26 +231,4 @@ def solve(props, flowfile, kind, build, num_parameters, terms, n, extra=None):
             "perf.elapsed_seconds": repr(time.perf_counter() - started),
         }
     )
-    if kind == "qaoa":
-        from pauli_dsl import diagonal_values
-
-        costs = diagonal_values(terms, n)  # index uses qubit 0 as least significant
-
-        def energy(bits):
-            return float(costs[int(bits[::-1], 2)])
-
-        best = min(counts, key=lambda bits: (energy(bits), bits))
-        minimum, maximum = float(costs.min()), float(costs.max())
-        attrs.update(
-            {
-                "qaoa.best_measurement": best,
-                "qaoa.best_value": repr(energy(best)),
-                "qaoa.exact_minimum": repr(minimum),
-                "qaoa.approximation_ratio": repr(
-                    (maximum - energy(best)) / (maximum - minimum)
-                    if maximum > minimum
-                    else 1.0
-                ),
-            }
-        )
     return success(json.dumps(counts).encode(), attrs)

@@ -518,13 +518,12 @@
         "bundle": {
           "group": "org.apache.nifi",
           "artifact": "python-extensions",
-          "version": "0.1.0"
+          "version": "0.2.0"
         },
         "properties": {
           "Layers": "1",
           "Optimizer": "L_BFGS_B",
           "Max Iterations": "100",
-          "Shots": "256",
           "Initial Parameters": "[-0.3,1]",
           "Random Seed": "42"
         },
@@ -551,11 +550,92 @@
         "identifier": "142a8f65-6fac-5bbb-9d4c-743c159ca6b9",
         "instanceIdentifier": "b455d029-1ce9-5395-8ce5-cb39cf469303",
         "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "PyquilSimulator",
+        "type": "PyquilSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1410,
+          "y": 1090
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Shots": "256",
+          "Noise Model": "none",
+          "Error Probability": "0.01",
+          "Random Seed": "42"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "3fe545f8-434e-5cd9-9ee9-acbf99d081f0",
+        "instanceIdentifier": "b6ec6a43-5a7d-5462-af9f-10727b6b3d53",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "name": "QuantumQAOAEvaluator",
+        "type": "QuantumQAOAEvaluator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 1880,
+          "y": 1090
+        },
+        "comments": "Local pyQuil example; run the trigger once.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Hamiltonian": "${hamiltonian.json}"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "ab347569-9695-53a5-9e3c-69daf109562e",
+        "instanceIdentifier": "793701ee-1dd3-5d22-adfb-35914f77770a",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
         "name": "QuanifiReport",
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
+          "x": 2350,
           "y": 1090
         },
         "comments": "Local pyQuil example; run the trigger once.",
@@ -1202,9 +1282,75 @@
         "destination": {
           "id": "142a8f65-6fac-5bbb-9d4c-743c159ca6b9",
           "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
-          "name": "QuanifiReport",
+          "name": "PyquilSimulator",
           "type": "PROCESSOR",
           "instanceIdentifier": "b455d029-1ce9-5395-8ce5-cb39cf469303"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "4ef5a207-7c16-515f-9551-ed2713d37000",
+        "instanceIdentifier": "f8f85c53-8269-5701-89e2-92204e8dacc4",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "142a8f65-6fac-5bbb-9d4c-743c159ca6b9",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "PyquilSimulator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b455d029-1ce9-5395-8ce5-cb39cf469303"
+        },
+        "destination": {
+          "id": "3fe545f8-434e-5cd9-9ee9-acbf99d081f0",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b6ec6a43-5a7d-5462-af9f-10727b6b3d53"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "7a5e8e30-544f-5af6-a2ae-c9fe9f01202a",
+        "instanceIdentifier": "49746630-0fbc-581c-a6f1-f9b68495e94a",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "3fe545f8-434e-5cd9-9ee9-acbf99d081f0",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b6ec6a43-5a7d-5462-af9f-10727b6b3d53"
+        },
+        "destination": {
+          "id": "ab347569-9695-53a5-9e3c-69daf109562e",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "793701ee-1dd3-5d22-adfb-35914f77770a"
         },
         "selectedRelationships": [
           "success"
@@ -1294,9 +1440,75 @@
         "source": {
           "id": "142a8f65-6fac-5bbb-9d4c-743c159ca6b9",
           "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
-          "name": "QuanifiReport",
+          "name": "PyquilSimulator",
           "type": "PROCESSOR",
           "instanceIdentifier": "b455d029-1ce9-5395-8ce5-cb39cf469303"
+        },
+        "destination": {
+          "id": "be662aeb-52ef-504a-84b3-eaf77676b8c2",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QAOA for a two-node cut failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "acb8efb0-1409-54aa-b7b8-7c36a94f150b"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "162b3e4d-157f-5d10-99cc-7150cf2907b0",
+        "instanceIdentifier": "90d5391d-dfb3-5592-ab41-79f434f9832d",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "3fe545f8-434e-5cd9-9ee9-acbf99d081f0",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuantumQAOAEvaluator",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b6ec6a43-5a7d-5462-af9f-10727b6b3d53"
+        },
+        "destination": {
+          "id": "be662aeb-52ef-504a-84b3-eaf77676b8c2",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QAOA for a two-node cut failures",
+          "type": "FUNNEL",
+          "instanceIdentifier": "acb8efb0-1409-54aa-b7b8-7c36a94f150b"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "cb9737ff-7479-5907-bee3-44a4589eb4be",
+        "instanceIdentifier": "00bfeec5-b240-5c04-b25f-b588c338d88b",
+        "groupIdentifier": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "ab347569-9695-53a5-9e3c-69daf109562e",
+          "groupId": "5d3992c8-28c6-52ee-966f-f77941375cfd",
+          "name": "QuanifiReport",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "793701ee-1dd3-5d22-adfb-35914f77770a"
         },
         "destination": {
           "id": "be662aeb-52ef-504a-84b3-eaf77676b8c2",
@@ -1368,7 +1580,7 @@
         "zIndex": 0,
         "width": 2200,
         "height": 65,
-        "label": "QAOA for a two-node cut \u2014 Minimize \u2212\u00bd + \u00bd Z0 Z1. The two cut states 01 and 10 have energy \u22121.",
+        "label": "QAOA for a two-node cut \u2014 Minimize \u2212\u00bd + \u00bd Z0 Z1, sample the trained circuit, then score it. The two cut states 01 and 10 have energy \u22121.",
         "style": {
           "background-color": "#eaf2ff",
           "font-size": "18px"

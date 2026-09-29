@@ -14,6 +14,7 @@ in separate repositories. Framework implementation handoffs are under `developme
 - [Creating processors](guides/CREATING_PROCESSORS.md)
 - [Configuring flows on the NiFi canvas](guides/NIFI_FLOW_CONFIGURATION_GUIDE.md)
 - [pyQuil components and example canvases](guides/PYQUIL_COMPONENTS.md)
+- [QAOA components, N×M flow and example canvases](guides/QAOA_COMPONENTS.md)
 - [Interchangeable Grover components](guides/INTERCHANGEABLE_GROVER_FLOW.md)
 - [Data-driven testing](guides/DATA_DRIVEN_TESTING.md)
 - [Mutation testing](guides/MUTATION_TESTING.md)

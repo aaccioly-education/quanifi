@@ -172,37 +172,42 @@ def test_qaoa_circuit_can_feed_expectation_and_simulator():
 
 def test_qaoa_solver_minimizes_and_exports_same_circuit_as_builder():
     cost = ham("-0.5 + 0.5 Z0 Z1", "2")
-    r = run(
-        "PyquilQAOA",
-        {
-            "Max Iterations": "100",
-            "Initial Parameters": "[-0.3,1]",
-            "Optimizer": "L_BFGS_B",
-            "Shots": "128",
-        },
-        cost,
-    )
+    props = {
+        "Layers": "1",
+        "Max Iterations": "100",
+        "Initial Parameters": "[-0.3,1]",
+        "Optimizer": "L_BFGS_B",
+    }
+    r = run("PyquilQAOA", props, cost)
     assert r.relationship == "success", r.attributes
     assert float(r.attributes["qaoa.optimal_value"]) == pytest.approx(-1, abs=1e-7)
-    assert float(r.attributes["qaoa.best_value"]) == -1
-    assert r.attributes["qaoa.best_measurement"] in ("01", "10")
-    assert float(r.attributes["qaoa.approximation_ratio"]) == 1
-    beta, gamma = json.loads(r.attributes["qaoa.optimal_parameters"])
-    built = run("PyquilQAOACircuit", {"Betas": str(beta), "Gammas": str(gamma)}, cost)
-    assert built.attributes["circuit.qasm2"] == r.attributes["circuit.qasm2"]
-    assert (
-        r.contents
-        == run(
-            "PyquilQAOA",
-            {
-                "Max Iterations": "100",
-                "Initial Parameters": "[-0.3,1]",
-                "Optimizer": "L_BFGS_B",
-                "Shots": "128",
-            },
-            cost,
-        ).contents
+
+    # Sample the trained circuit and score it downstream (train-only: the
+    # solver itself emits no sim.*/qaoa.best_* keys any more).
+    merged = result_to_flowfile_merged(r, cost)
+    engine_res = run("PyquilSimulator", {"Shots": "128", "Random Seed": "42"}, merged)
+    assert engine_res.relationship == "success", engine_res.attributes
+    engine_merged = result_to_flowfile_merged(engine_res, merged)
+    ev = run("QuantumQAOAEvaluator", flowfile=engine_merged)
+    assert ev.relationship == "success", ev.attributes
+    assert float(ev.attributes["qaoa.best_value"]) == -1
+    assert ev.attributes["qaoa.best_measurement"] in ("01", "10")
+    assert float(ev.attributes["qaoa.approximation_ratio"]) == 1
+
+    # The builder reproduces the trained circuit exactly from qaoa.* EL.
+    built = run(
+        "PyquilQAOACircuit",
+        {
+            "Layers": "${qaoa.layers}",
+            "Betas": "${qaoa.betas}",
+            "Gammas": "${qaoa.gammas}",
+        },
+        merged,
     )
+    assert built.relationship == "success", built.attributes
+    assert built.attributes["circuit.qasm2"] == r.attributes["circuit.qasm2"]
+
+    assert r.contents == run("PyquilQAOA", props, cost).contents
 
 
 def test_solver_budget_exhaustion_is_explicit_not_false_convergence():
@@ -258,7 +263,14 @@ def test_qft_append_inverse_restores_state_and_idle_qubits(swaps):
         ("PyquilQAOA", {}, "ham"),  # ham contains X
         ("PyquilQAOACircuit", {}, "ham"),
         ("PyquilQAOACircuit", {"Layers": "2"}, "diagonal"),
-        ("PyquilQAOA", {"Initial Parameters": "[1]"}, "diagonal"),
+        ("PyquilQAOACircuit", {"Betas": "[NaN]"}, "diagonal"),
+        (
+            "PyquilQAOA",
+            {"Initial Parameters": "[1]"},
+            "diagonal",
+        ),  # default Layers 2 -> 2p=4
+        ("PyquilQAOA", {"Random Seed": "-1"}, "diagonal"),
+        ("PyquilQAOA", {"Layers": "17"}, "diagonal"),
         ("PyquilQFT", {"Num Qubits": "0"}, "empty"),
         ("PyquilQFT", {"Input Mode": "append"}, "empty"),
     ],
