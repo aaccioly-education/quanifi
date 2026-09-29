@@ -21,10 +21,29 @@ docker compose up
 ```
 
 Wait for `(healthy)` in `docker compose ps`, then open
-<https://localhost:8443/nifi> (accept the self-signed certificate) and log in
-with `admin` / `quanifi-demo-password`. See
-[`docs/guides/DOCKER_QUICKSTART.md`](docs/guides/DOCKER_QUICKSTART.md) for
-running the demo, configuration, the report browser and troubleshooting.
+<https://localhost:8443/nifi> and accept the self-signed certificate.
+Use these default credentials on your first login:
+
+| Username | Password |
+| --- | --- |
+| `admin` | `quanifi-demo-password` |
+
+On the canvas, right-click **Quanifi quickstart — Grover 3×3** and choose
+**Start** to run the demo.
+
+If port `8443` is already in use, add `QUANIFI_NIFI_PORT=18443` to a local
+`.env` file beside `compose.yaml`, then run `docker compose up` again and open
+<https://localhost:18443/nifi>. The login credentials are the same.
+
+The optional report browser (`docker compose --profile web up`) is available
+at <http://localhost:8080/>. Its default email is `admin@example.com` and its
+password is `quanifi-demo-password`.
+
+These are demo defaults. NiFi credentials can be overridden with
+`QUANIFI_NIFI_USERNAME` and `QUANIFI_NIFI_PASSWORD`; the report browser uses
+`QUANIFI_ADMIN_EMAIL` and `QUANIFI_ADMIN_PASSWORD`.
+See [`docs/guides/DOCKER_QUICKSTART.md`](docs/guides/DOCKER_QUICKSTART.md) for
+configuration, connecting reports to the browser, and troubleshooting.
 
 ## Documentation
 
