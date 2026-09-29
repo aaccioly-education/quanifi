@@ -1,0 +1,33 @@
+Quanifi
+Copyright (C) 2026 Neilson Ramalho
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License, version 3, as published by
+the Free Software Foundation. See the LICENSE file for the full text.
+
+A commercial license is available for use that cannot comply with the AGPL.
+See COMMERCIAL.md.
+
+TRADEMARKS
+
+The name "Quanifi", the Quanifi logo, and any associated marks are not licensed
+under the AGPL and are reserved by the copyright holder. The license grants
+rights to the software only. Modified or redistributed versions must not use
+these marks in a way that suggests endorsement by, or origin from, the Quanifi
+project, and forks should be distributed under a different name.
+
+THIRD-PARTY SOFTWARE
+
+Quanifi runs as a set of Python extensions for Apache NiFi and depends on
+quantum-computing SDKs installed separately. It does not contain or redistribute
+their source code. Those dependencies remain under their own licenses, including:
+
+  Apache NiFi, Qiskit, Cirq, PennyLane, pyQuil,
+  Amazon Braket SDK, Quantum Inspire ......... Apache License 2.0
+  Microsoft Quantum Development Kit (qdk) .... MIT License
+  Django ..................................... BSD 3-Clause License
+  Qrisp ...................................... EPL-2.0 OR GPL-2.0 WITH
+                                               Classpath-exception-2.0
+
+Qrisp is used as an unmodified library through its public interfaces. No Qrisp
+source is included in or modified by this project.

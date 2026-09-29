@@ -44,3 +44,16 @@ every `<Fw>QAOA` solver and `<Fw>QAOACircuit` builder against every counts
 simulator. See the [QAOA components guide](docs/guides/QAOA_COMPONENTS.md)
 for the chain, property tables, attribute contracts and the 0.1.0→0.2.0
 migration notes.
+
+## License
+
+Quanifi is free software under the [GNU Affero General Public License v3](LICENSE).
+If you deploy it as a network service, note that AGPL section 13 requires you to
+offer your users the corresponding source.
+
+A [commercial license](COMMERCIAL.md) is available for use that cannot comply
+with the AGPL, such as embedding Quanifi in a closed-source product or offering
+it as a hosted service without publishing your source.
+
+The name "Quanifi" is not covered by the AGPL grant; see [NOTICE](NOTICE).
+Contributions are accepted under the terms in [CONTRIBUTING.md](CONTRIBUTING.md).
