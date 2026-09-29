@@ -28,8 +28,10 @@ Use these default credentials on your first login:
 | --- | --- |
 | `admin` | `quanifi-demo-password` |
 
-On the canvas, right-click **Quanifi quickstart — Grover 3×3** and choose
-**Start** to run the demo.
+On the canvas, right-click **Quanifi quickstart — Qiskit Grover** and choose
+**Start** to run the demo: **Start here → Build Grover circuit → Simulate circuit → View results**.
+It searches for `10` using two qubits and one Grover iteration. Open
+`reports/quickstart/qiskit-grover.html` on your computer to see the result.
 
 If port `8443` is already in use, add `QUANIFI_NIFI_PORT=18443` to a local
 `.env` file beside `compose.yaml`, then run `docker compose up` again and open

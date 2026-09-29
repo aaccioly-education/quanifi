@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Generate the stopped Quanifi quickstart canvas (Grover 3x3) and run the
-same matrix headlessly.
+"""Generate the simple Qiskit Grover quickstart and the advanced 3x3 example.
+
+``simple_snapshot()`` builds the default four-processor canvas written to
+``demo/grover/qiskit-grover.json``. The optional --run flag executes the
+advanced matrix headlessly.
 
 Three Grover builders (Qiskit, Cirq, Qrisp) each feed three counts engines
 (QiskitAerSimulator, CirqSimulator, QrispSimulator) over OpenQASM 2. Every
@@ -428,6 +431,63 @@ def snapshot(nifi_version="2.9.0"):
     }
 
 
+SIMPLE_GROUP_NAME = "Quanifi quickstart — Qiskit Grover"
+SIMPLE_FLOW_NAME = "qiskit-grover"
+SIMPLE_TARGET = "10"
+
+
+def simple_snapshot(nifi_version="2.9.0"):
+    """A beginner's four-processor flow: trigger, build, simulate, report."""
+    gid = uid("simple/group")
+    group = _empty_group(gid, SIMPLE_GROUP_NAME,
+                         "Find target 10 with two qubits and one Grover iteration.")
+    specs = [
+        ("Start here", "org.apache.nifi.processors.standard.GenerateFlowFile",
+         {"File Size": "0B", "Batch Size": "1", "Data Format": "Text",
+          "Unique FlowFiles": "false"}),
+        ("Build Grover circuit", "QiskitGroverCircuit",
+         {"Marked State": SIMPLE_TARGET, "Num Iterations": "1", "Output Format": "qasm2"}),
+        ("Simulate circuit", "QiskitAerSimulator", ENGINE_PROPS),
+        ("View results", "QuanifiReport",
+         {"Flow Name": SIMPLE_FLOW_NAME, "Reports Directory": REPORTS_DIR}),
+    ]
+    for i, (name, kind, props) in enumerate(specs):
+        proc = node("simple/" + kind, name, kind, props, gid, 0, 130 + i * 210,
+                    nifi_version, schedule="1 day" if i == 0 else "0 sec",
+                    auto_terminated=() if i == 0 else
+                    (("original", "success") if i == 3 else ("original",)))
+        proc["comments"] = [
+            "Right-click and Run Once to send one input. Start the other three processors first.",
+            "Search for 10 using two qubits and one Grover iteration. Change Marked State here.",
+            "Run the circuit on the local Qiskit Aer simulator with 1024 shots.",
+            "Open reports/quickstart/qiskit-grover.html on your host to see the result.",
+        ][i]
+        group["processors"].append(proc)
+    procs = group["processors"]
+    group["connections"] = [connection("simple/step-" + str(i), procs[i], procs[i+1], gid)
+                            for i in range(3)]
+    # Preserve failed inputs for inspection instead of silently discarding them.
+    funnel = {"identifier": uid("simple/failure"),
+              "instanceIdentifier": uid("simple/failure/instance"),
+              "groupIdentifier": gid, "componentType": "FUNNEL",
+              "name": "Failures (inspect the queue)", "position": {"x": 580, "y": 550}}
+    group["funnels"] = [funnel]
+    for proc in procs[1:]:
+        group["connections"].append(connection("simple/failure/" + proc["type"], proc,
+                                               funnel, gid, relationships=("failure",)))
+    group["labels"] = [{"identifier": uid("simple/label"),
+                        "instanceIdentifier": uid("simple/label/instance"),
+                        "groupIdentifier": gid, "componentType": "LABEL",
+                        "position": {"x": 0, "y": 0}, "zIndex": 0,
+                        "width": 850, "height": 90,
+                        "label": "Qiskit Grover: find 10 among four possible states. "
+                                 "Start the group to run. Open reports/quickstart/qiskit-grover.html. "
+                                 "For another run, stop Start here and choose Run Once.",
+                        "style": {"background-color": "#eaf2ff", "font-size": "18px"}}]
+    return {"flowContents": group, "flowEncodingVersion": "1.0", "parameterContexts": {},
+            "externalControllerServices": {}, "parameterProviders": {}}
+
+
 def python_processor_types(defn):
     """type -> bundle version for every python-extensions processor, walking
     nested process groups."""
@@ -558,6 +618,11 @@ def main():
         json.dumps(snapshot(args.nifi_version), indent=2, ensure_ascii=False) + "\n"
     )
     print("Wrote {}".format(args.output / "grover-3x3.json"))
+
+    (args.output / "qiskit-grover.json").write_text(
+        json.dumps(simple_snapshot(args.nifi_version), indent=2, ensure_ascii=False) + "\n"
+    )
+    print("Wrote " + str(args.output / "qiskit-grover.json"))
 
     if args.run:
         args.run_output.mkdir(parents=True, exist_ok=True)

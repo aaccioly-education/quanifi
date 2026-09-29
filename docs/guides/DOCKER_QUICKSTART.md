@@ -3,12 +3,13 @@
 A fresh clone plus `docker compose up` builds and starts a lean NiFi 2.9.0
 image with eight quantum processors pre-installed, a stopped demo canvas
 already loaded, and no network calls to the NiFi API during startup. Starting
-the canvas runs a 3×3 Grover matrix — three builders (Qiskit, Cirq, Qrisp)
-times three simulators (Aer, Cirq, Qrisp) over OpenQASM 2 — and writes an HTML
-report to your host.
+the canvas runs one Qiskit Grover circuit on a local Aer simulator and writes
+an HTML report to your host. The default canvas has four processors in a
+single sequence; no comparison matrix or consensus configuration is needed.
 
-The measurements below were collected on an Apple Silicon Mac using Docker
-Desktop. They are reference measurements, not performance guarantees.
+The image measurements below were collected with the previous advanced 3×3
+example (still available separately), not the simple demo. They were collected
+on an Apple Silicon Mac using Docker Desktop. They are reference measurements, not performance guarantees.
 
 ## Prerequisites
 
@@ -54,52 +55,59 @@ log in with:
 
 ## Run the demo
 
-1. On the canvas, right-click the **"Quanifi quickstart — Grover 3×3"** group
-   and choose **Start**.
-2. The trigger (`GenerateFlowFile`) fires once, each of the three builders
-   emits a Grover circuit for the target bitstring `110`, each circuit runs on
-   all three simulators (nine cells total), and `QuantumConsensusOracle`
-   (K=9) votes once all nine branches arrive.
-3. Output lands on your host under `./reports/quickstart/`:
-   - `grover-3x3.html` — nine simulation cards plus the consensus verdict card
-     (ten cards total).
-   - `grover-3x3-consensus.html` — the same verdict card alone.
-   - `results/<uuid>` — the verdict as JSON (written by the `AttributesToJSON
-     → PutFile` tail of the canvas).
-4. **Expected result**: every cell's top measurement is `|110⟩`,
-   `assert.verdict` is `PASS`, and `consensus.max_hellinger` is below `0.10`
-   (typically ≈0.04 — Grover with 2 iterations on 3 qubits is not a perfectly
-   peaked distribution, so a small spread between simulators is normal and
-   does not indicate disagreement).
+1. On the canvas, right-click **Quanifi quickstart — Qiskit Grover** and choose
+   **Start**. Double-click the group to see this single flow:
 
-### Headless alternative
+   **Start here → Build Grover circuit → Simulate circuit → View results**
 
-Rather than clicking through the UI, run the host-side smoke tool after the
-container reports healthy (stdlib only — no venv needed, works with the
-system `python3`):
+2. Each step has one purpose:
+   - **Start here** sends an empty input to start the flow.
+   - **Build Grover circuit** uses Qiskit to search for `10` among `00`, `01`,
+     `10`, and `11`, using two qubits and one Grover iteration.
+   - **Simulate circuit** runs the circuit locally using Qiskit Aer (1,024 shots).
+   - **View results** writes the circuit and measurement results to HTML.
+3. Open `reports/quickstart/qiskit-grover.html` on your computer. The expected
+   top result is **10**, with probability **1.0** on the ideal simulator.
+   Bitstrings use qubit 0 on the left.
+
+The trigger runs immediately when started and then once per day while left
+running. For another immediate run, stop **Start here**, leave the other three
+processors running, then right-click **Start here → Run Once**. Each run adds
+one result card to the report.
+
+To try another search, stop **Build Grover circuit**, edit its **Marked State**
+to another two-bit value (for example `01`), and start it again before triggering
+the flow. Keep **Num Iterations** at `1` for this two-qubit example. Failed inputs
+are retained in the connections to the failure funnel for inspection.
+
+### Headless check
+
+After NiFi is healthy, the following starts the flow, checks the new report for
+`10` with probability at least 0.99, and stops the flow again:
 
 ```bash
 python3 tools/quickstart_smoke.py --base-url https://127.0.0.1:8443/nifi-api
 ```
 
-It logs in, confirms the canvas is present and every component is `STOPPED`,
-starts the group, polls `reports/quickstart/results/` for the verdict file,
-stops the group again, prints the 3×3 table of top results plus the verdict,
-and exits non-zero if anything is off (a wrong top, a dissenting branch, a
-high Hellinger distance, or a timeout). Add `--check-only` to only confirm the
-canvas is present and stopped, without running it.
+Use your configured host port in the URL (for example `18443`). Add
+`--check-only` to confirm the canvas is present and stopped without running it.
+The smoke check expects the default target `10`.
 
-### Why the cells differ in gate count but not in distribution
+### Existing installations
 
-Each builder implements Grover's algorithm differently — Qiskit's
-multi-controlled-X oracle, Cirq's transcribed diffuser, Qrisp's
-`tag_state`/`grovers_alg` primitives — so `circuit.gate_count` and
-`circuit.depth` vary per builder. All three are transpiled to the same basis
-gate set (`{h, x, cx, rz}`) and describe the *same* quantum circuit up to
-that difference in construction, so the measured distribution is the same
-(within simulator/shot noise) regardless of which builder produced it. That
-is the point of the interchangeable-builder pattern; see
-[`INTERCHANGEABLE_GROVER_FLOW.md`](INTERCHANGEABLE_GROVER_FLOW.md).
+Rebuilding preserves your saved canvas. To add the new example without deleting
+existing flows, drag a Process Group onto the NiFi canvas, choose the option to
+upload a flow definition, and select `demo/grover/qiskit-grover.json`. The new
+group is **Quanifi quickstart — Qiskit Grover**. Do not use `down -v` to upgrade
+an installation whose flows or reports you want to keep.
+
+### Advanced example
+
+The old matrix is available in `demo/grover/grover-3x3.json` for users who want
+to compare three builders across three simulators. Import it separately when
+ready. All its processor types remain included in the image. Its local runner is
+`python3 tools/build_grover_examples.py --run`; the default Docker smoke check
+checks only the simple Qiskit flow.
 
 ## Configuration
 
@@ -116,7 +124,7 @@ Every variable below can be set in the shell or in a `.env` file next to
 | `QUANIFI_REPORTS_DIR` | `./reports` | Host directory bind-mounted at the container's `reports/`. |
 | `QUANIFI_PROCESSORS` | `docker/processors.txt` | Path (inside the repo) to the processor list to bake in, or `all`. Rebuild after changing. |
 | `QUANIFI_PREBAKE` | `true` | Pre-install dependencies at build time. Set `false` (with `QUANIFI_PROCESSORS=all`) to let NiFi install on first use instead — slower, needs network at runtime. |
-| `QUANIFI_CANVAS` | `demo/grover/grover-3x3.json` | Flow definition baked into the image; empty string (`QUANIFI_CANVAS=`) ships no canvas. |
+| `QUANIFI_CANVAS` | `demo/grover/qiskit-grover.json` | Flow definition baked into the image; empty string (`QUANIFI_CANVAS=`) ships no canvas. |
 | `QUANIFI_AUTO_RECOVER` | `true` | Auto-restart NiFi on a detected startup wedge (bounded, see below). |
 | `QUANIFI_AUTO_RESUME` | `false` | Opt in to NiFi resuming `RUNNING` components after a restart. **Also disables auto-recovery** when set `true` (see below). |
 | `QUANIFI_MAX_RECOVERIES` | `3` | Bounded retries for automatic wedge recovery. |
@@ -300,4 +308,4 @@ the current image, then `docker compose up` again.
 translation (`docker buildx build --platform linux/amd64 -f
 docker/nifi/Dockerfile --target runtime ...`): it succeeded in **~2m20s** on
 the reference machine, and an optional full run under emulation reached
-`healthy` in **~1 minute** and passed the demo (all 9 cells `110`, PASS). These timings are specific to that machine.
+`healthy` in **~1 minute** and passed the previous advanced demo (all 9 cells `110`, PASS). These timings are specific to that machine.

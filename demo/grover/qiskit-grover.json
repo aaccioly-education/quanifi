@@ -1,0 +1,437 @@
+{
+  "flowContents": {
+    "identifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+    "instanceIdentifier": "119741ce-8dba-52a8-9bb5-585c3a2795c1",
+    "name": "Quanifi quickstart — Qiskit Grover",
+    "componentType": "PROCESS_GROUP",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "comments": "Find target 10 with two qubits and one Grover iteration.",
+    "processors": [
+      {
+        "identifier": "3f90caf7-773a-55c4-b03c-e038c042f786",
+        "instanceIdentifier": "d324a822-f094-583d-9458-d1dc8d37c6e1",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "name": "Start here",
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 0,
+          "y": 130
+        },
+        "comments": "Right-click and Run Once to send one input. Start the other three processors first.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.9.0"
+        },
+        "properties": {
+          "File Size": "0B",
+          "Batch Size": "1",
+          "Data Format": "Text",
+          "Unique FlowFiles": "false"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "1 day",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "95f95f3f-4420-59a9-9b79-d1c9571f7623",
+        "instanceIdentifier": "92e383b0-a75e-5499-a390-279a5d7752db",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "name": "Build Grover circuit",
+        "type": "QiskitGroverCircuit",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 0,
+          "y": 340
+        },
+        "comments": "Search for 10 using two qubits and one Grover iteration. Change Marked State here.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.1.0"
+        },
+        "properties": {
+          "Marked State": "10",
+          "Num Iterations": "1",
+          "Insert Barriers": "false",
+          "Output Format": "qasm2"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "98feba90-c1a9-5a83-aaba-ddef8f55f69f",
+        "instanceIdentifier": "1c143e4c-9186-5b10-81ed-a9f9a64de975",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "name": "Simulate circuit",
+        "type": "QiskitAerSimulator",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 0,
+          "y": 550
+        },
+        "comments": "Run the circuit on the local Qiskit Aer simulator with 1024 shots.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.2.0"
+        },
+        "properties": {
+          "Shots": "1024",
+          "Noise Model": "none",
+          "1-Qubit Error Rate": "0.001",
+          "2-Qubit Error Rate": "0.01",
+          "T1 (us)": "50",
+          "T2 (us)": "70",
+          "Gate Time (ns)": "100",
+          "Backend Name": "fake_manila",
+          "Readout Error Rate": "0.0",
+          "Random Seed": "11"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      },
+      {
+        "identifier": "2fc4a3aa-0258-5ca4-a80f-48c97c7beb01",
+        "instanceIdentifier": "b14b603e-58f0-59ed-aa33-c44274783ca4",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "name": "View results",
+        "type": "QuanifiReport",
+        "componentType": "PROCESSOR",
+        "position": {
+          "x": 0,
+          "y": 760
+        },
+        "comments": "Open reports/quickstart/qiskit-grover.html on your host to see the result.",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.3.1"
+        },
+        "properties": {
+          "Reports Directory": "reports/quickstart",
+          "Flow Name": "qiskit-grover",
+          "Output Mode": "Local HTML",
+          "Reports API Timeout Seconds": "10"
+        },
+        "propertyDescriptors": {},
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original",
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 0,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins"
+      }
+    ],
+    "connections": [
+      {
+        "identifier": "4256c1a1-0f12-516f-9feb-d228b052aa0b",
+        "instanceIdentifier": "25c670c1-557b-5d13-b6a7-80bdb07e6da4",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "3f90caf7-773a-55c4-b03c-e038c042f786",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Start here",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "d324a822-f094-583d-9458-d1dc8d37c6e1"
+        },
+        "destination": {
+          "id": "95f95f3f-4420-59a9-9b79-d1c9571f7623",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Build Grover circuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "92e383b0-a75e-5499-a390-279a5d7752db"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "b4771802-c3dd-546b-9bfd-9f8ed2ce58a0",
+        "instanceIdentifier": "58edeeef-f6b0-5585-a9fb-ec6afb0b35ed",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "95f95f3f-4420-59a9-9b79-d1c9571f7623",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Build Grover circuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "92e383b0-a75e-5499-a390-279a5d7752db"
+        },
+        "destination": {
+          "id": "98feba90-c1a9-5a83-aaba-ddef8f55f69f",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Simulate circuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "1c143e4c-9186-5b10-81ed-a9f9a64de975"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "a6041701-83cf-5ac8-9162-cf48a2d483c5",
+        "instanceIdentifier": "47452941-1754-56fc-98ab-fb634e370354",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "componentType": "CONNECTION",
+        "name": "success",
+        "source": {
+          "id": "98feba90-c1a9-5a83-aaba-ddef8f55f69f",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Simulate circuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "1c143e4c-9186-5b10-81ed-a9f9a64de975"
+        },
+        "destination": {
+          "id": "2fc4a3aa-0258-5ca4-a80f-48c97c7beb01",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "View results",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b14b603e-58f0-59ed-aa33-c44274783ca4"
+        },
+        "selectedRelationships": [
+          "success"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "a75512e5-0600-5c0a-b16b-a795c1157090",
+        "instanceIdentifier": "9caa0d69-3275-533d-a517-a3f647dce1aa",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "95f95f3f-4420-59a9-9b79-d1c9571f7623",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Build Grover circuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "92e383b0-a75e-5499-a390-279a5d7752db"
+        },
+        "destination": {
+          "id": "4510efbb-16f0-5fd3-9445-5f4d0dc9f583",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "28ba8691-d400-584b-8392-a93edf2ecaf2"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "4b36ea34-230c-550c-9d0a-215fc844ca74",
+        "instanceIdentifier": "ea421a25-8422-56af-8525-63af207f1000",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "98feba90-c1a9-5a83-aaba-ddef8f55f69f",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Simulate circuit",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "1c143e4c-9186-5b10-81ed-a9f9a64de975"
+        },
+        "destination": {
+          "id": "4510efbb-16f0-5fd3-9445-5f4d0dc9f583",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "28ba8691-d400-584b-8392-a93edf2ecaf2"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      },
+      {
+        "identifier": "5992a347-2fda-5b9f-a2a1-5a9d99f74652",
+        "instanceIdentifier": "d0ab8ed5-043f-51c4-ae80-4fbc38d162af",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "componentType": "CONNECTION",
+        "name": "failure",
+        "source": {
+          "id": "2fc4a3aa-0258-5ca4-a80f-48c97c7beb01",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "View results",
+          "type": "PROCESSOR",
+          "instanceIdentifier": "b14b603e-58f0-59ed-aa33-c44274783ca4"
+        },
+        "destination": {
+          "id": "4510efbb-16f0-5fd3-9445-5f4d0dc9f583",
+          "groupId": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+          "name": "Failures (inspect the queue)",
+          "type": "FUNNEL",
+          "instanceIdentifier": "28ba8691-d400-584b-8392-a93edf2ecaf2"
+        },
+        "selectedRelationships": [
+          "failure"
+        ],
+        "labelIndex": 0,
+        "zIndex": 0,
+        "bends": [],
+        "backPressureObjectThreshold": 1000,
+        "backPressureDataSizeThreshold": "100 MB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "loadBalanceCompression": "DO_NOT_COMPRESS"
+      }
+    ],
+    "labels": [
+      {
+        "identifier": "a231b495-f07a-5a8c-8e87-0025844efcf4",
+        "instanceIdentifier": "52f31519-44f0-5b67-9a34-17afa4fd620d",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "componentType": "LABEL",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 0,
+        "width": 850,
+        "height": 90,
+        "label": "Qiskit Grover: find 10 among four possible states. Start the group to run. Open reports/quickstart/qiskit-grover.html. For another run, stop Start here and choose Run Once.",
+        "style": {
+          "background-color": "#eaf2ff",
+          "font-size": "18px"
+        }
+      }
+    ],
+    "funnels": [
+      {
+        "identifier": "4510efbb-16f0-5fd3-9445-5f4d0dc9f583",
+        "instanceIdentifier": "28ba8691-d400-584b-8392-a93edf2ecaf2",
+        "groupIdentifier": "d147b572-6271-5b16-a5ff-ba875849b3d4",
+        "componentType": "FUNNEL",
+        "name": "Failures (inspect the queue)",
+        "position": {
+          "x": 580,
+          "y": 550
+        }
+      }
+    ],
+    "processGroups": [],
+    "remoteProcessGroups": [],
+    "inputPorts": [],
+    "outputPorts": [],
+    "controllerServices": [],
+    "scheduledState": "ENABLED",
+    "defaultFlowFileExpiration": "0 sec",
+    "defaultBackPressureObjectThreshold": 1000,
+    "defaultBackPressureDataSizeThreshold": "100 MB",
+    "flowFileConcurrency": "UNBOUNDED",
+    "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+    "executionEngine": "INHERITED"
+  },
+  "flowEncodingVersion": "1.0",
+  "parameterContexts": {},
+  "externalControllerServices": {},
+  "parameterProviders": {}
+}

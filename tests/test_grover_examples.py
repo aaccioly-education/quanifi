@@ -208,3 +208,36 @@ def test_execute_matrix(tmp_path):
     html = (tmp_path / "grover-3x3.html").read_text()
     assert html.count('class="run-card"') == 10
     assert (tmp_path / "grover-3x3-consensus.html").exists()
+
+
+def test_simple_snapshot_and_linear_flow():
+    current = json.loads((ROOT / 'demo/grover/qiskit-grover.json').read_text())
+    assert current == tool.simple_snapshot()
+    group = current['flowContents']
+    procs = group['processors']
+    assert [p['type'].split('.')[-1] for p in procs] == [
+        'GenerateFlowFile', 'QiskitGroverCircuit', 'QiskitAerSimulator', 'QuanifiReport']
+    successes = [c for c in group['connections'] if c['selectedRelationships'] == ['success']]
+    assert [(c['source']['id'], c['destination']['id']) for c in successes] == [
+        (a['identifier'], b['identifier']) for a, b in zip(procs, procs[1:])]
+    assert all(p['scheduledState'] != 'RUNNING' for p in procs)
+    assert procs[1]['properties']['Marked State'] == '10'
+    assert procs[1]['properties']['Num Iterations'] == '1'
+
+
+def test_simple_flow_executes_and_reports(tmp_path):
+    from conftest import MockContext, MockFlowFile, result_to_flowfile_merged
+    flowfile = MockFlowFile()
+    for proc in tool.simple_snapshot()['flowContents']['processors'][1:]:
+        properties = dict(proc['properties'])
+        if proc['type'] == 'QuanifiReport':
+            properties['Reports Directory'] = str(tmp_path)
+        result = tool.processor_class(proc['type'])().transform(MockContext(**properties), flowfile)
+        assert result.relationship == 'success'
+        flowfile = result_to_flowfile_merged(result, flowfile)
+        if proc['type'] == 'QiskitAerSimulator':
+            assert result.attributes['sim.top_result'] == '10'
+            assert float(result.attributes['sim.top_probability']) == 1.0
+    report = (tmp_path / 'qiskit-grover.html').read_text()
+    assert report.count('class="run-card"') == 1
+    assert '<td>sim.top_result</td><td>10</td>' in report

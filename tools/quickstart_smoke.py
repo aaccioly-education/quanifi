@@ -1,20 +1,9 @@
 #!/usr/bin/env python3
-"""Host-side smoke check for the Quanifi quickstart demo.
+"""Run the four-processor Qiskit Grover demo after NiFi reports healthy.
 
-Run this only *after* `docker compose ps` (or the HEALTHCHECK) reports the
-`nifi` service as healthy: it is the one tool in this project that is allowed
-to call the NiFi REST API during/after startup, because by then the Flow
-Controller has already finished starting (the log-only monitor established
-that; see docker/nifi/quanifi_monitor.py).
-
-It checks that the quickstart group is present, stopped and loaded (every
-Python processor valid). Optionally (without --check-only) it also starts the
-group, waits for the verdict JSON written by the canvas's PutFile step, and
-asserts the 3x3 Grover matrix: every cell must read |110>, and
-QuantumConsensusOracle must vote PASS with low disagreement.
-
-Stdlib only (+ nifi_ready + build_grover_examples's constants), so it runs
-under the macOS system /usr/bin/python3 (3.9) with no venv.
+Checks that the canvas is stopped, runs it, validates the newly written HTML
+report, and stops the group again. The default target is 10 (two qubits).
+The matrix evaluate_result helper is retained for advanced-example tests.
 """
 from __future__ import annotations
 
@@ -142,10 +131,10 @@ def find_group(token):
     flow = nifi_ready.call("/flow/process-groups/root", token=token)
     groups = flow["processGroupFlow"]["flow"]["processGroups"]
     for group in groups:
-        if group["component"]["name"] == grover.GROUP_NAME:
+        if group["component"]["name"] == grover.SIMPLE_GROUP_NAME:
             return group["component"]["id"]
     raise SystemExit(
-        "quickstart group {!r} not found on the canvas".format(grover.GROUP_NAME)
+        "quickstart group {!r} not found on the canvas".format(grover.SIMPLE_GROUP_NAME)
     )
 
 
@@ -212,75 +201,32 @@ def main(argv=None):
         print("canvas present, {} processors, all STOPPED".format(len(states)))
         return 0
 
-    results_dir = Path(args.reports_dir) / "quickstart" / "results"
-    before = set(results_dir.glob("*")) if results_dir.exists() else set()
-
-    put_json(
-        "/flow/process-groups/{}".format(gid), token, {"id": gid, "state": "RUNNING"}
-    )
-
-    deadline = time.time() + args.timeout
-    doc = None
-    new_file = None
-    while time.time() < deadline:
-        if results_dir.exists():
-            candidates = set(results_dir.glob("*")) - before
-            for path in candidates:
-                try:
-                    doc = json.loads(path.read_text(encoding="utf-8"))
-                    new_file = path
-                    break
-                except (OSError, ValueError):
-                    continue
-        if doc is not None:
-            break
-        time.sleep(5)
-
-    if not args.leave_running:
-        put_json(
-            "/flow/process-groups/{}".format(gid),
-            token,
-            {"id": gid, "state": "STOPPED"},
-        )
-
-    if doc is None:
-        print(
-            "quickstart_smoke: timed out after {}s waiting for a verdict file "
-            "in {}; check the failure funnel's queue on the canvas".format(
-                args.timeout, results_dir
-            )
-        )
+    report = Path(args.reports_dir) / "quickstart" / "qiskit-grover.html"
+    before = report.read_text() if report.exists() else ""
+    put_json("/flow/process-groups/" + gid, token, {"id": gid, "state": "RUNNING"})
+    try:
+        deadline = time.time() + args.timeout
+        while time.time() < deadline:
+            current = report.read_text() if report.exists() else ""
+            if current != before and 'class="run-card"' in current:
+                # Check only the latest card; earlier runs may have other targets.
+                card = current.split('<section class="run-card">', 1)[1].split('</section>', 1)[0]
+                import re
+                top = re.search(r"<td>sim.top_result</td>\s*<td>([01]+)</td>", card)
+                probability = re.search(r"<td>sim.top_probability</td>\s*<td>([0-9.]+)</td>", card)
+                if top and probability:
+                    if top.group(1) != grover.SIMPLE_TARGET or float(probability.group(1)) < 0.99:
+                        print("FAIL: unexpected Grover result", top.group(1), probability.group(1))
+                        return 1
+                    print("PASS: Qiskit Grover target=10, top=" + top.group(1)
+                          + ", probability=" + probability.group(1) + "; report=" + str(report))
+                    return 0
+            time.sleep(2)
+        print("Timed out waiting for the Grover report; inspect the failure queue.")
         return 1
-
-    print("Wrote {}".format(new_file))
-    header = ["builder \\ engine"] + grover.ENGINES
-    print(" | ".join(header))
-    branches = doc.get("consensus.branches_json", "[]")
-    if isinstance(branches, str):
-        branches = json.loads(branches) if branches else []
-    by_label = {b["label"]: b for b in branches}
-    for _, bcomp in grover.BUILDERS:
-        row = [bcomp]
-        for engine in grover.ENGINES:
-            branch = by_label.get("{} and {}".format(bcomp, engine))
-            row.append(branch["top"] if branch else "-")
-        print(" | ".join(row))
-
-    print(
-        "verdict={} max_hellinger={} report={}".format(
-            doc.get("assert.verdict"),
-            doc.get("consensus.max_hellinger"),
-            Path(args.reports_dir) / "quickstart" / "grover-3x3.html",
-        )
-    )
-
-    errors = evaluate_result(doc)
-    if errors:
-        for err in errors:
-            print("FAIL: " + err)
-        return 1
-    print("PASS")
-    return 0
+    finally:
+        if not args.leave_running:
+            put_json("/flow/process-groups/" + gid, token, {"id": gid, "state": "STOPPED"})
 
 
 if __name__ == "__main__":

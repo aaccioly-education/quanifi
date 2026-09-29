@@ -1,5 +1,5 @@
 # Quanifi quick start.
-#   docker compose up                               NiFi + the Grover 3x3 demo canvas
+#   docker compose up                               NiFi + the Qiskit Grover demo canvas
 #   docker compose --profile web up                 + the report browser (Django + Postgres)
 #   docker compose --profile test run --rm test     pytest for the shipped processors
 # Every published port binds 127.0.0.1 and is configurable with the QUANIFI_*
@@ -15,7 +15,7 @@ services:
       target: runtime
       args:
         QUANIFI_PROCESSORS: ${QUANIFI_PROCESSORS:-docker/processors.txt}
-        QUANIFI_CANVAS: ${QUANIFI_CANVAS-demo/grover/grover-3x3.json}
+        QUANIFI_CANVAS: ${QUANIFI_CANVAS-demo/grover/qiskit-grover.json}
         QUANIFI_PREBAKE: ${QUANIFI_PREBAKE:-true}
     init: true
     restart: on-failure:5
@@ -62,7 +62,7 @@ services:
       target: test
       args:
         QUANIFI_PROCESSORS: ${QUANIFI_PROCESSORS:-docker/processors.txt}
-        QUANIFI_CANVAS: ${QUANIFI_CANVAS-demo/grover/grover-3x3.json}
+        QUANIFI_CANVAS: ${QUANIFI_CANVAS-demo/grover/qiskit-grover.json}
 
   db:
     profiles: ["web"]

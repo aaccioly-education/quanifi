@@ -14,7 +14,7 @@ FROM ${UV_IMAGE} AS uv
 
 FROM ${NIFI_IMAGE} AS select
 ARG QUANIFI_PROCESSORS=docker/processors.txt
-ARG QUANIFI_CANVAS=demo/grover/grover-3x3.json
+ARG QUANIFI_CANVAS=demo/grover/qiskit-grover.json
 USER root
 WORKDIR /src
 COPY nifi_extensions/ nifi_extensions/
