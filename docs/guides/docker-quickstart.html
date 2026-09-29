@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker Quick Start — Quanifi</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-action btn-primary">Processors (69+)</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-action btn-warning">Flow Guide</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-github" title="View Source on GitHub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener" class="btn-action btn-license" title="GNU AGPL-3.0 License">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"></path>
+          </svg>
+          AGPL-3.0
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="active">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+      <div class="nav-extra">
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="nav-extra-link" title="GitHub Repository">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="docker-quickstart.html">Docker Quick Start</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="docker-quick-start">Docker quick start</h1>
+<p>A fresh clone plus <code>docker compose up</code> builds and starts a lean NiFi 2.9.0
+image with eight quantum processors pre-installed, a stopped demo canvas
+already loaded, and no network calls to the NiFi API during startup. Starting
+the canvas runs one Qiskit Grover circuit on a local Aer simulator and writes
+an HTML report to your host. The default canvas has four processors in a
+single sequence; no comparison matrix or consensus configuration is needed.</p>
+<p>The image measurements below were collected with the previous advanced 3×3
+example (still available separately), not the simple demo. They were collected
+on an Apple Silicon Mac using Docker Desktop. They are reference measurements, not performance guarantees.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Docker Desktop with Compose v2, and <code>git</code>. No Python, no NiFi, no quantum
+  libraries needed on the host to run the demo through the NiFi UI.</li>
+<li><strong>Memory</strong>: give Docker Desktop at least <strong>4 GB</strong> (Settings → Resources →
+  Memory on macOS/Windows); <strong>6 GB or more</strong> is more comfortable if you also
+  run the report browser (<code>--profile web</code>) or the test profile at the same
+  time. On the reference machine the container used <strong>1.36 GiB idle</strong> (right
+  after <code>healthy</code>, before running the demo) and <strong>2.64 GiB after</strong> the demo
+  (nine simulated circuits, incl. Qrisp's jax/jaxlib import, the single
+  largest consumer at ~570 MB). A run capped to exactly 4 GB (<code>docker update
+  --memory 4g --memory-swap 4g</code>) still passed, peaking at 2.38 GiB (60% of
+  the cap).</li>
+<li><strong>Disk</strong>: a few GB free — the runtime image (<strong>3.9 GB on disk, 1.37 GB
+  compressed</strong> on the reference machine), the NAR unpack inside the
+  container's writable layer (~1 GB, done once per fresh container), and
+  Docker's build cache.</li>
+<li>Network access during the build: the base image, the pinned <code>uv</code> image and
+  every dependency wheel are pulled from Docker Hub / ghcr.io / PyPI. The
+  build is not reproducible offline.</li>
+</ul>
+<h2 id="quick-start">Quick start</h2>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>&lt;this<span class="w"> </span>repo&gt;<span class="w"> </span>quanifi
+<span class="nb">cd</span><span class="w"> </span>quanifi
+docker<span class="w"> </span>compose<span class="w"> </span>up
+</code></pre></div>
+
+<p>Wait for <code>(healthy)</code> in <code>docker compose ps</code>, or the <code>[quanifi] READY</code> line in
+the logs (<code>docker compose logs -f nifi | grep quanifi</code> — the foreground
+<code>docker compose up</code> is otherwise verbose, since the official image tails
+<code>nifi-app.log</code>). On the reference machine (Apple Silicon, arm64) the first
+build took <strong>~1 minute</strong> on a fast connection, and a fresh container reached
+<code>healthy</code> in <strong>~30 seconds</strong>; build time depends on network speed, and startup time depends on host resources.</p>
+<p>Open <a href="https://localhost:8443/nifi">https://localhost:8443/nifi</a>, accept the self-signed certificate, and
+log in with:</p>
+<ul>
+<li><strong>Username</strong>: <code>admin</code></li>
+<li><strong>Password</strong>: <code>quanifi-demo-password</code></li>
+</ul>
+<h2 id="run-the-demo">Run the demo</h2>
+<ol>
+<li>On the canvas, right-click <strong>Quanifi quickstart — Qiskit Grover</strong> and choose
+   <strong>Start</strong>. Double-click the group to see this single flow:</li>
+</ol>
+<p><strong>Start here → Build Grover circuit → Simulate circuit → View results</strong></p>
+<ol>
+<li>Each step has one purpose:</li>
+<li><strong>Start here</strong> sends an empty input to start the flow.</li>
+<li><strong>Build Grover circuit</strong> uses Qiskit to search for <code>10</code> among <code>00</code>, <code>01</code>,
+     <code>10</code>, and <code>11</code>, using two qubits and one Grover iteration.</li>
+<li><strong>Simulate circuit</strong> runs the circuit locally using Qiskit Aer (1,024 shots).</li>
+<li><strong>View results</strong> writes the circuit and measurement results to HTML.</li>
+<li>Open <code>reports/quickstart/qiskit-grover.html</code> on your computer. The expected
+   top result is <strong>10</strong>, with probability <strong>1.0</strong> on the ideal simulator.
+   Bitstrings use qubit 0 on the left.</li>
+</ol>
+<p>The trigger runs immediately when started and then once per day while left
+running. For another immediate run, stop <strong>Start here</strong>, leave the other three
+processors running, then right-click <strong>Start here → Run Once</strong>. Each run adds
+one result card to the report.</p>
+<p>To try another search, stop <strong>Build Grover circuit</strong>, edit its <strong>Marked State</strong>
+to another two-bit value (for example <code>01</code>), and start it again before triggering
+the flow. Keep <strong>Num Iterations</strong> at <code>1</code> for this two-qubit example. Failed inputs
+are retained in the connections to the failure funnel for inspection.</p>
+<h3 id="headless-check">Headless check</h3>
+<p>After NiFi is healthy, the following starts the flow, checks the new report for
+<code>10</code> with probability at least 0.99, and stops the flow again:</p>
+<div class="codehilite"><pre><span></span><code>python3<span class="w"> </span>tools/quickstart_smoke.py<span class="w"> </span>--base-url<span class="w"> </span>https://127.0.0.1:8443/nifi-api
+</code></pre></div>
+
+<p>Use your configured host port in the URL (for example <code>18443</code>). Add
+<code>--check-only</code> to confirm the canvas is present and stopped without running it.
+The smoke check expects the default target <code>10</code>.</p>
+<h3 id="existing-installations">Existing installations</h3>
+<p>Rebuilding preserves your saved canvas. To add the new example without deleting
+existing flows, drag a Process Group onto the NiFi canvas, choose the option to
+upload a flow definition, and select <code>demo/grover/qiskit-grover.json</code>. The new
+group is <strong>Quanifi quickstart — Qiskit Grover</strong>. Do not use <code>down -v</code> to upgrade
+an installation whose flows or reports you want to keep.</p>
+<h3 id="advanced-example">Advanced example</h3>
+<p>The old matrix is available in <code>demo/grover/grover-3x3.json</code> for users who want
+to compare three builders across three simulators. Import it separately when
+ready. All its processor types remain included in the image. Its local runner is
+<code>python3 tools/build_grover_examples.py --run</code>; the default Docker smoke check
+checks only the simple Qiskit flow.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Every variable below can be set in the shell or in a <code>.env</code> file next to
+<code>compose.yaml</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QUANIFI_NIFI_PORT</code></td>
+<td><code>8443</code></td>
+<td>Host port mapped to NiFi's HTTPS port.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_NIFI_USERNAME</code></td>
+<td><code>admin</code></td>
+<td>NiFi single-user login username.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_NIFI_PASSWORD</code></td>
+<td><code>quanifi-demo-password</code></td>
+<td>NiFi single-user login password.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_SENSITIVE_PROPS_KEY</code></td>
+<td><code>quanifi-quickstart-demo-key</code></td>
+<td>NiFi encryption key for sensitive properties. Set a private key before storing real credentials; retain it with the existing flow.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_NIFI_HEAP</code></td>
+<td><code>1g</code></td>
+<td>JVM initial and max heap (<code>NIFI_JVM_HEAP_INIT</code>/<code>_MAX</code>).</td>
+</tr>
+<tr>
+<td><code>QUANIFI_REPORTS_DIR</code></td>
+<td><code>./reports</code></td>
+<td>Host directory bind-mounted at the container's <code>reports/</code>.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_PROCESSORS</code></td>
+<td><code>docker/processors.txt</code></td>
+<td>Path (inside the repo) to the processor list to bake in, or <code>all</code>. Rebuild after changing.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_PREBAKE</code></td>
+<td><code>true</code></td>
+<td>Pre-install dependencies at build time. Set <code>false</code> (with <code>QUANIFI_PROCESSORS=all</code>) to let NiFi install on first use instead — slower, needs network at runtime.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_CANVAS</code></td>
+<td><code>demo/grover/qiskit-grover.json</code></td>
+<td>Flow definition baked into the image; empty string (<code>QUANIFI_CANVAS=</code>) ships no canvas.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_AUTO_RECOVER</code></td>
+<td><code>true</code></td>
+<td>Auto-restart NiFi on a detected startup wedge (bounded, see below).</td>
+</tr>
+<tr>
+<td><code>QUANIFI_AUTO_RESUME</code></td>
+<td><code>false</code></td>
+<td>Opt in to NiFi resuming <code>RUNNING</code> components after a restart. <strong>Also disables auto-recovery</strong> when set <code>true</code> (see below).</td>
+</tr>
+<tr>
+<td><code>QUANIFI_MAX_RECOVERIES</code></td>
+<td><code>3</code></td>
+<td>Bounded retries for automatic wedge recovery.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_STALL_SECONDS</code></td>
+<td><code>240</code></td>
+<td>Seconds of no progress after "Starting Flow Controller" before a stall is declared.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_WEB_PORT</code></td>
+<td><code>8080</code></td>
+<td>Host port mapped to the report browser (<code>--profile web</code>).</td>
+</tr>
+<tr>
+<td><code>QUANIFI_ADMIN_EMAIL</code></td>
+<td><code>admin@example.com</code></td>
+<td>Report browser's bootstrap administrator email.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_ADMIN_PASSWORD</code></td>
+<td><code>quanifi-demo-password</code></td>
+<td>Report browser's bootstrap administrator password.</td>
+</tr>
+<tr>
+<td><code>REPORT_INGESTION_TOKEN</code></td>
+<td><code>local-ingestion-token</code></td>
+<td>Bearer token the report browser accepts on <code>/api/v1/report-runs/</code>.</td>
+</tr>
+<tr>
+<td><code>DJANGO_SECRET_KEY</code></td>
+<td><code>local-only-development-key</code></td>
+<td>Report browser's Django secret key.</td>
+</tr>
+<tr>
+<td><code>QUANIFI_DB_PASSWORD</code></td>
+<td><code>local-only-password</code></td>
+<td>Postgres password for the report browser's database.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="stopping-and-resetting">Stopping and resetting</h2>
+<ul>
+<li><code>docker compose down</code> stops the container but <strong>keeps every volume</strong>,
+  including the canvas in <code>conf/</code>.</li>
+<li><code>docker compose down -v</code> also removes the volumes — the next <code>up</code> starts
+  from a fresh, unconfigured NiFi, and the canvas is re-seeded.</li>
+<li>After pulling new code: <code>docker compose up --build</code>. Because <code>conf/</code> is a
+  volume, the entrypoint re-applies <code>nifi.properties</code> settings on every start
+  but <strong>never overwrites an existing <code>flow.json.gz</code></strong> — so a changed demo
+  canvas only takes effect after <code>docker compose down -v</code>.</li>
+</ul>
+<h2 id="restarts-never-resume-anything">Restarts never resume anything</h2>
+<p>NiFi 2.9.0's <code>autoResumeState</code> controls whether components that were
+<code>RUNNING</code> before a restart resume automatically afterwards. The entrypoint
+sets it to <code>false</code> on every start (including an automatic wedge-recovery
+restart), so <strong>every restart leaves the canvas <code>STOPPED</code></strong>, regardless of
+what state it was in before. This closes a real hazard: a NiFi process that
+restarts with <code>autoResumeState=true</code> re-fires every <code>RUNNING</code> group
+immediately, which on a canvas that submits to real quantum hardware means
+spending quota twice for one restart. Set <code>QUANIFI_AUTO_RESUME=true</code> to opt
+out of this protection (NiFi's normal behaviour) — doing so also disables
+automatic wedge recovery, since a recovery restart with auto-resume enabled
+would itself be exactly that hazard.</p>
+<h2 id="adding-processors-to-the-image">Adding processors to the image</h2>
+<blockquote>
+<p><strong>The Docker quickstart does not install the full processor catalogue.</strong>
+Only the classes in <a href="https://github.com/saeg/quanifi/blob/main/docker/processors.txt"><code>docker/processors.txt</code></a>
+are included. A processor documented elsewhere may therefore be missing from
+NiFi's Add Processor dialog until you rebuild the image with it enabled.</p>
+</blockquote>
+<h3 id="enable-selected-processors-recommended">Enable selected processors (recommended)</h3>
+<p>Edit <code>docker/processors.txt</code> and add one existing processor class name per line,
+without <code>.py</code>. For example, append <code>QiskitQFTCircuit</code> to enable that processor. Keep the
+existing entries so your saved flows continue to work. Then rebuild and recreate
+NiFi:</p>
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build<span class="w"> </span>nifi
+</code></pre></div>
+
+<p>Wait until NiFi is healthy, refresh the canvas, and find the new class in
+<strong>Add Processor</strong>. Existing flows are preserved and start stopped. Adding a class
+to the image makes it available; it does not add it to your canvas automatically.
+A plain <code>docker compose restart</code> does not rebuild the image.</p>
+<h3 id="choose-a-separate-list-using-env">Choose a separate list using .env</h3>
+<p>To keep your own selection separate, copy <code>docker/processors.txt</code> to
+<code>docker/my-processors.txt</code>, then add class names to the copy. Add or update this
+setting in <code>.env</code> beside <code>compose.yaml</code>, keeping any existing settings:</p>
+<div class="codehilite"><pre><span></span><code>QUANIFI_PROCESSORS=docker/my-processors.txt
+QUANIFI_PREBAKE=true
+</code></pre></div>
+
+<p>Run <code>docker compose up -d --build nifi</code>. The list must be inside the repository.
+Keeping it under <code>docker/</code> includes it in the build context; a list elsewhere
+must also be permitted by <code>.dockerignore</code> and copied into the Dockerfile's
+selection stage. List processor classes only, not helper modules.</p>
+<h3 id="make-all-processors-available">Make all processors available</h3>
+<p>For the complete catalogue, set these values in the same local <code>.env</code> file:</p>
+<div class="codehilite"><pre><span></span><code>QUANIFI_PROCESSORS=all
+QUANIFI_PREBAKE=false
+</code></pre></div>
+
+<p>Then run <code>docker compose up -d --build nifi</code>. This copies every processor in
+<code>nifi_extensions/</code>; NiFi installs dependencies as it loads the processors.
+Startup can take substantially longer and requires network access and more
+resources. Framework-specific external services, credentials, or hardware access
+still need their own configuration. Selecting all processors does not configure
+those services.</p>
+<h3 id="dependency-and-extension-details">Dependency and extension details</h3>
+<ul>
+<li>With <code>QUANIFI_PREBAKE=true</code> (the default), dependencies are installed during
+  the build using <code>uv.lock</code> and the overrides in <code>pyproject.toml</code>. With pre-baking
+  disabled, NiFi installs the dependencies declared by each processor at runtime.</li>
+<li>Helper modules such as <code>reporting.py</code> are picked up automatically.</li>
+<li>A processor must not import another processor module: NiFi loads processors
+  in isolated module contexts. The image build rejects these imports.</li>
+<li>To implement a new processor class, see <a href="creating-processors.html">Creating processors</a>,
+  then include its class name in your Docker selection and rebuild.</li>
+</ul>
+<h2 id="report-browser-profile-web">Report browser (<code>--profile web</code>)</h2>
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>--profile<span class="w"> </span>web<span class="w"> </span>up
+</code></pre></div>
+
+<p>Starts Postgres and the Django report browser, running migrations and the
+administrator bootstrap automatically on start. Open
+<a href="http://localhost:8080/">http://localhost:8080/</a>, log in with <code>QUANIFI_ADMIN_EMAIL</code> /
+<code>QUANIFI_ADMIN_PASSWORD</code> (defaults above).</p>
+<p>QuanifiReport is <strong>not</strong> wired to the web profile by default: its <code>Reports
+API Token</code> property is <em>sensitive</em>, so NiFi will not let it be baked into the
+committed <code>flow.json.gz</code> in plain text. To wire a QuanifiReport instance on
+the canvas to the browser manually, set on that processor:</p>
+<ul>
+<li><code>Output Mode</code> = <code>Both</code> (or <code>Web API</code> to skip the local HTML file)</li>
+<li><code>Reports API URL</code> = <code>http://web:8080/api/v1/report-runs/</code></li>
+<li><code>Reports API Token</code> = the value of <code>REPORT_INGESTION_TOKEN</code> (default
+  <code>local-ingestion-token</code>)</li>
+</ul>
+<p>Both services share the Compose project's network, and <code>web</code> is already in
+<code>DJANGO_ALLOWED_HOSTS</code>.</p>
+<p>For live-reloading development on the report browser's own code (not part of
+the quick start):</p>
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>compose.yaml<span class="w"> </span>-f<span class="w"> </span>compose.web-dev.yaml<span class="w"> </span>--profile<span class="w"> </span>web<span class="w"> </span>up
+</code></pre></div>
+
+<h2 id="tests-in-docker-profile-test">Tests in Docker (<code>--profile test</code>)</h2>
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>--profile<span class="w"> </span><span class="nb">test</span><span class="w"> </span>build<span class="w"> </span><span class="nb">test</span>
+docker<span class="w"> </span>compose<span class="w"> </span>--profile<span class="w"> </span><span class="nb">test</span><span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+
+<p>Runs the modules listed in <code>docker/test-files.txt</code> — the tests whose imports
+are fully satisfied by the processors in <code>docker/processors.txt</code> and their
+pinned dependencies — inside a venv built the same way the runtime image's
+per-processor venvs are (one venv, the union of every shipped processor's
+dependencies, plus pytest). This is deliberately a small subset: a
+full-suite test image would need the entire research stack (pyQuil +
+rigetti-quax, Braket, the Q#/QDK toolchain, PennyLane, OpenFermion + PySCF,
+IQM), several GB beyond what the lean quickstart needs. The full suite
+already runs on the host with <code>just test</code>.</p>
+<h2 id="what-goes-into-the-images">What goes into the images</h2>
+<p><code>.dockerignore</code> is a strict <strong>allowlist</strong>: it starts with <code>*</code> (deny
+everything), then re-allows only the paths an image actually <code>COPY</code>s, then
+re-denies a set of secret-shaped patterns (<code>*token*</code>, <code>*key*</code>, <code>*credential*</code>,
+<code>.env*</code>, certificate/keystore extensions, <code>db.sqlite3</code>) even inside an
+allowed directory. This matters because this working tree can hold real
+provider credential files (IBM/IQM/Open Quantum key and token files) whose
+names follow no single convention — the allowlist means a new credential file
+dropped anywhere in the repo never reaches a build context by default,
+instead of relying on remembering to add it to a denylist.</p>
+<p>To audit what a build would actually send, from a clean clone:</p>
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--no-cache<span class="w"> </span>--progress<span class="o">=</span>plain<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span>.<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">FROM busybox:1.36</span>
+<span class="s">COPY . /ctx</span>
+<span class="s">RUN find /ctx -type f | sort</span>
+<span class="s">EOF</span>
+</code></pre></div>
+
+<p>A previous audit with eight decoy credential files found none in the build
+context. Repeat this check after changing the allowlist.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p><strong>Wedged start.</strong> NiFi 2.9's Python bridge can occasionally hang during
+startup (the "py4j startup wedge") — no more Python processors load and the
+Flow Controller never finishes initializing. The log-only monitor
+(<code>docker/nifi/quanifi_monitor.py</code>) detects this without ever calling the NiFi
+API (which would itself risk triggering the same wedge): if <code>QUANIFI_STALL_SECONDS</code>
+pass with no new "Successfully loaded Python Processor" record and no install
+progress after "Starting Flow Controller" was logged, it kills the NiFi JVMs,
+the container exits non-zero, and Compose's <code>restart: on-failure:5</code> starts it
+again — up to <code>QUANIFI_MAX_RECOVERIES</code> times. Because <code>autoResumeState=false</code>
+on every start, a recovered start always comes back with the canvas
+<code>STOPPED</code>: nothing re-fires.</p>
+<ul>
+<li>Check the current state: <code>docker compose exec nifi cat /tmp/quanifi/status.json</code>.</li>
+<li>Watch the monitor's own messages: <code>docker compose logs -f nifi | grep quanifi</code>.</li>
+<li>If recovery is exhausted (<code>recovery limit reached (N/N)</code>), the health check
+  reports <code>unhealthy</code> and stays that way; a manual <code>docker compose restart
+  nifi</code> resets the recovery counter (a fresh container start) and is safe for
+  the same reason automatic recovery is safe — the canvas never auto-resumes.</li>
+</ul>
+<p><strong>Port already in use.</strong> The default ports (8443, 8080) may collide with
+another NiFi or web service on your machine. Override
+<code>QUANIFI_NIFI_PORT</code>/<code>QUANIFI_WEB_PORT</code>.</p>
+<p><strong>Out of memory.</strong> An exit code of 137 (visible in <code>docker compose ps</code> or
+<code>docker inspect</code>) means the kernel OOM-killed the container. Check
+<code>docker stats</code> while the demo runs and increase Docker Desktop's memory
+limit (see Prerequisites).</p>
+<p><strong>Permission denied writing to <code>reports/</code> on Linux.</strong> The container runs as
+uid 1000. If your host <code>reports/</code> directory is owned by a different uid,
+<code>mkdir -p reports &amp;&amp; sudo chown 1000:1000 reports</code> (or run
+<code>id -u</code>/<code>id -g</code> and match those). The entrypoint logs a warning at startup if
+<code>reports/</code> is not writable.</p>
+<p><strong>A newly added processor is stuck "Initializing" after
+<code>QUANIFI_PREBAKE=false</code>.</strong> NiFi is downloading that processor's dependencies
+from PyPI on first use; this needs network access from inside the container
+and can take a while for a large dependency tree. Watch
+<code>docker compose logs -f nifi</code> for <code>Installing dependencies</code> lines.</p>
+<p><strong>Canvas shows components NiFi calls invalid / the monitor reports
+<code>broken: canvas uses processor types not baked into this image</code>.</strong> The
+<code>conf/flow.json.gz</code> volume was seeded by a different image build than the one
+now running (for example, you changed <code>docker/processors.txt</code> and rebuilt
+without <code>down -v</code>). Run <code>docker compose down -v</code> to get a canvas that matches
+the current image, then <code>docker compose up</code> again.</p>
+<p><strong>Apple Silicon vs amd64.</strong> The image builds and runs natively on
+<code>linux/arm64</code>. An <code>amd64</code> build was verified under Docker Desktop's Rosetta
+translation (<code>docker buildx build --platform linux/amd64 -f
+docker/nifi/Dockerfile --target runtime ...</code>): it succeeded in <strong>~2m20s</strong> on
+the reference machine, and an optional full run under emulation reached
+<code>healthy</code> in <strong>~1 minute</strong> and passed the previous advanced demo (all 9 cells <code>110</code>, PASS). These timings are specific to that machine.</p>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Compatible with Qiskit, Cirq, Qrisp, pyQuil, and PennyLane across local simulators and quantum cloud hardware.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Quantum Ecosystem</h3>
+          <ul>
+            <li><a href="../guides/qaoa-components.html">QAOA Cross-Framework Matrix</a></li>
+            <li><a href="../guides/pyquil-components.html">Rigetti pyQuil Integration</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Differential Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing (Layers A/B)</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Code &amp; Licenses</h3>
+          <p>Free and open source quantum orchestration under the GNU AGPL-3.0, with commercial licensing available.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">GNU AGPL-3.0 License</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial License Terms</a></li>
+            <li><a href="https://github.com/saeg/quanifi/releases" target="_blank" rel="noopener">Release Notes</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Quanifi Documentation &bull; Dual-licensed under <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">GNU AGPL-3.0</a> and <a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a> &bull; Source code hosted on <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

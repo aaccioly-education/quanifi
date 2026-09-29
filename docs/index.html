@@ -207,6 +207,13 @@
 
       <article>
         <h1 id="quanifi-documentation">Quanifi documentation</h1>
+<blockquote>
+<p><strong>Docker users: only a subset of processors is installed by default.</strong>
+The full catalogue includes processors that are not in the quickstart image.
+Add the processors you need to <code>docker/processors.txt</code>, then run
+<code>docker compose up -d --build nifi</code>. You can also select a custom list or all
+processors through <code>.env</code>. <a href="guides/docker-quickstart.html#adding-processors-to-the-image">Enable additional processors</a>.</p>
+</blockquote>
 <p>This directory contains documentation for users and framework contributors.
 Research plans, experiment protocols and generated study reports are maintained
 in separate repositories.</p>
@@ -216,6 +223,7 @@ in separate repositories.</p>
 </ul>
 <h2 id="framework-guides">Framework guides</h2>
 <ul>
+<li><a href="guides/docker-quickstart.html">Docker quick start</a></li>
 <li><a href="guides/developer-guide.html">Developer guide</a></li>
 <li><a href="guides/creating-processors.html">Creating processors</a></li>
 <li><a href="guides/nifi-flow-configuration-guide.html">Configuring flows on the NiFi canvas</a></li>

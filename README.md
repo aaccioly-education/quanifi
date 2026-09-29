@@ -14,6 +14,12 @@ results, and internal development material are maintained separately.
 
 ## Quick start (Docker)
 
+> **Docker users: only a subset of processors is installed by default.**
+> The full catalogue includes processors that are not in the quickstart image.
+> Add the processors you need to `docker/processors.txt`, then run
+> `docker compose up -d --build nifi`. You can also select a custom list or all
+> processors through `.env`. [Enable additional processors](docs/guides/DOCKER_QUICKSTART.md#adding-processors-to-the-image).
+
 ```bash
 git clone <this repo> quanifi
 cd quanifi

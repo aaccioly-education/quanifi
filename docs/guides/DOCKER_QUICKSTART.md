@@ -163,23 +163,69 @@ would itself be exactly that hazard.
 
 ## Adding processors to the image
 
-- Edit `docker/processors.txt` (one class name per line, `#` comments
-  allowed), or point `QUANIFI_PROCESSORS` at another list file **inside the
-  repo** (it must also be allowlisted in `.dockerignore` if it lives outside
-  the paths already allowed). Rebuild with `docker compose build nifi`.
-- `QUANIFI_PROCESSORS=all QUANIFI_PREBAKE=false docker compose build nifi`
-  bakes in every processor in `nifi_extensions/` without pre-installing any
-  dependencies; NiFi installs each processor's dependencies from PyPI the
-  first time it loads, which is slow and needs network access from inside the
-  container at runtime.
-- Dependency versions always come from this repo's `uv.lock`, plus the
-  `jax`/`jaxlib` override in `pyproject.toml`.
-- A processor's helper modules (plain Python files it imports, like
-  `reporting.py`) are picked up automatically — you never need to list them.
-- **A processor may not import another processor module.** NiFi loads each
-  processor in its own isolated module context, so importing one processor
-  from another creates a "ghost component": working code that is invisible on
-  every canvas. The build fails loudly if you try.
+> **The Docker quickstart does not install the full processor catalogue.**
+> Only the classes in [`docker/processors.txt`](https://github.com/saeg/quanifi/blob/main/docker/processors.txt)
+> are included. A processor documented elsewhere may therefore be missing from
+> NiFi's Add Processor dialog until you rebuild the image with it enabled.
+
+### Enable selected processors (recommended)
+
+Edit `docker/processors.txt` and add one existing processor class name per line,
+without `.py`. For example, append `QiskitQFTCircuit` to enable that processor. Keep the
+existing entries so your saved flows continue to work. Then rebuild and recreate
+NiFi:
+
+```bash
+docker compose up -d --build nifi
+```
+
+Wait until NiFi is healthy, refresh the canvas, and find the new class in
+**Add Processor**. Existing flows are preserved and start stopped. Adding a class
+to the image makes it available; it does not add it to your canvas automatically.
+A plain `docker compose restart` does not rebuild the image.
+
+### Choose a separate list using .env
+
+To keep your own selection separate, copy `docker/processors.txt` to
+`docker/my-processors.txt`, then add class names to the copy. Add or update this
+setting in `.env` beside `compose.yaml`, keeping any existing settings:
+
+```dotenv
+QUANIFI_PROCESSORS=docker/my-processors.txt
+QUANIFI_PREBAKE=true
+```
+
+Run `docker compose up -d --build nifi`. The list must be inside the repository.
+Keeping it under `docker/` includes it in the build context; a list elsewhere
+must also be permitted by `.dockerignore` and copied into the Dockerfile's
+selection stage. List processor classes only, not helper modules.
+
+### Make all processors available
+
+For the complete catalogue, set these values in the same local `.env` file:
+
+```dotenv
+QUANIFI_PROCESSORS=all
+QUANIFI_PREBAKE=false
+```
+
+Then run `docker compose up -d --build nifi`. This copies every processor in
+`nifi_extensions/`; NiFi installs dependencies as it loads the processors.
+Startup can take substantially longer and requires network access and more
+resources. Framework-specific external services, credentials, or hardware access
+still need their own configuration. Selecting all processors does not configure
+those services.
+
+### Dependency and extension details
+
+- With `QUANIFI_PREBAKE=true` (the default), dependencies are installed during
+  the build using `uv.lock` and the overrides in `pyproject.toml`. With pre-baking
+  disabled, NiFi installs the dependencies declared by each processor at runtime.
+- Helper modules such as `reporting.py` are picked up automatically.
+- A processor must not import another processor module: NiFi loads processors
+  in isolated module contexts. The image build rejects these imports.
+- To implement a new processor class, see [Creating processors](CREATING_PROCESSORS.md),
+  then include its class name in your Docker selection and rebuild.
 
 ## Report browser (`--profile web`)
 

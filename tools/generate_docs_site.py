@@ -20,6 +20,7 @@ TUTORIALS_DIR = DOCS_DIR / "tutorials"
 GUIDES_SRC_DIR = PROJECT_ROOT / "guides"
 
 PAGES_MAP = [
+    ("guides/DOCKER_QUICKSTART.md", "guides/docker-quickstart.html", "Docker Quick Start — Quanifi", "guides", [("Home", "../index.html"), ("Docker Quick Start", "docker-quickstart.html")]),
     # (source_rel_path, target_rel_path, page_title, active_tab, breadcrumb)
     ("README.md", "index.html", "Quanifi Documentation — Visual Quantum Software Engineering", "home", [("Home", "index.html")]),
     ("COMPONENTS.md", "components.html", "Component Reference — Quanifi Processor Catalogue", "components", [("Home", "index.html"), ("Components", "components.html")]),
@@ -37,6 +38,8 @@ PAGES_MAP = [
 ]
 
 LINK_REPLACEMENTS = [
+    (r'guides/DOCKER_QUICKSTART\.md', 'guides/docker-quickstart.html'),
+    (r'DOCKER_QUICKSTART\.md', 'docker-quickstart.html'),
     (r'COMPONENTS\.md', 'components.html'),
     (r'\.\./COMPONENTS\.md', '../components.html'),
     (r'guides/DEVELOPER_GUIDE\.md', 'guides/developer-guide.html'),

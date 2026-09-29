@@ -151,6 +151,13 @@
 
       <article>
         <h1 id="component-reference">Component reference</h1>
+<blockquote>
+<p><strong>Docker users: only a subset of processors is installed by default.</strong>
+The full catalogue includes processors that are not in the quickstart image.
+Add the processors you need to <code>docker/processors.txt</code>, then run
+<code>docker compose up -d --build nifi</code>. You can also select a custom list or all
+processors through <code>.env</code>. <a href="guides/docker-quickstart.html#adding-processors-to-the-image">Enable additional processors</a>.</p>
+</blockquote>
 <p>Every NiFi processor Quanifi ships, one row each, generated from each
 processor's own <code>ProcessorDetails.description</code> in
 <a href="https://github.com/saeg/quanifi/tree/main/nifi_extensions/"><code>nifi_extensions/</code></a> (69 processors as of 2026-07-04;
@@ -310,9 +317,13 @@ differential/mutation-testing processors below.</p>
 <td><code>QrispQAOACircuit</code></td>
 <td>Fixed-angle QAOA builder (NxM row): Qrisp's <code>QAOAProblem</code> cost operator + mixer, without training, bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator. Qrisp's per-qubit registers are normalised to one qreg; the XY mixer is rebased to <code>{h,x,rx,ry,rz,cx}</code>.</td>
 </tr>
+<tr>
+<td><code>QrispGroverCircuit</code></td>
+<td>Builds a Grover search circuit for a target bitstring with Qrisp's <code>tag_state</code> oracle and <code>grovers_alg</code> (fixed Num Iterations), emitted as portable OpenQASM 2.0 (one <code>qreg</code>, gates <code>{h,x,cx,rz}</code>) so any counts engine can run it. The Qrisp row of the Grover builder matrix (see the Docker quickstart); 1–8 qubits.</td>
+</tr>
 </tbody>
 </table>
-<p><em>(Qrisp has no standalone <code>GroverOperator</code>/<code>PhaseOracle</code>/<code>GroverCircuit</code> — see <code>QrispGroverSearch</code> under Algorithms.)</em></p>
+<p><em>(Qrisp has no standalone <code>GroverOperator</code>/<code>PhaseOracle</code>; <code>QrispGroverCircuit</code> builds the whole circuit, and <code>QrispGroverSearch</code> under Algorithms builds and runs it in one step.)</em></p>
 <h3 id="pennylane-circuit-emitting">PennyLane (circuit-emitting)</h3>
 <table>
 <thead>
