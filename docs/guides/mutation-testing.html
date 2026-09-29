@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mutation Testing for Quantum Computing Flows</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="active">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li class="active"><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="data-driven-testing.html">Testing</a> <span class="sep">&rsaquo;</span> <a href="mutation-testing.html">Mutation Testing</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="mutation-testing-for-quanifi">Mutation testing for Quanifi</h1>
+<blockquote>
+<p>Design doc + build log. Captures the two-layer mutation model, how it maps to
+the QMutBench/Muskit literature, the <strong>decisions taken</strong> (§A), what is <strong>already
+implemented</strong> (§B), and the remaining build order (§7, the resume point).</p>
+</blockquote>
+<h2 id="0-tldr">0. TL;DR</h2>
+<ul>
+<li>Quanifi can mutate at <strong>two layers</strong>: gate-level circuit content (the
+  QMutBench port, Layer A — <em>built</em>, <code>QuantumMutator</code>) and <strong>high-level
+  config/EL knobs</strong> (Layer B, quanifi-native — <em>built</em>). We did Layer B first.</li>
+<li><strong>Terminology (be precise in the write-up).</strong> Only <strong>Layer A is mutation
+  testing in the classical DeMillo/Offutt sense</strong>: it injects syntactic faults
+  into the <em>program artifact</em> (the circuit), and the kill rate measures the
+  test harness's fault-detection adequacy. <strong>Layer B mutates the test-case
+  parameters, not the program</strong> — present it as <em>configuration fault
+  injection</em> that measures <strong>oracle sensitivity</strong> (how reliably the consensus</li>
+<li>ground-truth oracle notices a corrupted run), not as mutation testing per
+  se. The structural tell: Layer-B mutants keep the base row's correct
+  <code>test.expected</code> while the input changes — the inversion of the classical
+  kill criterion, where the input stays fixed and the <em>program's</em> output is
+  compared against the original's. The two layers share the <code>mut.*</code>
+  bookkeeping, the oracle, and <code>MutationScoreReport</code>; only the injection
+  point — and therefore the claim each survival rate supports — differs.</li>
+<li>Mutants are judged by a <strong>K-way majority oracle</strong> across the framework
+  branches. Two checks, in severity order: <strong>DISAGREE</strong> (a branch dissents from
+  the majority — the cross-framework differential signal) and <strong>FAIL</strong> (branches
+  agree but the majority answer is wrong vs ground truth — catches whole-case
+  mutants that every branch gets equally wrong). <code>PASS</code> = agree (and correct).</li>
+<li>Both loops are <strong>end-to-end in code and tested</strong> (481 tests green). Layer B:
+  <code>QuantumTestCaseSource</code> (mutation pass) → branches → <code>QuantumConsensusOracle</code>
+  (K-way verdict) → <code>MutationScoreReport</code> (survival rate). Layer A:
+  <code>QuantumMutator</code> between one branch's builder and simulator, same oracle and
+  report. What remains is the canvas wiring + first live runs (§7 step 3,
+  MUTATION_CANVAS_TESTING.md Stage 8).</li>
+<li><strong>Controls (<code>mut.applied=false</code>) are excluded from the survival rate</strong>; a
+  dissenting control is a real cross-framework discrepancy, surfaced separately,
+  never a kill (see §3, DISSERTATION.md).</li>
+<li>Adopt QMutBench's <strong>survival-rate</strong> metric and <strong>position-interval bins</strong>
+  (0–10%, …, 90–100%) so results are comparable to the published dataset.</li>
+</ul>
+<h2 id="a-decisions-taken">A. Decisions taken</h2>
+<ol>
+<li><strong>Layer B first.</strong> Build the config/EL mutator before the gate-level Layer-A
+   <code>QuantumMutator</code>, because the EL knobs are quanifi's native abstraction
+   surface and reuse the existing EL attribute contract end-to-end.</li>
+<li><strong>Mutate in the test-case source, not a separate wire processor.</strong> A NiFi
+   processor can't touch another's <em>properties</em>, only the FlowFile. The knobs are
+   already EL-driven from attributes, so the mutation pass lives in
+   <code>QuantumTestCaseSource</code> and rewrites the shared attribute namespace.</li>
+<li><strong>K-way majority oracle, not 2-way.</strong> New <code>QuantumConsensusOracle</code> collects K
+   branches and votes, generalising <code>QuantumDistributionComparison</code> +
+   <code>QuantumAssertion</code>. The old 2-way processors stay for side-by-side reports and
+   other flows; they are not removed.</li>
+<li><strong>Fold ground truth into the oracle.</strong> Pure consensus can't see a whole-case
+   mutant (all branches share the fault and agree). The oracle therefore also
+   FAILs an agreed-but-wrong answer vs <code>test.expected</code>. DISAGREE = single-branch
+   dissent; FAIL = whole-case shared fault; both → killed. (See §3.)</li>
+<li><strong>Endian-agnostic voting</strong> via <code>_canonical(s)=min(s, s[::-1])</code> so framework
+   bit-order conventions are not false disagreements.</li>
+<li><strong>Controls excluded from the score; control dissents surfaced separately</strong>
+   (dedicated <code>control_dissent</code> relationship). A real framework discrepancy must
+   never masquerade as a mutation kill (DISSERTATION.md).</li>
+<li><strong>Reproducibility</strong> via <code>Mutation Seed</code> → per-mutant derived <code>mut.seed</code>.</li>
+<li><strong>Backward compatibility:</strong> with no <code>Mutation Operators</code> configured,
+   <code>QuantumTestCaseSource</code> output is byte-for-byte the legacy behaviour.</li>
+<li><strong>Dropdown-vs-EL override pattern (NiFi UI constraint).</strong> A property with
+   <code>allowable_values</code> renders as a constrained dropdown and <strong>cannot accept
+   Expression Language</strong> — so an attribute-driven mutation can't reach it. Where
+   a knob must stay a discoverable menu <em>and</em> be data-driven, keep the dropdown
+   and add an optional free-text companion <code>&lt;Name&gt; (EL)</code> that overrides it when
+   non-empty (<code>override or dropdown</code>). <strong>Applied to <code>Noise Model</code> on
+   <code>QiskitAerSimulator</code> + <code>CirqSimulator</code></strong> (<code>Noise Model (EL)</code>), so <code>noise.inject</code>
+   is canvas-drivable. The same one-property-companion fix applies to
+   <code>Output Format</code> (<code>format.swap</code>) and <code>Insert Barriers</code> (<code>barriers.toggle</code>) when
+   those operators need to run on the canvas — until then they are covered by the
+   unit tests only. Equivalent mutants (barriers / serialization) are better
+   produced at the content level by the Layer-A <code>QuantumMutator</code> anyway (§7).</li>
+</ol>
+<h2 id="b-implemented-components-build-log">B. Implemented components (build log)</h2>
+<p>All in the working tree, <strong>not committed</strong>; full suite <strong>402 passed</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>File</th>
+<th>Role</th>
+<th>Tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gate-level mutator (Layer A)</td>
+<td><code>nifi_extensions/QuantumMutator.py</code></td>
+<td>sits builder→simulator on one branch; parses qasm2/qasm3, applies one of <code>gate.add</code> / <code>gate.remove</code> / <code>gate.replace</code> / <code>rotation.perturb</code> from <code>_GATE_MUTATION_OPERATORS</code>, re-emits same format + full <code>mut.*</code> (incl. <code>mut.gate/position/position_interval/original_format</code>); controls (<code>mut.applied=false</code>) and Layer-B mutants pass through unmutated</td>
+<td><code>tests/test_quantum_mutator.py</code> (+21)</td>
+</tr>
+<tr>
+<td>Mutation pass (Layer B)</td>
+<td><code>nifi_extensions/QuantumTestCaseSource.py</code></td>
+<td><code>Mutation Operators</code> / <code>Mutants Per Row</code> / <code>Mutation Seed</code>; expands each base row → 1 control + cycled mutants with <code>mut.*</code>; 8 operators in <code>_MUTATION_OPERATORS</code>; <code>testsource.mutated/mutants/controls</code> summary</td>
+<td><code>tests/test_testcase_source.py</code> (+24)</td>
+</tr>
+<tr>
+<td>K-way oracle</td>
+<td><code>nifi_extensions/QuantumConsensusOracle.py</code></td>
+<td>collects K branch distributions per slot, majority vote (endian-agnostic) + ground-truth check → <code>assert.verdict</code> PASS/FAIL/DISAGREE + <code>consensus.*</code>; passes <code>mut.*</code>/<code>test.*</code> through; relationships <code>pass</code>/<code>fail</code>/<code>waiting</code></td>
+<td><code>tests/test_consensus_oracle.py</code> (+18)</td>
+</tr>
+<tr>
+<td>Survival-rate aggregator</td>
+<td><code>nifi_extensions/MutationScoreReport.py</code></td>
+<td>accumulates verdicts per <code>test.run_id</code> (dedup by case id), survival rate per operator, controls excluded, <code>control_dissent</code> relationship, HTML report + <code>mutation.*</code> attrs</td>
+<td><code>tests/test_mutation_score.py</code> (+11)</td>
+</tr>
+<tr>
+<td>Test harness</td>
+<td><code>tests/conftest.py</code></td>
+<td>added <code>nifiapi.relationship.Relationship</code> stub</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Pure cores are unit-tested independently of NiFi/filesystem: <code>_MUTATION_OPERATORS</code>
++ <code>_derive_seed</code>; <code>_consensus</code> / <code>_canonical</code> / <code>_gt_match</code>; <code>_score</code> /
+<code>_classify</code>.</p>
+<p><strong>Key emitted attributes (the inter-processor contract):</strong>
+- mutation pass → <code>mut.applied</code>, <code>mut.operator</code>, <code>mut.target_attr</code>,
+  <code>mut.original_value</code>, <code>mut.seed</code>, <code>mut.base_case_id</code>
+- oracle → <code>assert.verdict</code>, <code>assert.reason</code>, <code>consensus.majority_top</code>,
+  <code>consensus.dissenters</code>, <code>consensus.dissenter_count</code>, <code>consensus.max_hellinger</code>
+- aggregator → <code>mutation.survival_rate</code>, <code>mutation.mutation_score</code>,
+  <code>mutation.mutants/survived/killed/controls/controls_dissenting</code></p>
+<h2 id="1-what-qmutbench-gives-us-and-what-it-doesnt">1. What QMutBench gives us (and what it doesn't)</h2>
+<p>QMutBench (Mendiluze Usandizaga et al.) is a dataset of 723,079 Muskit-generated
+quantum-circuit mutants over 375 circuits, published as QASM with an online
+selection interface. Its mutation model is deliberately narrow:</p>
+<ul>
+<li><strong>3 operators:</strong> Add gate, Remove gate, Replace gate.</li>
+<li><strong>Granularity:</strong> individual QASM gate statements, across <em>all gates × all
+  positions</em>.</li>
+<li><strong>Characteristic vector:</strong> <code>(algorithm, #qubits, operator, affected gate,
+  position interval)</code>.</li>
+<li><strong>Headline metric:</strong> <strong>survival rate</strong> = % of mutants <em>not</em> detected (inverse
+  of mutation score); emphasises hard-to-detect / equivalent mutants.</li>
+<li><strong>Artifact:</strong> QASM — chosen precisely so any framework can consume it.</li>
+</ul>
+<p><strong>Why this is only half the story for quanifi.</strong> QMutBench mutates one level
+<em>below</em> where quanifi operates. Quanifi's thesis is "compose quantum solutions
+without gate-level code." A faithful QMutBench port is useful (and lets us
+validate against their <code>.qasm</code> mutants for shared algorithms — Grover, QFT, QPE,
+AE), but the mutations that matter most for a high-level dataflow platform are
+on the <strong>knobs</strong>, not the gates. Hence two layers.</p>
+<h2 id="2-two-mutation-layers">2. Two mutation layers</h2>
+<h3 id="layer-a-circuit-content-mutation-the-qmutbenchmuskit-port-built">Layer A — Circuit-content mutation (the QMutBench/Muskit port) — <strong>BUILT</strong></h3>
+<p>This is <strong>mutation testing proper</strong> (see §0 terminology): the mutated artifact
+is the circuit — the program — not the test data.</p>
+<p><code>QuantumMutator</code> (<code>nifi_extensions/QuantumMutator.py</code>) sits <strong>between a builder
+and a simulator on one branch</strong>, parses the FlowFile's circuit, applies one
+syntactic mutation, and re-emits it in the same format. It <strong>operates on the
+QASM bridge formats</strong> (<code>circuit.format</code> = <code>qasm2</code> or <code>qasm3</code>; cirq_json/qpy
+route to <code>failure</code> — put the mutator on a QASM-emitting branch), so one mutator
+serves Qiskit/Cirq/Qrisp identically and can ingest QMutBench <code>.qasm</code> directly.</p>
+<p>Registered operators (<code>_GATE_MUTATION_OPERATORS</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Action</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gate.add</code></td>
+<td>Insert a gate at slot <em>p</em></td>
+<td>single-qubit (<code>x/y/z/h/s/t</code>) or two-qubit (<code>cx</code>/<code>cz</code>) on random wire(s)</td>
+</tr>
+<tr>
+<td><code>gate.remove</code></td>
+<td>Delete one gate statement</td>
+<td><code>measure</code>/<code>barrier</code> are never touched (barriers are semantically live — see QASM3-barrier bug in PROJECT_SUMMARY §3)</td>
+</tr>
+<tr>
+<td><code>gate.replace</code></td>
+<td>Same-arity swap (<code>h→x</code>, <code>cx→cz</code>, …)</td>
+<td>Muskit constrains replacement to equal qubit count; ≥3-qubit gates (<code>mcx</code>) are not candidates</td>
+</tr>
+<tr>
+<td><code>rotation.perturb</code> <em>(extension)</em></td>
+<td><code>rz(θ) → rz(θ+δ)</code>, δ = <code>Rotation Epsilon</code></td>
+<td>not classic Muskit; tunable difficulty — small δ ⇒ high survival rate</td>
+</tr>
+</tbody>
+</table>
+<p>Properties: <code>Mutation Operators</code> (comma list; one chosen per FlowFile,
+seed-driven, falling through to the next listed operator when inapplicable —
+EL like <code>${mut.operator}</code> lets the row pick), <code>Mutation Seed</code>, <code>Rotation
+Epsilon</code>. Per-case seed = base seed mixed with <code>test.case_id</code> (recorded as
+<code>mut.seed</code>), so one seed reproduces the whole run's mutants.</p>
+<p><strong>Pass-through gating</strong> (how controls coexist on the mutated branch): a
+FlowFile with <code>mut.applied = "false"</code> (a control row) passes through
+byte-for-byte; one already carrying a Layer-B mutation (<code>mut.applied = "true"</code>
+<em>and</em> <code>mut.operator</code> set) also passes through, so layers never stack and kill
+attribution stays per-operator. A row with <code>mut.applied = "true"</code> and <strong>no</strong>
+<code>mut.operator</code> is the explicit "mutate me" marker — duplicate each matrix case
+as a <code>false</code>/<code>true</code> pair to get paired control/mutant runs from one matrix.</p>
+<p>Mutant attributes (mirror QMutBench's characteristic vector):
+<code>mut.operator</code>, <code>mut.gate</code>, <code>mut.position</code>, <code>mut.position_interval</code> (decile
+bins), <code>mut.seed</code>, <code>mut.original_format</code> — plus the shared §4 contract
+(<code>mut.target_attr</code> = gate locus <code>h@3</code>, <code>mut.base_case_id</code> = <code>test.case_id</code>,
+so the mutant joins the <em>same oracle slot</em> as its unmutated siblings — that is
+exactly the single-branch DISAGREE mechanism). The builder's stale <code>circuit.*</code>
+metrics (depth, gate_count, …) are recomputed for the mutant.</p>
+<p>Tests: <code>tests/test_quantum_mutator.py</code>. Canvas wiring: MUTATION_CANVAS_TESTING.md
+Stage 8. Fills the <code>Mutator</code> placeholder referenced in <code>DATA_DRIVEN_TESTING.md</code> §3.</p>
+<h3 id="layer-b-configel-parameter-mutation-quanifi-native-built">Layer B — Config/EL parameter mutation (quanifi-native) — <strong>BUILT</strong></h3>
+<p>Strictly speaking this layer is <strong>configuration fault injection, not mutation
+testing</strong> (§0 terminology): it corrupts the test-case row, every branch
+faithfully runs the corrupted spec, and the survival rate measures <em>oracle
+sensitivity</em>. Keep the layer — it probes a failure surface gate-level mutation
+cannot (the knobs a quanifi user actually turns) — but claim it as such.</p>
+<p>Every processor knob is already EL-driven through the attribute contract
+(<code>DATA_DRIVEN_TESTING.md</code> §1). So a config mutator never touches another
+processor's properties — it <strong>mutates the shared attribute namespace</strong> that
+<code>QuantumTestCaseSource</code> feeds the branches. A branch reading
+<code>${grover.marked_state}</code> never knows it's running a mutant.</p>
+<p>Operator catalog (grounded in real EL-enabled properties). The eight marked ✅
+are <strong>registered and tested</strong> in <code>_MUTATION_OPERATORS</code>; the two ⬜ are designed
+but not yet wired (they need the VQE/QPE attribute names and a tiny Pauli-string
+edit — slot them into the same registry, no other change):</p>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Attribute mutated</th>
+<th>Transform</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>marked_state.bitflip</code></td>
+<td><code>grover.marked_state</code></td>
+<td>flip one char (<code>0000→0001</code>)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>marked_state.lenshift</code></td>
+<td><code>grover.marked_state</code></td>
+<td>±1 length (qubit mismatch)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>iterations.offbyone</code></td>
+<td><code>grover.num_iterations</code></td>
+<td>+1 (over-rotate)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>iterations.zero</code></td>
+<td><code>grover.num_iterations</code></td>
+<td>→ 0 (identity diffuser)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>shots.shrink</code></td>
+<td><code>grover.shots</code></td>
+<td>→ 8 (shot-noise amplifier)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>format.swap</code></td>
+<td><code>circuit.output_format</code></td>
+<td>qasm2 ↔ qasm3</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>barriers.toggle</code></td>
+<td><code>grover.insert_barriers</code></td>
+<td>flip true/false</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>noise.inject</code></td>
+<td><code>sim.noise_model</code></td>
+<td>none → depolarizing</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>hamiltonian.flip</code></td>
+<td>Pauli string</td>
+<td><code>Z↔X</code> one term / drop term / scale coeff</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td><code>qpe.regsize</code></td>
+<td>QPE phase-register size</td>
+<td>off-by-one</td>
+<td>⬜</td>
+</tr>
+</tbody>
+</table>
+<p>An operator whose target attribute is absent from a row is <strong>silently skipped</strong>
+(logged), so listing all of them against a Grover row is safe. The <code>*.shots</code> /
+<code>*.insert_barriers</code> targets are currently the <code>grover.*</code> names; generalise the
+registry key if other algorithms expose differently-named shot/barrier knobs.</p>
+<p><strong>Layer B subsumes a structured subset of Layer A:</strong> mutating <code>num_iterations</code>
+is equivalent to a coordinated batch of Add/Remove gate mutations — but
+expressed at the level a quanifi user actually works. That's the novelty over
+QMutBench.</p>
+<h2 id="3-the-k-way-consensus-oracle-how-a-mutant-is-killed">3. The K-way consensus oracle (how a mutant is killed)</h2>
+<p>A mutant is judged by <code>QuantumConsensusOracle</code> — a <strong>K-way majority vote</strong> over
+the framework branches. It generalises the old 2-way
+<code>QuantumDistributionComparison → QuantumAssertion</code> chain into one processor and
+emits the same <code>assert.verdict</code> contract.</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">QuantumTestCaseSource</span><span class="w"> </span><span class="ss">(</span><span class="o">+</span><span class="w"> </span><span class="nv">mutation</span><span class="w"> </span><span class="nv">pass</span><span class="ss">)</span><span class="w"> </span>→<span class="w"> </span><span class="nv">SplitJson</span><span class="w"> </span>→<span class="w"> </span><span class="nv">EvaluateJsonPath</span>
+<span class="w">   </span>├─<span class="w"> </span><span class="nv">Qiskit</span><span class="w"> </span><span class="nv">branch</span><span class="w">  </span>→<span class="w"> </span><span class="nv">QiskitGroverCircuit</span><span class="w">  </span>→<span class="w"> </span><span class="nv">QiskitAerSimulator</span><span class="w"> </span>─┐
+<span class="w">   </span>├─<span class="w"> </span><span class="nv">Cirq</span><span class="w"> </span><span class="nv">branch</span><span class="w">    </span>→<span class="w"> </span><span class="nv">CirqGroverCircuit</span><span class="w">    </span>→<span class="w"> </span><span class="nv">CirqSimulator</span><span class="w"> </span>──────┤→<span class="w"> </span><span class="nv">QuantumConsensusOracle</span>
+<span class="w">   </span>└─<span class="w"> </span><span class="nv">Qrisp</span><span class="w"> </span><span class="nv">branch</span><span class="w">   </span>→<span class="w"> </span><span class="nv">QrispGroverSearch</span><span class="w"> </span>────────────────────────┘<span class="w">   </span><span class="ss">(</span><span class="nv">one</span><span class="w"> </span><span class="nv">slot</span><span class="w"> </span><span class="nv">per</span><span class="w"> </span><span class="nv">case</span>,
+<span class="w">                                                                       </span><span class="nv">collects</span><span class="w"> </span><span class="nv">K</span><span class="o">=</span><span class="mi">3</span>,<span class="w"> </span><span class="nv">votes</span><span class="ss">)</span>
+<span class="w">                                                                          </span>│<span class="w"> </span><span class="nv">assert</span>.<span class="nv">verdict</span>
+<span class="w">                                                                          </span>▼
+<span class="w">                                                                   </span><span class="nv">MutationScoreReport</span>
+<span class="w">                                                              </span><span class="ss">(</span><span class="nv">PASS</span><span class="o">=</span><span class="nv">survived</span>,<span class="w"> </span><span class="k">else</span><span class="o">=</span><span class="nv">killed</span><span class="ss">)</span>
+</code></pre></div>
+
+<h3 id="verdict-semantics-severity-order">Verdict semantics (severity order)</h3>
+<p>The oracle collects K distributions sharing a slot key (<code>${test.run_id}-${test.case_id}</code>),
+then decides:</p>
+<ol>
+<li><strong>DISAGREE</strong> — at least one branch's top result dissents from the majority.
+   This is the cross-framework <em>differential</em> signal: no golden reference, the
+   jury of agreeing frameworks catches the outlier. Most severe.</li>
+<li><strong>FAIL</strong> — branches <em>agree</em> but the agreed answer is wrong vs <code>test.expected</code>
+   (ground-truth check, endian-agnostic; skipped when no <code>test.expected</code>).</li>
+<li><strong>PASS</strong> — branches agree and (if checked) the answer is correct.</li>
+</ol>
+<p><code>MutationScoreReport</code> maps <code>PASS → survived</code>, anything else → <strong>killed</strong>.</p>
+<h3 id="why-ground-truth-is-folded-into-the-oracle-key-decision">Why ground truth is folded into the oracle (key decision)</h3>
+<p>Pure cross-framework consensus alone is <strong>not sufficient</strong> for Layer-B mutation.
+A config mutation applied to a whole case (our <code>QuantumTestCaseSource</code> mutation
+pass rewrites the row that <em>all</em> K branches read) makes every branch compute the
+<strong>same</strong> wrong answer — so they agree, and consensus alone would mark the mutant
+<em>survived</em>. Two ways to catch it, both supported:</p>
+<ul>
+<li><strong>Whole-case mutation + ground truth (current default).</strong> All K branches run
+  the mutated params, agree on a wrong answer → the oracle's <code>test.expected</code>
+  check returns <strong>FAIL</strong> → killed. Requires a per-case <code>test.expected</code> (the
+  explicit-table form of the Test Matrix carries it).</li>
+<li><strong>Single-branch mutation + pure consensus (no ground truth needed).</strong> Inject
+  the mutation into <em>one</em> branch only (e.g. a Layer-A <code>QuantumMutator</code>, or route
+  the mutant row to one framework while the control row feeds the others under
+  the same slot key). The K−1 unmutated jury then makes that branch the lone
+  <strong>DISAGREE</strong> → killed. This is the reference-free mode.</li>
+</ul>
+<p>So: <strong>DISAGREE = single-branch dissent; FAIL = whole-case shared fault.</strong> Both
+land as "killed" in the survival rate. The Layer-B mutation pass produces
+whole-case mutants, so seed <code>test.expected</code> to score them; the Layer-A
+<code>QuantumMutator</code> (§2, built) produces single-branch mutants scored by the
+reference-free DISAGREE path. Note the two modes support different claims:
+whole-case + ground truth assesses the <em>test matrix + oracle</em>; single-branch
+injection assesses the <em>differential harness itself</em> (would cross-framework
+consensus catch this bug?) — the standard way differential testers are
+evaluated.</p>
+<h3 id="normalisation-built-in-see-data_driven_testing-gotchas-for-the-vote">Normalisation (built in — see DATA_DRIVEN_TESTING §"Gotchas for the vote")</h3>
+<ul>
+<li><strong>Bit order:</strong> the oracle compares top results <strong>endian-agnostically</strong> —
+  <code>_canonical(s) = min(s, s[::-1])</code>, so Qiskit's little-endian readout and
+  Cirq/Qrisp's MSB-first readout of one state vote together. (Limitation: also
+  merges a genuine state with its bit-reverse; fine for the marked-state/phase
+  decodes we score, revisit if a future algorithm needs strict keys.)</li>
+<li><strong>Shot noise:</strong> the vote is on the argmax (top result), never on count
+  equality; <code>consensus.max_hellinger</code> is reported for distribution-shape insight.</li>
+</ul>
+<h3 id="failure-mode-designed-around-control-rows">Failure mode designed around: control rows</h3>
+<p>A <em>real framework bug</em> (e.g. a missed bit-order normalisation) makes an honest
+branch dissent and <strong>looks like a killed mutant on an unmutated row</strong>. Mitigation
+(implemented): the mutation pass always emits <strong>control rows</strong> (<code>mut.applied=false</code>);
+<code>MutationScoreReport</code> <strong>excludes controls from the survival rate</strong> and routes a
+dissenting control to a dedicated <code>control_dissent</code> relationship for
+investigation. See DISSERTATION.md for the full rationale.</p>
+<h2 id="4-mutant-bookkeeping-attributes-both-layers">4. Mutant bookkeeping attributes (both layers)</h2>
+<p>Every mutated row/FlowFile carries, alongside the existing <code>test.run_id</code> /
+<code>test.case_id</code> correlation keys:</p>
+<ul>
+<li><code>mut.applied</code> — <code>true</code> / <code>false</code> (control)</li>
+<li><code>mut.operator</code> — e.g. <code>iterations.offbyone</code></li>
+<li><code>mut.target_attr</code> — the attribute (Layer B) or gate locus (Layer A)</li>
+<li><code>mut.original_value</code> — pre-mutation value (for the report)</li>
+<li><code>mut.seed</code> — RNG seed for reproducibility</li>
+<li><code>mut.base_case_id</code> — <code>test.case_id</code> of the unmutated control this mutant
+  derives from (lets the oracle pair a mutant against its own baseline)</li>
+<li>Layer A only: <code>mut.gate</code>, <code>mut.position</code>, <code>mut.position_interval</code></li>
+</ul>
+<h2 id="5-metric-survival-rate-adopt-qmutbenchs-framing-verbatim">5. Metric: survival rate (adopt QMutBench's framing verbatim)</h2>
+<ul>
+<li><code>survival_rate(group) = killed=false / total</code> for a group sharing a
+  characteristic vector.</li>
+<li><strong>Position-interval bins:</strong> 0–10%, …, 90–100% (paper §III).</li>
+<li>Reporting these in the same shape as QMutBench lets us <strong>validate</strong> our
+  mutators against the published dataset for shared algorithms, and reuse their
+  selection criteria vocabulary.</li>
+</ul>
+<h2 id="6-reusable-infra-checklist">6. Reusable infra checklist</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fan-out one case to K framework branches</td>
+<td>✅ <code>QuantumTestCaseSource</code> + EL contract</td>
+</tr>
+<tr>
+<td>Config (Layer B) mutation</td>
+<td>✅ mutation pass in <code>QuantumTestCaseSource</code></td>
+</tr>
+<tr>
+<td>K-way verdict (consensus + ground truth)</td>
+<td>✅ <code>QuantumConsensusOracle</code></td>
+</tr>
+<tr>
+<td>2-way distance/report (other flows)</td>
+<td>✅ <code>QuantumDistributionComparison</code> / <code>QuantumAssertion</code> (unchanged)</td>
+</tr>
+<tr>
+<td>Survival-rate scoring</td>
+<td>✅ <code>MutationScoreReport</code></td>
+</tr>
+<tr>
+<td>Cross-framework comparability</td>
+<td>✅ EL attribute namespace (<code>grover.*</code>, <code>sim.*</code>, …)</td>
+</tr>
+<tr>
+<td>Canvas wiring + first live run</td>
+<td>⬜ §7 step 3</td>
+</tr>
+<tr>
+<td>Gate-level mutator (Layer A)</td>
+<td>✅ <code>QuantumMutator</code> (§2; canvas wiring ⬜ — MUTATION_CANVAS_TESTING.md Stage 8)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-build-order-resume-at-step-3">7. Build order — RESUME AT STEP 3</h2>
+<p>Agreed direction: <strong>Layer B (config/EL) first, K-way consensus oracle.</strong> Steps 1,
+2, 2b are done (§B); the loop is complete in code. Step 3 (canvas wiring + first
+live run) is the resume point.</p>
+<ol>
+<li>~~<strong>Mutation pass in <code>QuantumTestCaseSource</code>.</strong>~~ <strong>DONE.</strong> Properties
+   <code>Mutation Operators</code> (comma list), <code>Mutants Per Row</code>, <code>Mutation Seed</code>. Each
+   base row → one <code>mut.applied=false</code> control + cycled mutant rows carrying the
+   full <code>mut.*</code> bookkeeping (incl. <code>mut.base_case_id</code>); <code>testsource.mutated</code>/
+   <code>mutants</code>/<code>controls</code> summary attributes. Eight Layer-B operators registered
+   (<code>marked_state.bitflip|lenshift</code>, <code>iterations.offbyone|zero</code>, <code>shots.shrink</code>,
+   <code>format.swap</code>, <code>barriers.toggle</code>, <code>noise.inject</code>); Hamiltonian/QPE operators
+   slot into <code>_MUTATION_OPERATORS</code> when needed. No-operators path is byte-for-
+   byte legacy. 24 new tests in <code>tests/test_testcase_source.py</code>; full suite green
+   (373 passed).</li>
+<li>~~<strong>Survival-rate aggregator.</strong>~~ <strong>DONE.</strong> <code>MutationScoreReport</code> (see §B).
+   Consumes <code>assert.verdict</code> + <code>mut.*</code>, controls excluded, <code>control_dissent</code>
+   relationship, HTML report + <code>mutation.*</code> attrs.
+2b. ~~<strong>K-way majority oracle.</strong>~~ <strong>DONE.</strong> <code>QuantumConsensusOracle</code> (see §B and
+   §3). Replaces the 2-way comparison+assertion for this flow; PASS/FAIL/DISAGREE
+   with ground truth folded in; endian-agnostic vote.</li>
+<li><strong>← RESUME HERE. Wire the flow on the canvas</strong> (the §3 diagram) and run it
+   live. Concretely:</li>
+<li>Build a 3-branch Grover flow (Qiskit/Cirq/Qrisp) fed by <code>QuantumTestCaseSource</code>
+     → <code>SplitJson</code> → <code>EvaluateJsonPath</code> (hoist <code>grover.*</code> + <code>test.*</code> + <code>mut.*</code>
+     into attributes), each branch's props set to <code>${grover.*}</code> EL.</li>
+<li>Set <code>QuantumTestCaseSource</code> <code>Mutation Operators = iterations.offbyone,
+     marked_state.bitflip</code>, use the <strong>explicit-table</strong> Test Matrix so each row
+     carries <code>test.expected</code> (needed for the FAIL path on whole-case mutants).</li>
+<li>All three branches → one <code>QuantumConsensusOracle</code> (<code>Expected Branches = 3</code>,
+     <code>Consensus Label = ${test.run_id}-${test.case_id}</code>) → <code>MutationScoreReport</code>.</li>
+<li><strong>Acceptance:</strong> an <code>iterations.offbyone</code> mutant row is killed (FAIL),
+     <code>iterations.zero</code> is killed, the control row passes; survival report renders.</li>
+<li>Needs <code>flow.json.gz</code> edits — <strong>back it up first</strong> —
+     and a live NiFi. Good to do interactively, not blind.</li>
+<li>~~<strong><code>QuantumMutator</code></strong> for Layer A (gate-level QASM)~~ <strong>DONE</strong> (§2 Layer A).
+   Unlocks the single-branch DISAGREE path of §3. Canvas wiring is
+   MUTATION_CANVAS_TESTING.md Stage 8; QMutBench <code>.qasm</code> cross-validation for
+   Grover/QFT/QPE/AE remains open.</li>
+<li><em>(Later)</em> <strong>Statistical kill criterion.</strong> The vote/kill is currently on the
+   argmax (plus ground truth). For mutants that shift the <em>distribution</em> without
+   flipping the argmax (small <code>rotation.perturb</code>, <code>noise.inject</code>), promote
+   <code>consensus.max_hellinger</code> from a reported attribute to a thresholded — or
+   better, chi-square/KS-tested — kill decision against the control run's
+   distribution. This is the classical "differs from the original program"
+   criterion adapted to sampled outputs (what Muskit/QMutPy do), and it also
+   closes the distribution-comparison stats gap in the dissertation's
+   differential-testing chapter.</li>
+<li><em>(Later)</em> <strong>Register <code>hamiltonian.flip</code> + <code>qpe.regsize</code></strong> in
+   <code>_MUTATION_OPERATORS</code> once the VQE/QPE attribute names are pinned.</li>
+<li><em>(Later, frontier)</em> <strong>Flow-structure mutation</strong> — drop/reorder/swap a
+   processor in the dataflow itself. No QMutBench analogue; quanifi-native.</li>
+</ol>
+<h2 id="references">References</h2>
+<ul>
+<li><strong>Built processors:</strong> <code>nifi_extensions/QuantumMutator.py</code> (Layer-A gate-level
+  mutator), <code>nifi_extensions/QuantumTestCaseSource.py</code> (Layer-B mutation pass),
+  <code>nifi_extensions/QuantumConsensusOracle.py</code> (K-way oracle),
+  <code>nifi_extensions/MutationScoreReport.py</code> (survival rate). Tests:
+  <code>tests/test_quantum_mutator.py</code>, <code>tests/test_testcase_source.py</code>,
+  <code>tests/test_consensus_oracle.py</code>, <code>tests/test_mutation_score.py</code>.</li>
+<li><code>DISSERTATION.md</code> — the control-row safeguard / masquerading-fault finding.</li>
+<li><code>QMutBench.md</code> (paper, repo root) — dataset, operators, survival rate.</li>
+<li><code>DATA_DRIVEN_TESTING.md</code> — the EL attribute contract, <code>QuantumTestCaseSource</code>,
+  the <code>Mutator</code> placeholder, vote gotchas.</li>
+<li><code>PROJECT_SUMMARY.md</code> — QASM2 bridge, framework conventions.</li>
+<li>Muskit: Mendiluze Usandizaga et al., ASE '21. QMutBench empirical basis:
+  <em>Empirical Software Engineering</em> 30(4):100, 2025.</li>
+<li>Online: https://enautmendi.github.io/QMutBench/ ·
+  https://github.com/EnautMendi/QMutBench</li>
+</ul>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

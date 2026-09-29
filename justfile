@@ -18,3 +18,6 @@ check: lint test
 
 qaoa-examples:
     {{python}} tools/build_qaoa_examples.py --run --nxm
+
+docs:
+    {{python}} tools/generate_docs_site.py

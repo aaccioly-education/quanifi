@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QAOA Components & N×M Cross-Framework Flow</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="active">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li class="active"><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="developer-guide.html">Guides</a> <span class="sep">&rsaquo;</span> <a href="qaoa-components.html">QAOA Components</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="qaoa-components">QAOA components</h1>
+<p>Quanifi ships <strong>five <code>&lt;Fw&gt;QAOA</code> solvers</strong>, <strong>five <code>&lt;Fw&gt;QAOACircuit</code> fixed-angle
+builders</strong>, and one framework-neutral <strong><code>QuantumQAOAEvaluator</code></strong> — eleven
+processors that together let any QAOA construction (Qiskit, Cirq, Qrisp,
+PennyLane, pyQuil) run on any counts engine (Aer, Cirq, Qrisp, PennyLane,
+Braket, Q#, pyQuil) and be scored by one shared metric definition. Since
+0.2.0 the solvers are <strong>train-only</strong>: they no longer sample, have no <code>Shots</code>
+property, and emit the trained, bound circuit as portable OpenQASM 2.0 —
+exactly the way the fixed-angle builders already did. See "Migration from
+0.1.0" below if you have saved flows or scripts built against the old
+sampling solvers.</p>
+<p>Install the whole <code>nifi_extensions/</code> directory, including its lowercase
+helper modules (<code>qaoa_contract.py</code>, <code>qiskit_qaoa.py</code>, <code>cirq_qaoa.py</code>,
+<code>pennylane_qaoa.py</code>, <code>qrisp_qaoa.py</code>); copying a single processor file is not
+sufficient. pyQuil's construction lives in the existing
+<code>pyquil_processor.py</code>/<code>pyquil_components.py</code>, not a new module.</p>
+<h2 id="chain-and-conventions">Chain and conventions</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">flowchart</span><span class="w"> </span><span class="n">LR</span>
+<span class="w">  </span><span class="n">H</span><span class="o">[</span><span class="n">Any Hamiltonian/Problem producer</span><span class="o">]</span><span class="w"> </span><span class="c1">--&gt; S[&quot;&amp;lt;Fw&amp;gt;QAOA (trained betas/gammas)&quot;]</span>
+<span class="w">  </span><span class="n">H</span><span class="w"> </span><span class="c1">--&gt; B[&quot;&amp;lt;Fw&amp;gt;QAOACircuit (given betas/gammas)&quot;]</span>
+<span class="w">  </span><span class="n">S</span><span class="w"> </span><span class="c1">--&gt; E[&quot;Any counts engine (7): Aer | Cirq | Qrisp | PennyLane | pyQuil | Braket | QSharp&quot;]</span>
+<span class="w">  </span><span class="n">B</span><span class="w"> </span><span class="c1">--&gt; E</span>
+<span class="w">  </span><span class="n">E</span><span class="w"> </span><span class="c1">--&gt; V[QuantumQAOAEvaluator]</span>
+<span class="w">  </span><span class="n">V</span><span class="w"> </span><span class="c1">--&gt; R[QuanifiReport]</span>
+</code></pre></div>
+
+<p>Both the solver and the builder of a framework emit the qasm2 content plus
+<code>circuit.*</code>/<code>builder.*</code>/<code>hamiltonian.json</code>/<code>qaoa.(layers|betas|gammas...)</code>
+attributes — string-identical, because each framework's circuit is
+constructed by exactly one function (in its helper module), called with
+property angles by the builder and with trained angles by the solver. Any
+counts engine reads that qasm2, adds measurement and samples it; all
+upstream attributes ride through unchanged (NiFi FlowFile merge).
+<code>QuantumQAOAEvaluator</code> then computes every sample-dependent result from the
+counts plus <code>hamiltonian.json</code>, and stamps <code>qaoa.builder</code>/<code>qaoa.engine</code> so
+each cell of the resulting N×M matrix is self-describing.</p>
+<p>Shared conventions across all 11 processors:</p>
+<ul>
+<li><strong>Circuit:</strong> Hadamard on every qubit, then for each layer <code>l = 1..p</code>:
+  <code>U_C(gamma_l) = exp(-i*gamma_l*H)</code> followed by <code>RX(2*beta_l)</code> on every
+  qubit. Identity terms are omitted from the circuit (they contribute only
+  global phase) but always included in energies. The objective is
+  <strong>minimised</strong>.</li>
+<li><strong>Bit order:</strong> q0-left everywhere — qubit 0 is the leftmost character of
+  every bitstring key and <code>circuit.bit_order</code>/<code>sim.bit_order</code> both read
+  <code>q0_left</code>.</li>
+<li><strong>Energy of a bitstring <code>z</code>:</strong> <code>E(z) = sum_t c_t * prod_{i in t} (1 - 2*z_i)</code>.</li>
+<li><strong>Width limits (guardrails, not performance promises):</strong> 1–16 qubits,
+  1–16 layers, 1–4096 Hamiltonian terms, 1–10000 Max Iterations, seed
+  0–4294967295.</li>
+<li>Only diagonal (I/Z) cost Hamiltonians are accepted; identity-only
+  Hamiltonians are rejected by every builder and solver (they have no γ
+  parameters to train or sweep), but <em>are</em> accepted by the evaluator (their
+  ratios become <code>1.0</code> — see below).</li>
+<li><strong>Input rule shared by builders and solvers.</strong> If the incoming FlowFile
+  already carries a circuit (<code>circuit.format</code> is non-blank — the <em>rebuild</em>
+  path), the cost Hamiltonian is read from the <code>hamiltonian.json</code> attribute,
+  which is how a trained solver's output can be re-built by any framework's
+  builder via <code>${qaoa.betas}</code>/<code>${qaoa.gammas}</code>. Otherwise the Hamiltonian
+  comes from FlowFile content, and requires
+  <code>hamiltonian.format=sparse_pauli_op_json</code> from an upstream
+  <code>&lt;Fw&gt;Hamiltonian</code>, <code>MaxCutProblem</code>, <code>QuboToHamiltonian</code> or similar encoder.</li>
+</ul>
+<h2 id="processor-reference">Processor reference</h2>
+<table>
+<thead>
+<tr>
+<th>Processor</th>
+<th>Input → output</th>
+<th>Error attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QiskitQAOA</code></td>
+<td>Diagonal Hamiltonian → trained qasm2 + training attributes</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>CirqQAOA</code></td>
+<td>Diagonal Hamiltonian → trained qasm2 + training attributes</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>PennylaneQAOA</code></td>
+<td>Diagonal Hamiltonian → trained qasm2 + training attributes</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>QrispQAOA</code></td>
+<td>Diagonal Hamiltonian → trained qasm2 + training attributes</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilQAOA</code></td>
+<td>Diagonal Hamiltonian → trained qasm2 + training attributes</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>QiskitQAOACircuit</code></td>
+<td>Diagonal Hamiltonian + Betas/Gammas → bound qasm2</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>CirqQAOACircuit</code></td>
+<td>Diagonal Hamiltonian + Betas/Gammas → bound qasm2</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>PennylaneQAOACircuit</code></td>
+<td>Diagonal Hamiltonian + Betas/Gammas → bound qasm2</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>QrispQAOACircuit</code></td>
+<td>Diagonal Hamiltonian + Betas/Gammas → bound qasm2</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilQAOACircuit</code></td>
+<td>Diagonal Hamiltonian + Betas/Gammas → bound qasm2</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>QuantumQAOAEvaluator</code></td>
+<td>Counts (<code>sim.bit_order=q0_left</code>) + Hamiltonian → same counts + QAOA metrics</td>
+<td><code>qaoa.error</code></td>
+</tr>
+</tbody>
+</table>
+<p>All properties support FlowFile-attribute Expression Language
+(<code>FLOWFILE_ATTRIBUTES</code> scope), for example <code>Betas="${qaoa.betas}"</code>.
+Validation errors route to <code>failure</code>, <strong>preserve the input content</strong>, and set
+<code>qaoa.error</code>. Every changed processor carries a version bump (all five
+solvers and <code>QuantumQAOAEvaluator</code> are <code>0.2.0</code>/<code>0.1.0</code> respectively; the four
+new builders are <code>0.1.0</code>; <code>PyquilQAOACircuit</code> was rewritten to <code>0.2.0</code>).</p>
+<h3 id="solver-properties-identical-text-across-all-five-frameworks">Solver properties (identical text across all five frameworks)</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Required</th>
+<th>Default</th>
+<th>Validator</th>
+<th>EL scope</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layers</td>
+<td>yes</td>
+<td><code>2</code></td>
+<td>POSITIVE_INTEGER</td>
+<td>FLOWFILE_ATTRIBUTES</td>
+<td>1..16</td>
+</tr>
+<tr>
+<td>Optimizer</td>
+<td>yes</td>
+<td><code>COBYLA</code></td>
+<td>allowable list (per framework, below)</td>
+<td>none</td>
+<td>must be in list</td>
+</tr>
+<tr>
+<td>Max Iterations</td>
+<td>yes</td>
+<td><code>100</code></td>
+<td>POSITIVE_INTEGER</td>
+<td>FLOWFILE_ATTRIBUTES</td>
+<td>1..10000</td>
+</tr>
+<tr>
+<td>Initial Parameters</td>
+<td>yes</td>
+<td><code>random</code></td>
+<td>NON_EMPTY</td>
+<td>FLOWFILE_ATTRIBUTES</td>
+<td><code>random</code>, <code>zeros</code>, or a JSON/comma list of exactly 2p finite angles, betas then gammas</td>
+</tr>
+<tr>
+<td>Random Seed</td>
+<td>no</td>
+<td><em>(unset)</em></td>
+<td>NON_NEGATIVE_INTEGER</td>
+<td>FLOWFILE_ATTRIBUTES</td>
+<td>unset = nondeterministic; 0..4294967295</td>
+</tr>
+<tr>
+<td>Mixer Type (QrispQAOA only, inserted at index 1)</td>
+<td>yes</td>
+<td><code>RX</code></td>
+<td>allowable <code>RX</code>/<code>XY</code></td>
+<td>none</td>
+<td>Qrisp-only</td>
+</tr>
+</tbody>
+</table>
+<p>Per-framework <code>Optimizer</code> lists: <code>QiskitQAOA</code>
+<code>COBYLA/SPSA/NELDER_MEAD/L_BFGS_B</code>; <code>CirqQAOA</code>/<code>PennylaneQAOA</code>
+<code>COBYLA/NELDER_MEAD/POWELL/L_BFGS_B</code>; <code>QrispQAOA</code>
+<code>COBYLA/NELDER_MEAD/POWELL</code>; <code>PyquilQAOA</code> <code>COBYLA/POWELL/L_BFGS_B</code>.</p>
+<p><code>Random Seed</code> seeds initial-parameter generation and any optimizer-internal
+sampling; it does <strong>not</strong> seed the downstream simulator's measurement
+sampling, which has its own <code>Random Seed</code> property. A finite result with an
+exhausted iteration budget still routes to <code>success</code>, with
+<code>qaoa.converged=false</code> and the optimizer's own message; downstream logic can
+decide whether to accept an unconverged result. These are local minimizers —
+a converged result is not guaranteed to be the global ground energy.</p>
+<h3 id="builder-properties-identical-text-across-all-five-frameworks">Builder properties (identical text across all five frameworks)</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Required</th>
+<th>Default</th>
+<th>Validator</th>
+<th>EL scope</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layers</td>
+<td>yes</td>
+<td><code>1</code></td>
+<td>POSITIVE_INTEGER</td>
+<td>FLOWFILE_ATTRIBUTES</td>
+<td>1..16</td>
+</tr>
+<tr>
+<td>Betas</td>
+<td>yes</td>
+<td><code>0.39269908169872414</code></td>
+<td>NON_EMPTY</td>
+<td>FLOWFILE_ATTRIBUTES</td>
+<td>JSON or comma list, exactly Layers finite floats</td>
+</tr>
+<tr>
+<td>Gammas</td>
+<td>yes</td>
+<td><code>0.7853981633974483</code></td>
+<td>NON_EMPTY</td>
+<td>FLOWFILE_ATTRIBUTES</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Mixer Type (QrispQAOACircuit only, appended last)</td>
+<td>yes</td>
+<td><code>RX</code></td>
+<td>allowable <code>RX</code>/<code>XY</code></td>
+<td>none</td>
+<td>Qrisp-only</td>
+</tr>
+</tbody>
+</table>
+<p>The default angles (<code>pi/8</code>, <code>pi/4</code>) are an example setting for demos, not a
+claim of optimality for an arbitrary cost.</p>
+<h2 id="attribute-contracts">Attribute contracts</h2>
+<h3 id="circuit-contract-qaoa_contractcircuit_attributes-every-builder-and-solver">Circuit contract (<code>qaoa_contract.circuit_attributes</code>; every builder and solver)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>circuit.format</code></td>
+<td><code>qasm2</code></td>
+</tr>
+<tr>
+<td><code>circuit.qasm2</code></td>
+<td>same text as FlowFile content</td>
+</tr>
+<tr>
+<td><code>circuit.qasm3</code>, <code>circuit.cirq_json</code></td>
+<td><code>""</code> (blanked stale so <code>QuanifiReport</code> prefers <code>qasm3</code> when a different processor set it)</td>
+</tr>
+<tr>
+<td><code>circuit.svg</code></td>
+<td>Cirq's own SVG for Cirq processors; <code>""</code> otherwise (blanked stale so <code>QuanifiReport</code> prefers a stale SVG only when nothing fresher exists)</td>
+</tr>
+<tr>
+<td><code>circuit.diagram</code></td>
+<td>framework-native text diagram</td>
+</tr>
+<tr>
+<td><code>circuit.num_qubits</code>, <code>circuit.depth</code>, <code>circuit.gate_count</code>, <code>circuit.nonlocal_gates</code></td>
+<td>from <code>qasm2_profile</code> (identical semantics across all 5 rows — see "Portable qasm2 subset" below)</td>
+</tr>
+<tr>
+<td><code>circuit.gate_counts</code></td>
+<td>JSON <code>{gate: count}</code>, sorted keys</td>
+</tr>
+<tr>
+<td><code>circuit.t_count</code></td>
+<td><code>"0"</code></td>
+</tr>
+<tr>
+<td><code>circuit.framework</code>, <code>builder.framework</code></td>
+<td><code>qiskit</code> / <code>cirq</code> / <code>pennylane</code> / <code>qrisp</code> / <code>pyquil</code></td>
+</tr>
+<tr>
+<td><code>builder.component</code></td>
+<td>the emitting processor's class name</td>
+</tr>
+<tr>
+<td><code>circuit.bit_order</code></td>
+<td><code>q0_left</code></td>
+</tr>
+<tr>
+<td><code>circuit.algorithm</code></td>
+<td><code>qaoa</code></td>
+</tr>
+<tr>
+<td><code>circuit.num_parameters</code></td>
+<td><code>"0"</code> (bound, no free parameters remain)</td>
+</tr>
+<tr>
+<td><code>circuit.marked_state</code>, <code>circuit.num_iterations</code>, <code>circuit.error</code></td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td><code>mime.type</code></td>
+<td><code>text/plain</code></td>
+</tr>
+<tr>
+<td><code>report.type</code></td>
+<td><code>circuit</code></td>
+</tr>
+</tbody>
+</table>
+<p>PennyLane processors additionally set <code>circuit.global_phase_dropped</code>
+(<code>"true"</code>/<code>"false"</code>) — PennyLane's <code>to_openqasm</code> export drops a <code>gphase</code>
+statement if present, and this attribute records whether one was.</p>
+<h3 id="buildersolver-qaoa-contract-qaoa_contractbuilder_attributes-every-builder-and-solver">Builder/solver <code>qaoa.*</code> contract (<code>qaoa_contract.builder_attributes</code>; every builder and solver)</h3>
+<p>Blanks every <code>EVALUATOR_KEYS</code> entry (stale-key hygiene — see "Stale-attribute
+rules" below), then adds: <code>hamiltonian.json</code> (the raw wire text the circuit
+was built from), <code>qaoa.num_qubits</code>, <code>qaoa.layers</code>, <code>qaoa.betas</code> and
+<code>qaoa.gammas</code> (each <code>json.dumps([float, ...])</code>, full <code>repr</code> precision,
+lossless), <code>qaoa.mixer_type</code> (<code>"RX"</code> or <code>"XY"</code>), <code>qaoa.error=""</code>.</p>
+<h3 id="solver-only-qaoa-extension-qaoa_contractsolver_attributes">Solver-only <code>qaoa.*</code> extension (<code>qaoa_contract.solver_attributes</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>qaoa.framework</code></td>
+<td><code>qiskit</code>/<code>cirq</code>/<code>pennylane</code>/<code>qrisp</code>/<code>pyquil</code></td>
+</tr>
+<tr>
+<td><code>qaoa.optimal_parameters</code></td>
+<td><code>json.dumps(betas + gammas)</code>, full precision, no rounding</td>
+</tr>
+<tr>
+<td><code>qaoa.optimal_value</code></td>
+<td><code>repr(float)</code>, the optimizer's own final objective</td>
+</tr>
+<tr>
+<td><code>qaoa.energy_method</code></td>
+<td>see the table below</td>
+</tr>
+<tr>
+<td><code>qaoa.energy_shots</code></td>
+<td><code>"1024"</code> for <code>QiskitQAOA</code>; <code>""</code> for the other four</td>
+</tr>
+<tr>
+<td><code>qaoa.optimizer</code>, <code>qaoa.max_iterations</code>, <code>qaoa.cost_function_evals</code>, <code>qaoa.num_iterations</code></td>
+<td><code>num_iterations</code> always equals <code>cost_function_evals</code></td>
+</tr>
+<tr>
+<td><code>qaoa.converged</code></td>
+<td>scipy's <code>result.success</code> for Cirq/PennyLane/pyQuil; <code>evals &lt; maxiter</code> for Qiskit/Qrisp</td>
+</tr>
+<tr>
+<td><code>qaoa.optimizer_message</code></td>
+<td>scipy's <code>result.message</code>, else <code>""</code></td>
+</tr>
+<tr>
+<td><code>qaoa.seed</code></td>
+<td>the seed, or <code>""</code> if unset — solvers do <strong>not</strong> write <code>run.seed</code>; that attribute belongs to the downstream engine's own sampling seed</td>
+</tr>
+<tr>
+<td><code>qaoa.elapsed_seconds</code>, <code>perf.elapsed_seconds</code></td>
+<td><code>"{:.4f}"</code> training wall-clock time</td>
+</tr>
+</tbody>
+</table>
+<p>Solvers emit <strong>no</strong> <code>sim.*</code> keys — those come only from a downstream counts
+engine.</p>
+<h3 id="qaoaenergy_method-per-solver"><code>qaoa.energy_method</code> per solver</h3>
+<table>
+<thead>
+<tr>
+<th>Solver</th>
+<th><code>energy_method</code></th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QiskitQAOA</code></td>
+<td><code>sampled_statevector</code></td>
+<td>Trained via <code>qiskit_algorithms.QAOA</code> with a seeded <code>StatevectorSampler</code>. <strong>The objective is sampled, not exact</strong> — <code>StatevectorSampler.default_shots == 1024</code>. Measured gap between the sampled and exact eigenvalue at <code>optimal_point</code>: 0.030 at 1024 shots, 4.4e-4 at 100000 shots (about 15x slower). <code>qaoa.energy_shots="1024"</code> records this.</td>
+</tr>
+<tr>
+<td><code>CirqQAOA</code></td>
+<td><code>exact_statevector</code></td>
+<td>Hand-rolled sympy ladder, <code>cirq.Simulator(dtype=complex128)</code> exact expectation.</td>
+</tr>
+<tr>
+<td><code>PennylaneQAOA</code></td>
+<td><code>exact_statevector</code></td>
+<td><code>default.qubit</code> analytic <code>qml.expval</code>.</td>
+</tr>
+<tr>
+<td><code>QrispQAOA</code></td>
+<td><code>exact_probabilities</code></td>
+<td>Qrisp's own <code>QAOAProblem.optimization_routine</code>, exact probabilities that Qrisp itself rounds to 5 decimals (see "Qrisp energy rounding" below).</td>
+</tr>
+<tr>
+<td><code>PyquilQAOA</code></td>
+<td><code>exact_statevector</code></td>
+<td><code>pyquil_components.expectation</code>, exact local expectation.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="quantumqaoaevaluator-contract"><code>QuantumQAOAEvaluator</code> contract</h3>
+<p>One property, <code>Hamiltonian</code> (required, default <code>${hamiltonian.json}</code>,
+NON_EMPTY, FLOWFILE_ATTRIBUTES EL) — either the neutral wire JSON
+(<code>hamiltonian.json</code> from any upstream builder/solver) or the indexed DSL
+(<code>Z0 Z1 - 0.5 Z2 + 1</code>, width inferred from the counts). Validation order:</p>
+<ol>
+<li><code>sim.bit_order</code> must equal <code>q0_left</code> (missing or any other value fails).</li>
+<li>Parse the counts content: a non-empty JSON object with equal-width binary
+   keys and finite, non-negative, non-bool values (integer counts or
+   probabilities), total &gt; 0.</li>
+<li>Resolve the Hamiltonian (blank → a clear "no cost Hamiltonian" error).</li>
+<li>It must be diagonal — unlike the builders/solvers, <strong>identity-only is
+   allowed here</strong> (ratios become <code>1.0</code>, since there is nothing to
+   distinguish).</li>
+<li>Counts width must equal the Hamiltonian's qubit count.</li>
+<li>If <code>circuit.num_qubits</code> is present and disagrees, fail.</li>
+</ol>
+<p>Metric definitions (content passes through unchanged):</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>qaoa.best_measurement</code></td>
+<td>the observed key minimising <code>(round(E, 9), key)</code> — lowest energy, ties broken lexicographically so it is comparable across engines/counts totals</td>
+</tr>
+<tr>
+<td><code>qaoa.best_value</code></td>
+<td><code>repr(E(best))</code></td>
+</tr>
+<tr>
+<td><code>qaoa.sampled_expectation</code></td>
+<td><code>sum(counts[k] * E(k)) / sum(counts.values())</code></td>
+</tr>
+<tr>
+<td><code>qaoa.exact_minimum</code>, <code>qaoa.exact_maximum</code></td>
+<td>min/max of <code>E</code> over all <code>2^n</code> states (includes identity terms)</td>
+</tr>
+<tr>
+<td><code>qaoa.approximation_ratio</code></td>
+<td><code>(Emax - E_best) / (Emax - Emin)</code>; <code>1.0</code> if <code>Emax - Emin &lt;= 1e-12</code></td>
+</tr>
+<tr>
+<td><code>qaoa.expectation_ratio</code></td>
+<td><code>(Emax - sampled_expectation) / (Emax - Emin)</code>; <code>1.0</code> if degenerate</td>
+</tr>
+<tr>
+<td><code>qaoa.optimal_probability</code></td>
+<td>observed mass on states whose energy rounds (9 dp) to the exact minimum</td>
+</tr>
+<tr>
+<td><code>qaoa.optimal_states</code></td>
+<td>sorted JSON list of all optimal q0-left states (first 64)</td>
+</tr>
+<tr>
+<td><code>qaoa.num_optimal_states</code></td>
+<td>the true count of optimal states, uncapped</td>
+</tr>
+<tr>
+<td><code>qaoa.shots</code></td>
+<td>integer total if every count value is integral, else <code>sim.shots</code> or <code>""</code></td>
+</tr>
+<tr>
+<td><code>qaoa.builder</code>, <code>qaoa.engine</code></td>
+<td>copies of <code>builder.component</code>/<code>sim.component</code> (or <code>""</code> if absent)</td>
+</tr>
+<tr>
+<td><code>qaoa.evaluator</code></td>
+<td><code>"QuantumQAOAEvaluator"</code></td>
+</tr>
+<tr>
+<td><code>qaoa.num_qubits</code>, <code>qaoa.error</code></td>
+<td><code>str(n)</code>, <code>""</code></td>
+</tr>
+<tr>
+<td><code>report.type</code>, <code>mime.type</code></td>
+<td><code>simulation</code>, <code>application/json</code></td>
+</tr>
+</tbody>
+</table>
+<p>On failure: content is preserved, <code>qaoa.error</code> is set, and every
+<code>EVALUATOR_KEYS</code> entry is blanked (a stale success must never survive a
+failed re-evaluation).</p>
+<h3 id="stale-attribute-rules">Stale-attribute rules</h3>
+<p>NiFi FlowFile merges never drop attributes, so every hop is explicit about
+what it owns:</p>
+<ul>
+<li>Builders and solvers blank every <code>EVALUATOR_KEYS</code> entry plus
+  <code>circuit.qasm3</code>, <code>circuit.cirq_json</code>, <code>circuit.svg</code> (unless they produce
+  one), <code>circuit.marked_state</code>, <code>circuit.num_iterations</code> and
+  <code>circuit.error</code>.</li>
+<li>Builders never touch solver-owned keys. On the rebuild path (feeding a
+  solver's output into a different framework's builder) those keys still
+  describe the solver that originally trained the angles.</li>
+<li><code>QuantumQAOAEvaluator</code> overwrites all <code>EVALUATOR_KEYS</code> on success and
+  blanks them on failure.</li>
+<li><code>hamiltonian.json</code>, <code>builder.*</code> and <code>circuit.*</code> ride through the counts
+  engine hop untouched.</li>
+</ul>
+<h2 id="portable-qasm2-subset-the-nm-interchange-contract">Portable qasm2 subset (the N×M interchange contract)</h2>
+<p>Every builder and solver emits, and <code>QuantumQAOAEvaluator</code> implicitly
+depends on via <code>circuit.num_qubits</code>, a strict portable subset of OpenQASM
+2.0: <code>OPENQASM 2.0;</code>, optional <code>include "qelib1.inc";</code>, exactly <strong>one</strong>
+<code>qreg</code>, and gates only from <code>{h, x, rx, ry, rz, cx}</code>. No <code>creg</code>, <code>measure</code>,
+<code>barrier</code>, <code>reset</code>, <code>gate</code>, <code>opaque</code>, <code>if</code> or <code>gphase</code>. This is enforced by
+<code>qaoa_contract.qasm2_profile()</code> (hand-rolled regex/statement parsing, no
+<code>qiskit.qasm2</code> dependency) before any builder or solver returns, and its
+metrics (<code>num_qubits</code>/<code>depth</code>/<code>gate_count</code>/<code>nonlocal_gates</code>) agree with
+Qiskit's own <code>QuantumCircuit.depth()</code>/<code>.size()</code> on all five dialects.</p>
+<p>Per-framework export facts that motivated this subset:</p>
+<ul>
+<li><strong>Qiskit:</strong> <code>transpile(bound, basis_gates=["h","rx","rz","cx"], optimization_level=0)</code> then <code>qasm2.dumps</code> gives exactly <code>{h, cx, rz, rx}</code> in one <code>qreg</code>. <code>decompose()</code> alone emits <code>rzz</code>, which is not in the portable set — transpiling is required. <code>QAOAAnsatz</code> is deprecated (an <code>NLocal</code> subclass, removed in Qiskit 3.0); the non-deprecated <code>qiskit.circuit.library.qaoa_ansatz()</code> has the same parameter order and F=1, so the builders and <code>QiskitQAOACircuit</code> use it, while <code>qiskit_algorithms.QAOA</code> still trains internally with the deprecated <code>QAOAAnsatz</code> (expect a <code>DeprecationWarning</code> in logs — the unitary and parameter order of both are verified equal).</li>
+<li><strong>Cirq:</strong> <code>circuit.to_qasm()</code> gives <code>{h, cx, rz, rx}</code> directly, with angles written as <code>pi*&lt;10 significant digits&gt;</code> plus <code>//</code> comment lines (both handled by <code>qasm2_profile</code>'s comment-stripping).</li>
+<li><strong>PennyLane:</strong> <code>qml.to_openqasm(qnode, measure_all=False)()</code> gives <code>{h, cx, rz}</code> — the RX mixer is exported as <code>h . rz . h</code> (no native <code>rx</code> in PennyLane's OpenQASM exporter). No <code>gphase</code> statement is emitted even with an identity Hamiltonian term.</li>
+<li><strong>Qrisp:</strong> <code>qv.qs.compile().to_qiskit()</code> gives <code>{h, cx, rz, rx}</code> but declares <strong>one <code>qreg</code> per qubit</strong> (<code>qreg qv_0[1]; qreg qv_1[1]; ...</code>); every builder/solver composes this into a single <code>n</code>-qubit <code>QuantumCircuit</code> before emitting, which is what makes the output importable on <code>QSharpSimulator</code> (the raw multi-qreg export fails there with a register-ambiguity error). The <strong>XY mixer</strong> additionally exports <code>s, sdg, sx, sxdg</code> (<code>sx</code> is rejected by <code>QSharpSimulator</code>); whenever any non-portable gate appears, the export is rebased with <code>transpile(..., basis_gates=["h","x","rx","ry","rz","cx"], optimization_level=0)</code> before emission — rebasing only happens when needed, since it also changes the RX export's text.</li>
+<li><strong>pyQuil:</strong> <code>quil_qasm.to_qasm2</code> gives <code>{h, cx, rz, rx}</code> in one <code>qreg</code> directly.</li>
+</ul>
+<h2 id="nm-flow">N×M flow</h2>
+<p>The 5 builders × 7 engines matrix is the point of this extraction: one qasm2
+circuit per builder, built at the <em>same</em> explicit angles across all five
+frameworks, runs unmodified on all seven counts engines and is scored by one
+<code>QuantumQAOAEvaluator</code>. The generated canvas
+(<code>demo/qaoa/qaoa-nxm.json</code>, also documented as "Flow 35" in the
+<a href="nifi-flow-configuration-guide.html#flow-35-qaoa-nm-5-builders-7-engines">NiFi flow configuration guide</a>)
+wires: one <code>QiskitHamiltonian</code> trigger → 5 builders (each <code>Layers=2</code>,
+<code>Betas=[-0.67, -0.42]</code>, <code>Gammas=[1.14, 1.27]</code>) → each builder's <code>success</code>
+fanned out to all 7 engines (35 connections) → each engine's <code>success</code> into
+one shared <code>QuantumQAOAEvaluator</code> → one shared <code>QuanifiReport</code>.</p>
+<p>The instance is <code>H_NXM = -0.8 Z0 Z1 + 0.5 Z1 Z2 - 0.3 Z0 + 0.2</code> (3 qubits).
+Its unique ground state is <code>001</code> (E=-1.4); every one of the 35 cells reaches
+<code>qaoa.best_measurement="001"</code> and <code>qaoa.exact_minimum=-1.4</code> /
+<code>qaoa.approximation_ratio=1.0</code> — the whole point is that cells are scored as
+<strong>distributions</strong>, not by their argmax alone (a test deliberately mirrors one
+row's qubit indices and shows it still reports <code>best_measurement="001"</code>
+while its Hellinger distance to the reference jumps past 0.3).</p>
+<p>Thresholds, measured on the pinned environment:</p>
+<ul>
+<li>The 6 seedable engines (Aer, Cirq, Qrisp, PennyLane, Q#) at 4096 shots,
+  <code>Random Seed=11</code>: worst measured Hellinger distance to the exact
+  distribution across all 5 rows is <strong>0.0187</strong>, well inside the plan's
+  statistical bound for this instance (0.9999-quantile 0.0304 over 50000
+  multinomial draws).</li>
+<li><strong><code>BraketSimulator</code> has no <code>Random Seed</code> property and is unseedable.</strong> Its
+  column is included in the N×M matrix but compared only <em>statistically</em>
+  (against the same bound above, max observed 0.0316 over 50000 trials) —
+  never for exact-value equality against a saved cell. Regenerating the
+  example canvas twice in a row changes only this column's numbers.</li>
+<li><strong><code>PyquilSimulator</code> costs about 13.6 ms/shot</strong> via its pure-Python PyQVM
+  (no external <code>quilc</code>/<code>qvm</code> server); the N×M column therefore runs at
+  <strong>256 shots</strong>, not 4096. Measured Hellinger distance: consistently
+  <strong>0.0439</strong> (256 shots) across repeated regenerations, well under its own
+  0.20 statistical bound for this shot count. Raising its shot count in the
+  canvas without re-timing will make the regeneration/tests noticeably
+  slower (about 3.3s at 256 shots per builder in isolation, 14s at 1024).</li>
+</ul>
+<h2 id="example-canvases">Example canvases</h2>
+<p>Regenerate the local example canvases and reports:</p>
+<div class="codehilite"><pre><span></span><code>.venv/bin/python<span class="w"> </span>tools/build_qaoa_examples.py<span class="w"> </span>--run<span class="w"> </span>--nxm
+</code></pre></div>
+
+<p>or via <code>just qaoa-examples</code>. This produces <code>demo/qaoa/qaoa-lanes.json</code> (10
+single-processor lanes, one per QAOA processor type — see the table below),
+<code>demo/qaoa/qaoa-nxm.json</code> (the N×M matrix above), and <code>demo/qaoa/index.html</code>
+(a static overview linking both snapshots, per-lane result cards, and the
+N×M Hellinger table). Like <code>tools/build_pyquil_examples.py</code>, the generator
+runs the real processors through the test harness's NiFi API stubs — it does
+not contact a provider or a running NiFi instance, and it never hand-edits
+<code>demo/**</code>; regenerate through the tool after any change that affects a
+lane's output.</p>
+<table>
+<thead>
+<tr>
+<th>Lane key</th>
+<th>Encoder</th>
+<th>QAOA processor</th>
+<th>Engine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>qiskit-qaoa</code></td>
+<td><code>MaxCutProblem</code></td>
+<td><code>QiskitQAOA</code> (Layers 2, Max Iterations 150, Random Seed 11)</td>
+<td><code>CirqSimulator</code></td>
+</tr>
+<tr>
+<td><code>cirq-qaoa</code></td>
+<td><code>QuboToHamiltonian</code></td>
+<td><code>CirqQAOA</code> (same)</td>
+<td><code>QrispSimulator</code></td>
+</tr>
+<tr>
+<td><code>pennylane-qaoa</code></td>
+<td><code>MaxIndependentSetProblem</code></td>
+<td><code>PennylaneQAOA</code> (same)</td>
+<td><code>QSharpSimulator</code></td>
+</tr>
+<tr>
+<td><code>qrisp-qaoa</code></td>
+<td><code>PortfolioRebalancingProblem</code></td>
+<td><code>QrispQAOA</code> (Layers 2, Mixer Type XY, Max Iterations 100, Random Seed 11)</td>
+<td><code>PennylaneSimulator</code></td>
+</tr>
+<tr>
+<td><code>pyquil-qaoa</code></td>
+<td><code>QiskitHamiltonian</code> (<code>-0.5 + 0.5 Z0 Z1</code>)</td>
+<td><code>PyquilQAOA</code> (Layers 1, Optimizer L_BFGS_B, Max Iterations 100, Initial Parameters <code>[-0.3,1]</code>, Random Seed 42)</td>
+<td><code>PyquilSimulator</code> (Shots 256, Random Seed 42)</td>
+</tr>
+<tr>
+<td><code>qiskit-qaoa-circuit</code></td>
+<td><code>QiskitHamiltonian</code> (<code>H_NXM</code>)</td>
+<td><code>QiskitQAOACircuit</code> (N×M angles)</td>
+<td><code>QiskitAerSimulator</code></td>
+</tr>
+<tr>
+<td><code>cirq-qaoa-circuit</code></td>
+<td><code>CirqHamiltonian</code> (<code>H_NXM</code>)</td>
+<td><code>CirqQAOACircuit</code> (N×M angles)</td>
+<td><code>QSharpSimulator</code></td>
+</tr>
+<tr>
+<td><code>pennylane-qaoa-circuit</code></td>
+<td><code>MaxCutProblem</code></td>
+<td><code>PennylaneQAOACircuit</code> (defaults)</td>
+<td><code>QiskitAerSimulator</code></td>
+</tr>
+<tr>
+<td><code>qrisp-qaoa-circuit</code></td>
+<td><code>QrispHamiltonian</code> (<code>H_NXM</code>)</td>
+<td><code>QrispQAOACircuit</code> (N×M angles)</td>
+<td><code>CirqSimulator</code></td>
+</tr>
+<tr>
+<td><code>pyquil-qaoa-circuit</code></td>
+<td><code>MaxCliqueProblem</code></td>
+<td><code>PyquilQAOACircuit</code> (defaults)</td>
+<td><code>QrispSimulator</code></td>
+</tr>
+</tbody>
+</table>
+<p>All six seedable engines and every Hamiltonian producer/encoder appear
+across these ten lanes; <code>BraketSimulator</code> appears only in the N×M matrix,
+per its unseedable-engine rule above. Every lane ends
+<code>... → QuantumQAOAEvaluator → QuanifiReport</code>.</p>
+<h3 id="import-into-nifi">Import into NiFi</h3>
+<p>Follow the same procedure as the <a href="pyquil-components.html#import-into-nifi">pyQuil guide</a>:
+install the updated <code>nifi_extensions/</code> directory (including the QAOA helper
+modules above), wait for NiFi to install each processor's declared
+dependencies in its own environment, import <code>qaoa-lanes.json</code> and/or
+<code>qaoa-nxm.json</code> as process groups, start the downstream processors, then
+<strong>Run Once</strong> each trigger. All processors import stopped (<code>ENABLED</code>). As
+with every canvas in this repository, <strong>these artifacts are validated
+structurally and executed headlessly by the generator</strong> — this guide does
+not claim live NiFi execution of the N×M canvas.</p>
+<p><strong>NiFi deployment note.</strong> Six existing processors changed dependencies or
+version in this work: <code>QiskitQAOA</code> (dropped <code>qiskit-aer</code>), <code>CirqQAOA</code>,
+<code>PennylaneQAOA</code>, <code>QrispQAOA</code> (dropped <code>qiskit-qasm3-import</code>), <code>PyquilQAOA</code>,
+and <code>PyquilQAOACircuit</code> (rewritten to 0.2.0). A live NiFi deployment must
+<strong>delete the cached extension venvs</strong>
+<code>work/python/extensions/{QiskitQAOA,CirqQAOA,PennylaneQAOA,QrispQAOA,PyquilQAOA,PyquilQAOACircuit}/</code>
+so NiFi rebuilds them against the new <code>ProcessorDetails.dependencies</code>;
+otherwise the old venv (missing the QAOA helper modules, or carrying a stale
+dependency set) is reused. The five new processors
+(<code>QiskitQAOACircuit</code>, <code>CirqQAOACircuit</code>, <code>PennylaneQAOACircuit</code>,
+<code>QrispQAOACircuit</code>, <code>QuantumQAOAEvaluator</code>) have no prior venv to clear.
+<strong>This wipe was not performed as part of this work</strong> — no live NiFi instance
+was touched; it is documented here for whoever deploys the change.</p>
+<h2 id="migration-from-010">Migration from 0.1.0</h2>
+<p>If you have flows or scripts built against the pre-0.2.0 solvers:</p>
+<ul>
+<li><strong><code>Shots</code> is removed</strong> from all five solvers. They no longer sample.</li>
+<li><strong>Counts now come from any downstream simulator</strong>, not from the solver
+  itself. Insert one between the solver and anything that used to read its
+  counts content.</li>
+<li><strong><code>qaoa.best_measurement</code>/<code>qaoa.best_value</code>/<code>qaoa.approximation_ratio</code>/
+  <code>qaoa.exact_minimum</code>/<code>qaoa.shots</code>/<code>run.seed</code></strong> are no longer emitted by
+  the solver. They now come from <code>QuantumQAOAEvaluator</code> (or, for
+  <code>run.seed</code>, from the engine you choose), computed downstream of whichever
+  simulator you connect — insert <code>QuantumQAOAEvaluator</code> after the
+  simulator wherever your flow or script reads these.</li>
+<li><strong><code>QrispQAOA</code>'s <code>Initial Parameters</code> is now canonical beta-then-gamma</strong>,
+  matching every other solver and builder (Qrisp's own internal ordering,
+  gamma-then-beta, is converted at the boundary via
+  <code>qrisp_qaoa.to_qrisp_theta</code>/<code>from_qrisp_theta</code>). A 0.1.0 value written in
+  Qrisp's own order will train the wrong angles under 0.2.0.</li>
+<li><strong>The <code>QrispQAOA</code> mirror-training bug is fixed.</strong> The 0.1.0 processor
+  reversed measurement keys in both its training loss and its reported best
+  measurement, which trained and reported the <em>bit-reversed</em> Hamiltonian
+  (verified: for <code>H = -Z0 + 0.3 Z1</code>, it reported best <code>01</code> while its own
+  emitted circuit actually favoured <code>10</code>, P=0.687). 0.2.0 uses
+  <code>qaoa_contract.energy_vector</code>'s q0-left indexing directly, with no
+  reversal, by construction. Any 0.1.0 result computed from <code>QrispQAOA</code> that
+  matters for correctness should be recomputed, not carried forward.</li>
+<li><strong><code>PyquilQAOA</code>'s <code>Layers</code> default is now <code>2</code></strong> (was <code>1</code>, unified with the
+  other four solvers) and <strong><code>Random Seed</code> is now unset by default</strong> (was a
+  required <code>42</code>) — set it explicitly if you relied on the old default seed.</li>
+<li>A live NiFi deployment needs a <strong>venv wipe</strong> for the six changed
+  processors — see "NiFi deployment note" above.</li>
+</ul>
+<h2 id="known-limitations">Known limitations</h2>
+<ul>
+<li><strong><code>BraketSimulator</code> is unseedable</strong> — it has no <code>Random Seed</code> property.
+  It appears only in the N×M matrix (not the ten deterministic
+  single-processor lanes) and its cells are compared statistically, never
+  for exact equality.</li>
+<li><strong><code>PyquilSimulator</code> is the slow column</strong> — about 13.6 ms/shot via its
+  pure-Python PyQVM. The N×M matrix samples it at 256 shots (not 4096 like
+  the other six engines) to keep regeneration and the test suite fast;
+  raising this without re-timing will slow both down noticeably.</li>
+<li><strong><code>QiskitQAOA</code>'s training objective is sampled, not exact</strong> — its
+  <code>StatevectorSampler</code> defaults to 1024 shots (<code>qaoa.energy_method=
+  sampled_statevector</code>, <code>qaoa.energy_shots="1024"</code>). This is an intentional,
+  documented characteristic, not a bug: the measured gap to the exact
+  eigenvalue was 0.030 at 1024 shots and 4.4e-4 at 100000 shots (about 15x
+  slower), so <code>QiskitQAOA</code>'s energy-consistency tests use a statistical
+  (6-sigma) tolerance rather than an exact one.</li>
+<li><strong><code>QrispSimulator</code>'s <code>Random Seed</code> is best-effort</strong>, seeded via the
+  global NumPy RNG (Qrisp's sampler exposes no seed API of its own) — this
+  is a pre-existing, documented characteristic of <code>QrispSimulator</code> itself,
+  distinct from the <code>QrispQAOA</code> <em>solver's</em> determinism (which draws from a
+  local generator and does not touch global state as of the fix described
+  below). Because of this, the generated example canvas compares
+  <code>QrispSimulator</code>-engine lanes only on their deterministic fields (circuit,
+  Hamiltonian, non-sampling attributes); sampling-derived fields (counts,
+  <code>qaoa.best_measurement</code>, etc.) are checked for shape and validity, not
+  byte-for-byte equality across regenerations. This was found and
+  documented while building the example generator (M7); it is unrelated to
+  and unaffected by the QrispQAOA solver fixes below.</li>
+<li><strong>Qrisp's XY mixer is not K-hot constrained</strong> — it starts from the
+  uniform superposition, not a fixed-Hamming-weight state, so it does not
+  guarantee the "exactly K selected" property some QAOA applications (e.g.
+  budget-constrained portfolio selection) want from it in isolation; that
+  constraint comes from how <code>QrispQAOA</code>/<code>QrispQAOACircuit</code> initialize the
+  register in practice, not from the mixer alone. It is Qrisp-specific
+  semantics, existing before this work and documented rather than changed
+  here. <strong>The XY mixer is not part of the N×M builder rows</strong> — those always
+  use the cross-framework RX convention so all five rows share one unitary
+  construction; XY appears only in the single-processor <code>qrisp-qaoa</code> /
+  <code>qrisp-qaoa-circuit</code> lanes and <code>QrispQAOA</code>'s own tests.</li>
+<li><strong>Qrisp energy rounding.</strong> Qrisp's exact-probability measurement backend
+  already rounds probabilities to 5 decimals internally (max error about
+  3.2e-6). <code>QrispQAOA</code>'s classical cost function additionally rounds its
+  <em>returned energy</em> to 12 decimals before handing it to the optimizer. This
+  is not cosmetic: Qrisp's backend differs by up to 1 ulp (2.22e-16) between
+  separately compiled circuits evaluated at the <em>same</em> angles, and scipy's
+  Fortran-backed <code>COBYLA</code>/<code>POWELL</code> optimizers chaotically amplify that
+  1-ulp jitter over ~100 iterations into macroscopic (0.06-0.2 rad)
+  parameter drift between otherwise-identical seeded runs. Rounding to 12
+  decimals removes the drift outright (measured: 40 seeded COBYLA repeats,
+  each run after an unrelated intervening run, gave exactly 0.0 parameter
+  drift) while losing no resolution beyond Qrisp's own 5-decimal probability
+  rounding. <code>NELDER_MEAD</code> (pure Python/NumPy, no Fortran extension) was
+  never affected by this and needed no such fix.</li>
+</ul>
+<h2 id="verification">Verification</h2>
+<div class="codehilite"><pre><span></span><code>.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_qaoa*.py<span class="w"> </span>tests/test_bit_order.py<span class="w"> </span>tests/test_seeds.py<span class="w"> </span>tests/test_numeric_guards.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tests/test_problem_encoders.py<span class="w"> </span>tests/test_qrisp_qaoa_problems.py<span class="w"> </span>tests/test_qrisp_cross_framework.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tests/test_pyquil_processors.py<span class="w"> </span>tests/test_pyquil_examples.py<span class="w"> </span>tests/test_reporting.py<span class="w"> </span>tests/test_processor_dependencies.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tests/test_all_components_group.py<span class="w"> </span>tests/test_qrisp_components_group.py<span class="w"> </span>-q<span class="w"> </span>--tb<span class="o">=</span>short
+.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not slow&quot;</span>
+.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>--tb<span class="o">=</span>short
+</code></pre></div>
+
+<p>The numbers referenced above are reproduced by the test suite, which is the
+authoritative record for this extraction.</p>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

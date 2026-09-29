@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 5: QAOA & Constrained Portfolio Optimization — Visual Quantum Software Engineering</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="active">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li class="active"><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="index.html">Tutorials</a> <span class="sep">&rsaquo;</span> <a href="05_portfolio_optimization_qaoa.html">05 Portfolio Optimization Qaoa</a>
+      </nav>
+
+      
+
+      <article>
+        
+
+  <h1>Module 5: Variational Optimization &amp; The Constrained XY Mixer (QAOA)</h1>
+  <p class="lead">
+    Move beyond 1990s toy textbook circuits into modern <strong>hybrid quantum-classical algorithms</strong>. Learn how to solve NP-hard combinatorial business problems using QAOA, and discover how Quanifi enforces hard budget constraints using particle-preserving <strong>XY mixers</strong>.
+  </p>
+
+  <section>
+    <h2>1. Beyond Textbook Circuits: The Modern NISQ Era</h2>
+    <p>
+      Algorithms like Deutsch-Jozsa and Grover are brilliant theoretical proofs of quantum speedup, but they require fault-tolerant quantum computers with thousands of noise-free operations.
+    </p>
+    <p>
+      Today's quantum computers are in the <strong>NISQ (Noisy Intermediate-Scale Quantum)</strong> era. To extract practical value from noisy hardware, modern quantum software engineering relies on <strong>Hybrid Quantum-Classical Algorithms</strong>:
+    </p>
+
+    <div class="callout software-analogy">
+      <div class="callout-title">
+        <span>💡</span> The Analogy: GPU Acceleration &amp; Gradient Descent
+      </div>
+      <div class="callout-content">
+        <p>
+          In machine learning, your CPU runs Python control logic while offloading matrix multiplications to a GPU. Similarly, in a hybrid quantum algorithm:
+          <br>&bull; The <strong>Quantum Processor (QPU)</strong> acts as an accelerator that evaluates an objective function in high-dimensional superposition.
+          <br>&bull; A <strong>Classical Optimizer (CPU)</strong> iteratively tunes parameterized rotation angles ($\gamma, \beta$) via gradient-free methods (like COBYLA or SPSA) until the minimum energy is found.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. The Real-World Problem: Markowitz Portfolio Rebalancing</h2>
+    <p>
+      Consider an investment fund managing $n$ candidate assets (e.g. Apple, Google, Microsoft). Each asset $i$ has an expected financial return $\mu_i$, and the mutual volatility between assets is captured by an $n \times n$ covariance matrix $\Sigma$.
+    </p>
+    <p>
+      The fund manager wants to pick a subset of assets $x \in \{0, 1\}^n$ that maximizes returns while minimizing financial risk, subject to a strict <strong>budget constraint</strong>: you must select <em>exactly</em> $K$ assets.
+    </p>
+
+    <h3>The Mathematical Formulation:</h3>
+    $$\min_{x \in \{0,1\}^n} \left( \lambda \sum_{i,j} \Sigma_{ij} x_i x_j - \sum_i \mu_i x_i + P \left( \sum_{i=1}^n x_i - K \right)^2 \right)$$
+    <p>Where:</p>
+    <ul>
+      <li>$\mu$: Vector of expected returns (we want high returns, hence negative sign).</li>
+      <li>$\Sigma$: Covariance matrix measuring risk/volatility (we penalize high covariance).</li>
+      <li>$\lambda \ge 0$: The <strong>Risk Factor</strong> (how risk-averse the investor is).</li>
+      <li>$K$: The exact <strong>Budget</strong> (number of assets to purchase, e.g. $K=2$ out of $3$).</li>
+      <li>$P > 0$: The penalty weight enforcing the constraint $\sum x_i = K$.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. How Quantum Solves It: Cost Hamiltonians &amp; The Pauli Mapping</h2>
+    <p>
+      Quantum computers do not understand financial matrices directly. To evaluate this problem on qubits, Quanifi maps classical binary variables $x_i \in \{0, 1\}$ to quantum spin operators (Pauli-$Z$ matrices):
+    </p>
+    $$x_i = \frac{I - Z_i}{2}$$
+    <p>
+      When qubit $i$ is in state $\vert 0\rangle$, $Z_i = +1$, so $x_i = \frac{1 - 1}{2} = 0$ (asset not selected).<br>
+      When qubit $i$ is in state $\vert 1\rangle$, $Z_i = -1$, so $x_i = \frac{1 - (-1)}{2} = 1$ (asset selected).
+    </p>
+    <p>
+      Substituting this transformation converts the business objective into a diagonal <strong>Cost Hamiltonian</strong> ($H_C$):
+    </p>
+    $$H_C = \sum_i c_i Z_i + \sum_{i < j} J_{ij} Z_i Z_j + \text{constant}$$
+    <p>
+      The lowest-energy state (ground state) of $H_C$ corresponds exactly to the optimal asset portfolio!
+    </p>
+  </section>
+
+  <section>
+    <h2>4. Advanced Quantum Mechanism: The Constrained XY Mixer</h2>
+    <p>
+      In standard textbook QAOA, the algorithm applies the unconstrained transverse-field mixer:
+    </p>
+    $$H_M^{\text{standard}} = \sum_{i=1}^n X_i$$
+    <p>
+      The $X$ gate simply flips individual qubits ($0 \leftrightarrow 1$). But notice the flaw: if your budget requires picking exactly $K=2$ assets, single bit flips will produce states with $0$, $1$, or $3$ assets!
+      In classical computing, this is like an optimizer spending 90% of its runtime exploring invalid solutions that violate constraints.
+    </p>
+
+    <div class="callout warning">
+      <div class="callout-title">
+        <span>⚡</span> The Innovation: The Particle-Preserving XY Mixer
+      </div>
+      <div class="callout-content">
+        <p>
+          To solve this, Quanifi uses Qrisp's <strong>XY Mixer</strong>:
+          $$H_M^{\text{XY}} = \frac{1}{2} \sum_{(i,j)} \left( X_i X_j + Y_i Y_j \right)$$
+          Instead of flipping single bits, the XY operator swaps quantum excitations between adjacent qubits:
+          $$\vert 01\rangle \leftrightarrow \vert 10\rangle, \quad \text{while } \vert 00\rangle \to 0, \quad \vert 11\rangle \to 0$$
+          <strong>The consequence:</strong> The total number of <code>1</code>s (the Hamming weight $K$) is <em>strictly conserved</em>!
+          If you initialize the register in a state with exactly $K$ ones (e.g. $\vert 011\rangle$), the quantum circuit <strong>never leaves the feasible subspace</strong>. 100% of measurement shots are guaranteed to be valid $K$-asset portfolios!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Running Portfolio QAOA on the Quanifi Canvas</h2>
+    <p>
+      This problem beautifully demonstrates why <strong>Flow-Based Programming with NiFi</strong> is so powerful for enterprise quantum computing:
+    </p>
+
+    <div class="diagram-container">
+      <img src="img/portfolio_qaoa_canvas.png" alt="Portfolio QAOA Canvas Pipeline" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+      <div class="diagram-caption">Figure 5.1: Decoupled Portfolio Rebalancing QAOA pipeline on the NiFi canvas. This screenshot predates the 0.2.0 QAOA extraction below: it shows <code>QrispQAOA</code> sampling and reporting directly. Since 0.2.0, <code>QrispQAOA</code> trains only and emits a circuit; a simulator and <code>QuantumQAOAEvaluator</code> now sit between it and the report, per the 6-stage pipeline described next.</div>
+    </div>
+
+    <h3>The 6 Decoupled Stages:</h3>
+    <ol class="step-list">
+      <li class="step-item">
+        <div class="step-number">1</div>
+        <div class="step-body">
+          <div class="step-title">Trigger (GenerateFlowFile)</div>
+          <p>Initiates a rebalancing assessment (e.g. daily, hourly, or market-event driven).</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number">2</div>
+        <div class="step-body">
+          <div class="step-title">Problem Encoder (PortfolioRebalancingProblem)</div>
+          <p>
+            Takes financial market inputs (expected returns, covariance matrix, risk aversion factor $\lambda$, budget $K$), performs the Pauli substitution, and emits a framework-neutral JSON Hamiltonian (<code>sparse_pauli_op_json</code>). <strong>No quantum code required for the financial analyst!</strong>
+          </p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number">3</div>
+        <div class="step-body">
+          <div class="step-title">Variational Quantum Solver (QrispQAOA)</div>
+          <p>
+            Consumes the Hamiltonian. Configured with <strong><code>Mixer Type = XY</code></strong> and <strong><code>Optimizer = COBYLA</code></strong>. It initializes the $K$-hot subspace, constructs the parameterized cost and mixer unitary layers $U(C, \gamma) U(M, \beta)$, and optimizes the angles in a loop. Since 0.2.0 it <strong>trains and emits the trained circuit as OpenQASM 2.0</strong> — it no longer samples or has a <code>Shots</code> property.
+          </p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number">4</div>
+        <div class="step-body">
+          <div class="step-title">A Simulator (e.g. PennylaneSimulator)</div>
+          <p>Any counts-emitting simulator can sample the trained circuit — the example canvas uses <code>PennylaneSimulator</code>, but any of the seven counts engines works.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number">5</div>
+        <div class="step-body">
+          <div class="step-title">Framework-Neutral Scorer (QuantumQAOAEvaluator)</div>
+          <p>Reads the sampled counts plus the cost Hamiltonian (carried through as <code>hamiltonian.json</code>) and computes every sample-dependent QAOA metric: best measurement, approximation ratio, and the rest of the <code>qaoa.*</code> panel.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number">6</div>
+        <div class="step-body">
+          <div class="step-title">Automated Reporter (QuanifiReport)</div>
+          <p>Receives the counts and the evaluator's attributes and writes the interactive audit card to <code>reports/qrisp-qaoa-portfolio.html</code>.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>6. How to Read and Interpret the Results</h2>
+    <p>
+      Trigger the flow in NiFi, or regenerate the local example canvas and reports with:
+    </p>
+    <pre><code>.venv/bin/python tools/build_qaoa_examples.py --run</code></pre>
+    <p>
+      (the <code>qrisp-qaoa</code> lane covers this pipeline) and open the generated report:
+    </p>
+    <pre><code>open reports/qrisp-qaoa-portfolio.html</code></pre>
+
+    <p>The table below is a real measured run of the <code>qrisp-qaoa</code> lane (<code>demo/qaoa/lanes/qrisp-qaoa.json</code>), Layers <code>2</code>, Random Seed <code>11</code>, sampled by <code>PennylaneSimulator</code> at 1024 shots:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Observed Value</th>
+          <th>Financial &amp; Quantum Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>sim.top_result</code></td>
+          <td><code>001</code></td>
+          <td>The most frequently sampled binary vector of chosen assets — can differ from the lowest-energy one below, since it is the sampled mode, not the minimum.</td>
+        </tr>
+        <tr>
+          <td><code>qaoa.best_measurement</code></td>
+          <td><code>011</code></td>
+          <td>The observed bitstring with the lowest cost, from <code>QuantumQAOAEvaluator</code> — the actual portfolio recommendation.</td>
+        </tr>
+        <tr>
+          <td><code>qaoa.mixer_type</code></td>
+          <td><code>XY</code></td>
+          <td>Confirms the subspace-preservation mixer was applied.</td>
+        </tr>
+        <tr>
+          <td><code>qaoa.optimal_value</code></td>
+          <td><code>1.83382615</code></td>
+          <td>The minimized objective cost found by COBYLA (Qrisp's exact, rounded objective — see the <a href="../docs/guides/QAOA_COMPONENTS.md">QAOA components guide</a>'s energy-rounding note).</td>
+        </tr>
+        <tr>
+          <td><code>qaoa.cost_function_evals</code></td>
+          <td><code>47</code></td>
+          <td>Number of variational optimizer evaluations (this replaces the old, removed <code>qaoa.iterations</code> attribute).</td>
+        </tr>
+        <tr>
+          <td><code>qaoa.approximation_ratio</code></td>
+          <td><code>1.0</code></td>
+          <td>From <code>QuantumQAOAEvaluator</code>: the sampled best measurement reached the true minimum energy of this 3-asset instance.</td>
+        </tr>
+        <tr>
+          <td><code>sim.shots</code></td>
+          <td><code>1024</code></td>
+          <td>Statistical sampling size — now comes from the simulator stage, not the solver.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Hands-on Exercise -->
+  <section class="exercise-box">
+    <span class="exercise-badge">Hands-on Exercise 5.1</span>
+    <h3 class="exercise-title">Tuning the Risk Aversion Factor</h3>
+    <p>
+      In portfolio management, increasing the <strong>Risk Factor</strong> ($\lambda$) forces the optimizer to avoid volatile assets, even if they have higher expected returns.
+    </p>
+    <p>
+      Consider 3 assets with expected returns $\mu = [0.10, 0.20, 0.15]$ and covariance diagonal (variances) $\Sigma_{ii} = [0.05, 0.08, 0.06]$.<br>
+      Notice that Asset 1 (return 0.20) is the most profitable, but also the most volatile ($\Sigma_{11} = 0.08$).
+    </p>
+    <p><strong>Your Task:</strong></p>
+    <ol>
+      <li>In the NiFi canvas (<a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a>), stop <strong><code>Portfolio Encoder</code></strong>.</li>
+      <li>Configure it and change the <strong>Risk Factor</strong> property from <code>0.5</code> to a high risk aversion of <code>5.0</code>. Apply changes and restart the processor.</li>
+      <li>Trigger the pipeline: right-click <strong><code>Portfolio — Trigger</code></strong> and choose <strong>Run Once</strong>.</li>
+      <li>Inspect the newly appended report card in <code>reports/qrisp-qaoa-portfolio.html</code>.</li>
+      <li>Which 2 assets are selected now, and why did the optimal portfolio change?</li>
+    </ol>
+
+    <details class="solution-accordion">
+      <summary>👉 Click to Reveal Exercise Solution &amp; Explanation</summary>
+      <div class="solution-content">
+        <h4>Solution:</h4>
+        <p>
+          With risk factor $\lambda = 5.0$, the optimizer heavily penalizes the volatility term $\lambda x^T \Sigma x$.
+        </p>
+        <ul>
+          <li><strong>Selected Portfolio:</strong> <code>101</code> (Asset 0 and Asset 2).</li>
+          <li><strong>Why:</strong> Asset 0 (variance 0.05) and Asset 2 (variance 0.06) have much lower risk than Asset 1 (variance 0.08). When risk aversion is high ($\lambda = 5.0$), the mathematical penalty of Asset 1's volatility outweighs its extra $5\%$ return!</li>
+          <li><strong>Constraint Preservation:</strong> Notice that even though the optimal choice flipped, the measured bitstring still has <strong>exactly two 1s</strong> (<code>101</code>), because the <strong>XY Mixer</strong> prevents the quantum state from ever sampling illegal allocations like <code>111</code> or <code>100</code>!</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <div class="guide-nav-footer">
+    <a href="04_grover_search.html" class="guide-nav-button">
+      <span class="nav-sub">&larr; Previous</span>
+      <span class="nav-title">4. Grover's Search Algorithm</span>
+    </a>
+    <a href="06_disconnected_graph_decomposition.html" class="guide-nav-button">
+      <span class="nav-sub">Next &rarr;</span>
+      <span class="nav-title">6. Disconnected Graph Decomposition</span>
+    </a>
+  </div>
+
+
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

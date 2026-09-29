@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component Reference — Quanifi Processor Catalogue</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="./index.html" class="branding-group">
+        <img src="./assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="./assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="./components.html" class="btn-each btn-primary">Processors</a>
+        <a href="./guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="./tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="./index.html">Overview</a></li>
+        <li class="active"><a href="./components.html">Components (69+)</a></li>
+        <li class="">
+          <a href="./guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="./guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="./guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="./guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="./guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="./guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="./guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="./guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="./guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="./guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="./guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="./guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="./tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="./tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="./tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="./tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="./tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="./tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="./tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="./tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="./screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="./index.html"><span>Documentation Hub</span></a></li>
+<li class="active"><a href="./components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="./screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="./guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="./guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="./guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="./guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="./guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="./guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="./guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="./guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="./guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="./guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="./tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="./tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="./tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="./tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="./tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="./tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="./tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="components.html">Components</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="component-reference">Component reference</h1>
+<p>Every NiFi processor Quanifi ships, one row each, generated from each
+processor's own <code>ProcessorDetails.description</code> in
+<a href="https://github.com/saeg/quanifi/tree/main/nifi_extensions/"><code>nifi_extensions/</code></a> (69 processors as of 2026-07-04;
+<code>pauli_dsl.py</code> and <code>reporting.py</code> are shared helper modules, not processors,
+as are the QAOA chain's <code>qaoa_contract.py</code> (attribute contract, validation,
+portable-qasm2 profile) and its per-framework circuit constructors
+<code>qiskit_qaoa.py</code>, <code>cirq_qaoa.py</code>, <code>pennylane_qaoa.py</code> and <code>qrisp_qaoa.py</code> —
+see the <a href="guides/qaoa-components.html">QAOA components guide</a> for the full
+chain, property tables and N×M flow).
+This supersedes the "Processors" section in the root <a href="../index.html">README.md</a>,
+which predates the amplitude-estimation, Braket, molecular-Hamiltonian, and
+differential/mutation-testing processors below.</p>
+<p>For the cross-processor attribute contracts (<code>circuit.*</code>, <code>sim.*</code>, <code>ae.*</code>,
+<code>vqe.*</code>, …) these components share, see
+<a href="guides/creating-processors.html"><code>guides/CREATING_PROCESSORS.md</code></a>.</p>
+<h2 id="circuit-builders">Circuit builders</h2>
+<h3 id="qiskit">Qiskit</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QiskitAnsatz</code></td>
+<td>Builds a parameterised variational ansatz (efficient_su2, real_amplitudes, or two_local) and attaches it to the FlowFile as base64 QPY in the <code>ansatz.qpy_b64</code> attribute. In chain mode the incoming Hamiltonian content passes through unchanged; in standalone mode the ansatz is written as the circuit content with the <code>circuit.*</code> contract.</td>
+</tr>
+<tr>
+<td><code>QiskitHadamardTransform</code></td>
+<td>Applies a Hadamard gate to every qubit of a circuit. If the incoming FlowFile already carries a circuit, H gates are appended to all its qubits; if empty, a fresh n-qubit circuit is created.</td>
+</tr>
+<tr>
+<td><code>QiskitStatePreparation</code></td>
+<td>Prepares a state circuit from a classical description: uniform superposition, GHZ, a specific basis state, or an arbitrary normalized amplitude vector (custom mode).</td>
+</tr>
+<tr>
+<td><code>QiskitPhaseOracle</code></td>
+<td>Builds a phase oracle for a target bitstring (−1 phase on <code>\|target⟩</code>, identity elsewhere). Standalone outputs a bare oracle; compose mode appends it to an existing circuit. Mirrors <code>CirqPhaseOracle</code> for cross-framework use.</td>
+</tr>
+<tr>
+<td><code>QiskitGroverOperator</code></td>
+<td>Reads an oracle circuit, prepends the uniform superposition H⊗n, and applies the full Grover operator (oracle + diffuser) N times via <code>qiskit.circuit.library.grover_operator</code>. Mirrors <code>CirqGroverOperator</code>.</td>
+</tr>
+<tr>
+<td><code>QiskitGroverCircuit</code></td>
+<td>Builds a full Grover search circuit for a target bitstring, unmeasured, in QPY or OpenQASM 3.</td>
+</tr>
+<tr>
+<td><code>ReadoutBaselineCircuit</code></td>
+<td>Builds the readout-error baseline for the Grover N-M hardware matrix: an X gate on every qubit whose target bit is 1, then measurement — no superposition, no entanglement, no two-qubit gates, emitted as OpenQASM 2.0. On ideal hardware every shot returns the target, so any departure is pure state-preparation-and-measurement error for those physical qubits, isolated from the builders' gate error. Sets <code>grover.kind = "readout"</code> so the batch submitter's case-major ordering ranks it first.</td>
+</tr>
+<tr>
+<td><code>QiskitQFTCircuit</code></td>
+<td>Applies the Quantum Fourier Transform or its inverse. Standalone creates a fresh n-qubit QFT circuit; compose mode appends it to an existing circuit.</td>
+</tr>
+<tr>
+<td><code>QiskitPhaseEstimation</code></td>
+<td>Builds a QPE circuit using Qiskit's <code>PhaseEstimation</code> library block. Standalone demos a builtin unitary (T/S/Z); compose mode loads the unitary from the FlowFile.</td>
+</tr>
+<tr>
+<td><code>QiskitQuantumArithmetic</code></td>
+<td>Builds a reversible arithmetic circuit (<code>a + b</code>) from Qiskit's adder library — <code>cdkm</code> (Cuccaro ripple-carry), <code>vbe</code> (VBE ripple-carry), or <code>draper</code> (Fourier-basis) — with the operands encoded into the input registers and no measurement. Publishes the <code>arithmetic.*</code> contract (expected result, expected result bits, result-qubit indices) so an oracle can score the run against the classical answer.</td>
+</tr>
+<tr>
+<td><code>QiskitQAOACircuit</code></td>
+<td>Fixed-angle QAOA builder (NxM row): <code>qiskit.circuit.library.qaoa_ansatz</code> bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cirq">Cirq</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CirqAnsatz</code></td>
+<td>Builds a parameterised Cirq variational ansatz (efficient_su2, real_amplitudes, two_local) with sympy free parameters, attached as Cirq JSON in <code>ansatz.cirq_json</code>.</td>
+</tr>
+<tr>
+<td><code>CirqHadamardTransform</code></td>
+<td>Applies H⊗n. Standalone creates a fresh circuit producing the uniform superposition; compose mode appends the H layer to an incoming Cirq/qasm2 circuit.</td>
+</tr>
+<tr>
+<td><code>CirqStatePreparation</code></td>
+<td>Prepares a state circuit (uniform superposition, GHZ, basis state, or custom amplitude vector). Cross-framework mirror of <code>QiskitStatePreparation</code>.</td>
+</tr>
+<tr>
+<td><code>CirqPhaseOracle</code></td>
+<td>Builds a phase oracle for a target bitstring. Standalone outputs a bare oracle; compose mode appends to an existing Cirq circuit. Feeds <code>CirqGroverOperator</code> or amplitude estimation/amplification.</td>
+</tr>
+<tr>
+<td><code>CirqGroverOperator</code></td>
+<td>Reads an oracle circuit, prepends H⊗n, and applies the full Grover operator N times — equivalent to Classiq's <code>power(reps, grover_operator(oracle, hadamard_transform))</code>.</td>
+</tr>
+<tr>
+<td><code>CirqGroverCircuit</code></td>
+<td>Builds a Grover search circuit for a target bitstring, in Cirq JSON or OpenQASM 2.0.</td>
+</tr>
+<tr>
+<td><code>CirqQFTCircuit</code></td>
+<td>Applies the QFT (or inverse) using Cirq's built-in <code>cirq.qft</code>. Standalone or compose (appends to an existing circuit).</td>
+</tr>
+<tr>
+<td><code>CirqPhaseEstimation</code></td>
+<td>QPE using Cirq: X on target → H on phase register → controlled-U^(2^k) → inverse QFT. Standalone uses a builtin Z-rotation (T/S/Z) as U; compose mode uses the incoming circuit as U.</td>
+</tr>
+<tr>
+<td><code>CirqQuantumArithmetic</code></td>
+<td>Builds <code>a + b</code> in Cirq as either a hand-written Cuccaro MAJ/UMA ripple-carry adder (<code>ripple_carry</code>) or a Fourier-basis adder (<code>qft</code>), emitting qasm2 on the same <code>arithmetic.*</code> contract as the Qiskit and Qrisp builders. Cirq ships no high-level adder, so this is a reuse artifact in the same sense as <code>CirqGroverOperator</code>: the algorithm is transcribed, not imported.</td>
+</tr>
+<tr>
+<td><code>CirqQAOACircuit</code></td>
+<td>Fixed-angle QAOA builder (NxM row): the hand-rolled sympy-parameterised cost/mixer ladder (<code>cirq_qaoa.py</code>) bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="qrisp">Qrisp</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QrispAnsatz</code></td>
+<td>Declares a parameterised Qrisp variational ansatz (efficient_su2, real_amplitudes, two_local) as a spec in <code>ansatz.*</code> attributes — a Qrisp ansatz is a callable, not a serialisable circuit, so <code>QrispVQE</code> reconstructs it from the spec.</td>
+</tr>
+<tr>
+<td><code>QrispHadamardTransform</code></td>
+<td>Applies H⊗n using Qrisp. Standalone or compose (appends to an incoming qasm2 circuit). Always emits OpenQASM 2.0. Cross-framework mirror of <code>QiskitHadamardTransform</code>.</td>
+</tr>
+<tr>
+<td><code>QrispStatePreparation</code></td>
+<td>Prepares a state circuit (uniform superposition, GHZ, basis state, or custom amplitude vector), emitting OpenQASM 2.0. Cross-framework mirror of <code>QiskitStatePreparation</code>.</td>
+</tr>
+<tr>
+<td><code>QrispQFTCircuit</code></td>
+<td>Applies the QFT (or inverse) using Qrisp's built-in QFT primitive, output as qasm2.</td>
+</tr>
+<tr>
+<td><code>QrispPhaseEstimation</code></td>
+<td>QPE using Qrisp's QPE primitive (<code>iter_spec=True</code>). Builtin unitaries T/S/Z; target register prepared in <code>\|1⟩</code>. Sets <code>qpe.top_phase</code>; exports the circuit as qasm2.</td>
+</tr>
+<tr>
+<td><code>QrispQuantumArithmetic</code></td>
+<td>Arithmetic on Qrisp <code>QuantumFloat</code> registers (add / subtract / multiply, signed or unsigned). <code>Implementation</code> selects the adder: <code>default</code> (Qrisp's own operator overloading), or the named <code>cuccaro</code>, <code>fourier</code>, <code>gidney</code> (temporary-AND, measurement-based uncompute) and <code>qcla</code> (carry-lookahead) adders. The widest implementation choice of the three frameworks, which is why it supplies most of the algorithm families in the arithmetic study.</td>
+</tr>
+<tr>
+<td><code>QrispQAOACircuit</code></td>
+<td>Fixed-angle QAOA builder (NxM row): Qrisp's <code>QAOAProblem</code> cost operator + mixer, without training, bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator. Qrisp's per-qubit registers are normalised to one qreg; the XY mixer is rebased to <code>{h,x,rx,ry,rz,cx}</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Qrisp has no standalone <code>GroverOperator</code>/<code>PhaseOracle</code>/<code>GroverCircuit</code> — see <code>QrispGroverSearch</code> under Algorithms.)</em></p>
+<h3 id="pennylane-circuit-emitting">PennyLane (circuit-emitting)</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PennylaneFeatureEmbedding</code></td>
+<td>Encodes a classical feature vector into a circuit via a PennyLane embedding template (angle/amplitude/iqp/basis), emitted as OpenQASM 2.0 — the classical→quantum data-loading step of a QML pipeline.</td>
+</tr>
+<tr>
+<td><code>PennylaneVariationalAnsatz</code></td>
+<td>Builds a PennyLane variational ansatz (<code>StronglyEntanglingLayers</code> or <code>BasicEntanglerLayers</code>) with reproducible seeded weights, emitted as OpenQASM 2.0. Standalone or appended after an embedding to compose a full QML model circuit.</td>
+</tr>
+<tr>
+<td><code>PennylaneGroverCircuit</code></td>
+<td>Builds a Grover search circuit for a target bitstring with <code>qml.GroverOperator</code>, emitted as OpenQASM 2.0. The third builder in the N-M version matrix: for the 4-qubit case it emits 88 two-qubit gates against Qiskit's 56 and Cirq's 112, so the three are bit-identical on simulators but should separate on hardware.</td>
+</tr>
+<tr>
+<td><code>PennylaneQuantumArithmetic</code></td>
+<td>Builds <code>a + b</code> with PennyLane's <code>qml.OutAdder</code>, on the same <code>arithmetic.*</code> contract as the Qiskit, Cirq and Qrisp builders. Alone among the four it is <strong>out-of-place</strong>: the sum lands in its own <code>(n+1)</code>-wide register rather than over B, because <code>OutAdder</code> is PennyLane's only native quantum+quantum adder. It is the confirmatory experiment's third framework lane, chosen because its circuit is built from <em>wires</em> rather than operand values and is therefore identical for every operand pair — the property every Qrisp adder lacks.</td>
+</tr>
+<tr>
+<td><code>PennylaneQAOACircuit</code></td>
+<td>Fixed-angle QAOA builder (NxM row): <code>qml.qaoa</code> <code>cost_layer</code>/<code>mixer_layer</code> bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator. The RX mixer is exported as <code>h.rz.h</code>; <code>circuit.global_phase_dropped</code> records whether a <code>gphase</code> statement was stripped.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pyquil-rigetti">pyquil (Rigetti)</h3>
+<p>Ten processors, including the simulator listed below. See the
+<a href="guides/pyquil-components.html">pyQuil guide</a> for properties, wire formats,
+limits, example canvases and exact-energy versus shot-sampling semantics.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PyquilGroverCircuit</code></td>
+<td>Existing complete native Grover builder, now sharing the oracle/diffuser implementation with the modular processors. Outputs unmeasured qasm2; 1–8 qubits and 0–100 iterations.</td>
+</tr>
+<tr>
+<td><code>PyquilPhaseOracle</code></td>
+<td>Native bitstring phase oracle, without state preparation. Connect to the Grover operator; q0-left targets.</td>
+</tr>
+<tr>
+<td><code>PyquilGroverOperator</code></td>
+<td>Accepts a qasm2/qasm3 oracle, prepares the uniform state and repeats oracle plus native diffuser. Connect to any compatible simulator.</td>
+</tr>
+<tr>
+<td><code>PyquilAnsatz</code></td>
+<td>RY or RY/RZ trial-state recipe with CNOT entanglers. Attach mode preserves a Hamiltonian for VQE; circuit mode emits a bound qasm2 circuit.</td>
+</tr>
+<tr>
+<td><code>PyquilExpectation</code></td>
+<td>Exact local pyQuil expectation of a Hermitian Pauli sum on an incoming circuit; emits expectation JSON, not counts.</td>
+</tr>
+<tr>
+<td><code>PyquilVQE</code></td>
+<td>Optimizes an upstream pyQuil ansatz recipe against the shared Hamiltonian format using exact local expectations and SciPy. Emits final counts and optimal qasm2 metadata.</td>
+</tr>
+<tr>
+<td><code>PyquilQAOACircuit</code></td>
+<td>Fixed-angle QAOA builder (NxM row): the native <code>pyquil_components.qaoa</code> program bound to explicit Betas/Gammas; emits portable qasm2 + hamiltonian.json for any simulator and QuantumQAOAEvaluator.</td>
+</tr>
+<tr>
+<td><code>PyquilQAOA</code></td>
+<td>Optimise-only: trains against the exact local expectation objective with <code>scipy</code>, reusing the same native <code>pyquil_components.qaoa</code> circuit builder as <code>PyquilQAOACircuit</code>, and emits the trained, bound circuit as portable qasm2 plus <code>qaoa.optimal_parameters</code>. It does not sample; connect any counts simulator, then <code>QuantumQAOAEvaluator</code>. See the <a href="guides/qaoa-components.html">QAOA components guide</a> (VQE-only content in the <a href="guides/pyquil-components.html">pyQuil guide</a> still applies to <code>PyquilVQE</code>).</td>
+</tr>
+<tr>
+<td><code>PyquilQFT</code></td>
+<td>Forward/inverse Fourier transform, optionally appended to an incoming circuit, with optional bit-reversal swaps.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="simulators">Simulators</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QiskitAerSimulator</code></td>
+<td>Reads a circuit (QPY or OpenQASM 3), adds measurement, runs it on Qiskit's <code>AerSimulator</code>, writes shot counts as JSON. Optional gate/readout noise model.</td>
+</tr>
+<tr>
+<td><code>QiskitStatevectorSimulator</code></td>
+<td>Computes the exact statevector of an unmeasured circuit via <code>qiskit.quantum_info.Statevector</code>. Outputs probability distribution as JSON plus an HTML card with amplitude/phase per basis state.</td>
+</tr>
+<tr>
+<td><code>CirqSimulator</code></td>
+<td>Reads a circuit (Cirq JSON or qasm2), adds measurement, runs it on Cirq's wave-function simulator, writes shot counts as JSON. Optional noise channel and readout error.</td>
+</tr>
+<tr>
+<td><code>CirqStatevectorSimulator</code></td>
+<td>Exact statevector via <code>cirq.Simulator().simulate()</code>. Cross-framework mirror of <code>QiskitStatevectorSimulator</code>.</td>
+</tr>
+<tr>
+<td><code>QrispSimulator</code></td>
+<td>Reads a qasm2 circuit, adds measurement, runs it on Qrisp's native statevector simulator, writes shot counts as JSON. No noise-model support (ideal only).</td>
+</tr>
+<tr>
+<td><code>PennylaneSimulator</code></td>
+<td>Reads a qasm2 circuit, samples it on PennyLane's <code>default.qubit</code> device, writes shot counts as JSON. Ideal (noiseless) only — for QML-native outputs (expectations, analytic probabilities) use <code>PennylaneExpectation</code> instead.</td>
+</tr>
+<tr>
+<td><code>BraketSimulator</code></td>
+<td>Reads a circuit (OpenQASM 3, or qasm2 via Qiskit's parser), samples it on the Amazon Braket <code>LocalSimulator</code> (no AWS account/network needed), writes shot counts as JSON. MSB-first bit order (Cirq convention). Noiseless only.</td>
+</tr>
+<tr>
+<td><code>QSharpSimulator</code></td>
+<td>Reads OpenQASM 2/3, normalizes it to a measured circuit, and samples it with the Microsoft QDK sparse or Clifford simulator. Supports seeded sparse-simulator Pauli noise and emits canonical q0-left counts.</td>
+</tr>
+<tr>
+<td><code>PyquilSimulator</code></td>
+<td>Reads a circuit (OpenQASM 2 or 3, re-based onto Quil-native gates via Qiskit's parser), samples it on Rigetti's pure-Python PyQVM (no external <code>quilc</code>/<code>qvm</code> server), and writes shot counts as JSON. Seeded and reproducible; supports pyquil's six post-gate Kraus noise channels (relaxation, dephasing, depolarizing, phase_flip, bit_flip, bitphase_flip) via <code>ReferenceDensitySimulator</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hardware-execution">Hardware execution</h2>
+<p>Gateways from the shared circuit contract (<code>circuit.format = qasm2</code>/<code>qasm3</code>) to
+real quantum hardware. Because they consume the interchange format, a circuit
+built by <em>any</em> framework's builder runs on real QPUs through them.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BraketDevice</code></td>
+<td>Runs a circuit on an Amazon Braket device: a QPU / managed-simulator ARN (IonQ, Rigetti, IQM, SV1) or <code>local</code> for the offline <code>LocalSimulator</code>. <code>Wait For Results = false</code> submits asynchronously and continues with <code>hw.task_arn</code>, so hours-long QPU queues never block the canvas. Credentials via the standard AWS chain.</td>
+</tr>
+<tr>
+<td><code>QiskitRuntimeSampler</code></td>
+<td>Samples a circuit via IBM Qiskit Runtime <code>SamplerV2</code>. <code>Backend = fake_&lt;name&gt;</code> runs the calibrated noisy fake backend locally (offline, no account); <code>least_busy</code> or a backend name submits to real IBM hardware (token required). Transpiles to the backend ISA before submission.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="algorithms-all-in-one-solvers">Algorithms (all-in-one solvers)</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Framework</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QiskitGroverSearch</code></td>
+<td>Qiskit</td>
+<td>Full Grover's search for a target bitstring: phase oracle → <code>grover_operator</code> → N iterations → <code>AerSimulator</code> → measurement counts.</td>
+</tr>
+<tr>
+<td><code>QrispGroverSearch</code></td>
+<td>Qrisp</td>
+<td>Grover's search via Qrisp: <code>tag_state()</code> oracle → <code>grovers_alg()</code> → measurement probability distribution as JSON.</td>
+</tr>
+<tr>
+<td><code>QiskitVQE</code></td>
+<td>Qiskit</td>
+<td>Variational Quantum Eigensolver: reads a Hamiltonian and an ansatz, minimises energy with a classical optimizer. Emits <code>vqe.*</code> results.</td>
+</tr>
+<tr>
+<td><code>CirqVQE</code></td>
+<td>Cirq</td>
+<td>Hand-rolled VQE: simulates a sympy-parameterised ansatz, computes the Hamiltonian expectation from the statevector, minimises with <code>scipy.optimize</code>. Strict solver — requires upstream Hamiltonian + ansatz.</td>
+</tr>
+<tr>
+<td><code>QrispVQE</code></td>
+<td>Qrisp</td>
+<td>VQE via Qrisp's <code>VQEProblem</code>: trains the ansatz spec with the chosen optimizer, emits <code>vqe.*</code> results.</td>
+</tr>
+<tr>
+<td><code>QiskitQAOA</code></td>
+<td>Qiskit</td>
+<td>Optimise-only: trains the p-layer ansatz via <code>qiskit_algorithms.QAOA</code> against a diagonal cost Hamiltonian (objective sampled via a seeded <code>StatevectorSampler</code>, 1024 shots) and emits the trained, bound circuit as portable qasm2 plus <code>qaoa.optimal_parameters</code>. It does not sample; connect any counts simulator, then <code>QuantumQAOAEvaluator</code>. See the <a href="guides/qaoa-components.html">QAOA components guide</a>.</td>
+</tr>
+<tr>
+<td><code>CirqQAOA</code></td>
+<td>Cirq</td>
+<td>Optimise-only: alternating <code>exp(-i·gamma·H)</code> cost layers and Rx mixer layers, trained against the exact statevector objective with <code>scipy</code>, and emits the trained, bound circuit as portable qasm2 plus <code>qaoa.optimal_parameters</code>. Connect any counts simulator, then <code>QuantumQAOAEvaluator</code>.</td>
+</tr>
+<tr>
+<td><code>QrispQAOA</code></td>
+<td>Qrisp</td>
+<td>Optimise-only: trains via Qrisp's <code>QAOAProblem.optimization_routine</code> (exact, Qrisp-rounded probabilities) and emits the trained, bound circuit as portable qasm2 plus <code>qaoa.optimal_parameters</code>. Connect any counts simulator, then <code>QuantumQAOAEvaluator</code>.</td>
+</tr>
+<tr>
+<td><code>PennylaneQAOA</code></td>
+<td>PennyLane</td>
+<td>Optimise-only: <code>qml.qaoa</code> cost/mixer layers with analytic expectations on <code>default.qubit</code>, trained with <code>scipy</code>, and emits the trained, bound circuit as portable qasm2 plus <code>qaoa.optimal_parameters</code>. Connect any counts simulator, then <code>QuantumQAOAEvaluator</code>.</td>
+</tr>
+<tr>
+<td><code>QiskitAmplitudeEstimation</code></td>
+<td>Qiskit</td>
+<td>QAE on a Bernoulli problem (<code>A = Ry(2·asin(√p))</code>) via <code>qiskit-algorithms</code>. <code>canonical</code> = QPE-based grid estimate + MLE refinement; <code>iterative</code> = epsilon-convergent, no phase register. Emits <code>ae.*</code>.</td>
+</tr>
+<tr>
+<td><code>CirqAmplitudeEstimation</code></td>
+<td>Cirq</td>
+<td>Canonical QPE-based QAE built from Cirq primitives, same Bernoulli problem. Emits <code>ae.*</code>.</td>
+</tr>
+<tr>
+<td><code>QrispAmplitudeEstimation</code></td>
+<td>Qrisp</td>
+<td>QAE via Qrisp's native IQAE, converging to <code>Epsilon Target</code> at confidence <code>Alpha</code>. Emits <code>ae.*</code>.</td>
+</tr>
+<tr>
+<td><code>PennylaneAmplitudeEstimation</code></td>
+<td>PennyLane</td>
+<td>QAE composed from PennyLane's <code>QuantumPhaseEstimation</code> template. Emits <code>ae.*</code>.</td>
+</tr>
+<tr>
+<td><code>QiskitAmplitudeAmplification</code></td>
+<td>Qiskit</td>
+<td>Generalised Grover amplitude amplification via <code>qiskit-algorithms</code>' <code>AmplificationProblem</code>/<code>Grover.construct_circuit()</code> (Brassard et al., 2000). <code>Q = A·S₀·A†·Sꜰ</code> applied N times.</td>
+</tr>
+<tr>
+<td><code>QrispShor</code></td>
+<td>Qrisp</td>
+<td>Shor's factoring algorithm via Qrisp's native <code>shors_alg</code>: configure <code>Number To Factor</code> (small odd composites, e.g. 15 or 21), get <code>shor.factor_1</code>/<code>shor.factor_2</code>. Educational scale.</td>
+</tr>
+<tr>
+<td><code>QiskitBellState</code></td>
+<td>Qiskit</td>
+<td>Prepares and measures one of the four Bell states (H + CNOT + local flips); <code>bell.correlation</code> is the probability mass on the correlated pair (1.0 ideal). The canonical entanglement demo.</td>
+</tr>
+<tr>
+<td><code>QiskitTeleportation</code></td>
+<td>Qiskit</td>
+<td>Teleports <code>Rz(Phi)Ry(Theta)\|0&gt;</code> from qubit 0 to qubit 2 using a Bell pair, a mid-circuit Bell measurement, and classically conditioned corrections (dynamic circuit). Self-verifying: <code>teleport.fidelity = P(target = 0)</code>, ideally 1.0.</td>
+</tr>
+<tr>
+<td><code>QiskitQuantumHelloWorld</code></td>
+<td>Qiskit</td>
+<td>Runs a GHZ-state circuit and writes the measurement bitstring to the FlowFile content — the smoke-test processor.</td>
+</tr>
+<tr>
+<td><code>QrispBernsteinVazirani</code></td>
+<td>Qrisp</td>
+<td>Recovers a hidden bit string with the Bernstein--Vazirani algorithm.</td>
+</tr>
+<tr>
+<td><code>QrispDeutschJozsa</code></td>
+<td>Qrisp</td>
+<td>Classifies a configured oracle as constant or balanced.</td>
+</tr>
+<tr>
+<td><code>QrispSwapTest</code></td>
+<td>Qrisp</td>
+<td>Estimates the overlap between two quantum states.</td>
+</tr>
+<tr>
+<td><code>QrispTruthTableSynthesis</code></td>
+<td>Qrisp</td>
+<td>Synthesizes a reversible oracle from a classical truth table.</td>
+</tr>
+<tr>
+<td><code>QrispTypeEncoder</code></td>
+<td>Qrisp</td>
+<td>Encodes typed classical values into Qrisp quantum variables.</td>
+</tr>
+<tr>
+<td><code>QrispQCCSDAnsatz</code></td>
+<td>Qrisp</td>
+<td>Builds a QCCSD chemistry ansatz for downstream VQE components.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hamiltonians-problem-encoders">Hamiltonians &amp; problem encoders</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QiskitHamiltonian</code></td>
+<td>Builds a problem Hamiltonian (<code>SparsePauliOp</code>) from a compact Pauli sum (e.g. <code>Z0 + Z1 + 0.5 X0 X1</code>) or JSON, serialised with <code>hamiltonian.format = sparse_pauli_op_json</code> so <code>QiskitVQE</code>/<code>QiskitQAOA</code> can consume it. No quantum execution.</td>
+</tr>
+<tr>
+<td><code>CirqHamiltonian</code></td>
+<td>Same wire format, tagged <code>hamiltonian.framework=cirq</code>, shared with <code>QiskitHamiltonian</code>.</td>
+</tr>
+<tr>
+<td><code>QrispHamiltonian</code></td>
+<td>Same wire format, tagged <code>hamiltonian.framework=qrisp</code>.</td>
+</tr>
+<tr>
+<td><code>MaxCutProblem</code></td>
+<td>Encodes a weighted graph (JSON edge list, e.g. <code>[[0,1],[1,2,0.5]]</code>) as the MaxCut Ising Hamiltonian in the framework-neutral wire format. The minimum eigenvalue equals <code>-max_cut</code>, so QAOA results read in cut units. No Pauli strings required.</td>
+</tr>
+<tr>
+<td><code>QuboToHamiltonian</code></td>
+<td>Encodes a QUBO matrix (JSON 2D array; minimize <code>x^T Q x</code> over binary <code>x</code>) as the equivalent Ising Hamiltonian. The ground bitstring is the binary solution vector — the universal adapter for combinatorial problems (portfolio, scheduling, routing).</td>
+</tr>
+<tr>
+<td><code>MoleculeHamiltonian</code></td>
+<td>Builds a molecular qubit Hamiltonian from a geometry string (e.g. <code>H 0 0 0; H 0 0 0.735</code>) using <code>pyscf</code> + OpenFermion (Jordan-Wigner). Emits the same framework-neutral format plus chemistry attributes (formula, bond distance, HF/FCI reference energies) so any <code>*VQE</code> solver can consume it.</td>
+</tr>
+<tr>
+<td><code>MaxCliqueProblem</code></td>
+<td>Encodes maximum clique as a QUBO-derived Hamiltonian.</td>
+</tr>
+<tr>
+<td><code>MaxIndependentSetProblem</code></td>
+<td>Encodes maximum independent set as a QUBO-derived Hamiltonian.</td>
+</tr>
+<tr>
+<td><code>PortfolioRebalancingProblem</code></td>
+<td>Encodes a constrained portfolio-rebalancing objective for QAOA.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pennylane-qml-lane">PennyLane QML lane</h2>
+<p>PennyLane is treated as a separate QML lane rather than a fourth circuit-and-counts
+framework: its native outputs are expectation values/probabilities, and its
+focus is data encoding + training rather than gate-level circuits. <code>PennylaneFeatureEmbedding</code>
+and <code>PennylaneVariationalAnsatz</code> (listed under Circuit builders above) emit qasm2
+and <em>are</em> interchangeable with the other frameworks' simulators; the three below are not.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PennylaneDatasetLoader</code></td>
+<td>Emits a labelled classical dataset as a JSON array of records (<code>{"features": [...], "label": k}</code>). <code>synthetic</code> generates a seeded two-class Gaussian-blob dataset offline; <code>inline</code> validates a dataset given via the <code>Records</code> property. Feeds <code>SplitJson</code> → <code>PennylaneFeatureEmbedding</code>.</td>
+</tr>
+<tr>
+<td><code>PennylaneExpectation</code></td>
+<td>Runs a qasm2 circuit on a PennyLane device and emits QML-native outputs: per-qubit Pauli expectation values (<code>sim.expectations</code>) and the probability distribution. The expectation-value lane PennyLane is built around, as opposed to shot-count simulators.</td>
+</tr>
+<tr>
+<td><code>PennylaneVariationalClassifier</code></td>
+<td>Trains a variational quantum classifier on the labelled JSON dataset in the FlowFile content (from <code>PennylaneDatasetLoader</code>). <code>Embedding</code> (angle / iqp / amplitude) and <code>Ansatz</code> (strongly_entangling / basic_entangler) use the same vocabulary as the builder processors. Emits <code>train.*</code> attributes, the loss history, and <code>report.type = training</code> for the loss-curve report card.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="differential-mutation-testing-infrastructure">Differential &amp; mutation-testing infrastructure</h2>
+<p>Cross-framework infrastructure for data-driven differential testing (N frameworks
+× M simulators) and mutation testing (inject a mutant on one branch of a K-way
+consensus flow, see if it's caught).</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QuantumTestCaseSource</code></td>
+<td>Expands a compact test-matrix spec (explicit JSON table or parameter axes) into a JSON array of test-case rows, each carrying <code>test.case_id</code>/<code>test.run_id</code>/<code>test.partition</code>. Feeds <code>SplitJson</code> to fan out one FlowFile per case. Setting <code>Arithmetic Suite</code> (<code>exhaustive:2</code>, <code>boundary:3</code>) instead generates arithmetic operand pairs through the same generator the headless study uses, tagging each row with the boundary conditions (<code>carry_out</code>, <code>max_a</code>, …) that input covers. <code>Case Input Mode</code> adds two modes that state the operand pairs explicitly instead of generating them — <code>inline-arithmetic-json</code> (the <code>Arithmetic Cases</code> property) and <code>flowfile-content</code> (a reviewed file placed by a stock <code>FetchFile</code>) — validated by one strict parser that derives all ground truth, with <code>Expected Case Count</code> / <code>Expected Case Set SHA-256</code> / <code>Expected Manifest SHA-256</code> as fail-closed campaign guards. Default <code>legacy-auto</code> reproduces the historical precedence exactly. See <a href="guides/data-driven-testing.html">DATA_DRIVEN_TESTING.md</a> §2a.</td>
+</tr>
+<tr>
+<td><code>QuantumBatchResultExpander</code></td>
+<td>Expands a polled hardware batch into a JSON array of one row per circuit, each carrying that circuit's counts and the ground-truth attributes recorded at submission, so per-circuit hardware results can be scored against a known answer. Normalises counts to the canonical <code>q0_left</code> order (Qiskit/IBM return them MSB-first; the IQM serializer does not), because getting that wrong does not raise, it reports 0% success and looks like a dead device. Feed into <code>SplitJson</code>.</td>
+</tr>
+<tr>
+<td><code>QuantumSuccessProbabilityOracle</code></td>
+<td>Ground-truth oracle for circuits with a known answer: marginalises counts onto the result register, reports the success probability with a Wilson score interval, and in paired mode runs a two-proportion z-test against a reference run, emitting <code>agree</code> / <code>negligible-difference</code> / <code>diverge</code> / <code>no-test</code>. Unlike the distributional oracles it scores against a <em>specification</em>, not against another branch, so a wrong answer and a merely different distribution are distinguishable. Pure-Python statistics, no scipy.</td>
+</tr>
+<tr>
+<td><code>QuantumDistributionComparison</code></td>
+<td>Pairs two measurement distributions and computes Hellinger distance, Total Variation, and Fidelity (effect sizes), plus a Pearson chi-squared homogeneity test (significance). Emits a two-gate verdict (consistent / negligible-difference / disagree). Pairing via a static Comparison Label.</td>
+</tr>
+<tr>
+<td><code>QuantumUnitaryComparison</code></td>
+<td>Compares two unitary matrices (from <code>QuanifiUnitary</code>) for equivalence up to global phase via process fidelity <code>F = \|tr(U_A† · U_B)\|² / d²</code>. <code>F = 1</code> means equivalence on every possible input, not just <code>\|0...0⟩</code>.</td>
+</tr>
+<tr>
+<td><code>QuantumAssertion</code></td>
+<td>Assertion gate: receives <code>QuantumDistributionComparison</code> output, applies a Hellinger threshold check (differential oracle) plus an optional ground-truth check against <code>test.expected</code>. Routes to pass/fail.</td>
+</tr>
+<tr>
+<td><code>QuantumConsensusOracle</code></td>
+<td>K-way majority oracle: collects K framework distributions sharing a slot key, takes an endian-agnostic majority vote, emits <code>assert.verdict = PASS / FAIL / DISAGREE</code>. Generalises <code>QuantumDistributionComparison</code> + <code>QuantumAssertion</code> to K branches; feeds <code>MutationScoreReport</code>.</td>
+</tr>
+<tr>
+<td><code>QuantumDistributionOracle</code></td>
+<td>K-way oracle for degenerate/multi-peaked outputs (GHZ, W states) where top-1 voting is a coin flip: votes on <strong>distribution similarity</strong> instead, via pairwise Hellinger distance gated by a chi-squared homogeneity test across every branch pair sharing a slot key. Requires <strong>Multiple Comparison Correction</strong> (<code>none</code> / <code>holm</code> / <code>benjamini-hochberg</code>, no default — an unset value leaves the processor INVALID) to correct the per-pair p-values for the K(K-1)/2 tests a slot runs; <code>none</code> reproduces the original uncorrected <code>p &lt; alpha</code> rule byte-for-byte. Emits <code>consensus.correction</code>, <code>consensus.pairwise_tests</code>, <code>consensus.significant_pairs_raw</code>, <code>consensus.significant_pairs_corrected</code> alongside the existing <code>consensus.*</code>/<code>assert.*</code> attributes. Ground truth is checked as expected <strong>support</strong> (a set of bitstrings), not a single winner, so a degenerate but correct output is not penalised. Shares <code>multiple_comparisons.py</code> with the version-matrix and mutation experiment scripts.</td>
+</tr>
+<tr>
+<td><code>QuantumMutator</code></td>
+<td>Gate-level (Layer-A) mutation operator: reads a qasm2/qasm3 circuit, applies one syntactic mutation (<code>gate.add</code>, <code>gate.remove</code>, <code>gate.replace</code> same-arity, <code>rotation.perturb</code>, and <code>carry.break</code> — deletes a gate on the carry-out qubit named by <code>arithmetic.result_qubits</code>, so the fault only manifests on operand pairs that actually carry), emits the mutant with <code>mut.*</code> bookkeeping. Placed on one branch of a K-branch consensus flow so a killed mutant surfaces as a single-branch <code>DISAGREE</code>.</td>
+</tr>
+<tr>
+<td><code>MutationScoreReport</code></td>
+<td>Aggregates per-case verdicts into a mutation survival rate, grouped by mutation operator, keyed on <code>test.run_id</code>. Excludes control rows from the score and reports control dissents (real cross-framework discrepancies) separately.</td>
+</tr>
+<tr>
+<td><code>QuantumQAOAEvaluator</code></td>
+<td>Framework-neutral QAOA scoring: reads q0_left counts from any simulator plus the cost Hamiltonian (<code>hamiltonian.json</code> from any QAOA builder/solver, or the Hamiltonian property) and emits <code>qaoa.best_measurement</code>, <code>best_value</code>, <code>sampled_expectation</code>, <code>exact_minimum/maximum</code>, <code>approximation_ratio</code>, <code>expectation_ratio</code>, <code>optimal_probability</code> and the builder/engine of the cell. Counts pass through for QuanifiReport.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reporting-utility">Reporting &amp; utility</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QuanifiReport</code></td>
+<td>Generic HTML report writer. Reads <code>report.type</code> to select which sections to render (circuit diagram, counts, statevector, comparison metrics, …) and appends a card to a local HTML file.</td>
+</tr>
+<tr>
+<td><code>QuanifiUnitary</code></td>
+<td>Computes the 2ⁿ×2ⁿ unitary matrix of a circuit, written as JSON. Connects any circuit builder to a downstream consumer such as <code>QuantumUnitaryComparison</code>. Normalises Qiskit circuits to Cirq qubit-ordering so unitaries are directly comparable across frameworks.</td>
+</tr>
+<tr>
+<td><code>QiskitCircuitReport</code></td>
+<td><strong>Deprecated</strong> — use <code>QuanifiReport</code>. Legacy Qiskit-only reporter (SVG circuit diagram, QASM 3 source, counts bar chart). Kept only for backward compatibility with existing saved flows.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="catalogue-coverage">Catalogue coverage</h2>
+<p>This reference groups processors by their user-facing role. Some components
+appear in more than one section. For the current complete inventory, including
+hardware batch processors, use <code>tools/add_all_components_group.py --help</code> and its
+processor discovery function; discovery reads the actual classes and declared
+versions from <code>nifi_extensions/</code> rather than relying on a manually maintained
+summary count.</p>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="./components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="./guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="./guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="./guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="./tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="./screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>

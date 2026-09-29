@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NiFi Flow Configuration Guide — Visual Quantum Pipelines</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="active">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li class="active"><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="developer-guide.html">Guides</a> <span class="sep">&rsaquo;</span> <a href="nifi-flow-configuration-guide.html">Flow Configuration</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="nifi-flow-configuration-guide">NiFi flow configuration guide</h1>
+<p>This is a hands-on, click-by-click guide to building and running every processor
+in <a href="https://github.com/saeg/quanifi/tree/main/nifi_extensions/"><code>nifi_extensions/</code></a> on the NiFi canvas. It is organized as
+<strong>24 flows</strong>, ordered so you can work through them one at a time and exercise
+every component at least once. Standalone-friendly processors get their own
+small flow; processors that only make sense chained together (the three <code>*VQE</code>
+pipelines, Cirq's oracle+operator pair, the PennyLane QML lane, the comparison /
+assertion pair, …) are grouped into a single combined flow instead of one flow
+per processor — per the "category, not name" rule in
+<a href="creating-processors.html">CREATING_PROCESSORS.md</a>.</p>
+<blockquote>
+<p>Companion docs: <a href="CREATING_PROCESSORS.md">CREATING_PROCESSORS.md</a> (how
+processors are built), <a href="data-driven-testing.html">DATA_DRIVEN_TESTING.md</a> (the
+attribute-externalization contract used in Flow 24), and
+The VQE flow uses the shared Hamiltonian and ansatz attribute contracts.</p>
+</blockquote>
+<h2 id="before-you-start">Before you start</h2>
+<ol>
+<li><strong>Start NiFi</strong> from your local installation and open the canvas in
+   a browser (<code>https://localhost:8443/nifi</code> or whatever your <code>nifi.properties</code>
+   sets).</li>
+<li><strong>Reports directory</strong> — most flows end in <code>QuanifiReport</code> /
+   <code>QiskitCircuitReport</code> / <code>QiskitStatevectorSimulator</code>, which append HTML "run
+   cards" to files under <code>reports/</code>. Make sure
+   that directory (and <code>reports/tmp/</code> for the comparison processors' pairing
+   state) exists and is writable by the NiFi process. Open the resulting
+   <code>.html</code> files directly in a browser and refresh after each run — new cards
+   are appended at the top.</li>
+<li><strong>General recipe</strong> (applies to every flow below):</li>
+<li>Drag the <strong>Processor</strong> icon onto the canvas, search for the class name
+     (e.g. <code>QiskitGroverCircuit</code>), add it.</li>
+<li>Double-click it → <strong>Properties</strong> tab → set the values from the tables
+     below (leave anything not mentioned at its default).</li>
+<li>Drag from one processor's edge to the next to create a <strong>Connection</strong>;
+     in the dialog, tick the relationship(s) named in "Wire" below
+     (almost always <code>success</code>).</li>
+<li>For every relationship a processor can emit that you are <strong>not</strong> wiring
+     to something downstream (typically <code>failure</code>, and the unused side of
+     <code>pass</code>/<code>fail</code> or <code>success</code>/<code>waiting</code>), open the processor's
+     <strong>Settings</strong> tab (or the connection dialog) and tick <strong>automatically
+     terminate</strong> — otherwise NiFi refuses to start it.</li>
+<li>Select every processor in the flow and press the <strong>▶ Start</strong> button (or
+     right-click → Start).</li>
+<li>To inspect a FlowFile, right-click the connection → <strong>List queue</strong> → the
+     little "i" icon → <strong>View</strong> (content) / <strong>Attributes</strong> tab.</li>
+<li>First placement of a processor triggers NiFi to build an isolated venv
+     and install <code>ProcessorDetails.dependencies</code> — this can take a minute; watch
+     the bulletin board (top-right bell icon) for errors.</li>
+</ol>
+<hr />
+<h1 id="qiskit">Qiskit</h1>
+<h2 id="flow-1-smoke-test-qiskitquantumhelloworld">Flow 1 — Smoke test: <code>QiskitQuantumHelloWorld</code></h2>
+<p><strong>Components:</strong> <code>QiskitQuantumHelloWorld</code>
+<strong>What it proves:</strong> NiFi can load the processor, its isolated venv has Qiskit,
+and you can read FlowFile content/attributes. No upstream wiring needed.</p>
+<ol>
+<li>Add <code>QiskitQuantumHelloWorld</code>.</li>
+<li>Properties: <strong>Qubit Count</strong> = <code>2</code> (default; try <code>3</code> later to see a 3-letter
+   GHZ string).</li>
+<li>Add a <code>GenerateFlowFile</code> processor upstream (any standard NiFi processor;
+   content/schedule don't matter — it's just the trigger) → connect its
+   <code>success</code> to <code>QiskitQuantumHelloWorld</code>.</li>
+<li>Wire <code>QiskitQuantumHelloWorld</code>'s <code>success</code> to a funnel (or any processor you
+   auto-terminate) so you can list the queue.</li>
+<li>Start everything. List the queue on the final connection: content is the
+   measured GHZ bitstring (e.g. <code>00</code> or <code>11</code>); attributes carry
+   <code>quantum.bitstring</code> and <code>quantum.qubits</code>.</li>
+</ol>
+<hr />
+<h2 id="flow-2-qiskit-grover-circuit-simulator-circuit-report">Flow 2 — Qiskit Grover circuit → simulator → circuit report</h2>
+<p><strong>Components:</strong> <code>QiskitGroverCircuit</code> → <code>QiskitAerSimulator</code> → <code>QiskitCircuitReport</code>
+<strong>What it proves:</strong> the Tier-1 "circuit builder → simulator → report" shape
+that most Qiskit/Cirq flows below reuse, plus the Grover-specific HTML report.</p>
+<ol>
+<li><strong><code>QiskitGroverCircuit</code></strong>
+   | Property | Value |
+   |---|---|
+   | Marked State | <code>11</code> |
+   | Num Iterations | <code>1</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>qasm3</code> |</li>
+</ol>
+<p>Wire <code>success</code> → <code>QiskitAerSimulator</code>.</p>
+<ol>
+<li><strong><code>QiskitAerSimulator</code></strong>
+   | Property | Value |
+   |---|---|
+   | Shots | <code>1024</code> |
+   | Noise Model | <code>none</code> (try <code>depolarizing</code> on a second run to see the noise panel) |</li>
+</ol>
+<p>Leave the noise/backend properties at default for an ideal run. Wire
+   <code>success</code> → <code>QiskitCircuitReport</code>.</p>
+<ol>
+<li><strong><code>QiskitCircuitReport</code></strong>
+   | Property | Value |
+   |---|---|
+   | Reports Directory | <code>reports</code> |
+   | Flow Name | <code>qiskit-grover</code> |</li>
+</ol>
+<p>Auto-terminate <code>success</code> (it's the terminal node).</p>
+<ol>
+<li>Start all three. Open
+   <code>reports/qiskit-grover.html</code> — you should see
+   a card with the circuit diagram (QASM3), the marked state/iteration count,
+   and a measurement-count bar chart dominated by <code>11</code>.</li>
+</ol>
+<hr />
+<h2 id="flow-3-qiskit-hadamard-transform">Flow 3 — Qiskit Hadamard transform</h2>
+<p><strong>Components:</strong> <code>QiskitHadamardTransform</code> → <code>QiskitAerSimulator</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> standalone-vs-compose mode (run it bare first, then chained
+onto an existing circuit) and the generic <code>QuanifiReport</code> "simulation" card.</p>
+<ol>
+<li><strong><code>QiskitHadamardTransform</code></strong>
+   | Property | Value |
+   |---|---|
+   | Qubit Count | <code>3</code> |
+   | Output Format | <code>qasm3</code> |</li>
+</ol>
+<p>Feed it from a <code>GenerateFlowFile</code> with <strong>empty content</strong> (standalone mode —
+   it builds a fresh 3-qubit H⊗3 circuit). Wire <code>success</code> → <code>QiskitAerSimulator</code>.
+2. <strong><code>QiskitAerSimulator</code></strong> — Shots <code>1024</code>, Noise Model <code>none</code>. Wire <code>success</code>
+   → <code>QuanifiReport</code>.
+3. <strong><code>QuanifiReport</code></strong> — Reports Directory (default), Flow Name = <code>qiskit-hadamard</code>.
+   Auto-terminate <code>success</code>.
+4. Start, then open <code>qiskit-hadamard.html</code>. Counts should be roughly uniform
+   across all 8 three-bit strings (uniform superposition).
+5. <strong>Try compose mode</strong>: place a fresh <code>QiskitGroverCircuit</code> (Flow 2 settings)
+   <em>before</em> <code>QiskitHadamardTransform</code> instead of <code>GenerateFlowFile</code> — now it
+   appends <code>H</code> to every qubit of the Grover circuit it receives (it detects the
+   incoming <code>circuit.format</code> and non-empty content).</p>
+<hr />
+<h2 id="flow-4-qiskit-qft-circuit">Flow 4 — Qiskit QFT circuit</h2>
+<p><strong>Components:</strong> <code>QiskitQFTCircuit</code> → <code>QiskitAerSimulator</code> → <code>QuanifiReport</code></p>
+<ol>
+<li><strong><code>QiskitQFTCircuit</code></strong>
+   | Property | Value |
+   |---|---|
+   | Qubit Count | <code>3</code> |
+   | Inverse | <code>false</code> |
+   | Approximation Degree | <code>0</code> |
+   | Do Swaps | <code>true</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>qasm3</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code> (empty content → standalone mode, fresh 3-qubit
+   QFT). Wire <code>success</code> → <code>QiskitAerSimulator</code>.
+2. <strong><code>QiskitAerSimulator</code></strong> — Shots <code>1024</code>. Wire <code>success</code> → <code>QuanifiReport</code>.
+3. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qiskit-qft</code>. Auto-terminate <code>success</code>.
+4. Start; open <code>qiskit-qft.html</code>. Then flip <strong>Inverse</strong> to <code>true</code> and re-run to
+   compare QFT vs QFT† — note <code>circuit.qft_inverse</code> in the Circuit Attributes
+   table changes accordingly.</p>
+<hr />
+<h2 id="flow-5-qiskit-phase-estimation">Flow 5 — Qiskit Phase Estimation</h2>
+<p><strong>Components:</strong> <code>QiskitPhaseEstimation</code> → <code>QiskitAerSimulator</code> → <code>QuanifiReport</code></p>
+<ol>
+<li><strong><code>QiskitPhaseEstimation</code></strong>
+   | Property | Value |
+   |---|---|
+   | Phase Register Size | <code>3</code> |
+   | Builtin Unitary | <code>T</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>qasm3</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code> with empty content (standalone mode — it
+   builds a demo QPE estimating the <code>T</code> gate's eigenphase 1/8 with the
+   eigenstate <code>|1⟩</code> prepared). Wire <code>success</code> → <code>QiskitAerSimulator</code>.
+2. <strong><code>QiskitAerSimulator</code></strong> — Shots <code>1024</code>. Wire <code>success</code> → <code>QuanifiReport</code>.
+3. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qiskit-qpe</code>. Auto-terminate <code>success</code>.
+4. Start; open <code>qiskit-qpe.html</code>. The <strong>Decoded Result</strong> panel reads the phase
+   register off <code>sim.top_result</code> and shows the answer directly: with
+   <code>Builtin Unitary = T</code> and a 3-qubit phase register, <em>Estimated phase (φ)</em> =
+   <code>0.1250 (= 1/8)</code>, readout bits <code>001</code>. (<code>sim.top_result</code> itself is the full
+   4-qubit string <code>1100</code> — the 4th qubit is the <code>|1⟩</code> eigenstate; the decoder
+   extracts just the phase bits.) Switch <strong>Builtin Unitary</strong> to <code>S</code> (expect
+   <code>1/4</code>, bits <code>010</code>) or <code>Z</code> (expect <code>1/2</code>, bits <code>100</code>) and re-run to see the
+   decoded phase shift.</p>
+<p><em>Note:</em> the circuit builder no longer self-measures — measurement is the
+   simulator's job. Earlier builds called <code>measure_all()</code> in both stages, which
+   produced a garbled doubled readout like <code>1100 1100</code>.</p>
+<hr />
+<h2 id="flow-6-qiskit-amplitude-amplification">Flow 6 — Qiskit Amplitude Amplification</h2>
+<p><strong>Components:</strong> <code>QiskitAmplitudeAmplification</code> → <code>QiskitAerSimulator</code> → <code>QuanifiReport</code></p>
+<ol>
+<li><strong><code>QiskitAmplitudeAmplification</code></strong>
+   | Property | Value |
+   |---|---|
+   | Marked State | <code>11</code> |
+   | Num Iterations | <code>1</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>qasm3</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code> with empty content — <strong>standalone mode</strong>: it
+   builds its own phase oracle for <code>Marked State</code> and amplifies it. (You can
+   later feed it a <code>circuit.format</code>-bearing oracle, e.g. from
+   <code>QiskitGroverCircuit</code> with <code>Num Iterations = 0</code>, to exercise <strong>compose
+   mode</strong> instead — <code>circuit.mode</code> flips from <code>standalone</code> to <code>compose</code> and
+   <code>circuit.marked_state</code> is no longer set.) Wire <code>success</code> → <code>QiskitAerSimulator</code>.
+2. <strong><code>QiskitAerSimulator</code></strong> — Shots <code>1024</code>. Wire <code>success</code> → <code>QuanifiReport</code>.
+3. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qiskit-amplitude-amplification</code>.
+   Auto-terminate <code>success</code>.
+4. Start; open the report. <code>circuit.mode = standalone</code> and
+   <code>circuit.marked_state = 11</code> should appear in the Circuit Attributes table,
+   and the histogram should peak at <code>11</code>.</p>
+<hr />
+<h2 id="flow-7-qiskit-state-preparation-statevector-simulator">Flow 7 — Qiskit State Preparation → Statevector Simulator</h2>
+<p><strong>Components:</strong> <code>QiskitStatePreparation</code> → <code>QiskitStatevectorSimulator</code>
+<strong>What it proves:</strong> the exact-statevector lane (no shots/noise — it's its own
+self-reporting terminal node, unlike the shot-based simulators above).</p>
+<ol>
+<li><strong><code>QiskitStatePreparation</code></strong>
+   | Property | Value |
+   |---|---|
+   | State Type | <code>ghz</code> |
+   | Qubit Count | <code>3</code> |
+   | Output Format | <code>qasm3</code> |</li>
+</ol>
+<p>(<code>Target Basis State</code> / <code>Amplitudes</code> are ignored for <code>ghz</code>; try <code>basis</code> with
+   <code>Target Basis State = 3</code> or <code>custom</code> with <code>Amplitudes = [1,0,0,1]</code> on later
+   runs.) Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> →
+   <code>QiskitStatevectorSimulator</code>.
+2. <strong><code>QiskitStatevectorSimulator</code></strong>
+   | Property | Value |
+   |---|---|
+   | Reports Directory | <code>reports</code> |
+   | Flow Name | <code>qiskit-statevector</code> |
+   | Probability Threshold | <code>0.001</code> |
+   | Max States | <code>32</code> |</p>
+<p>Auto-terminate <code>success</code> — there is no downstream <code>QuanifiReport</code> here; this
+   processor writes its own HTML directly.
+3. Start both. Open <code>qiskit-statevector-html</code> (file name is
+   <code>{flow_name}-statevector.html</code>, i.e.
+   <code>reports/qiskit-statevector-statevector.html</code>). For a 3-qubit GHZ state you
+   should see exactly two rows, <code>000</code> and <code>111</code>, each at probability ≈ 0.5,
+   with amplitude/phase columns.</p>
+<hr />
+<h2 id="flow-8-qiskit-grover-search-all-in-one">Flow 8 — Qiskit Grover Search (all-in-one)</h2>
+<p><strong>Components:</strong> <code>QiskitGroverSearch</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> the "all-in-one / solver" category — a single processor
+that builds <em>and</em> simulates, emitting both <code>circuit.*</code>-style and <code>grover.*</code>
+algorithm-specific attributes (no separate simulator needed).</p>
+<ol>
+<li><strong><code>QiskitGroverSearch</code></strong>
+   | Property | Value |
+   |---|---|
+   | Marked State | <code>101</code> |
+   | Num Iterations | <code>2</code> |
+   | Shots | <code>1024</code> |
+   | Insert Barriers | <code>false</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> → <code>QuanifiReport</code>.
+2. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qiskit-grover-search</code>. Note: this
+   processor does <strong>not</strong> set <code>report.type</code>, so <code>QuanifiReport</code> falls back to
+   its <code>_default</code> card (raw JSON content + an "All Attributes" table) rather
+   than the simulation layout — that's expected; look for <code>grover.top_result</code>
+   and <code>grover.top_probability</code> in the attributes table, which should show
+   <code>101</code> dominating. Auto-terminate <code>success</code>.
+3. Start both and inspect the report.</p>
+<hr />
+<h2 id="flow-9-qiskit-vqe-pipeline-one-combined-flow">Flow 9 — Qiskit VQE pipeline (one combined flow)</h2>
+<p><strong>Components:</strong> <code>QiskitHamiltonian</code> → <code>QiskitAnsatz</code> → <code>QiskitVQE</code> → <code>QuanifiReport</code>
+<strong>Why one flow:</strong> VQE
+is <em>decomposed</em> — the Hamiltonian and ansatz stages are reusable building
+blocks, but <code>QiskitVQE</code> is a <strong>strict solver</strong> that refuses to run without both
+of them on the FlowFile (<code>failure</code> + <code>vqe.error</code> otherwise). Testing any one in
+isolation from the others isn't meaningful, so they're documented as a single
+chain.</p>
+<ol>
+<li><strong><code>QiskitHamiltonian</code></strong>
+   | Property | Value |
+   |---|---|
+   | Hamiltonian | <code>Z0 + Z1 + 0.5 X0 X1</code> |
+   | Num Qubits | <code>0</code> (auto-derive → 2) |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> → <code>QiskitAnsatz</code>; auto-terminate
+   <code>failure</code> (only triggers on a DSL parse error).
+2. <strong><code>QiskitAnsatz</code></strong>
+   | Property | Value |
+   |---|---|
+   | Ansatz Type | <code>efficient_su2</code> |
+   | Reps | <code>2</code> |
+   | Entanglement | <code>full</code> |
+   | Num Qubits | <code>2</code> (ignored — <strong>chain mode</strong> activates because the incoming
+   FlowFile already carries <code>hamiltonian.format</code> + <code>hamiltonian.num_qubits</code>, so
+   the qubit count comes from the Hamiltonian and its content passes through
+   untouched) |</p>
+<p>Wire <code>success</code> → <code>QiskitVQE</code>; auto-terminate <code>failure</code>.
+3. <strong><code>QiskitVQE</code></strong>
+   | Property | Value |
+   |---|---|
+   | Optimizer | <code>COBYLA</code> |
+   | Max Iterations | <code>100</code> |
+   | Shots | <code>1024</code> |
+   | Initial Parameters | <code>random</code> |</p>
+<p>This is the strict solver — it requires <code>hamiltonian.format =
+   sparse_pauli_op_json</code> <em>and</em> <code>ansatz.qpy_b64</code> on the FlowFile (both supplied
+   by the two upstream stages) and routes to <code>failure</code>/<code>vqe.error</code> if either is
+   missing. Wire <code>success</code> → <code>QuanifiReport</code>; auto-terminate <code>failure</code>.
+4. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qiskit-vqe</code>. Auto-terminate <code>success</code>.
+5. Start all four. Open <code>qiskit-vqe.html</code>; look for <code>vqe.optimal_value</code>,
+   <code>vqe.converged</code>, <code>vqe.num_iterations</code>, and the trained circuit's measurement
+   histogram (it uses the <code>simulation</code> card layout because <code>QiskitVQE</code> sets
+   <code>report.type = simulation</code>).
+6. <strong>To see the strict-solver failure path</strong>, temporarily disconnect
+   <code>QiskitHamiltonian → QiskitAnsatz</code> and feed <code>QiskitVQE</code> directly from
+   <code>GenerateFlowFile</code>: it routes to <code>failure</code> with <code>vqe.error = "no Hamiltonian
+   on the FlowFile..."</code>. Reconnect afterwards.</p>
+<hr />
+<h1 id="cirq">Cirq</h1>
+<h2 id="flow-10-cirq-grover-circuit-simulator">Flow 10 — Cirq Grover circuit → simulator</h2>
+<p><strong>Components:</strong> <code>CirqGroverCircuit</code> → <code>CirqSimulator</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> the Cirq equivalent of Flow 2's shape, plus
+<code>circuit.svg</code>/Cirq-JSON content (which <code>QuanifiReport</code> prefers over QASM).</p>
+<ol>
+<li><strong><code>CirqGroverCircuit</code></strong>
+   | Property | Value |
+   |---|---|
+   | Marked State | <code>11</code> |
+   | Num Iterations | <code>1</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>cirq_json</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> → <code>CirqSimulator</code>.
+2. <strong><code>CirqSimulator</code></strong>
+   | Property | Value |
+   |---|---|
+   | Shots | <code>1024</code> |
+   | Noise Model | <code>none</code> |
+   | Error Probability | <code>0.01</code> (ignored when Noise Model = none) |
+   | Damping Gamma | <code>0.05</code> (ignored unless <code>amplitude_damp</code>) |
+   | Readout Error Rate | <code>0.0</code> |</p>
+<p>Wire <code>success</code> → <code>QuanifiReport</code>; auto-terminate <code>failure</code> (only fires for
+   an unsupported <code>circuit.format</code>).
+3. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>cirq-grover</code>. Auto-terminate <code>success</code>.
+4. Start; open <code>cirq-grover.html</code>. The card should show the SVG circuit
+   diagram (Cirq renders <code>circuit.svg</code>, preferred over QASM) and a histogram
+   peaking at <code>11</code>. Re-run with <strong>Output Format = <code>qasm2</code></strong> on
+   <code>CirqGroverCircuit</code> to see the alternate serialisation path (and
+   <code>circuit.qasm2</code> show up instead).</p>
+<hr />
+<h2 id="flow-11-cirq-phase-oracle-grover-operator-one-combined-flow">Flow 11 — Cirq Phase Oracle + Grover Operator (one combined flow)</h2>
+<p><strong>Components:</strong> <code>CirqPhaseOracle</code> → <code>CirqGroverOperator</code> → <code>CirqSimulator</code> → <code>QuanifiReport</code>
+<strong>Why one flow:</strong> <code>CirqGroverOperator</code> is explicitly designed to consume the
+oracle that <code>CirqPhaseOracle</code> produces (it prepends the H⊗n layer and applies
+oracle+diffuser); neither is a meaningful standalone test on its own.</p>
+<ol>
+<li><strong><code>CirqPhaseOracle</code></strong>
+   | Property | Value |
+   |---|---|
+   | Marked State | <code>101</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>cirq_json</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code> with empty content (standalone mode — bare
+   oracle on a fresh 3-qubit register). Wire <code>success</code> → <code>CirqGroverOperator</code>.
+2. <strong><code>CirqGroverOperator</code></strong>
+   | Property | Value |
+   |---|---|
+   | Num Iterations | <code>2</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>cirq_json</code> |</p>
+<p>It reads the oracle off the FlowFile content (per <code>circuit.format</code>,
+   defaulting to <code>cirq_json</code>), prepends <code>H⊗n</code>, and applies oracle+diffuser
+   <code>Num Iterations</code> times. Wire <code>success</code> → <code>CirqSimulator</code>.
+3. <strong><code>CirqSimulator</code></strong> — Shots <code>1024</code>, Noise Model <code>none</code>. Wire <code>success</code> →
+   <code>QuanifiReport</code>; auto-terminate <code>failure</code>.
+4. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>cirq-grover-operator</code>. Auto-terminate
+   <code>success</code>.
+5. Start all four; open the report. <code>circuit.marked_state = 101</code> should be
+   forwarded all the way through (both downstream processors re-emit it when
+   present), and the histogram should peak at <code>101</code>.</p>
+<hr />
+<h2 id="flow-12-cirq-hadamard-transform">Flow 12 — Cirq Hadamard transform</h2>
+<p><strong>Components:</strong> <code>CirqHadamardTransform</code> → <code>CirqSimulator</code> → <code>QuanifiReport</code></p>
+<ol>
+<li><strong><code>CirqHadamardTransform</code></strong> — Qubit Count <code>3</code>, Output Format <code>cirq_json</code>.
+   Feed from <code>GenerateFlowFile</code> with empty content (standalone — fresh H⊗3).
+   Wire <code>success</code> → <code>CirqSimulator</code>.</li>
+<li><strong><code>CirqSimulator</code></strong> — Shots <code>1024</code>. Wire <code>success</code> → <code>QuanifiReport</code>.</li>
+<li><strong><code>QuanifiReport</code></strong> — Flow Name = <code>cirq-hadamard</code>. Auto-terminate <code>success</code>.</li>
+<li>Start; counts should be roughly uniform over all 8 three-bit strings.</li>
+<li><strong>Compose mode</strong>: insert a <code>CirqGroverCircuit</code> (Flow 10 settings) before it
+   — it now appends <code>H</code> to the existing circuit's qubits and forwards
+   <code>circuit.marked_state</code>.</li>
+</ol>
+<hr />
+<h2 id="flow-13-cirq-qft-circuit">Flow 13 — Cirq QFT circuit</h2>
+<p><strong>Components:</strong> <code>CirqQFTCircuit</code> → <code>CirqSimulator</code> → <code>QuanifiReport</code></p>
+<ol>
+<li><strong><code>CirqQFTCircuit</code></strong>
+   | Property | Value |
+   |---|---|
+   | Qubit Count | <code>3</code> |
+   | Inverse | <code>false</code> |
+   | Do Swaps | <code>true</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>cirq_json</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code> (empty content → standalone). Wire <code>success</code> →
+   <code>CirqSimulator</code>.
+2. <strong><code>CirqSimulator</code></strong> — Shots <code>1024</code>. Wire <code>success</code> → <code>QuanifiReport</code>.
+3. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>cirq-qft</code>. Auto-terminate <code>success</code>.
+4. Start; toggle <strong>Inverse</strong> between runs and watch <code>circuit.qft_inverse</code> flip
+   in the report's attribute table.</p>
+<hr />
+<h2 id="flow-14-cirq-phase-estimation">Flow 14 — Cirq Phase Estimation</h2>
+<p><strong>Components:</strong> <code>CirqPhaseEstimation</code> → <code>CirqSimulator</code> → <code>QuanifiReport</code></p>
+<ol>
+<li><strong><code>CirqPhaseEstimation</code></strong>
+   | Property | Value |
+   |---|---|
+   | Phase Register Size | <code>3</code> |
+   | Builtin Unitary | <code>T</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>cirq_json</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code> with empty content (standalone — builtin <code>T</code>
+   gate, expected dominant readout <code>001</code>). Wire <code>success</code> → <code>CirqSimulator</code>.
+2. <strong><code>CirqSimulator</code></strong> — Shots <code>1024</code>. Wire <code>success</code> → <code>QuanifiReport</code>.
+3. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>cirq-qpe</code>. Auto-terminate <code>success</code>.
+4. Start; open the report and confirm the <code>001</code>/<code>010</code>/<code>100</code> readouts as you
+   cycle <strong>Builtin Unitary</strong> through <code>T</code>/<code>S</code>/<code>Z</code>. You can also feed it a
+   circuit from <code>CirqGroverCircuit</code> upstream to exercise <strong>compose mode</strong>
+   (the incoming circuit becomes the unitary; <code>circuit.qpe_builtin</code> then reads
+   <code>compose</code>).</p>
+<hr />
+<h2 id="flow-15-cirq-vqe-pipeline-one-combined-flow">Flow 15 — Cirq VQE pipeline (one combined flow)</h2>
+<p><strong>Components:</strong> <code>CirqHamiltonian</code> → <code>CirqAnsatz</code> → <code>CirqVQE</code> → <code>QuanifiReport</code>
+<strong>Why one flow:</strong> same rationale as Flow 9 — <code>CirqVQE</code> is a strict solver that
+requires both upstream stages.</p>
+<ol>
+<li><strong><code>CirqHamiltonian</code></strong> — Hamiltonian <code>Z0 + Z1 + 0.5 X0 X1</code>, Num Qubits <code>0</code>.
+   Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> → <code>CirqAnsatz</code>; auto-terminate
+   <code>failure</code>.</li>
+<li><strong><code>CirqAnsatz</code></strong>
+   | Property | Value |
+   |---|---|
+   | Ansatz Type | <code>efficient_su2</code> |
+   | Reps | <code>2</code> |
+   | Entanglement | <code>full</code> |
+   | Num Qubits | <code>2</code> (ignored — chain mode picks up <code>hamiltonian.num_qubits</code>) |</li>
+</ol>
+<p>Wire <code>success</code> → <code>CirqVQE</code>; auto-terminate <code>failure</code>.
+3. <strong><code>CirqVQE</code></strong>
+   | Property | Value |
+   |---|---|
+   | Optimizer | <code>COBYLA</code> |
+   | Max Iterations | <code>100</code> |
+   | Shots | <code>1024</code> |
+   | Initial Parameters | <code>random</code> |</p>
+<p>Strict solver: requires <code>hamiltonian.format = sparse_pauli_op_json</code> (content
+   parsed via <code>wire_to_terms</code>) <em>and</em> <code>ansatz.cirq_json</code> on the FlowFile. Wire
+   <code>success</code> → <code>QuanifiReport</code>; auto-terminate <code>failure</code>.
+4. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>cirq-vqe</code>. Auto-terminate <code>success</code>.
+5. Start; open <code>cirq-vqe.html</code>. Compare <code>vqe.optimal_value</code> /
+   <code>vqe.elapsed_seconds</code> against the Qiskit run from Flow 9 — same Hamiltonian
+   expression, two independently hand-rolled solvers (<code>CirqVQE</code> is
+   <code>cirq.Simulator</code> + <code>scipy.optimize</code> by hand vs. <code>qiskit_algorithms.VQE</code>).</p>
+<hr />
+<h1 id="qrisp">Qrisp</h1>
+<h2 id="flow-16-qrisp-grover-search-all-in-one">Flow 16 — Qrisp Grover Search (all-in-one)</h2>
+<p><strong>Components:</strong> <code>QrispGroverSearch</code> → <code>QuanifiReport</code></p>
+<ol>
+<li><strong><code>QrispGroverSearch</code></strong>
+   | Property | Value |
+   |---|---|
+   | Marked State | <code>11</code> |
+   | Num Iterations | <code>0</code> (let Qrisp pick the optimal count automatically) |
+   | Shots | <code>1024</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> → <code>QuanifiReport</code>.
+2. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qrisp-grover</code>. Note: like
+   <code>QiskitGroverSearch</code>, this all-in-one does <strong>not</strong> set <code>report.type</code>, so you
+   get the <code>_default</code> card; check <code>grover.framework = qrisp</code>,
+   <code>sim.top_result</code>, <code>sim.top_probability</code> and <code>circuit.num_iterations</code>
+   (= <code>"auto"</code> when <code>Num Iterations = 0</code>) in the attribute table. Auto-terminate
+   <code>success</code>.
+3. Start both; the content is a JSON probability distribution (Qrisp returns
+   probabilities, not raw counts) peaking at <code>11</code>.</p>
+<hr />
+<h2 id="flow-17-qrisp-qft-circuit-simulator">Flow 17 — Qrisp QFT circuit → simulator</h2>
+<p><strong>Components:</strong> <code>QrispQFTCircuit</code> → <code>QrispSimulator</code> → <code>QuanifiReport</code>
+<strong>Note:</strong> <code>QrispQFTCircuit</code> always emits <code>circuit.format = qasm2</code> — the <em>only</em>
+format <code>QrispSimulator</code> accepts (anything else routes it to <code>failure</code> with
+<code>sim.error</code>), so this pairing is the path of least resistance.</p>
+<ol>
+<li><strong><code>QrispQFTCircuit</code></strong>
+   | Property | Value |
+   |---|---|
+   | Qubit Count | <code>3</code> |
+   | Inverse | <code>false</code> |
+   | Do Swaps | <code>true</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> → <code>QrispSimulator</code>.
+2. <strong><code>QrispSimulator</code></strong> — Shots <code>1024</code>. Wire <code>success</code> → <code>QuanifiReport</code>;
+   auto-terminate <code>failure</code> (fires only on an unsupported <code>circuit.format</code> —
+   won't happen here since the upstream always emits <code>qasm2</code>).
+3. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qrisp-qft</code>. Auto-terminate <code>success</code>.
+4. Start; open the report and toggle <strong>Inverse</strong>, watching
+   <code>circuit.qft_inverse</code> change.</p>
+<hr />
+<h2 id="flow-18-qrisp-phase-estimation-all-in-one">Flow 18 — Qrisp Phase Estimation (all-in-one)</h2>
+<p><strong>Components:</strong> <code>QrispPhaseEstimation</code> → <code>QuanifiReport</code>
+<strong>Note:</strong> unlike its Qiskit/Cirq counterparts, this processor has <strong>no compose
+mode</strong> — it always builds its own demo QPE for a builtin unitary and emits its
+own <code>qpe.*</code> result attributes plus a probability-distribution content (no
+simulator needed downstream).</p>
+<ol>
+<li><strong><code>QrispPhaseEstimation</code></strong>
+   | Property | Value |
+   |---|---|
+   | Phase Register Size | <code>3</code> |
+   | Builtin Unitary | <code>T</code> |
+   | Shots | <code>1024</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> → <code>QuanifiReport</code>.
+2. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qrisp-qpe</code>. No <code>report.type</code> is set here
+   either, so expect the <code>_default</code> card; look at <code>qpe.top_phase</code>,
+   <code>qpe.top_probability</code>, <code>qpe.precision</code> (≈ <code>0.125</code> for <code>T</code>) in the attribute
+   table. Auto-terminate <code>success</code>.
+3. Start; cycle <strong>Builtin Unitary</strong> through <code>T</code>/<code>S</code>/<code>Z</code> (expected <code>qpe.top_phase</code>
+   ≈ <code>0.125</code>/<code>0.25</code>/<code>0.5</code>) between runs.</p>
+<hr />
+<h2 id="flow-19-qrisp-vqe-pipeline-one-combined-flow">Flow 19 — Qrisp VQE pipeline (one combined flow)</h2>
+<p><strong>Components:</strong> <code>QrispHamiltonian</code> → <code>QrispAnsatz</code> → <code>QrispVQE</code> → <code>QuanifiReport</code>
+<strong>Why one flow:</strong> same strict-solver rationale as Flows 9/15. Note Qrisp's
+ansatz "carrier" is a <em>spec</em>, not a circuit (<code>ansatz.format = qrisp_spec</code>) —
+<code>QrispVQE</code> rebuilds the callable <code>ansatz_function(qv, theta)</code> from
+<code>ansatz.type</code>/<code>ansatz.reps</code>/<code>ansatz.entanglement</code> via <code>QrispAnsatz</code>'s
+<code>_build_ansatz_function</code>.</p>
+<ol>
+<li><strong><code>QrispHamiltonian</code></strong> — Hamiltonian <code>Z0 + Z1 + 0.5 X0 X1</code>, Num Qubits <code>0</code>.
+   Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> → <code>QrispAnsatz</code>; auto-terminate
+   <code>failure</code>.</li>
+<li><strong><code>QrispAnsatz</code></strong>
+   | Property | Value |
+   |---|---|
+   | Ansatz Type | <code>efficient_su2</code> |
+   | Reps | <code>2</code> |
+   | Entanglement | <code>full</code> |
+   | Num Qubits | <code>2</code> (ignored — chain mode reads <code>hamiltonian.num_qubits</code>) |</li>
+</ol>
+<p>Wire <code>success</code> → <code>QrispVQE</code>. (No <code>failure</code> relationship is declared on this
+   processor — nothing to auto-terminate.)
+3. <strong><code>QrispVQE</code></strong>
+   | Property | Value |
+   |---|---|
+   | Optimizer | <code>COBYLA</code> |
+   | Max Iterations | <code>100</code> |
+   | Shots | <code>1024</code> |
+   | Initial Parameters | <code>random</code> |</p>
+<p>Strict solver: requires <code>hamiltonian.format = sparse_pauli_op_json</code> <em>and</em>
+   <code>ansatz.format = qrisp_spec</code>. Wire <code>success</code> → <code>QuanifiReport</code>;
+   auto-terminate <code>failure</code>.
+4. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qrisp-vqe</code>. Auto-terminate <code>success</code>.
+5. Start all four; open <code>qrisp-vqe.html</code>. <code>QrispVQE</code> calls Qrisp's first-class
+   <code>VQEProblem.run(...)</code> — compare <code>vqe.optimal_value</code> /
+   <code>vqe.elapsed_seconds</code> against Flows 9 and 15 for a three-way cross-framework
+   comparison on the <em>identical</em> Hamiltonian expression and ansatz spec.</p>
+<hr />
+<h1 id="pennylane-qml-lane">PennyLane (QML lane)</h1>
+<h2 id="flow-20-feature-embedding-variational-ansatz-expectation-qnode-chain">Flow 20 — Feature embedding → variational ansatz → expectation (QNode chain)</h2>
+<p><strong>Components:</strong> <code>PennylaneFeatureEmbedding</code> → <code>PennylaneVariationalAnsatz</code> →
+<code>PennylaneExpectation</code> → <code>QuanifiReport</code>
+<strong>Why one flow:</strong> these three chain end to end and only make sense as a
+pipeline — PennyLane is QNode-centric (its native output is expectation values
+/ probabilities, not raw shot counts), and <code>circuit.format = qasm2</code> is the glue
+between every stage.</p>
+<ol>
+<li><strong><code>PennylaneFeatureEmbedding</code></strong>
+   | Property | Value |
+   |---|---|
+   | Embedding | <code>angle</code> |
+   | Features | <code>[0.1, 0.5, 0.9]</code> (used as a fallback only — feed real content below) |
+   | Rotation | <code>Y</code> |</li>
+</ol>
+<p>Feed from a <code>GenerateFlowFile</code> whose <strong>content</strong> is a JSON array of numbers,
+   e.g. <code>[0.2, 0.4, 0.6]</code> (this is preferred over the <code>Features</code> property
+   fallback — set <code>GenerateFlowFile</code>'s "Custom Text" / content accordingly and
+   <code>mime.type = application/json</code> if you like). One qubit is allocated per
+   feature → 3 qubits here. Wire <code>success</code> → <code>PennylaneVariationalAnsatz</code>;
+   auto-terminate <code>failure</code>.
+2. <strong><code>PennylaneVariationalAnsatz</code></strong>
+   | Property | Value |
+   |---|---|
+   | Ansatz | <code>strongly_entangling</code> |
+   | Num Qubits | <code>3</code> (ignored — <strong>compose mode</strong> activates because the
+   incoming <code>circuit.format = qasm2</code>; qubit count is taken from the embedding
+   circuit) |
+   | Num Layers | <code>2</code> |
+   | Weight Seed | <code>42</code> |</p>
+<p>Wire <code>success</code> → <code>PennylaneExpectation</code>; auto-terminate <code>failure</code>.
+3. <strong><code>PennylaneExpectation</code></strong>
+   | Property | Value |
+   |---|---|
+   | Observable | <code>Z</code> |
+   | Shots | <em>(leave blank for an exact analytic result, or set e.g. <code>1024</code> to sample)</em> |</p>
+<p>This is the PennyLane execution lane (<code>sim.framework = pennylane</code>) —
+   strictly requires <code>circuit.format = qasm2</code> (both upstream processors emit
+   it). Wire <code>success</code> → <code>QuanifiReport</code>; auto-terminate <code>failure</code>.
+4. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>pennylane-qml</code>. It uses the <code>simulation</code>
+   card layout (<code>report.type = simulation</code>). Auto-terminate <code>success</code>.
+5. Start all four. Open <code>pennylane-qml.html</code>: instead of plain shot counts you
+   should see <code>sim.observable = Z</code>, <code>sim.expectations</code> (a per-qubit <code>⟨Z⟩</code> JSON
+   map), plus the usual <code>sim.top_result</code>/<code>sim.top_probability</code> derived from the
+   probability distribution. Try <strong>Observable = <code>X</code></strong> or <strong><code>Y</code></strong> to see the
+   expectation values change, and compare standalone vs. compose mode on
+   <code>PennylaneVariationalAnsatz</code> by disconnecting the embedding stage and
+   feeding it directly from <code>GenerateFlowFile</code> (it then builds a fresh
+   <code>Num Qubits</code>-sized ansatz with no embedding in front).</p>
+<hr />
+<h2 id="flow-21-pennylane-dataset-loader-standalone-generator">Flow 21 — PennyLane dataset loader (standalone generator)</h2>
+<p><strong>Components:</strong> <code>PennylaneDatasetLoader</code>
+<strong>Why separate:</strong> it's a <em>source</em> processor. Its natural consumer is the
+training lane: wire it straight into <code>PennylaneVariationalClassifier</code>
+(Flow 33), which reads the whole record array from the FlowFile content. To
+feed the <em>circuit</em> lane instead (Flow 20), bridge one record's <code>features</code>
+array into FlowFile content with standard NiFi <code>SplitJson</code> +
+<code>EvaluateJsonPath</code>, the same pattern Flow 24 uses for test cases.</p>
+<ol>
+<li><strong><code>PennylaneDatasetLoader</code></strong>
+   | Property | Value |
+   |---|---|
+   | Mode | <code>synthetic</code> |
+   | Num Samples | <code>20</code> |
+   | Num Features | <code>3</code> |
+   | Class Separation | <code>2.0</code> |
+   | Seed | <code>0</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> to a funnel/auto-terminated
+   processor; auto-terminate <code>failure</code>.
+2. Start, list the queue: content is a JSON array of 20
+   <code>{"features": [...], "label": 0|1}</code> records; attributes show
+   <code>dataset.count = 20</code>, <code>dataset.num_features = 3</code>, <code>dataset.num_classes = 2</code>,
+   <code>dataset.framework = pennylane</code>.
+3. Switch <strong>Mode</strong> to <code>inline</code> and set <strong>Records</strong> to a literal JSON array
+   (e.g. <code>[{"features":[0,0,0],"label":0},{"features":[1,1,1],"label":1}]</code>) to
+   exercise the second code path — <code>dataset.mode</code> should now read <code>inline</code> and
+   <code>dataset.count = 2</code>.</p>
+<hr />
+<h1 id="cross-framework-comparison-equivalence">Cross-framework comparison &amp; equivalence</h1>
+<h2 id="flow-22-unitary-equivalence-qiskit-vs-cirq-grover-circuit">Flow 22 — Unitary equivalence: Qiskit vs. Cirq Grover circuit</h2>
+<p><strong>Components:</strong> <code>QuanifiUnitary</code> (×2) → <code>QuantumUnitaryComparison</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> that two circuit-producing processors from <em>different</em>
+frameworks build mathematically equivalent unitaries (up to global phase) —
+exercising <code>QuanifiUnitary</code>'s Qiskit→Cirq qubit-order normalisation
+(<code>reverse_bits()</code>) and the pairing/state-persistence machinery in
+<code>QuantumUnitaryComparison</code>.</p>
+<ol>
+<li><strong>Branch A</strong> — reuse/duplicate the <code>QiskitGroverCircuit</code> from Flow 2 with
+   <strong>Marked State = <code>11</code>, Num Iterations = <code>1</code>, Output Format = <code>qasm3</code></strong>, and
+   set its <strong>Num Iterations property to <code>0</code></strong> so the resulting circuit is just
+   the oracle+state-prep layer (a deterministic, <em>unmeasured</em> circuit — the
+   form <code>QuanifiUnitary</code> needs). Wire <code>success</code> → a <code>QuanifiUnitary</code> instance
+   ("Unitary A").</li>
+<li><strong>Branch B</strong> — a <code>CirqGroverCircuit</code> with the <strong>same</strong> <code>Marked State = 11</code>,
+   <code>Num Iterations = 0</code>, <code>Output Format = cirq_json</code>. Wire <code>success</code> → a second
+   <code>QuanifiUnitary</code> instance ("Unitary B").</li>
+<li><strong>Both <code>QuanifiUnitary</code> instances</strong>
+   | Property | Value |
+   |---|---|
+   | Max Qubits | <code>12</code> |</li>
+</ol>
+<p>Each requires <code>circuit.format</code> on the FlowFile (fails clearly with
+   <code>unitary.error_type = missing_circuit_format_attribute</code> otherwise — both
+   branches supply it). Wire each <code>success</code> → the <strong>same</strong>
+   <code>QuantumUnitaryComparison</code> instance; auto-terminate <code>failure</code> on both.
+4. <strong><code>QuantumUnitaryComparison</code></strong>
+   | Property | Value |
+   |---|---|
+   | State Directory | <code>reports/tmp/quanifi_unitary_state</code> |
+   | Comparison Label | <code>grover-2q-equiv</code> |
+   | Framework Label | <code>${unitary.source_format}</code> (default — auto-detects <code>qasm3</code> vs <code>cirq_json</code>) |
+   | Tolerance | <code>1e-9</code> |</p>
+<p>It pairs FlowFiles by <strong>Comparison Label</strong> (both branches must use the same
+   value/instance) and persists the first arrival to <code>State Directory</code> until
+   the second shows up. Wire <code>success</code> → <code>QuanifiReport</code>. The <code>failure</code>
+   relationship covers <em>both</em> "first of pair, waiting" <em>and</em> real errors
+   (<code>not_a_unitary_flowfile</code>, <code>json_parse_failure</code>, <code>state_load_failure</code>) — per
+   its docstring, just auto-terminate it (you can inspect <code>equiv.status =
+   waiting</code> on those FlowFiles if curious before terminating).
+5. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>unitary-equivalence</code>. Note: this
+   processor doesn't set <code>report.type</code>, so it lands in the <code>_default</code> card —
+   look for <code>equiv.equivalent = true</code>, <code>equiv.process_fidelity ≈ 1.0000000000</code>,
+   and <code>equiv.global_phase_degrees</code> in the attributes table. Auto-terminate
+   <code>success</code>.
+6. Start everything, run <strong>both branches once</strong> (so a pair completes), then
+   open the report. <code>equiv.equivalent</code> should read <code>true</code> — Qiskit and Cirq
+   build the same Grover oracle+state-prep unitary (modulo the
+   <code>reverse_bits()</code> qubit-order fix <code>QuanifiUnitary</code> applies to Qiskit
+   circuits).</p>
+<hr />
+<h2 id="flow-23-distribution-comparison-assertion-gate-one-combined-flow">Flow 23 — Distribution comparison + assertion gate (one combined flow)</h2>
+<p><strong>Components:</strong> <code>QuantumDistributionComparison</code> → <code>QuantumAssertion</code> → <code>QuanifiReport</code>
+<strong>Why one flow:</strong> <code>QuantumAssertion</code> is explicitly designed to sit immediately
+downstream of <code>QuantumDistributionComparison</code> (it reads <code>compare.*</code> attributes
+and is the natural pass/fail gate on top of it) — testing it without a real
+comparison upstream means hand-crafting <code>compare.*</code> attributes yourself.</p>
+<ol>
+<li><strong>Branch A</strong> — <code>QiskitGroverCircuit</code> (<code>Marked State = 11</code>,
+   <code>Num Iterations = 1</code>, <code>Output Format = qasm3</code>) → <code>QiskitAerSimulator</code>
+   (<code>Shots = 1024</code>). This is the same shape as Flow 2's first two stages — you
+   can reuse those instances and fan their <code>success</code> out to a second
+   destination.</li>
+<li><strong>Branch B</strong> — <code>CirqGroverCircuit</code> (<code>Marked State = 11</code>,
+   <code>Num Iterations = 1</code>, <code>Output Format = cirq_json</code>) → <code>CirqSimulator</code>
+   (<code>Shots = 1024</code>). Likewise reusable from Flow 10.</li>
+<li>Wire <strong>both</strong> branches' final <code>success</code> into a single
+   <strong><code>QuantumDistributionComparison</code></strong> instance.
+   | Property | Value |
+   |---|---|
+   | Reports Directory | <code>reports</code> |
+   | Flow Name | <code>grover-qiskit-vs-cirq</code> |
+   | State Directory | <code>reports/tmp/quanifi_compare_state</code> |
+   | Comparison Label | <code>grover-comparison</code> |
+   | Framework Label | <code>${grover.framework}</code> (default; falls back to
+   auto-labels <code>run-1</code>/<code>run-2</code> since these simulator FlowFiles don't actually
+   carry <code>grover.framework</code> — that's fine for a quick smoke test, but if you
+   want clean <code>qiskit</code>/<code>cirq</code> labels in the report, override this to a literal
+   per-branch value, e.g. by adding an <code>UpdateAttribute</code> on each branch setting
+   <code>grover.framework</code> to <code>qiskit</code>/<code>cirq</code> before the comparison) |</li>
+</ol>
+<p>Per its docstring, <strong>auto-terminate <code>failure</code></strong> — it carries both the
+   benign "first of pair, waiting" case (<code>compare.status = waiting</code>) and real
+   parse errors. Wire <code>success</code> → <code>QuantumAssertion</code>.
+4. <strong><code>QuantumAssertion</code></strong>
+   | Property | Value |
+   |---|---|
+   | Hellinger Threshold | <code>0.10</code> |
+   | Check Ground Truth | <code>true</code> |
+   | Reports Directory | <code>reports</code> |
+   | Flow Name | <code>grover-qiskit-vs-cirq</code> |</p>
+<p>It overrides the default relationships entirely — there is <strong>no</strong>
+   <code>success</code>/<code>failure</code> here, only <strong><code>pass</code></strong> and <strong><code>fail</code></strong>. Wire both to a
+   <code>QuanifiReport</code> (or to separate funnels if you'd rather just watch the
+   queues). Note <code>Check Ground Truth = true</code> requires a <code>test.expected</code>
+   attribute to actually assert anything; since these FlowFiles don't carry
+   one, that half of the check is silently skipped and the verdict rests on the
+   Hellinger-distance check alone.
+5. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>grover-assertion</code>. Look for
+   <code>assert.verdict</code> (<code>PASS</code>/<code>FAIL</code>/<code>DISAGREE</code>), <code>assert.hellinger</code>,
+   <code>assert.top_result_a</code>/<code>assert.top_result_b</code> in the attributes (<code>_default</code>
+   card — <code>QuantumAssertion</code> doesn't set <code>report.type</code>). Auto-terminate
+   <code>success</code>.
+6. Start everything and trigger <strong>both branches once</strong>. Because Qiskit and
+   Cirq use different bit-order conventions for <code>11</code> on a 2-qubit Grover
+   search, you may see <code>compare.agreement = false</code> on the <em>raw</em> label
+   comparison even though the underlying physics agrees — that's the
+   "Gotchas for the (future) vote" bit-order caveat called out in
+   <a href="data-driven-testing.html">DATA_DRIVEN_TESTING.md</a>; it's a good opportunity to
+   see <code>assert.verdict = DISAGREE</code> / <code>FAIL</code> and read the <code>assert.reason</code> text.</p>
+<hr />
+<h2 id="flow-24-data-driven-test-case-generation">Flow 24 — Data-driven test case generation</h2>
+<p><strong>Components:</strong> <code>QuantumTestCaseSource</code>
+<strong>Why standalone here:</strong> wiring its output into the parametrized Grover
+branches end-to-end requires three <em>standard</em> NiFi processors
+(<code>SplitJson</code> → <code>EvaluateJsonPath</code> → fan-out to <code>${grover.*}</code>-driven branches) —
+that full recipe is already documented as the canvas-wiring diagram in
+<a href="data-driven-testing.html">DATA_DRIVEN_TESTING.md</a> §3. Run it standalone first to
+see what it produces, then follow that doc to wire it up for real differential
+runs (which would ultimately feed Flow 23's comparison/assertion pair, closing
+the loop).</p>
+<ol>
+<li><strong><code>QuantumTestCaseSource</code></strong>
+   | Property | Value |
+   |---|---|
+   | Test Matrix | <code>{"grover.marked_state": ["00", "11", "000"], "grover.num_iterations": ["1", "2"]}</code> (the default — a parameter-axes spec; its Cartesian product yields 6 cases) |
+   | Case ID Prefix | <code>case</code> |
+   | Partition Label | <em>(leave blank)</em> |
+   | Run ID | <em>(leave blank — auto-generates a timestamp-based id per trigger)</em> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> to a funnel; auto-terminate
+   <code>failure</code> (fires on bad JSON or a zero-case expansion).
+2. Start, list the queue: content is a JSON array of 6 row objects, each
+   stamped with <code>test.case_id</code> (<code>case-000</code> … <code>case-005</code>), <code>test.run_id</code>
+   (shared across the batch), and the two axis attributes per row; FlowFile
+   attributes show <code>testsource.count = 6</code>, <code>testsource.mode = axes</code>.
+3. <strong>Try the explicit-table form</strong> — switch <strong>Test Matrix</strong> to a JSON array,
+   e.g.
+   <code>[{"grover.marked_state": "0000", "test.partition": "all-zeros", "test.expected": "0000"}, {"grover.marked_state": "1", "test.partition": "n=1", "test.expected": "1"}]</code>
+   — now <code>testsource.mode = table</code>, <code>testsource.count = 2</code>, and each row
+   carries its own <code>test.partition</code>/<code>test.expected</code> (a per-row ground-truth
+   oracle that <code>QuantumAssertion</code> in Flow 23 can later check via
+   <code>Check Ground Truth = true</code>).</p>
+<hr />
+<h1 id="problem-encoders-data-in-solution-out">Problem encoders (data in, solution out)</h1>
+<p>These two framework-agnostic processors are the "no Pauli strings" entry
+point: raw problem data becomes a Hamiltonian in the shared wire format
+(<code>hamiltonian.format = sparse_pauli_op_json</code>), which any <code>*QAOA</code> (or <code>*VQE</code>)
+solver consumes. Swapping the solver framework is a one-processor change.</p>
+<h2 id="flow-25-maxcut-graph-edges-qaoa-report">Flow 25 — MaxCut: graph edges → QAOA → report</h2>
+<p><strong>Components:</strong> <code>MaxCutProblem</code> → <code>QiskitQAOA</code> → <code>QiskitAerSimulator</code> →
+<code>QuantumQAOAEvaluator</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> a user goes from an edge list to an optimal graph
+partition without writing a Hamiltonian: the encoder emits the MaxCut Ising
+operator whose minimum eigenvalue is exactly <code>-max_cut</code>. <code>QiskitQAOA</code> only
+<em>trains</em> the circuit (0.2.0: it no longer samples, has no <code>Shots</code> property,
+and emits the trained circuit as qasm2 content); a simulator samples it, and
+<code>QuantumQAOAEvaluator</code> scores those samples against the exact reference. See
+the <a href="qaoa-components.html">QAOA components guide</a> for the full chain and the
+0.1.0→0.2.0 migration.</p>
+<ol>
+<li><strong><code>MaxCutProblem</code></strong>
+   | Property | Value |
+   |---|---|
+   | Edges | <code>[[0, 1], [1, 2], [0, 2]]</code> (a triangle; default) |
+   | Num Nodes | <code>0</code> (derive from the edges) |</li>
+</ol>
+<p>Feed from a <code>GenerateFlowFile</code> trigger. To drive it from data instead,
+   put the JSON edge list in the FlowFile <em>content</em>: content overrides the
+   property, which is what makes data-driven runs (Flow 24 style) work.
+   Wire <code>success</code> → <code>QiskitQAOA</code>; auto-terminate <code>failure</code>.
+2. <strong><code>QiskitQAOA</code></strong> — defaults are fine (Layers <code>2</code>). Wire <code>success</code> →
+   <code>QiskitAerSimulator</code>; auto-terminate <code>failure</code>.
+3. <strong><code>QiskitAerSimulator</code></strong> — Shots <code>1024</code>, Random Seed <code>11</code> (for a
+   reproducible demo run). Wire <code>success</code> → <code>QuantumQAOAEvaluator</code>;
+   auto-terminate <code>failure</code>.
+4. <strong><code>QuantumQAOAEvaluator</code></strong> — no properties needed; <code>Hamiltonian</code> defaults
+   to <code>${hamiltonian.json}</code>, which rides through from <code>QiskitQAOA</code>'s output.
+   Wire <code>success</code> → <code>QuanifiReport</code>; auto-terminate <code>failure</code>.
+5. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>maxcut-qaoa</code>. Auto-terminate <code>success</code>.
+6. Start all four. In <code>maxcut-qaoa.html</code> the QAOA panel now reflects the
+   <em>evaluator's</em> attributes: <code>qaoa.exact_minimum = -2.0</code> (the triangle's max
+   cut is 2), <code>qaoa.approximation_ratio ≥ 0.99</code>, and a
+   <code>qaoa.best_measurement</code> that is any 3-bit string except <code>000</code>/<code>111</code> (all
+   balanced partitions of a triangle cut 2 edges).
+7. Swap <code>QiskitQAOA</code> for <code>CirqQAOA</code>, <code>QrispQAOA</code>, <code>PennylaneQAOA</code> or
+   <code>PyquilQAOA</code>: the wire format is byte-identical, so no reconfiguration is
+   needed upstream. The downstream simulator is swappable too — any counts
+   engine (Aer, Cirq, Qrisp, PennyLane, Braket, QSharp, pyQuil) works with
+   any of the five solvers, since <code>QuantumQAOAEvaluator</code> is framework-neutral.</p>
+<hr />
+<h2 id="flow-26-qubo-matrix-qaoa-framework-swappable">Flow 26 — QUBO matrix → QAOA (framework-swappable)</h2>
+<p><strong>Components:</strong> <code>QuboToHamiltonian</code> → <code>QiskitQAOA</code> → <code>QiskitAerSimulator</code> →
+<code>QuantumQAOAEvaluator</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> QUBO is the lingua franca of combinatorial optimization
+(portfolio selection, scheduling, routing all reduce to it); this one adapter
+makes any such problem solvable by every QAOA processor, sampled by any
+simulator and scored by one evaluator. The ground bitstring <em>is</em> the binary
+solution vector.</p>
+<ol>
+<li><strong><code>QuboToHamiltonian</code></strong>
+   | Property | Value |
+   |---|---|
+   | QUBO Matrix | <code>[[-1, 2], [0, -1]]</code> (default) |</li>
+</ol>
+<p>For this Q, <code>f(00) = 0</code>, <code>f(01) = f(10) = -1</code>, <code>f(11) = 0</code>: pick exactly
+   one of the two variables. As with Flow 25, a JSON 2D array in the FlowFile
+   content overrides the property. Wire <code>success</code> → <code>QiskitQAOA</code>.
+2. <strong><code>QiskitQAOA</code></strong> → <strong><code>QiskitAerSimulator</code></strong> (Shots <code>1024</code>, Random Seed
+   <code>11</code>) → <strong><code>QuantumQAOAEvaluator</code></strong> → <strong><code>QuanifiReport</code></strong> (Flow Name =
+   <code>qubo-qaoa</code>), as in Flow 25.
+3. Expect <code>qaoa.exact_minimum = -1.0</code> and <code>qaoa.best_measurement</code> = <code>01</code> or
+   <code>10</code>, both read from <code>QuantumQAOAEvaluator</code>'s output. Read the bitstring
+   left to right: character <em>i</em> is variable <em>i</em> (<code>sim.bit_order = q0_left</code>).</p>
+<hr />
+<h1 id="entanglement-factoring-demos">Entanglement &amp; factoring demos</h1>
+<p>The learner ladder: Bell states (first entanglement), teleportation (first
+protocol), Shor (the famous one). All three are all-in-one processors that
+need only a <code>GenerateFlowFile</code> trigger.</p>
+<h2 id="flow-27-bell-state">Flow 27 — Bell state</h2>
+<p><strong>Components:</strong> <code>QiskitBellState</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> entanglement in one box: two qubits, two outcomes, perfect
+correlation.</p>
+<ol>
+<li><strong><code>QiskitBellState</code></strong>
+   | Property | Value |
+   |---|---|
+   | Bell State | <code>phi_plus</code> |
+   | Shots | <code>1024</code> |</li>
+</ol>
+<p>Wire <code>success</code> → <code>QuanifiReport</code> (Flow Name = <code>bell</code>); auto-terminate
+   <code>failure</code>.
+2. Start. The report's counts chart shows only <code>00</code> and <code>11</code>, roughly 50/50,
+   and <code>bell.correlation = 1.0000</code>: every shot landed on the correlated pair.
+3. Try the other three states: <code>psi_plus</code>/<code>psi_minus</code> flip the pair to
+   <code>01</code>/<code>10</code>; the correlation stays 1.0.</p>
+<hr />
+<h2 id="flow-28-quantum-teleportation">Flow 28 — Quantum teleportation</h2>
+<p><strong>Components:</strong> <code>QiskitTeleportation</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> a real dynamic-circuit protocol: mid-circuit measurement
+plus classically conditioned corrections, self-verified.</p>
+<ol>
+<li><strong><code>QiskitTeleportation</code></strong>
+   | Property | Value |
+   |---|---|
+   | Theta | <code>1.0471975512</code> (pi/3) |
+   | Phi | <code>0.7853981634</code> (pi/4) |
+   | Shots | <code>1024</code> |</li>
+</ol>
+<p>Wire <code>success</code> → <code>QuanifiReport</code> (Flow Name = <code>teleport</code>); auto-terminate
+   <code>failure</code>.
+2. Start. This processor sets no <code>report.type</code>, so the report falls back to
+   the all-attributes card: look for <code>teleport.fidelity = 1.0000</code>. The counts
+   keys read <code>c0 c1 c2</code> left to right; the first two bits (the Bell
+   measurement) are random across all four values, the third (the
+   verification readout on the teleported qubit) is always <code>0</code>: the state
+   arrived intact regardless of which correction branch fired.
+3. Change Theta/Phi to any angles: fidelity stays 1.0. That invariance under
+   the message state is the protocol working, not a lucky input.</p>
+<hr />
+<h2 id="flow-29-shors-algorithm">Flow 29 — Shor's algorithm</h2>
+<p><strong>Components:</strong> <code>QrispShor</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> the most famous quantum algorithm as a one-property box,
+via Qrisp's native <code>shors_alg</code> (the only integrated framework that ships Shor
+as a high-level call).</p>
+<ol>
+<li><strong><code>QrispShor</code></strong>
+   | Property | Value |
+   |---|---|
+   | Number To Factor | <code>15</code> |</li>
+</ol>
+<p>Wire <code>success</code> → <code>QuanifiReport</code> (Flow Name = <code>shor</code>); wire <code>failure</code> to a
+   funnel so you can inspect <code>shor.error</code>.
+2. Start. The all-attributes card shows <code>shor.factor_1 = 3</code>,
+   <code>shor.factor_2 = 5</code> (a couple of seconds on the local simulator). Try
+   <code>21</code> (slower). A prime input (e.g. <code>13</code>) routes to <code>failure</code> with a clear
+   <code>shor.error</code>: that is the input validation, not a bug.</p>
+<hr />
+<h1 id="amplitude-estimation">Amplitude estimation</h1>
+<h2 id="flow-30-bernoulli-amplitude-estimation-across-frameworks">Flow 30 — Bernoulli amplitude estimation across frameworks</h2>
+<p><strong>Components:</strong> <code>QiskitAmplitudeEstimation</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> the estimation counterpart to sampling: all four
+frameworks implement the same Bernoulli problem
+(<code>A = Ry(2·asin(√p))</code>), so their canonical estimates land on the same grid
+<code>sin²(π·y/2^m)</code> and are directly comparable.</p>
+<ol>
+<li><strong><code>QiskitAmplitudeEstimation</code></strong>
+   | Property | Value |
+   |---|---|
+   | Probability | <code>0.2</code> |
+   | Evaluation Qubits | <code>3</code> |
+   | Method | <code>canonical</code> |
+   | Shots | <code>1024</code> |</li>
+</ol>
+<p>Wire <code>success</code> → <code>QuanifiReport</code> (Flow Name = <code>qae</code>); auto-terminate
+   <code>failure</code>.
+2. Start. The Amplitude Estimation panel shows <code>ae.estimate = 0.14644661</code>
+   (the m = 3 grid point nearest 0.2) and <code>ae.mle ≈ 0.2</code> (the off-grid
+   maximum-likelihood refinement).
+3. Switch <strong>Method</strong> to <code>iterative</code>: <code>ae.estimate ≈ 0.2</code> directly, within
+   <code>Epsilon Target</code>.
+4. Swap the processor for <code>CirqAmplitudeEstimation</code> or
+   <code>PennylaneAmplitudeEstimation</code> with the same Probability/Evaluation
+   Qubits: the canonical estimate is <em>identical</em> (same grid), which is the
+   N-version pseudo-oracle for this component. <code>QrispAmplitudeEstimation</code> is
+   the iterative counterpart (Qrisp's native IQAE): expect <code>≈ 0.2</code>.</p>
+<hr />
+<h1 id="real-hardware-execution">Real hardware execution</h1>
+<p>Both gateways consume the shared circuit contract, so a circuit built by
+<em>any</em> framework's builder (Qiskit, Cirq, Qrisp, PennyLane) runs on real
+hardware through them: set the builder's <strong>Output Format</strong> to <code>qasm2</code> and
+wire it in. Every default below works offline; credentials only matter when
+you point at a real device.</p>
+<h2 id="flow-31-any-circuit-amazon-braket-local-or-qpu">Flow 31 — Any circuit → Amazon Braket (local or QPU)</h2>
+<p><strong>Components:</strong> any circuit builder (e.g. <code>QiskitGroverCircuit</code>) →
+<code>BraketDevice</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> the qasm2 interchange reaching hardware: the same wiring
+runs offline today and on an IonQ/Rigetti/IQM QPU when you paste an ARN.</p>
+<ol>
+<li><strong><code>QiskitGroverCircuit</code></strong> — Marked State = <code>11</code>, Num Iterations = <code>1</code>,
+   <strong>Output Format = <code>qasm2</code></strong>. Wire <code>success</code> → <code>BraketDevice</code>.</li>
+<li><strong><code>BraketDevice</code></strong>
+   | Property | Value |
+   |---|---|
+   | Device | <code>local</code> |
+   | Shots | <code>1024</code> |
+   | Wait For Results | <code>true</code> |</li>
+</ol>
+<p>Wire <code>success</code> → <code>QuanifiReport</code> (Flow Name = <code>braket-hw</code>); auto-terminate
+   <code>failure</code>.
+3. Start. Counts concentrate on <code>11</code>; the attributes carry
+   <code>hw.provider = aws-braket</code>, <code>hw.device = local</code>.
+4. For real hardware: set <strong>Device</strong> to a Braket ARN (e.g.
+   <code>arn:aws:braket:::device/quantum-simulator/amazon/sv1</code>, or a QPU ARN),
+   have AWS credentials in the standard chain (env vars or <code>~/.aws</code>), and,
+   for QPUs with long queues, set <strong>Wait For Results</strong> = <code>false</code>: the
+   FlowFile continues immediately with <code>hw.task_arn</code> + <code>hw.status</code> instead
+   of blocking the canvas. Missing credentials route to <code>failure</code> with a
+   clear <code>hw.error</code>.
+5. Cross-framework check: replace the builder with <code>CirqQFTCircuit</code> or
+   <code>PennylaneFeatureEmbedding</code> (both emit qasm2): a Cirq- or PennyLane-built
+   circuit on AWS hardware, no translation step on the canvas.</p>
+<h2 id="flow-32-any-circuit-ibm-quantum-fake-backend-or-real">Flow 32 — Any circuit → IBM Quantum (fake backend or real)</h2>
+<p><strong>Components:</strong> any circuit builder → <code>QiskitRuntimeSampler</code> → <code>QuanifiReport</code>
+<strong>What it proves:</strong> the same gateway idea for IBM: one processor, offline
+noisy rehearsal and real-QPU submission.</p>
+<ol>
+<li>Reuse the builder from Flow 31 (Output Format = <code>qasm2</code>), wired into
+   <strong><code>QiskitRuntimeSampler</code></strong>:
+   | Property | Value |
+   |---|---|
+   | Backend | <code>fake_manila</code> |
+   | Shots | <code>2000</code> |</li>
+</ol>
+<p>Wire <code>success</code> → <code>QuanifiReport</code> (Flow Name = <code>ibm-hw</code>); auto-terminate
+   <code>failure</code>.
+2. Start. <code>fake_manila</code> runs <em>locally</em> with the real backend's calibrated
+   noise model: a Bell/Grover pair now shows a few percent leakage into the
+   wrong states — that is what the hardware will do to you, rehearsed
+   offline. Attributes carry <code>hw.mode = local-fake</code>.
+3. For real hardware: set <strong>Backend</strong> = <code>least_busy</code> (or a name like
+   <code>ibm_brisbane</code>) and put your IBM Quantum token in <strong>Token</strong> (or use a
+   saved account). The circuit is transpiled to the backend ISA
+   automatically. <code>hw.mode</code> flips to <code>cloud</code>.</p>
+<h2 id="flow-34-any-circuit-iqm-resonance-async-submit-rest-polling">Flow 34 — Any circuit → IQM Resonance (async submit + REST polling)</h2>
+<p><em>(Numbered 34 so the existing flow numbers keep pointing at the same
+diagrams; it belongs to this hardware section, not to the QML one below.)</em></p>
+<p><strong>Components:</strong> any circuit builder → <code>QrispIQMDevice</code> → <code>IQMJobPoller</code>
+(self-looping) → <code>QuanifiReport</code>
+<strong>What it proves:</strong> the third gateway, and the one shape the other two don't
+show — <strong>submission and collection as separate canvas steps</strong>. Qrisp's
+Backend Interface is asynchronous, so the submit node never blocks on an IQM
+queue; a poller drives the job to completion against the IQM Resonance REST
+API and re-queues itself while the job is still waiting.</p>
+<ol>
+<li>Reuse the builder from Flow 31 (<strong>Output Format = <code>qasm2</code></strong> — Qrisp's
+   importer is the qasm2 one), wired into <strong><code>QrispIQMDevice</code></strong>:
+   | Property | Value |
+   |---|---|
+   | Device Instance | <code>local</code> |
+   | Shots | <code>1024</code> |
+   | Wait For Results | <code>true</code> |</li>
+</ol>
+<p>Wire <code>success</code> → <code>QuanifiReport</code> (Flow Name = <code>iqm-hw</code>); auto-terminate
+   <code>failure</code>. Start it: <code>local</code> runs Qrisp's own statevector simulator, so
+   the whole lane is exercised offline with no token. Attributes carry
+   <code>hw.provider = iqm-resonance</code>, <code>hw.mode = local-sim</code>.</p>
+<ol>
+<li>Now switch to the asynchronous shape, which is what a real QPU wants.
+   Set <strong><code>QrispIQMDevice</code></strong>:
+   | Property | Value |
+   |---|---|
+   | Device Instance | <code>garnet</code> |
+   | API Token | <code>#{iqm.resonance.token}</code> |
+   | Shots | <code>100</code> |
+   | Wait For Results | <code>false</code> |</li>
+</ol>
+<p>It now returns immediately with <code>hw.job_id</code>, <code>hw.status</code> and
+   <code>hw.server_url</code> instead of counts — there is no <code>report.type</code> yet,
+   because there are no results yet.</p>
+<ol>
+<li><strong><code>IQMJobPoller</code></strong> between it and the report:
+   | Property | Value |
+   |---|---|
+   | API Token | <code>#{iqm.resonance.token}</code> |
+   | Job ID | <code>${hw.job_id}</code> |
+   | Poll Timeout Seconds | <code>60</code> |
+   | Poll Interval Seconds | <code>5</code> |
+   | Max Poll Interval Seconds | <code>60</code> |</li>
+</ol>
+<p>Set its <strong>Run Schedule</strong> to <code>30 sec</code>. Wire <code>success</code> → <code>QuanifiReport</code>,
+   auto-terminate <code>failure</code>, and — the important one — wire <strong><code>pending</code> back
+   into <code>IQMJobPoller</code> itself</strong>. Each pass polls <code>GET /api/v1/jobs/{id}</code> for
+   up to 60 s, obeying the server's <code>Retry-After</code> header; a job still in the
+   queue leaves on <code>pending</code> and comes round again. A three-hour queue costs
+   a few hundred cheap passes and zero parked threads.</p>
+<ol>
+<li>
+<p>When the job reaches <code>completed</code>, the poller fetches
+   <code>GET /api/v1/jobs/{id}/artifacts/measurement_counts</code>, normalises to the
+   canonical <code>q0_left</code> order, and emits the usual <code>sim.*</code> +
+   <code>report.type = simulation</code>. <code>QuanifiReport</code> renders the counts chart plus
+   a <strong>Hardware Execution</strong> panel (<code>hw.provider</code>, <code>hw.device</code>, <code>hw.job_id</code>,
+   <code>hw.status</code>, <code>hw.poll_attempts</code>) — that panel is vendor-neutral, so
+   Flows 31 and 32 get it too.</p>
+</li>
+<li>
+<p>Credentials: create a Parameter Context <code>IQM Quantum Credentials</code> with a
+   <strong>sensitive</strong> parameter <code>iqm.resonance.token</code>, assign it to the process
+   group, and set both <strong>API Token</strong> properties to exactly
+   <code>#{iqm.resonance.token}</code> (a sensitive property may reference one sensitive
+   Parameter and nothing else). The ready-made group is built by
+   <code>tools/add_iqm_group.py</code>.</p>
+</li>
+</ol>
+<hr />
+<h1 id="qml-training">QML training</h1>
+<h2 id="flow-33-dataset-variational-classifier-training-report">Flow 33 — Dataset → variational classifier → training report</h2>
+<p><strong>Components:</strong> <code>PennylaneDatasetLoader</code> → <code>PennylaneVariationalClassifier</code> →
+<code>QuanifiReport</code>
+<strong>What it proves:</strong> the QML lane end to end: machine learning on a quantum
+circuit with zero equations, honest train/validation split, and a loss curve
+in the report.</p>
+<ol>
+<li><strong><code>PennylaneDatasetLoader</code></strong>
+   | Property | Value |
+   |---|---|
+   | Mode | <code>synthetic</code> |
+   | Num Samples | <code>24</code> |
+   | Num Features | <code>2</code> |
+   | Seed | <code>7</code> |</li>
+</ol>
+<p>Feed from <code>GenerateFlowFile</code>. Wire <code>success</code> →
+   <code>PennylaneVariationalClassifier</code>; auto-terminate <code>failure</code>.
+2. <strong><code>PennylaneVariationalClassifier</code></strong>
+   | Property | Value |
+   |---|---|
+   | Embedding | <code>angle</code> |
+   | Ansatz | <code>strongly_entangling</code> |
+   | Layers | <code>2</code> |
+   | Epochs | <code>25</code> |
+   | Learning Rate | <code>0.2</code> |</p>
+<p>The Embedding/Ansatz values use the same vocabulary as
+   <code>PennylaneFeatureEmbedding</code> and <code>PennylaneVariationalAnsatz</code> (Flow 20), so
+   the model trained here is the same circuit family those builders emit.
+   Wire <code>success</code> → <code>QuanifiReport</code>; auto-terminate <code>failure</code>.
+3. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qml-training</code>. Auto-terminate <code>success</code>.
+4. Start all three. The card uses the <code>training</code> layout: a loss curve that
+   visibly decreases, plus <code>train.train_accuracy</code> / <code>train.val_accuracy</code>
+   (≥ 0.8 on the separable synthetic blobs) and the model summary
+   (<code>train.embedding</code>, <code>train.ansatz</code>, <code>train.num_qubits</code>).
+5. Variations: <strong>Embedding</strong> = <code>iqp</code> with <strong>Ansatz</strong> = <code>basic_entangler</code>
+   trains a different circuit family; <strong>Embedding</strong> = <code>amplitude</code> packs the
+   features into <code>ceil(log2(n))</code> qubits (watch <code>train.num_qubits</code> drop).
+   Switch the loader's <strong>Mode</strong> to <code>inline</code> to train on your own records.</p>
+<hr />
+<h2 id="flow-35-qaoa-nm-5-builders-7-engines">Flow 35 — QAOA N×M: 5 builders × 7 engines</h2>
+<p><strong>Components:</strong> <code>QiskitHamiltonian</code> → 5 fixed-angle builders
+(<code>QiskitQAOACircuit</code>, <code>CirqQAOACircuit</code>, <code>PennylaneQAOACircuit</code>,
+<code>QrispQAOACircuit</code>, <code>PyquilQAOACircuit</code>) → each builder's <code>success</code> fanned
+out to all 7 simulators (<code>QiskitAerSimulator</code>, <code>CirqSimulator</code>,
+<code>QrispSimulator</code>, <code>PennylaneSimulator</code>, <code>BraketSimulator</code>, <code>QSharpSimulator</code>,
+<code>PyquilSimulator</code>) → one shared <code>QuantumQAOAEvaluator</code> → one shared
+<code>QuanifiReport</code>.
+<strong>What it proves:</strong> one qasm2 circuit, built by any of the five QAOA
+frameworks at the <em>same</em> explicit angles, runs unmodified on any of the
+seven counts engines and is scored by one framework-neutral evaluator — the
+35-cell matrix this whole extraction exists to enable. It is generated, not
+hand-built; see <a href="https://github.com/saeg/quanifi/tree/main/demo/qaoa/qaoa-nxm.json"><code>demo/qaoa/qaoa-nxm.json</code></a>
+and the "N×M flow" section of the
+<a href="qaoa-components.html">QAOA components guide</a> for the full click path,
+regeneration command and every measured Hellinger distance.</p>
+<ol>
+<li><strong><code>QiskitHamiltonian</code></strong> — Hamiltonian
+   <code>-0.8 Z0 Z1 + 0.5 Z1 Z2 - 0.3 Z0 + 0.2</code>, Num Qubits <code>3</code> (this is <code>H_NXM</code>;
+   its unique ground state is <code>001</code>, energy <code>-1.4</code>). Wire <code>success</code> to all
+   5 builders; auto-terminate <code>failure</code>.</li>
+<li><strong>Each builder</strong> — Layers <code>2</code>, Betas <code>[-0.67, -0.42]</code>, Gammas
+   <code>[1.14, 1.27]</code> (identical across all 5, so every row builds the <em>same</em>
+   angles in its own framework). Wire each builder's <code>success</code> to all 7
+   simulators (35 connections total); auto-terminate <code>failure</code> on each.</li>
+<li><strong>Each simulator</strong> — the 6 seedable engines use Shots <code>4096</code>, Random
+   Seed <code>11</code>; <code>BraketSimulator</code> uses Shots <code>4096</code> only (it has no seed
+   property — see "Known limitations" in the QAOA guide) and
+   <code>PyquilSimulator</code> uses Shots <code>256</code> (its PyQVM sampling cost is about
+   13.6 ms/shot; 4096 shots would take tens of seconds per cell). Wire each
+   simulator's <code>success</code> to the one shared <code>QuantumQAOAEvaluator</code>;
+   auto-terminate <code>failure</code>.</li>
+<li><strong><code>QuantumQAOAEvaluator</code></strong> — no properties needed. Wire <code>success</code> →
+   <code>QuanifiReport</code>; auto-terminate <code>failure</code>.</li>
+<li><strong><code>QuanifiReport</code></strong> — Flow Name = <code>qaoa-nxm</code>, Reports Directory =
+   <code>reports/qaoa</code>. Auto-terminate <code>success</code>.</li>
+<li>Start every processor except the trigger, then <strong>Run Once</strong> the
+   <code>QiskitHamiltonian</code> trigger. All 35 cells reach <code>qaoa.best_measurement
+   = "001"</code> and <code>qaoa.exact_minimum = -1.4</code>. Every seeded 4096-shot cell's
+   Hellinger distance to the exact distribution stays under 0.023 (measured
+   worst case 0.0187, on the seeded engines); the unseeded <code>BraketSimulator</code>
+   column varies run to run but stays within the plan's measured statistical
+   bound (0.9999-quantile 0.030, maximum observed 0.032 across 50000
+   trials) — never compare its saved value for exact equality.
+   <code>PyquilSimulator</code> cells (256 shots) stay under 0.044.</li>
+<li>This flow is intentionally 5×7 = 35 connections wide; import it as-is
+   from <code>demo/qaoa/qaoa-nxm.json</code> rather than click-building it by hand.</li>
+</ol>
+<hr />
+<h1 id="quick-reference-which-flow-exercises-which-processor">Quick-reference: which flow exercises which processor</h1>
+<table>
+<thead>
+<tr>
+<th>Processor</th>
+<th>Flow(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QiskitQuantumHelloWorld</td>
+<td>1</td>
+</tr>
+<tr>
+<td>QiskitGroverCircuit</td>
+<td>2, 22, 23</td>
+</tr>
+<tr>
+<td>QiskitAerSimulator</td>
+<td>2, 3, 4, 5, 6, 23</td>
+</tr>
+<tr>
+<td>QiskitCircuitReport</td>
+<td>2</td>
+</tr>
+<tr>
+<td>QiskitHadamardTransform</td>
+<td>3</td>
+</tr>
+<tr>
+<td>QiskitQFTCircuit</td>
+<td>4</td>
+</tr>
+<tr>
+<td>QiskitPhaseEstimation</td>
+<td>5</td>
+</tr>
+<tr>
+<td>QiskitAmplitudeAmplification</td>
+<td>6</td>
+</tr>
+<tr>
+<td>QiskitStatePreparation</td>
+<td>7</td>
+</tr>
+<tr>
+<td>QiskitStatevectorSimulator</td>
+<td>7</td>
+</tr>
+<tr>
+<td>QiskitGroverSearch</td>
+<td>8</td>
+</tr>
+<tr>
+<td>QiskitHamiltonian</td>
+<td>9</td>
+</tr>
+<tr>
+<td>QiskitAnsatz</td>
+<td>9</td>
+</tr>
+<tr>
+<td>QiskitVQE</td>
+<td>9</td>
+</tr>
+<tr>
+<td>CirqGroverCircuit</td>
+<td>10, 22, 23</td>
+</tr>
+<tr>
+<td>CirqSimulator</td>
+<td>10, 11, 12, 13, 14, 23</td>
+</tr>
+<tr>
+<td>CirqPhaseOracle</td>
+<td>11</td>
+</tr>
+<tr>
+<td>CirqGroverOperator</td>
+<td>11</td>
+</tr>
+<tr>
+<td>CirqHadamardTransform</td>
+<td>12</td>
+</tr>
+<tr>
+<td>CirqQFTCircuit</td>
+<td>13</td>
+</tr>
+<tr>
+<td>CirqPhaseEstimation</td>
+<td>14</td>
+</tr>
+<tr>
+<td>CirqHamiltonian</td>
+<td>15</td>
+</tr>
+<tr>
+<td>CirqAnsatz</td>
+<td>15</td>
+</tr>
+<tr>
+<td>CirqVQE</td>
+<td>15</td>
+</tr>
+<tr>
+<td>QrispGroverSearch</td>
+<td>16</td>
+</tr>
+<tr>
+<td>QrispQFTCircuit</td>
+<td>17</td>
+</tr>
+<tr>
+<td>QrispSimulator</td>
+<td>17</td>
+</tr>
+<tr>
+<td>QrispPhaseEstimation</td>
+<td>18</td>
+</tr>
+<tr>
+<td>QrispHamiltonian</td>
+<td>19</td>
+</tr>
+<tr>
+<td>QrispAnsatz</td>
+<td>19</td>
+</tr>
+<tr>
+<td>QrispVQE</td>
+<td>19</td>
+</tr>
+<tr>
+<td>PennylaneFeatureEmbedding</td>
+<td>20</td>
+</tr>
+<tr>
+<td>PennylaneVariationalAnsatz</td>
+<td>20</td>
+</tr>
+<tr>
+<td>PennylaneExpectation</td>
+<td>20</td>
+</tr>
+<tr>
+<td>PennylaneDatasetLoader</td>
+<td>21</td>
+</tr>
+<tr>
+<td>QuanifiUnitary</td>
+<td>22</td>
+</tr>
+<tr>
+<td>QuantumUnitaryComparison</td>
+<td>22</td>
+</tr>
+<tr>
+<td>QuantumDistributionComparison</td>
+<td>23</td>
+</tr>
+<tr>
+<td>QuantumAssertion</td>
+<td>23</td>
+</tr>
+<tr>
+<td>QuantumTestCaseSource</td>
+<td>24</td>
+</tr>
+<tr>
+<td>MaxCutProblem</td>
+<td>25</td>
+</tr>
+<tr>
+<td>QuboToHamiltonian</td>
+<td>26</td>
+</tr>
+<tr>
+<td>QiskitQAOA</td>
+<td>25, 26 (train-only since 0.2.0; sampled by the next hop, <code>QiskitAerSimulator</code>), 35 (as swap-in for the N×M solver-equivalent row context)</td>
+</tr>
+<tr>
+<td>CirqQAOA / QrispQAOA / PennylaneQAOA / PyquilQAOA</td>
+<td>25, 26 (as swap-ins for the solver)</td>
+</tr>
+<tr>
+<td>QiskitQAOACircuit / CirqQAOACircuit / PennylaneQAOACircuit / QrispQAOACircuit / PyquilQAOACircuit</td>
+<td>35</td>
+</tr>
+<tr>
+<td>QuantumQAOAEvaluator</td>
+<td>25, 26, 35</td>
+</tr>
+<tr>
+<td>QiskitBellState</td>
+<td>27</td>
+</tr>
+<tr>
+<td>QiskitTeleportation</td>
+<td>28</td>
+</tr>
+<tr>
+<td>QrispShor</td>
+<td>29</td>
+</tr>
+<tr>
+<td>QiskitAmplitudeEstimation</td>
+<td>30</td>
+</tr>
+<tr>
+<td>CirqAmplitudeEstimation / PennylaneAmplitudeEstimation / QrispAmplitudeEstimation</td>
+<td>30 (as swap-ins)</td>
+</tr>
+<tr>
+<td>BraketDevice</td>
+<td>31</td>
+</tr>
+<tr>
+<td>QiskitRuntimeSampler</td>
+<td>32</td>
+</tr>
+<tr>
+<td>QrispIQMDevice</td>
+<td>34</td>
+</tr>
+<tr>
+<td>IQMJobPoller</td>
+<td>34</td>
+</tr>
+<tr>
+<td>PennylaneVariationalClassifier</td>
+<td>33</td>
+</tr>
+<tr>
+<td>QuanifiReport</td>
+<td>3, 4, 5, 6, 7 (self-reporting peers aside), 8, 9, 10–15, 17–35</td>
+</tr>
+<tr>
+<td></content></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

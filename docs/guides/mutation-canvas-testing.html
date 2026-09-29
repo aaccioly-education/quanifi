@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mutation Canvas Testing Guide (Layers A & B)</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="active">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li class="active"><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="data-driven-testing.html">Testing</a> <span class="sep">&rsaquo;</span> <a href="mutation-canvas-testing.html">Canvas Testing</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="canvas-testing-guide-mutation-pipeline-layers-b-and-a">Canvas testing guide — mutation pipeline (Layers B and A)</h1>
+<blockquote>
+<p>Step-by-step, component-by-component build + test of the mutation flow
+(<code>QuantumTestCaseSource</code> mutation pass → 3 framework branches →
+<code>QuantumConsensusOracle</code> → <code>MutationScoreReport</code>). Build the <strong>success flow</strong>
+first (Stages 1–4), confirm it's green, then <strong>add config fault injection</strong>
+(Stages 5–6, Layer B), <strong>exercise the edge cases</strong> (Stage 7), and finally run
+<strong>gate-level mutation testing proper</strong> (Stage 8, Layer A —
+<code>QuantumMutator</code>). Every property value below is literal — paste it as-is.</p>
+<p><strong>Terminology.</strong> Stages 5–7 inject faults into the <em>test-case parameters</em>
+(Layer B) — strictly that is <strong>configuration fault injection</strong> measuring
+<em>oracle sensitivity</em>, not mutation testing in the classical sense. Stage 8
+mutates the <em>circuit itself</em> on one branch (Layer A) — that is <strong>mutation
+testing proper</strong>, and it evaluates the differential harness via the
+reference-free DISAGREE path. See MUTATION_TESTING.md §0/§2.</p>
+</blockquote>
+<p>All property values that start with <code>${…}</code> are NiFi Expression Language; they
+read a FlowFile attribute that <code>EvaluateJsonPath</code> hoisted from the test-case row.
+<code>:replaceEmpty('x')</code> supplies a fallback so a processor still works if the
+attribute is absent.</p>
+<h2 id="the-target-topology">The target topology</h2>
+<div class="codehilite"><pre><span></span><code>GenerateFlowFile (Run Once)
+  → QuantumTestCaseSource        (matrix → JSON array of rows)
+  → SplitJson  ($)               (array → one FlowFile per row)
+  → EvaluateJsonPath             (row fields → attributes)   ── matched ─┐
+                                                                          │ (clone ×3)
+        ┌─────────────────────────────────────────────────────────────┘
+        ├─ QiskitGroverCircuit → QiskitAerSimulator ─┐
+        ├─ CirqGroverCircuit   → CirqSimulator ──────┤→ QuantumConsensusOracle
+        └─ QrispGroverSearch ────────────────────────┘     pass│fail → MutationScoreReport
+                                                           waiting → (funnel / auto-terminate)
+</code></pre></div>
+
+<p>The single <code>EvaluateJsonPath</code> <code>matched</code> relationship is connected to <strong>all three</strong>
+branch-entry processors — NiFi clones the row FlowFile to each, so the three
+frameworks run the <em>same</em> case and meet again at the one oracle instance.</p>
+<h2 id="where-to-look-for-results">Where to look for results</h2>
+<table>
+<thead>
+<tr>
+<th>Artifact</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consensus verdicts (per case)</td>
+<td><code>reports/datadriven-grover-consensus.html</code></td>
+</tr>
+<tr>
+<td>Survival-rate report</td>
+<td><code>reports/datadriven-grover-mutation.html</code></td>
+</tr>
+<tr>
+<td>Oracle slot buffer (transient)</td>
+<td><code>reports/tmp/quanifi_consensus_state/</code></td>
+</tr>
+<tr>
+<td>Aggregator state</td>
+<td><code>reports/datadriven-grover-mutation-state.json</code></td>
+</tr>
+</tbody>
+</table>
+<p>Also add a <strong>LogAttribute</strong> processor (or use NiFi Data Provenance → View
+Details → Attributes) wherever you want to read <code>assert.verdict</code>,
+<code>consensus.dissenters</code>, <code>mutation.survival_rate</code> directly off a FlowFile.</p>
+<hr />
+<h2 id="stage-0-prerequisites">Stage 0 — Prerequisites</h2>
+<ol>
+<li>NiFi 2.9.0 running; the new processors are discoverable in <em>Add
+   Processor</em> (search "Quantum" / "Mutation"): <code>QuantumTestCaseSource</code>,
+   <code>QuantumConsensusOracle</code>, <code>MutationScoreReport</code>, <code>QuantumMutator</code> (Stage 8)
+   (plus the existing Grover builders/simulators). If a processor is missing, NiFi hasn't loaded the file —
+   restart NiFi so it picks up the new <code>.py</code> files.
+   <strong>Cached-venv trap:</strong> if a processor is <em>on the canvas</em> but shows stale or
+   missing properties, NiFi is reusing the venv/property cache from when it was
+   first placed — a plain restart won't refresh it. Wipe the cache, then restart:
+   <code>rm -rf "$NIFI_HOME/work/python/extensions/&lt;ProcessorName&gt;/"</code></li>
+<li><code>reports/</code> exists (it does). The processors auto-create their <code>tmp/…</code> state
+   dirs.</li>
+<li><strong>Clear stale oracle state before each experiment</strong> (a half-filled slot from a
+   previous, interrupted run will corrupt the next vote):
+   <code>rm -rf reports/tmp/quanifi_consensus_state/*
+   rm -f  reports/datadriven-grover-mutation-state.json</code></li>
+<li><strong>Empty all connection queues before each experiment.</strong> Step 3 clears the
+   <em>disk</em> state, but FlowFiles stranded in queues from an interrupted run
+   (unconsumed splits, <code>waiting</code> outputs) will replay into the oracle and
+   corrupt the next vote just as badly. Right-click the canvas / process group →
+   <strong>Empty all queues</strong>.</li>
+<li><strong>Start every processor in the flow before Run Once.</strong> A stopped branch is
+   the most common cause of the <code>waiting</code>-forever trap (see the K-mismatch
+   warning in Stage 4 and Troubleshooting).</li>
+</ol>
+<hr />
+<h2 id="stage-1-the-qiskit-branch-alone-no-oracle-yet">Stage 1 — The Qiskit branch alone (no oracle yet)</h2>
+<p>Build and verify one branch end-to-end first.</p>
+<p><strong>GenerateFlowFile</strong>
+- Leave defaults. You'll trigger it with right-click → <strong>Run Once</strong> each test.</p>
+<p><strong>QuantumTestCaseSource</strong>
+| Property | Value |
+|---|---|
+| Test Matrix | <code>[{"grover.marked_state":"11","grover.num_iterations":"1","test.expected":"11","test.partition":"2q"},{"grover.marked_state":"101","grover.num_iterations":"2","test.expected":"101","test.partition":"3q"}]</code> |
+| Case ID Prefix | <code>case</code> |
+| Mutation Operators | <em>(leave blank)</em> |</p>
+<p><strong>SplitJson</strong>
+| Property | Value |
+|---|---|
+| JsonPath Expression | <code>$</code> |</p>
+<p>Auto-terminate/funnel its <code>failure</code>/<code>original</code>; wire <code>split</code> onward.</p>
+<p><strong>EvaluateJsonPath</strong> — set these once; they cover the whole guide (mutation
+included) so you never reconfigure it.
+| Property | Value |
+|---|---|
+| Destination | <code>flowfile-attribute</code> |
+| Return Type | <code>scalar</code> |
+| Path Not Found Behavior | <code>skip</code> |</p>
+<p>Then add one <strong>dynamic property per field</strong> (click +). Property <em>name</em> = the
+attribute, <em>value</em> = the JsonPath:</p>
+<div class="codehilite"><pre><span></span><code>grover.marked_state    = $[&#39;grover.marked_state&#39;]
+grover.num_iterations  = $[&#39;grover.num_iterations&#39;]
+grover.shots           = $[&#39;grover.shots&#39;]
+grover.insert_barriers = $[&#39;grover.insert_barriers&#39;]
+sim.noise_model        = $[&#39;sim.noise_model&#39;]
+test.expected          = $[&#39;test.expected&#39;]
+test.partition         = $[&#39;test.partition&#39;]
+test.case_id           = $[&#39;test.case_id&#39;]
+test.run_id            = $[&#39;test.run_id&#39;]
+mut.applied            = $[&#39;mut.applied&#39;]
+mut.operator           = $[&#39;mut.operator&#39;]
+mut.target_attr        = $[&#39;mut.target_attr&#39;]
+mut.original_value     = $[&#39;mut.original_value&#39;]
+mut.seed               = $[&#39;mut.seed&#39;]
+mut.base_case_id       = $[&#39;mut.base_case_id&#39;]
+</code></pre></div>
+
+<p><code>Path Not Found Behavior = skip</code> is essential: control rows have no <code>mut.operator</code>
+and non-mutated rows have no <code>mut.*</code> at all — <code>skip</code> lets those pass instead of
+routing to <code>unmatched</code>/<code>failure</code>.</p>
+<blockquote>
+<p><strong>Implicit relationships on every Quanifi processor.</strong> NiFi's Python
+framework adds <strong><code>original</code></strong> and <strong><code>failure</code></strong> to every Python processor,
+on top of whatever the processor declares (you'll recognise them by their
+generic descriptions). NiFi refuses to start a processor until <em>all</em>
+relationships are connected or auto-terminated, so at each Quanifi processor
+in this guide: auto-terminate <strong><code>original</code></strong> (it's just a copy of the input),
+and auto-terminate or LogAttribute <strong><code>failure</code></strong> (LogAttribute recommended on
+the builders/simulators — see the <code>lenshift</code> warning in Stage 7b).</p>
+</blockquote>
+<p><strong>Wiring <code>EvaluateJsonPath</code> → <code>QiskitGroverCircuit</code>.</strong> Drag from the
+<code>EvaluateJsonPath</code> box to <code>QiskitGroverCircuit</code>; in the <em>Create Connection</em>
+dialog tick the <strong><code>matched</code></strong> relationship (only). Auto-terminate or funnel
+<code>EvaluateJsonPath</code>'s <code>unmatched</code> and <code>failure</code>. With <code>Path Not Found Behavior =
+skip</code> every row exits via <code>matched</code>, so that single connection carries all rows.
+(In Stages 3–4 you drag <em>additional</em> connections from the same <code>matched</code>
+relationship to the Cirq and Qrisp entry processors — NiFi clones the FlowFile
+to each.)</p>
+<p><strong>QiskitGroverCircuit</strong>
+| Property | Value |
+|---|---|
+| Marked State | <code>${grover.marked_state}</code> |
+| Num Iterations | <code>${grover.num_iterations:replaceEmpty('1')}</code> |
+| Insert Barriers | <code>false</code> ← literal; this is a dropdown (allowable_values), so it <strong>cannot</strong> take EL or a parameter ref. Leave it <code>false</code>. |
+| Output Format | <code>qasm3</code> |</p>
+<blockquote>
+<p><strong>Why <code>Insert Barriers</code> won't accept <code>${…}</code>:</strong> the descriptor declares
+<code>allowable_values=["true","false"]</code>, so NiFi renders a constrained dropdown and
+the "reference parameter"/EL editor is disabled for it. Consequence: the
+<code>barriers.toggle</code> mutation operator can't propagate to this property from the
+canvas — it's covered by the unit tests only. To make it canvas-mutable you'd
+drop <code>allowable_values</code> from the descriptor (then it becomes a free-text EL
+field). Not needed for this guide.
+<strong>The same constraint applies to <code>Output Format</code></strong> (also a dropdown:
+<code>qasm3</code>/<code>qpy</code>/<code>qasm2</code>), so the <code>format.swap</code> mutation operator is likewise
+unit-test-only. With the matrix used in this guide it is harmless-but-useless:
+the rows carry no <code>circuit.output_format</code> field, so the operator logs
+"inapplicable … skipping" and emits no mutants. If you <em>did</em> add that field to
+a row, the mutants would be emitted but the mutated value could never reach
+the dropdown — every branch would compute the correct answer and the mutants
+would all count as <strong>survived</strong>, silently inflating the survival rate. Leave
+it out of canvas runs.</p>
+</blockquote>
+<p><strong>QiskitAerSimulator</strong>
+| Property | Value |
+|---|---|
+| Shots | <code>${grover.shots:replaceEmpty('1024')}</code> |
+| Noise Model | <code>none</code> ← dropdown; leave it (it's the human-facing menu) |
+| Noise Model (EL) | <code>${sim.noise_model:replaceEmpty('none')}</code> ← the EL hatch that drives <code>noise.inject</code> |</p>
+<blockquote>
+<p>The dropdown <code>Noise Model</code> can't take EL (allowable_values). The companion
+<strong><code>Noise Model (EL)</code></strong> free-text property overrides it when non-empty, so the
+<code>noise.inject</code> mutation operator reaches the simulator from the canvas while the
+dropdown still shows the pickable options.</p>
+</blockquote>
+<p>Wire <code>QiskitAerSimulator.success</code> → a <strong>QuanifiReport</strong> (or LogAttribute) for now.</p>
+<p><strong>Verify Stage 1:</strong> Run Once on GenerateFlowFile. You should get two FlowFiles
+out of the simulator with content like <code>{"11": 1024}</code> and <code>{"101": 1024}</code>
+(roughly — shot noise). Confirm <code>sim.top_result</code> = <code>11</code> / <code>101</code> and
+<code>sim.framework = qiskit</code>. If this works, the EL parameterization is correct.</p>
+<hr />
+<h2 id="stage-2-add-the-oracle-with-k-1">Stage 2 — Add the oracle with K = 1</h2>
+<p>Now insert <code>QuantumConsensusOracle</code> between the Qiskit simulator and the report,
+and run it as a <strong>single-branch</strong> oracle to validate its wiring and the
+ground-truth check before fanning out.</p>
+<p><strong>QuantumConsensusOracle</strong>
+| Property | Value |
+|---|---|
+| Reports Directory | <code>reports</code> |
+| Flow Name | <code>datadriven-grover</code> |
+| State Directory | <code>reports/tmp/quanifi_consensus_state</code> |
+| Consensus Label | <code>${test.run_id}-${test.case_id}</code> |
+| Expected Branches | <code>1</code> |
+| Branch Label | <code>${sim.framework:replaceEmpty(${grover.framework})}</code> |
+| Check Ground Truth | <code>true</code> |</p>
+<p>Wire <code>QiskitAerSimulator.success</code> → oracle. Oracle <code>pass</code> and <code>fail</code> → the
+<strong>QuanifiReport you placed in Stage 1</strong> (or a LogAttribute — either is just a
+landing spot to inspect the verdict FlowFiles; the oracle writes its own
+consensus HTML regardless); <code>waiting</code> → auto-terminate; the framework-supplied
+<code>original</code> and <code>failure</code> → auto-terminate (see the implicit-relationships note
+in Stage 1). <code>MutationScoreReport</code> does <strong>not</strong> enter the flow until Stage 5 —
+at that point you'll re-point <code>pass</code>/<code>fail</code> from here to it.</p>
+<p><strong>Verify Stage 2 (PASS):</strong> Run Once. <code>reports/datadriven-grover-consensus.html</code>
+shows each case with verdict <strong>PASS</strong> (branch <code>qiskit</code>, majority = the marked
+state, no dissenters). <code>assert.verdict = PASS</code> on the output FlowFile.</p>
+<p><strong>Verify Stage 2 (FAIL path):</strong> temporarily change the first matrix row's
+<code>test.expected</code> to <code>00</code>. Re-run. That case now reports <strong>FAIL</strong> ("all branches
+agree on |11⟩ but expected |00⟩"). This proves the ground-truth check — the
+mechanism that will kill whole-case mutants. Put <code>test.expected</code> back to <code>11</code>.</p>
+<hr />
+<h2 id="stage-3-add-the-cirq-branch-k-2">Stage 3 — Add the Cirq branch, K = 2</h2>
+<p><strong>CirqGroverCircuit</strong>
+| Property | Value |
+|---|---|
+| Marked State | <code>${grover.marked_state}</code> |
+| Num Iterations | <code>${grover.num_iterations:replaceEmpty('1')}</code> |
+| Insert Barriers | <code>false</code> ← literal dropdown, same as Qiskit (no EL) |
+| Output Format | <em>(default)</em> |</p>
+<p>Wiring: drag a second connection from <code>EvaluateJsonPath</code>'s <strong><code>matched</code></strong>
+relationship to <code>CirqGroverCircuit</code> (the row is now cloned to both branches).</p>
+<p><strong>CirqSimulator</strong>
+| Property | Value |
+|---|---|
+| Shots | <code>${grover.shots:replaceEmpty('1024')}</code> |
+| Noise Model | <code>none</code> ← dropdown; leave it |
+| Noise Model (EL) | <code>${sim.noise_model:replaceEmpty('none')}</code> ← EL hatch (same pattern as Qiskit) |</p>
+<p>Wiring: connect <strong>EvaluateJsonPath <code>matched</code></strong> to <code>CirqGroverCircuit</code> as well
+(now two destinations → each row cloned to both branches). <code>CirqSimulator.success</code>
+→ the <strong>same</strong> <code>QuantumConsensusOracle</code>. Set oracle <strong>Expected Branches = 2</strong>.</p>
+<p><strong>Verify Stage 3:</strong> Run Once. The consensus card now lists two branches
+(<code>qiskit</code>, <code>cirq</code>), both agreeing → <strong>PASS</strong>. This is the cross-framework
+agreement working. If you see DISAGREE here on a clean run, that's a real
+bit-order/normalisation discrepancy worth noting (the oracle already
+canonicalises endianness, so investigate before proceeding).</p>
+<hr />
+<h2 id="stage-4-add-the-qrisp-branch-k-3-full-success-flow">Stage 4 — Add the Qrisp branch, K = 3 (full success flow)</h2>
+<p><strong>QrispGroverSearch</strong> (all-in-one — no separate simulator)
+| Property | Value |
+|---|---|
+| Marked State | <code>${grover.marked_state}</code> |
+| Num Iterations | <code>${grover.num_iterations:replaceEmpty('1')}</code> |
+| Shots | <code>${grover.shots:replaceEmpty('1024')}</code> |</p>
+<p>Wiring: connect <strong>EvaluateJsonPath <code>matched</code></strong> to <code>QrispGroverSearch</code> (third
+destination). <code>QrispGroverSearch.success</code> → the <strong>same</strong> oracle. Set oracle
+<strong>Expected Branches = 3</strong>.</p>
+<p><strong>Verify Stage 4 (the success flow):</strong> Run Once. Both cases report <strong>PASS</strong> over
+three branches (<code>qiskit</code>, <code>cirq</code>, <code>qrisp</code>), zero dissenters, majority = the
+marked state, matching <code>test.expected</code>. The success flow is now complete and
+trustworthy.</p>
+<blockquote>
+<p>⚠ <strong>K must equal the number of running branches.</strong> With Expected Branches = 3
+but a branch stopped, slots never fill and every case sits in <code>waiting</code>
+forever (and leaves state files behind). If you see only <code>waiting</code>, check all
+three branches are started and clear the state dir (Stage 0.3).</p>
+</blockquote>
+<hr />
+<h2 id="stage-5-add-the-survival-rate-aggregator-baseline-still-no-mutation">Stage 5 — Add the survival-rate aggregator (baseline, still no mutation)</h2>
+<p><strong>MutationScoreReport</strong>
+| Property | Value |
+|---|---|
+| Verdict Attribute | <code>assert.verdict</code> |
+| Reports Directory | <code>reports</code> |
+| Flow Name | <code>datadriven-grover</code> |</p>
+<p>Wiring: oracle <code>pass</code> <strong>and</strong> <code>fail</code> → <code>MutationScoreReport</code>. Its <code>success</code> →
+auto-terminate; <strong><code>control_dissent</code> → a LogAttribute</strong> (you want to see these).</p>
+<p><strong>LogAttribute</strong> (stock NiFi processor — a debugging tap that prints the
+FlowFile's attributes into <code>logs/nifi-app.log</code>):
+| Property | Value |
+|---|---|
+| Log Level | <code>warn</code> |
+| Log Prefix | <code>CONTROL-DISSENT</code> |
+| Log Payload | <code>false</code> |
+| Attributes to Log | <em>(empty = log all)</em> |</p>
+<p>Auto-terminate its <code>success</code>. Watch with
+<code>tail -f "$NIFI_HOME/logs/nifi-app.log"</code>.</p>
+<p><strong>Verify Stage 5:</strong> Run Once. <code>reports/datadriven-grover-mutation.html</code> renders.
+With no mutation, every row is treated as a control: <code>mutation.controls = 2</code>,
+<code>mutation.mutants = 0</code>, <code>mutation.controls_dissenting = 0</code>. A clean baseline.</p>
+<blockquote>
+<p><strong>What <code>control_dissent</code> is (and why nothing reaches it yet).</strong> From Stage 6
+on, every base case is emitted twice: unmodified (the <em>control</em>) and with
+corrupted parameters (the <em>mutants</em>). A control must always PASS — if it
+doesn't, the harness itself is broken for that case (a real cross-framework
+discrepancy), so <code>MutationScoreReport</code> excludes it from the score and routes
+it out the dedicated <strong><code>control_dissent</code></strong> relationship for a human to
+investigate. This mirrors the classical mutation-testing precondition that
+the <em>unmutated</em> program must pass before kills count.
+In <strong>this</strong> stage mutation is still off, so rows aren't labelled as controls
+yet and nothing will ever arrive at your <code>control_dissent</code> LogAttribute —
+that wiring only becomes active in Stage 6+, and Stage 7a demonstrates it
+firing. An empty LogAttribute here is expected, not a wiring bug.</p>
+</blockquote>
+<hr />
+<h2 id="stage-6-introduce-mutants">Stage 6 — Introduce mutants</h2>
+<p>Change <strong>only</strong> <code>QuantumTestCaseSource</code> — nothing downstream moves.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mutation Operators</td>
+<td><code>iterations.offbyone, marked_state.bitflip</code></td>
+</tr>
+<tr>
+<td>Mutants Per Row</td>
+<td><em>(blank = one mutant per operator)</em></td>
+</tr>
+<tr>
+<td>Mutation Seed</td>
+<td><code>777</code></td>
+</tr>
+</tbody>
+</table>
+<p>Now each base row expands to <strong>1 control + 2 mutants</strong>. The mutants keep the
+base row's <code>test.expected</code> (the <em>correct</em> answer), but corrupt the parameters —
+so all three frameworks compute the <em>wrong</em> result, agree on it, and the oracle
+returns <strong>FAIL</strong> vs <code>test.expected</code> → <strong>killed</strong>.</p>
+<p><strong>Verify Stage 6:</strong> clear state (Stage 0.3), Run Once. In
+<code>datadriven-grover-mutation.html</code>:
+- <code>marked_state.bitflip</code> mutants → <strong>killed</strong> (wrong target state ≠ expected).
+- <code>iterations.offbyone</code> mutants → usually <strong>killed</strong> (over-rotation drops the
+  marked-state amplitude; for 2q, 2 iterations sends prob to ~0.25 so the argmax
+  flips). If a particular case still lands on the right argmax it shows as
+  <strong>survived</strong> — a genuine equivalent/weak mutant, exactly the kind survival rate
+  is meant to expose.
+- The two control rows → <strong>survived/PASS</strong>, excluded from the score,
+  <code>controls_dissenting = 0</code>.
+- <code>mutation.survival_rate</code> / <code>mutation.mutation_score</code> summarise it; the per-
+  operator table breaks it down.</p>
+<p>Reproducibility: re-running with <code>Mutation Seed = 777</code> produces identical
+mutants (same <code>mut.seed</code> per mutant).</p>
+<hr />
+<h2 id="stage-7-exercise-the-verdict-paths-and-the-control-row-safeguard">Stage 7 — Exercise the verdict paths and the control-row safeguard</h2>
+<h3 id="7a-disagree-single-branch-dissent-and-the-masquerading-fault-demo">7a. DISAGREE (single-branch dissent) — and the masquerading-fault demo</h3>
+<p>Whole-case mutation produces FAIL, not DISAGREE. To see a <strong>single-branch
+dissent</strong> (and demonstrate the dissertation's control-row safeguard), deliberately
+break one branch so it dissents on <em>every</em> row:</p>
+<ul>
+<li>On <strong>CirqGroverCircuit</strong>, set <code>Marked State</code> to the literal <code>00</code> (ignore the
+  EL). Now Cirq always measures <code>00</code>, regardless of the row.</li>
+</ul>
+<p>Clear state, Run Once. Observe:
+- On <strong>control rows</strong>: Qiskit + Qrisp agree on the correct state, Cirq dissents →
+  oracle <strong>DISAGREE</strong> → because <code>mut.applied = false</code>, <code>MutationScoreReport</code>
+  routes it to <strong><code>control_dissent</code></strong> (your LogAttribute), and it is <strong>excluded
+  from the survival rate</strong>. This is the safeguard in action: a real framework
+  discrepancy is caught and <em>not</em> miscounted as a mutation kill.
+- The consensus card names <code>cirq</code> in the <strong>dissenters</strong> column.</p>
+<p>Restore <code>CirqGroverCircuit</code> <code>Marked State</code> to <code>${grover.marked_state}</code> afterward.</p>
+<h3 id="7b-per-operator-sweep">7b. Per-operator sweep</h3>
+<p>Set <code>Mutation Operators</code> to one operator at a time and confirm the expected
+behaviour:
+| Operator | Setup | Expected |
+|---|---|---|
+| <code>marked_state.bitflip</code> | as Stage 6 | killed (wrong state) |
+| <code>iterations.zero</code> | add to list | killed (no amplification → uniform, argmax ≠ expected) |
+| <code>shots.shrink</code> | add <code>grover.shots</code> to a matrix row, e.g. <code>"grover.shots":"1024"</code> | mostly survives (8 shots still argmax-correct) — a survival-rate probe, not a guaranteed kill |
+| <code>marked_state.lenshift</code> | as Stage 6 | odd-shapes the branch (qubit-count mismatch) → DISAGREE or FAIL; <strong>can strand the oracle slot — see warning below</strong> |</p>
+<blockquote>
+<p>⚠ <strong><code>lenshift</code> can strand oracle slots.</strong> If the mutated marked state makes a
+<em>builder</em> error, that FlowFile exits via the builder's <strong><code>failure</code></strong>
+relationship and never reaches the oracle — the slot fills to 2/3 and the
+case sits in <code>waiting</code> forever (no DISAGREE, no FAIL). Before running this
+operator: wire each builder's and simulator's <code>failure</code> relationship to a
+LogAttribute (or funnel) so an erroring branch is <em>visible</em>, and expect to
+clear the state dir (Stage 0.3) and empty queues (Stage 0.4) afterwards.</p>
+</blockquote>
+<h3 id="7c-confirm-controls-are-never-scored">7c. Confirm controls are never scored</h3>
+<p>In any mutated run, <code>mutation.controls</code> counts the control rows and
+<code>mutation.survival_rate</code> is computed over <strong>mutants only</strong>. Verify the survival
+rate doesn't change if you add more control rows.</p>
+<hr />
+<h2 id="stage-8-layer-a-gate-level-mutation-testing-proper-quantummutator">Stage 8 — Layer A: gate-level mutation testing proper (<code>QuantumMutator</code>)</h2>
+<p>Now mutate the <strong>circuit</strong>, not the test data. <code>QuantumMutator</code> is inserted on
+the <strong>Qiskit branch only</strong>; the unmutated Cirq + Qrisp branches form the jury,
+so a detected mutant surfaces as a single-branch <strong>DISAGREE</strong> (qiskit named as
+dissenter) — no <code>test.expected</code> needed. Nothing else in the flow moves.</p>
+<p><strong>Turn Layer B off first:</strong> set <code>QuantumTestCaseSource</code> <code>Mutation Operators</code>
+back to <em>(blank)</em> so the two layers don't mix in one score. Then drive the
+control/mutant split from the matrix itself with paired rows (<code>EvaluateJsonPath</code>
+already hoists <code>mut.applied</code> — Stage 1):</p>
+<table>
+<thead>
+<tr>
+<th>Property (<code>QuantumTestCaseSource</code>)</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test Matrix</td>
+<td><code>[{"grover.marked_state":"11","grover.num_iterations":"1","test.expected":"11","mut.applied":"false"},{"grover.marked_state":"11","grover.num_iterations":"1","test.expected":"11","mut.applied":"true"},{"grover.marked_state":"101","grover.num_iterations":"2","test.expected":"101","mut.applied":"false"},{"grover.marked_state":"101","grover.num_iterations":"2","test.expected":"101","mut.applied":"true"}]</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>mut.applied=false</code> rows pass through the mutator byte-for-byte (the controls);
+<code>mut.applied=true</code> rows (no <code>mut.operator</code> — that marks a Layer-B mutant, which
+would also pass through) get one gate mutation each.</p>
+<p><strong>QuantumMutator</strong> — wire <code>QiskitGroverCircuit.success</code> → <code>QuantumMutator</code> →
+<code>QiskitAerSimulator</code> (re-point the existing connection). Auto-terminate
+<code>original</code>; <strong><code>failure</code> → a LogAttribute</strong> — a mutant that fails to
+parse/serialise exits here and strands the oracle slot exactly like <code>lenshift</code>
+(Stage 7b warning).</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mutation Operators</td>
+<td><code>gate.add, gate.remove, gate.replace</code></td>
+</tr>
+<tr>
+<td>Mutation Seed</td>
+<td><code>777</code></td>
+</tr>
+<tr>
+<td>Rotation Epsilon</td>
+<td><code>0.1</code> (unused unless <code>rotation.perturb</code> is listed)</td>
+</tr>
+</tbody>
+</table>
+<p>The mutator reads <code>circuit.format</code> and supports <code>qasm2</code>/<code>qasm3</code> only —
+<code>QiskitGroverCircuit</code>'s <code>Output Format = qasm3</code> from Stage 1 is already right.</p>
+<p><strong>Verify Stage 8:</strong> clear state (Stage 0.3) + queues (0.4), Run Once. Expect:
+- The two <code>mut.applied=true</code> cases → oracle <strong>DISAGREE</strong>, <code>consensus.dissenters
+  = qiskit</code> → <strong>killed</strong>. The verdict FlowFile carries the Layer-A vector:
+  <code>mut.operator</code> (<code>gate.add</code>/<code>gate.remove</code>/<code>gate.replace</code>), <code>mut.gate</code>,
+  <code>mut.position</code>, <code>mut.position_interval</code>.
+- The two control cases → <strong>PASS</strong> over 3 branches, excluded from the score.
+- <code>datadriven-grover-mutation.html</code> breaks survival down by the <code>gate.*</code>
+  operators.
+- Re-running with <code>Mutation Seed = 777</code> reproduces identical mutants.</p>
+<blockquote>
+<p><strong>Survived gate mutants are expected, and they're the finding.</strong> A <code>gate.add</code>
+that inserts a phase-only gate (<code>z</code>/<code>s</code>/<code>t</code>) on a computational-basis state
+just before measurement doesn't change the measured distribution — an
+<strong>equivalent mutant</strong>; argmax voting can't kill it. That's the survival-rate
+signal QMutBench is built around, and the motivation for the statistical
+(distribution-level) kill criterion in MUTATION_TESTING.md §7 step 5.</p>
+</blockquote>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause / fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All cases stuck in <code>waiting</code></td>
+<td>Expected Branches ≠ running branch count, or a branch is stopped. Match K; clear state dir.</td>
+</tr>
+<tr>
+<td>One case stuck in <code>waiting</code> after a mutated run</td>
+<td>A branch errored on that mutant (e.g. <code>lenshift</code>) and exited via its <code>failure</code> relationship, so the slot never filled. Check the builders' <code>failure</code> routes; clear state dir + queues.</td>
+</tr>
+<tr>
+<td><code>unmatched</code>/<code>failure</code> out of EvaluateJsonPath</td>
+<td><code>Path Not Found Behavior</code> not <code>skip</code>, or a JsonPath typo.</td>
+</tr>
+<tr>
+<td>Oracle DISAGREE on a clean (unmutated) run</td>
+<td>Real cross-framework discrepancy (bit order / normalisation). This is a finding — record it; the canonicaliser handles simple endianness but not every convention.</td>
+</tr>
+<tr>
+<td>Mutant shows <code>survived</code> unexpectedly</td>
+<td>Could be a genuine equivalent mutant (weak over-rotation), or <code>test.expected</code> missing on that row (no ground-truth check → can't FAIL). Use the explicit-table matrix so every row carries <code>test.expected</code>.</td>
+</tr>
+<tr>
+<td>Stale numbers after re-run</td>
+<td>Clear <code>reports/tmp/quanifi_consensus_state/*</code> and <code>datadriven-grover-mutation-state.json</code> between experiments — <strong>and empty all connection queues</strong> (Stage 0.4): queued FlowFiles from the previous run replay into the oracle.</td>
+</tr>
+<tr>
+<td><code>QuantumMutator</code> routes everything to <code>failure</code></td>
+<td>Read <code>mut.error</code> on the FlowFile: unsupported <code>circuit.format</code> (must be qasm2/qasm3 — check the builder's Output Format), unknown operator name, or <code>no_applicable_operator</code> (e.g. only <code>rotation.perturb</code> listed against a circuit with no rotation gates).</td>
+</tr>
+<tr>
+<td>Stage-8 case stuck in <code>waiting</code></td>
+<td>The mutant errored downstream (unparseable/unsimulatable mutant) and left via a <code>failure</code> relationship, so the oracle slot never filled — same shape as the <code>lenshift</code> trap. Check the mutator's and simulator's <code>failure</code> LogAttribute; clear state + queues.</td>
+</tr>
+<tr>
+<td>Processor on canvas shows stale/missing properties</td>
+<td>NiFi is reusing the processor's cached venv. <code>rm -rf nifi-2.9.0/work/python/extensions/&lt;Name&gt;/</code>, then restart (Stage 0.1).</td>
+</tr>
+<tr>
+<td>Processor not in Add-Processor list</td>
+<td>NiFi hasn't loaded the new file — restart NiFi.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cross-references">Cross-references</h2>
+<ul>
+<li>Pipeline design, decisions, and verdict semantics: <code>MUTATION_TESTING.md</code>.</li>
+<li>The control-row safeguard rationale: <code>DISSERTATION.md</code>.</li>
+<li>The EL attribute contract these branches rely on: <code>DATA_DRIVEN_TESTING.md</code>.</li>
+</ul>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 1: Introduction to Quanifi — Visual Quantum Software Engineering</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="active">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li class="active"><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="index.html">Tutorials</a> <span class="sep">&rsaquo;</span> <a href="01_introduction_to_quanifi.html">01 Introduction To Quanifi</a>
+      </nav>
+
+      
+
+      <article>
+        
+
+  <h1>Module 1: Introduction to Quanifi</h1>
+  <p class="lead">
+    Welcome to Quanifi! In this guide, you will learn the mental model of quantum software engineering, understand how Apache NiFi orchestrates quantum dataflows, and explore your first live pipeline.
+  </p>
+
+  <section>
+    <h2>1. The Software Engineer's Mental Model of Quantum Computing</h2>
+    <p>
+      You do not need a degree in quantum mechanics to program quantum computers. Think of quantum computing through standard linear algebra and probability:
+    </p>
+
+    <div class="callout software-analogy">
+      <div class="callout-title">
+        <span>⚙️</span> Classical Bit vs. Qubit
+      </div>
+      <div class="callout-content">
+        <p>
+          <strong>Classical Bit:</strong> A variable restricted to <code>0</code> or <code>1</code>.<br>
+          <strong>Qubit:</strong> A 2-element normalized vector holding two complex numbers called <em>probability amplitudes</em>:
+          $$\vert\psi\rangle = \alpha \vert 0\rangle + \beta \vert 1\rangle = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}$$
+          where $|\alpha|^2 + |\beta|^2 = 1$. The quantity $|\alpha|^2$ is simply the probability of reading out a <code>0</code>, and $|\beta|^2$ is the probability of reading out a <code>1</code>.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      Here are the 4 fundamental concepts software developers need:
+    </p>
+    <ol>
+      <li>
+        <strong>Superposition:</strong> A qubit is not "both 0 and 1 at the same time" in a mystical sense; rather, it stores a continuous probability distribution across possible bit combinations. For $n$ qubits, the vector has $2^n$ amplitudes.
+      </li>
+      <li>
+        <strong>Quantum Gates:</strong> Gates are simply reversible linear transformations (unitary matrices). For example, the <strong>Hadamard ($H$) gate</strong> turns a definite <code>0</code> into a 50/50 balanced probability coin:
+        $$H \vert 0\rangle = \frac{1}{\sqrt{2}} \vert 0\rangle + \frac{1}{\sqrt{2}} \vert 1\rangle = \vert+\rangle$$
+      </li>
+      <li>
+        <strong>Interference:</strong> Amplitudes can be positive, negative, or complex. When we combine paths, negative amplitudes cancel out positive ones (destructive interference), while matching amplitudes reinforce each other (constructive interference). Quantum algorithms work by steering wrong answers toward zero probability and right answers toward 100% probability.
+      </li>
+      <li>
+        <strong>Measurement:</strong> Measuring a register collapses the state vector, sampling one classical string with probability proportional to its squared amplitude. To estimate probabilities, we run the circuit multiple times (each run is called a <strong>shot</strong>, typically 1024 or 4096 shots).
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>2. What is Quanifi?</h2>
+    <p>
+      <strong>Quanifi</strong> (Quantum NiFi) is an open-source platform that brings <strong>Flow-Based Programming (FBP)</strong> to quantum software development. Instead of writing monolithic Python scripts that call SDKs directly, Quanifi breaks quantum workflows into modular, reusable blocks managed by <strong>Apache NiFi</strong>.
+    </p>
+
+    <div class="diagram-container">
+      <svg width="780" height="200" viewBox="0 0 780 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="50" width="180" height="100" rx="10" fill="#f8fafc" stroke="#0284c7" stroke-width="2"/>
+        <text x="110" y="85" text-anchor="middle" font-weight="bold" font-size="14" fill="#0f172a">Trigger Processor</text>
+        <text x="110" y="110" text-anchor="middle" font-size="12" fill="#64748b">GenerateFlowFile</text>
+        <text x="110" y="130" text-anchor="middle" font-size="11" fill="#0284c7">(Emits Event / Payload)</text>
+
+        <path d="M 200 100 L 280 100" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)"/>
+        <rect x="220" y="75" width="40" height="20" rx="4" fill="#e0f2fe"/>
+        <text x="240" y="89" text-anchor="middle" font-size="10" font-weight="bold" fill="#0369a1">Queue</text>
+
+        <rect x="280" y="50" width="220" height="100" rx="10" fill="#f8fafc" stroke="#8b5cf6" stroke-width="2"/>
+        <text x="390" y="85" text-anchor="middle" font-weight="bold" font-size="14" fill="#0f172a">Quantum Processor</text>
+        <text x="390" y="110" text-anchor="middle" font-size="12" fill="#64748b">e.g. QrispDeutschJozsa</text>
+        <text x="390" y="130" text-anchor="middle" font-size="11" fill="#8b5cf6">(Synthesizes &amp; Simulates)</text>
+
+        <path d="M 500 100 L 580 100" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)"/>
+        <rect x="520" y="75" width="40" height="20" rx="4" fill="#e0f2fe"/>
+        <text x="540" y="89" text-anchor="middle" font-size="10" font-weight="bold" fill="#0369a1">Queue</text>
+
+        <rect x="580" y="50" width="180" height="100" rx="10" fill="#f8fafc" stroke="#10b981" stroke-width="2"/>
+        <text x="670" y="85" text-anchor="middle" font-weight="bold" font-size="14" fill="#0f172a">Report Processor</text>
+        <text x="670" y="110" text-anchor="middle" font-size="12" fill="#64748b">QuanifiReport</text>
+        <text x="670" y="130" text-anchor="middle" font-size="11" fill="#10b981">(Writes HTML Card)</text>
+
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#0284c7"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="diagram-caption">Figure 1.1: Anatomy of a typical Quanifi dataflow pipeline.</div>
+    </div>
+
+    <h3>The 3 Core Concepts of Quanifi:</h3>
+    <ul class="step-list">
+      <li class="step-item">
+        <div class="step-number">1</div>
+        <div class="step-body">
+          <div class="step-title">FlowFiles (Data Envelopes)</div>
+          <p>
+            In NiFi, every data packet moving through the canvas is called a <strong>FlowFile</strong>. A FlowFile has two parts:
+          </p>
+          <ul>
+            <li><strong>Content:</strong> The binary or text payload (e.g. OpenQASM 2.0 / 3.0 circuit text, QPY byte streams, or JSON result dictionaries).</li>
+            <li><strong>Attributes:</strong> Key-value metadata headers attached to the payload (e.g. <code>circuit.format=qasm2</code>, <code>circuit.num_qubits=4</code>, <code>sim.shots=1024</code>, <code>sim.top_result=100</code>).</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-number">2</div>
+        <div class="step-body">
+          <div class="step-title">Processors (Black-Box Workers)</div>
+          <p>
+            Processors are self-contained executable components written in Python or Java. They read incoming FlowFiles, perform a specific task (such as constructing an oracle, running a Grover step, transpiling for IBM hardware, or recording execution latency), and output new or enriched FlowFiles.
+          </p>
+        </div>
+      </li>
+
+      <li class="step-item">
+        <div class="step-number">3</div>
+        <div class="step-body">
+          <div class="step-title">Connections &amp; Queues</div>
+          <p>
+            Processors are connected via directed edges with bounded FIFO queues. NiFi handles backpressure, retries, and failure routing automatically. If an IBM quantum processor queue is congested, NiFi automatically holds upstream jobs without dropping data.
+          </p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. The Wire Contract: How Data Moves Between Frameworks</h2>
+    <p>
+      In multi-vendor quantum computing, interoperability is the holy grail. One processor might assemble a circuit using <strong>Qrisp</strong>, while the downstream simulator runs <strong>Qiskit Aer</strong>, and a comparison node checks against <strong>Cirq</strong>.
+    </p>
+    <p>
+      Quanifi achieves zero-lock-in by enforcing standardized <strong>wire contracts</strong> over OpenQASM:
+    </p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Attribute Key</th>
+          <th>Sample Value</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>circuit.format</code></td>
+          <td><code>qasm2</code> or <code>qasm3</code></td>
+          <td>Identifies serialization dialect of the payload.</td>
+        </tr>
+        <tr>
+          <td><code>circuit.num_qubits</code></td>
+          <td><code>4</code></td>
+          <td>Total qubit allocation of the circuit.</td>
+        </tr>
+        <tr>
+          <td><code>circuit.framework</code></td>
+          <td><code>qrisp</code> / <code>qiskit</code> / <code>cirq</code></td>
+          <td>Framework that originally generated the circuit.</td>
+        </tr>
+        <tr>
+          <td><code>sim.shots</code></td>
+          <td><code>1024</code></td>
+          <td>Total execution shots requested for sampling.</td>
+        </tr>
+        <tr>
+          <td><code>sim.top_result</code></td>
+          <td><code>1011</code></td>
+          <td>The most frequently measured bitstring.</td>
+        </tr>
+        <tr>
+          <td><code>sim.top_probability</code></td>
+          <td><code>1.0000</code></td>
+          <td>Empirical probability of the top measurement result.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>4. Hands-on Tour of the NiFi Canvas</h2>
+    <p>
+      Let's look at the actual NiFi web interface:
+    </p>
+    <ol>
+      <li>
+        Open your browser and navigate to <a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a>.
+      </li>
+      <li>
+        Log in with Username: <code>admin</code>, Password: <code>quanifiadmin123</code>.
+      </li>
+      <li>
+        Double-click on the process group named <strong><code>Qrisp Components &amp; Textbook Algorithms</code></strong>.
+      </li>
+    </ol>
+
+    <div class="diagram-container">
+      <img src="img/overview.png" alt="Process Group Canvas View" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+      <div class="diagram-caption">Figure 1.2: Navigating inside the Qrisp Components Process Group.</div>
+    </div>
+
+    <p>
+      Notice the icons on the top-left of each processor box:
+    </p>
+    <ul>
+      <li><span style="color: #10b981; font-weight: bold;">▶ (Green Play)</span>: The processor is <strong>Running</strong> and actively listening for incoming FlowFiles in its input queue.</li>
+      <li><span style="color: #f59e0b; font-weight: bold;">⏹ (Red/Orange Square)</span>: The processor is <strong>Stopped</strong>. FlowFiles will accumulate in its input queue until it starts.</li>
+      <li><span style="color: #10b981; font-weight: bold;">✔ (Green Checkmark)</span>: The processor configuration is <strong>Valid</strong> and ready to execute.</li>
+      <li><span style="color: #ef4444; font-weight: bold;">⚠ (Yellow Warning / Triangle)</span>: The processor has validation errors (e.g. missing required properties or unconnected relationships).</li>
+    </ul>
+  </section>
+
+  <!-- Interactive Exercise -->
+  <section class="exercise-box">
+    <span class="exercise-badge">Hands-on Exercise 1.1</span>
+    <h3 class="exercise-title">Exploring Processor Properties and Queues</h3>
+    <p>
+      In this exercise, you will practice inspecting a processor's configuration and finding where output reports land.
+    </p>
+    <p><strong>Tasks:</strong></p>
+    <ol>
+      <li>In the NiFi canvas (<a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a>), locate the <strong><code>DJ — Trigger</code></strong> processor.</li>
+      <li>Right-click on <strong><code>DJ — Trigger</code></strong> and select <strong>Configure</strong> (or double click it).</li>
+      <li>Go to the <strong>PROPERTIES</strong> tab. What is the value of <strong>Batch Size</strong>?</li>
+      <li>Next, look at the terminal processor in that pipeline: <strong><code>DJ — Report</code></strong>. What is the property value for <strong>Flow Name</strong>?</li>
+      <li>Where does <code>DJ — Report</code> save the generated HTML reports on the host filesystem?</li>
+    </ol>
+
+    <details class="solution-accordion">
+      <summary>👉 Click to Reveal Exercise Solution &amp; Explanation</summary>
+      <div class="solution-content">
+        <h4>Solution:</h4>
+        <ol>
+          <li><strong>Batch Size:</strong> Set to <code>1</code>. This means each execution cycle produces exactly 1 FlowFile (a single test event).</li>
+          <li><strong>Flow Name:</strong> Set to <code>qrisp-deutsch-jozsa</code>.</li>
+          <li><strong>Reports Directory:</strong> The property <code>Reports Directory</code> points to <code>reports</code>. When the flow executes, it writes the HTML report card to:
+            <pre><code>reports/qrisp-deutsch-jozsa.html</code></pre>
+            You can open this HTML file directly in any web browser to view the executed circuit diagram, execution time, and output probability distribution!
+          </li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <div class="guide-nav-footer">
+    <a href="index.html" class="guide-nav-button">
+      <span class="nav-sub">&larr; Previous</span>
+      <span class="nav-title">Curriculum Overview</span>
+    </a>
+    <a href="02_deutsch_jozsa.html" class="guide-nav-button">
+      <span class="nav-sub">Next Module &rarr;</span>
+      <span class="nav-title">2. Deutsch-Jozsa Algorithm</span>
+    </a>
+  </div>
+
+
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

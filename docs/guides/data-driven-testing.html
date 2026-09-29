@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data-Driven Differential Testing</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="active">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li class="active"><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="data-driven-testing.html">Testing</a> <span class="sep">&rsaquo;</span> <a href="data-driven-testing.html">Data-Driven Testing</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="data-driven-differential-testing">Data-driven differential testing</h1>
+<p>This is the runnable foundation for <strong>data-driven / equivalence-partition
+testing</strong> of the quantum processors: define a table of input combinations once,
+fan it out to every framework branch with identical parameters, and (later) vote
+on the results. This document covers the two pieces that exist today —
+<strong>parameter externalization</strong> and <strong><code>QuantumTestCaseSource</code></strong> — and the canvas
+wiring that connects them. The K-way consensus oracle is the next layer.</p>
+<h2 id="1-parameter-externalization-the-attribute-contract">1. Parameter externalization (the attribute contract)</h2>
+<p>A separate processor on the wire can only touch the <strong>FlowFile</strong> (content +
+attributes), never another processor's configured <strong>properties</strong>. The bridge is
+NiFi Expression Language: a property declared with
+<code>ExpressionLanguageScope.FLOWFILE_ATTRIBUTES</code> can be set on the canvas to
+<code>${attr}</code> and is then resolved from a FlowFile attribute at run time.</p>
+<p>To let one test row drive a processor, set its properties to EL referencing a
+shared attribute namespace. The Grover family now has <strong>every</strong> knob
+EL-enabled (<code>Marked State</code>, <code>Num Iterations</code>, <code>Shots</code>, <code>Insert Barriers</code>,
+<code>Output Format</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Drives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>grover.marked_state</code></td>
+<td><code>Marked State</code> property</td>
+</tr>
+<tr>
+<td><code>grover.num_iterations</code></td>
+<td><code>Num Iterations</code> property</td>
+</tr>
+<tr>
+<td><code>grover.shots</code></td>
+<td><code>Shots</code> property</td>
+</tr>
+<tr>
+<td><code>grover.insert_barriers</code></td>
+<td><code>Insert Barriers</code> property</td>
+</tr>
+<tr>
+<td><code>circuit.output_format</code></td>
+<td><code>Output Format</code> property</td>
+</tr>
+</tbody>
+</table>
+<p>On the canvas, set e.g. <code>Num Iterations = ${grover.num_iterations}</code>. Because the
+literal default is preserved, a processor used <strong>without</strong> these attributes still
+behaves exactly as before. Use the <code>replaceEmpty</code> form to keep a fallback:
+<code>${grover.num_iterations:replaceEmpty('1')}</code>.</p>
+<p>Since the contract is <em>just attribute names</em>, the <strong>same</strong> test table drives the
+Qiskit, Cirq, and Qrisp branches identically — that is what makes the frameworks
+comparable in a single run.</p>
+<h2 id="2-quantumtestcasesource">2. <code>QuantumTestCaseSource</code></h2>
+<p>Expands a compact <strong>Test Matrix</strong> into a JSON array of test-case rows (one
+trigger FlowFile in → one table out). Two spec shapes, detected by JSON type:</p>
+<ul>
+<li><strong>Parameter axes</strong> (JSON object) — Cartesian product:
+  <code>json
+  {"grover.marked_state": ["00", "11", "000"], "grover.num_iterations": ["1", "2"]}</code>
+  → 6 cases.</li>
+<li><strong>Explicit table</strong> (JSON array) — each element is one case used verbatim, so
+  you can attach a per-row <code>test.expected</code> (ground-truth oracle):
+  <code>json
+  [{"grover.marked_state": "0000", "test.partition": "all-zeros", "test.expected": "0000"},
+   {"grover.marked_state": "1",    "test.partition": "n=1",       "test.expected": "1"}]</code></li>
+</ul>
+<p>Every row is stamped with bookkeeping fields (never clobbering a value the row
+sets itself):</p>
+<ul>
+<li><code>test.case_id</code> — <code>{prefix}-000</code>, <code>{prefix}-001</code>, … (stable, ordered)</li>
+<li><code>test.run_id</code>  — shared by all rows of one generation; the correlation key the
+  future consensus oracle uses to group the K framework results of one run</li>
+<li><code>test.partition</code> — equivalence-class label (per-row, or the static property)</li>
+</ul>
+<h2 id="2a-arithmetic-case-manifests-case-input-mode">2a. Arithmetic case manifests (<code>Case Input Mode</code>)</h2>
+<p><code>Arithmetic Suite</code> states a <strong>rule</strong> for picking operand pairs, so the canvas
+shows <code>boundary:2</code> and not the seven pairs it selects. For a campaign whose
+inputs a reader has to be able to check, <code>Case Input Mode</code> adds two modes that
+state the pairs themselves. The default is <code>legacy-auto</code>, which reproduces the
+historical precedence exactly — every existing canvas keeps working untouched.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Reads</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>legacy-auto</code> (default)</td>
+<td>non-blank <code>Arithmetic Suite</code>, else <code>Test Matrix</code></td>
+<td>everything that already exists</td>
+</tr>
+<tr>
+<td><code>generated-suite</code></td>
+<td><code>Arithmetic Suite</code>, required</td>
+<td>making the generated path explicit</td>
+</tr>
+<tr>
+<td><code>inline-arithmetic-json</code></td>
+<td>the <code>Arithmetic Cases</code> property</td>
+<td>a readable demonstration — the cases are on the processor</td>
+</tr>
+<tr>
+<td><code>flowfile-content</code></td>
+<td>the incoming FlowFile</td>
+<td>a reviewed, version-controlled file, fetched with a stock <code>FetchFile</code></td>
+</tr>
+</tbody>
+</table>
+<p>The manifest is deliberately compact
+(<code>experiments/test_cases/arithmetic_campaign1_boundary2.v1.json</code>):</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;quanifi.arithmetic-cases/v1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;suite_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arithmetic-campaign1-boundary2-v1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;add&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;bit_width&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;cases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">}]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>A case declares operands and nothing else.</strong> Expected answers, carry
+classification and <code>test.partition</code> are derived by <code>arithmetic_spec.make_case()</code>
+— the same function a generated suite goes through — so a typo in a hand-edited
+file cannot become the oracle. Version 1 is a closed schema: any unknown
+top-level or per-case key is a rejection, which is what stops
+<code>"expected_result": 5</code> from quietly becoming a second source of truth. Array
+order is significant and is preserved.</p>
+<p>Both explicit modes reject the whole input rather than emitting a prefix of it,
+and neither falls back to the other property on error — a malformed file cannot
+silently run a stale definition. The offending bytes come back on <code>failure</code> with
+<code>testsource.error</code> and a stable <code>testsource.error_code</code>.</p>
+<h3 id="three-digests-three-different-questions">Three digests, three different questions</h3>
+<table>
+<thead>
+<tr>
+<th>Digest</th>
+<th>Covers</th>
+<th>Changes when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>case set</strong> (<code>testsource.case_set_sha256</code>)</td>
+<td>operation, bit width, ordered pairs</td>
+<td>a case is added, removed, changed or reordered</td>
+</tr>
+<tr>
+<td><strong>manifest</strong> (<code>testsource.manifest_sha256</code>)</td>
+<td>the above plus <code>schema</code> and <code>suite_id</code></td>
+<td>also when the file is relabelled</td>
+</tr>
+<tr>
+<td><strong>raw</strong> (<code>testsource.raw_sha256</code>)</td>
+<td>the exact supplied bytes</td>
+<td>also when whitespace or key order changes</td>
+</tr>
+</tbody>
+</table>
+<p>The case set is the <strong>scientific input identity</strong>. A different case-set digest
+is a different test-case condition, and its results must not be pooled with a
+campaign pinned to the old one. The converse does not follow: the same digest is
+necessary but not sufficient for pooling — the operator, implementation set,
+loci, shots, layout policy, device and blocking rules must match too. Renaming
+<code>suite_id</code> moves the manifest digest but not the case-set digest, and is not by
+itself a new treatment.</p>
+<p>A generated suite gets a case-set digest as well (after derivation), which is
+how the generated and manifest paths can be shown to be the same treatment. It
+has no manifest or raw digest and keeps its existing
+<code>testsource.suite</code>/<code>.bit_width</code>/<code>.suite_seed</code> metadata instead.</p>
+<h3 id="fail-closed-guards">Fail-closed guards</h3>
+<p><code>Expected Case Count</code>, <code>Expected Case Set SHA-256</code> and
+<code>Expected Manifest SHA-256</code> are blank by default and refuse to emit <strong>any</strong> row
+when they do not match. A hardware campaign should set all three: the batch size
+downstream is a static number, so a quietly changed case list leaves the
+submitter waiting forever for a circuit nobody will build.</p>
+<p><code>Expected Case Count</code> checks <code>testsource.base_case_count</code>, the count <em>before</em>
+any Layer-B mutation expansion. <code>testsource.count</code> keeps its old meaning (rows
+emitted, after expansion). They are equal on the arithmetic canvas because every
+catalogued Layer-B operator targets a <code>grover.*</code>/<code>circuit.*</code>/<code>sim.*</code> attribute
+that an arithmetic row does not carry — gate mutations there come from
+<code>QuantumMutator</code>, not from this processor.</p>
+<p>All the new properties are declared <code>ExpressionLanguageScope.NONE</code>. They are
+campaign controls, and an incoming FlowFile attribute must not be able to
+rewrite which cases an armed batch runs. NiFi Parameter Contexts still
+substitute into them at deployment time.</p>
+<h3 id="provenance">Provenance</h3>
+<p>Source-level: <code>testsource.input_mode</code>, <code>testsource.case_set_sha256</code>,
+<code>testsource.base_case_count</code>, and — explicit modes only —
+<code>testsource.manifest_sha256</code>, <code>.raw_sha256</code>, <code>.schema</code>, <code>.suite_id</code>.</p>
+<p>The same identity is published a second time under the <code>arithmetic.</code> prefix
+(<code>arithmetic.test_case_set_sha256</code>, <code>.test_manifest_sha256</code>, <code>.test_suite_id</code>,
+<code>.test_suite_schema</code>) plus a per-row <code>arithmetic.test_case_ordinal</code>. That
+duplication is load-bearing: the batch submitter captures everything under its
+<code>Attribute Prefix</code> onto the manifest entry, so only the <code>arithmetic.*</code> copies
+survive into a hardware result. The ordinal records the <strong>declared</strong> position —
+parallel branch arrival and the submitter's kind-based interleave decide the
+actual submission order, which <code>batch.entry_index</code> records.</p>
+<h2 id="3-canvas-wiring">3. Canvas wiring</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">GenerateFlowFile</span><span class="w">                 </span><span class="err">#</span><span class="w"> </span><span class="kr">any</span><span class="w"> </span><span class="n">trigger</span><span class="p">;</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="n">ignored</span>
+<span class="w">   </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">QuantumTestCaseSource</span><span class="w">      </span><span class="err">#</span><span class="w"> </span><span class="n">Test</span><span class="w"> </span><span class="n">Matrix</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">JSON</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="kr">of</span><span class="w"> </span><span class="n">rows</span>
+<span class="w">   </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">SplitJson</span><span class="w">                  </span><span class="err">#</span><span class="w"> </span><span class="n">JsonPath</span><span class="w"> </span><span class="n">Expression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="w">   </span><span class="p">(</span><span class="n">array</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">FF</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="nf">row</span><span class="p">)</span>
+<span class="w">   </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">EvaluateJsonPath</span><span class="w">           </span><span class="err">#</span><span class="w"> </span><span class="n">Destination</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flowfile</span><span class="o">-</span><span class="n">attribute</span><span class="p">,</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">field</span><span class="o">:</span>
+<span class="w">   </span><span class="o">|</span><span class="w">                             </span><span class="err">#</span><span class="w">   </span><span class="n">grover</span><span class="p">.</span><span class="n">marked_state</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="p">[</span><span class="s">&#39;grover.marked_state&#39;</span><span class="p">]</span>
+<span class="w">   </span><span class="o">|</span><span class="w">                             </span><span class="err">#</span><span class="w">   </span><span class="n">grover</span><span class="p">.</span><span class="n">num_iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="p">[</span><span class="s">&#39;grover.num_iterations&#39;</span><span class="p">]</span>
+<span class="w">   </span><span class="o">|</span><span class="w">                             </span><span class="err">#</span><span class="w">   </span><span class="n">test</span><span class="p">.</span><span class="n">case_id</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="p">[</span><span class="s">&#39;test.case_id&#39;</span><span class="p">]</span>
+<span class="w">   </span><span class="o">|</span><span class="w">                             </span><span class="err">#</span><span class="w">   </span><span class="n">test</span><span class="p">.</span><span class="n">run_id</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="p">[</span><span class="s">&#39;test.run_id&#39;</span><span class="p">]</span>
+<span class="w">   </span><span class="o">|</span><span class="w">                             </span><span class="err">#</span><span class="w">   </span><span class="n">test</span><span class="p">.</span><span class="n">expected</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="p">[</span><span class="s">&#39;test.expected&#39;</span><span class="p">]</span><span class="w">   </span><span class="p">(</span><span class="nf">if</span><span class="w"> </span><span class="n">present</span><span class="p">)</span>
+<span class="w">   </span><span class="o">+-&gt;</span><span class="w"> </span><span class="n">QiskitGroverCircuit</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">QiskitAerSimulator</span><span class="w"> </span><span class="o">----</span><span class="p">.</span>
+<span class="w">   </span><span class="o">+-&gt;</span><span class="w"> </span><span class="n">CirqGroverCircuit</span><span class="w">   </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">CirqSimulator</span><span class="w"> </span><span class="o">---------+--&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">consensus</span><span class="w"> </span><span class="n">oracle</span><span class="p">,</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="n">layer</span><span class="p">)</span>
+<span class="w">   </span><span class="o">+-&gt;</span><span class="w"> </span><span class="n">QrispGroverSearch</span><span class="w"> </span><span class="o">---------------------------/</span>
+</code></pre></div>
+
+<p>Each framework branch sets its properties to <code>${grover.*}</code> EL, so all three run
+the <em>same</em> case. <code>QuantumMutator</code> (built — the Layer-A gate-level mutator, see
+MUTATION_TESTING.md §2) placed between one branch's builder and simulator makes
+that branch the dissenter the oracle should flag.</p>
+<h3 id="equivalence-partitions-worth-seeding">Equivalence partitions worth seeding</h3>
+<p>The Grover code paths suggest natural partitions / boundaries: <code>n = 1</code>
+(degenerate diffuser), all-zeros vs all-ones vs mixed <code>marked_state</code> (different
+X-layer paths), and optimal vs over-rotated <code>num_iterations</code> (the over-rotated
+row doubles as a mutant).</p>
+<h2 id="gotchas-for-the-future-vote">Gotchas for the (future) vote</h2>
+<ul>
+<li><strong>Bit-order normalization.</strong> Qiskit counts are little-endian; Cirq/Qrisp use a
+  different convention. The consensus oracle must canonicalize distribution keys
+  before comparing, or it will report false disagreements.</li>
+<li><strong>Shot noise.</strong> Compare on argmax or a distance threshold, never equality.</li>
+</ul>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

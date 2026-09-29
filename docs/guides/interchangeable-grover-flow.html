@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interchangeable Grover Canvas Guide</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="active">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li class="active"><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="developer-guide.html">Guides</a> <span class="sep">&rsaquo;</span> <a href="interchangeable-grover-flow.html">Interchangeable Grover</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="interchangeable-grover-canvas-guide">Interchangeable Grover — canvas guide</h1>
+<p>Click-by-click instructions for the <strong>decomposed Grover pipeline</strong> using the
+Qiskit pair (<code>QiskitPhaseOracle</code> → <code>QiskitGroverOperator</code>) and for the two
+<strong>cross-framework assemblies</strong> that mix Qiskit and Cirq stages in one search.
+Follows the same conventions as
+<a href="nifi-flow-configuration-guide.html">NIFI_FLOW_CONFIGURATION_GUIDE.md</a> (general
+recipe, auto-terminating unused relationships, etc.); the Cirq-only twin of
+Flow A is that guide's Flow 11.</p>
+<p><strong>Why these exist:</strong> every stage holds exactly one concern — the <em>oracle</em> holds
+<strong>Marked State</strong>, the <em>operator</em> holds <strong>Num Iterations</strong>, the <em>simulator</em>
+holds <strong>Shots</strong> — and the property names match across frameworks, so any stage
+can be swapped for its counterpart, even mid-pipeline across frameworks.</p>
+<p>Two contract rules make the mixing work:</p>
+<ol>
+<li><strong>OpenQASM 2 is the cross-framework wire format.</strong> Within one framework use
+   the native format (<code>qasm3</code>/<code>qpy</code> for Qiskit, <code>cirq_json</code> for Cirq); the
+   moment a connection crosses frameworks, set the upstream processor's
+   <strong>Output Format = <code>qasm2</code></strong>.</li>
+<li><strong>Canonical bit order (<code>q0_left</code>).</strong> All simulators emit counts keys and
+   <code>sim.top_result</code> with qubit 0 as the leftmost character — the same order you
+   type <strong>Marked State</strong> in. Non-palindromic targets like <code>110</code> work
+   everywhere; expect <code>sim.top_result == circuit.marked_state</code> always.</li>
+</ol>
+<p>Before you start: restart NiFi after pulling the processors
+(<code>cd ~/projects/nifi-2.9.0 &amp;&amp; bin/nifi.sh restart</code>). First canvas placement of
+each new processor installs its pip dependencies (~30 s, watch the bulletin
+board).</p>
+<hr />
+<h2 id="flow-a-pure-qiskit-decomposed">Flow A — Pure Qiskit, decomposed</h2>
+<p><strong>Components:</strong> <code>GenerateFlowFile</code> → <code>QiskitPhaseOracle</code> →
+<code>QiskitGroverOperator</code> → <code>QiskitAerSimulator</code> → <code>QuanifiReport</code></p>
+<ol>
+<li><strong><code>GenerateFlowFile</code></strong> — empty content, any schedule (it is just the
+   trigger). Wire <code>success</code> → <code>QiskitPhaseOracle</code>.</li>
+<li><strong><code>QiskitPhaseOracle</code></strong>
+   | Property | Value |
+   |---|---|
+   | Marked State | <code>110</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>qasm3</code> |</li>
+</ol>
+<p>Standalone mode (no incoming <code>circuit.format</code>): emits a bare 3-qubit oracle
+   that flips the sign of |110⟩ only. Wire <code>success</code> → <code>QiskitGroverOperator</code>;
+   auto-terminate <code>failure</code> (or route it to a funnel — it fires on a malformed
+   Marked State with a <code>circuit.error</code> attribute explaining why).
+3. <strong><code>QiskitGroverOperator</code></strong>
+   | Property | Value |
+   |---|---|
+   | Num Iterations | <code>2</code> |
+   | Insert Barriers | <code>false</code> |
+   | Output Format | <code>qasm3</code> |</p>
+<p>Reads the oracle off the FlowFile content (per <code>circuit.format</code>), prepends
+   H⊗n, and applies oracle+diffuser <code>Num Iterations</code> times via Qiskit's
+   <code>grover_operator</code>. Forwards <code>circuit.marked_state</code>. Wire <code>success</code> →
+   <code>QiskitAerSimulator</code>; auto-terminate <code>failure</code> (fires when no oracle is on
+   the FlowFile — e.g. wired directly to <code>GenerateFlowFile</code>).
+4. <strong><code>QiskitAerSimulator</code></strong> — Shots <code>1024</code>, Noise Model <code>none</code>. Wire
+   <code>success</code> → <code>QuanifiReport</code>; auto-terminate <code>failure</code>.
+5. <strong><code>QuanifiReport</code></strong> — Flow Name = <code>qiskit-grover-decomposed</code>.
+   Auto-terminate <code>success</code>.
+6. Start all five; open
+   <code>reports/qiskit-grover-decomposed-report.html</code>. The histogram peaks at
+   <code>110</code> and <code>sim.top_result = 110</code> — <em>not</em> bit-reversed; the simulators
+   normalise key order (<code>sim.bit_order = q0_left</code>).</p>
+<p><strong>Iteration count:</strong> optimal is ⌊π/4·√2ⁿ⌋ for one marked state — <code>1</code> for 2
+qubits, <code>2</code> for 3, <code>3</code> for 4. Too many iterations <em>overshoots</em> and the peak
+degrades again; that is Grover physics, not a bug.</p>
+<hr />
+<h2 id="flow-b-cirq-oracle-qiskit-amplification-simulation">Flow B — Cirq oracle, Qiskit amplification + simulation</h2>
+<p>Same canvas as Flow A with <strong>one box swapped</strong>: replace <code>QiskitPhaseOracle</code>
+with <code>CirqPhaseOracle</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Processor</th>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CirqPhaseOracle</code></td>
+<td>Marked State</td>
+<td><code>110</code></td>
+</tr>
+<tr>
+<td></td>
+<td>Insert Barriers</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Output Format</strong></td>
+<td><strong><code>qasm2</code></strong> ← the cross-framework hop</td>
+</tr>
+<tr>
+<td><code>QiskitGroverOperator</code></td>
+<td>Num Iterations</td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td></td>
+<td>Output Format</td>
+<td><code>qasm3</code> (back inside Qiskit)</td>
+</tr>
+<tr>
+<td><code>QiskitAerSimulator</code></td>
+<td>Shots</td>
+<td><code>1024</code></td>
+</tr>
+<tr>
+<td><code>QuanifiReport</code></td>
+<td>Flow Name</td>
+<td><code>xfw-cirq-oracle-qiskit-grover</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>QiskitGroverOperator</code> detects <code>circuit.format = qasm2</code> and parses the
+Cirq-emitted oracle with Qiskit's qasm2 loader. Everything downstream is
+unchanged. Expect the same <code>110</code> peak. (Note the qasm2 export decomposes the
+multi-controlled Z into CZ + single-qubit gates, so <code>circuit.gate_count</code> /
+<code>circuit.depth</code> differ from Flow A — the <em>semantics</em> are identical, the gate
+inventory is not.)</p>
+<p>The report's <strong>Circuit Diagram</strong> panel is rendered from the operator's qasm3
+via Qiskit's matplotlib drawer and shows the <strong>full</strong> H⊗n + (oracle+diffuser)×2
+circuit. The Cirq oracle's own SVG is deliberately blanked by
+<code>QiskitGroverOperator</code> — NiFi merges attributes downstream, and the report
+would otherwise prefer that stale SVG, which depicts only the bare oracle.</p>
+<hr />
+<h2 id="flow-c-qiskit-oracle-cirq-amplification-simulation">Flow C — Qiskit oracle, Cirq amplification + simulation</h2>
+<p>The reverse assembly: keep <code>QiskitPhaseOracle</code>, swap the rest of the chain to
+Cirq.</p>
+<table>
+<thead>
+<tr>
+<th>Processor</th>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QiskitPhaseOracle</code></td>
+<td>Marked State</td>
+<td><code>110</code></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Output Format</strong></td>
+<td><strong><code>qasm2</code></strong> ← the cross-framework hop</td>
+</tr>
+<tr>
+<td><code>CirqGroverOperator</code></td>
+<td>Num Iterations</td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td></td>
+<td>Output Format</td>
+<td><code>cirq_json</code> (back inside Cirq)</td>
+</tr>
+<tr>
+<td><code>CirqSimulator</code></td>
+<td>Shots</td>
+<td><code>1024</code>, Noise Model <code>none</code></td>
+</tr>
+<tr>
+<td><code>QuanifiReport</code></td>
+<td>Flow Name</td>
+<td><code>xfw-qiskit-oracle-cirq-grover</code></td>
+</tr>
+</tbody>
+</table>
+<p>Again expect the <code>110</code> peak with <code>sim.top_result = 110</code>, now with
+<code>sim.framework = cirq</code> in the report header.</p>
+<hr />
+<h2 id="differential-testing-in-one-canvas">Differential testing in one canvas</h2>
+<p>Run Flows A–C side by side into <strong>separate</strong> <code>QuanifiReport</code> flow names, or
+fan one <code>GenerateFlowFile</code> into all three chains and feed the simulator
+outputs pairwise into <code>QuantumDistributionComparison</code> — because all engines
+emit canonical-order keys, the distributions are directly comparable
+(Hellinger ≈ 0, chi-squared verdict <code>consistent</code> for ideal runs).</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ul>
+<li><strong>The <code>original</code> relationship keeps re-marking itself auto-terminated</strong> —
+  that's NiFi framework behaviour for <em>all</em> Python processors, not a bug:
+  <code>original</code> is added by NiFi's Java proxy (it receives the <strong>unmodified
+  incoming</strong> FlowFile, for provenance) with auto-terminate as its default, and
+  the default is re-applied whenever the Python processor is reinitialised on
+  start. Leave it terminated — the <em>result</em> (counts + <code>sim.*</code>) always travels
+  on <code>success</code>, so <code>original</code> can never block the report.</li>
+<li><strong>Nothing reaches the report, but the logs are clean</strong> — the simulator
+  rejected the circuit and routed it to <code>failure</code>, which is auto-terminated,
+  so the FlowFile vanished. Typical cause: an upstream Output Format the
+  simulator can't read (<code>CirqSimulator</code> accepts only <code>cirq_json</code>/<code>qasm2</code>;
+  <code>QrispSimulator</code> only <code>qasm2</code>). The simulators now log the rejection with
+  the offending <code>circuit.format</code>, so check the processor bulletin (red square,
+  top-right of the box) or <code>logs/nifi-app.log</code>.</li>
+<li><strong>Operator routes to <code>failure</code> immediately</strong> — its FlowFile had no circuit:
+  check the oracle is upstream and its <code>success</code> (not <code>failure</code>) is wired in.
+  The <code>circuit.error</code> attribute on the failed FlowFile names the cause.</li>
+<li><strong>Peak at the bit-reversed target</strong> — you are running a pre-normalisation
+  processor build; restart NiFi so the current <code>nifi_extensions/</code> code loads,
+  and re-generate stale report cards (<code>just clean-reports</code>).</li>
+<li><strong>Circuit Diagram shows only the small oracle, not the full Grover circuit</strong>
+  (Flow B) — same cause: an older build of <code>QiskitGroverOperator</code> that didn't
+  blank the upstream Cirq SVG. Restart NiFi; no venv wipe needed.</li>
+<li><strong><code>ModuleNotFoundError: No module named 'ply'</code> from a Cirq processor</strong>
+  (Flow C) — Cirq's qasm2 importer needs <code>ply</code>, which only the cross-framework
+  path exercises. All qasm-importing Cirq processors now declare it, but a
+  <strong>dependency change does not reach an already-cached venv</strong>: delete the
+  processor's cached environment and restart —
+  <code>rm -rf ~/projects/nifi-2.9.0/work/python/extensions/CirqGroverOperator/</code>
+  (same for <code>CirqPhaseOracle</code>, <code>CirqHadamardTransform</code>, <code>CirqQFTCircuit</code>,
+  <code>CirqPhaseEstimation</code> if they're already on the canvas). First placement
+  re-installs deps (~30 s).</li>
+<li><strong>Processor missing from the add dialog</strong> — the file failed to parse or
+  NiFi wasn't restarted; see the skeleton rules in
+  <a href="creating-processors.html">CREATING_PROCESSORS.md</a>.</li>
+</ul>
+<p>These three flows are pinned in CI-style tests:
+<code>tests/test_integration.py::TestCrossFramework</code> and
+<code>tests/test_bit_order.py::TestGroverNonPalindrome</code>.</p>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

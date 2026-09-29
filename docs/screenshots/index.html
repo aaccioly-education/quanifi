@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Screenshots Gallery — Quanifi Process Groups</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class="active"><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li class="active"><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="index.html">Screenshots</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="canvas-screenshots">Canvas screenshots</h1>
+<p>Generated images of the <code>AllComponents</code> process group: every Quanifi processor
+placed once, in labelled blocks, with no connections. They exist to illustrate
+the component catalogue in the documentation.</p>
+<table>
+<thead>
+<tr>
+<th>Image</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>all-components-overview.png</code></td>
+<td>All 83 processors, nine blocks, one frame</td>
+</tr>
+<tr>
+<td><code>circuit-builders.png</code></td>
+<td>26</td>
+</tr>
+<tr>
+<td><code>algorithms-all-in-one-solvers.png</code></td>
+<td>18</td>
+</tr>
+<tr>
+<td><code>differential-mutation-testing-infrastructure.png</code></td>
+<td>11</td>
+</tr>
+<tr>
+<td><code>simulators.png</code></td>
+<td>9</td>
+</tr>
+<tr>
+<td><code>hamiltonians-problem-encoders.png</code></td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>hardware-batch-lane.png</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>pennylane-qml-lane.png</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>reporting-utility.png</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>hardware-execution.png</code></td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Blocks follow the categories in <a href="../components.html"><code>../COMPONENTS.md</code></a>, so a
+figure can be dropped beside the table it illustrates.</p>
+<h2 id="regenerating">Regenerating</h2>
+<p>Two steps, and NiFi must be stopped for the first one.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. put the group on the canvas, then start NiFi</span>
+python<span class="w"> </span>tools/add_all_components_group.py<span class="w"> </span>--flow<span class="w"> </span>~/projects/nifi-2.9.0/conf/flow.json.gz
+
+<span class="c1"># 2. photograph it (group UUID from the NiFi UI or the API)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NIFI_USER</span><span class="o">=</span>...<span class="w"> </span><span class="nv">NIFI_PASSWORD</span><span class="o">=</span>...
+python<span class="w"> </span>tools/nifi_screenshot.py<span class="w"> </span>--group<span class="w"> </span>&lt;uuid&gt;<span class="w"> </span>--out-dir<span class="w"> </span>docs/screenshots
+</code></pre></div>
+
+<p><code>nifi_screenshot.py</code> drives headless Chrome over the DevTools protocol, reads
+the rendered geometry of every processor and label in the same session as the
+capture, and crops one image per block from those measurements — so the crops
+cannot drift from the screenshot regardless of the zoom NiFi picked.</p>
+<h2 id="two-things-visible-in-the-images">Two things visible in the images</h2>
+<p><strong>Every processor carries a warning triangle.</strong> The message is "requires an
+upstream connection but currently has none", which is inherent to a group whose
+components are deliberately unconnected. It is not a defect in the processors:
+placing them in a real flow clears it.</p>
+<p><strong>The version under each name is the processor's own.</strong> They are not uniform —
+76 are 0.1.0, six 0.2.0, one 0.1.1 — and the tool reads each from the class
+rather than assuming, because a wrong bundle version renders a ghost component
+that looks real in a screenshot.</p>
+<h2 id="before-adding-the-group">Before adding the group</h2>
+<p>Raise the Python process limits in <code>conf/nifi.properties</code>, or NiFi will hang on
+startup with no error:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">nifi</span><span class="p">.</span><span class="nx">python</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">processes</span><span class="p">=</span><span class="mi">400</span>
+<span class="nx">nifi</span><span class="p">.</span><span class="nx">python</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">processes</span><span class="p">.</span><span class="nx">per</span><span class="p">.</span><span class="nx">extension</span><span class="p">.</span><span class="k">type</span><span class="p">=</span><span class="mi">20</span>
+</code></pre></div>
+
+<p>If a start does hang, kill the orphaned extension processes before retrying —
+they survive the JVM and block the next start:</p>
+<div class="codehilite"><pre><span></span><code>pkill<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;nifi-2.9.0/work/python/extensions&quot;</span>
+</code></pre></div><h2>Process Group Visual Gallery</h2>
+<p>Click any canvas image below to open full resolution in the lightbox viewer:</p>
+<div class="gallery-grid">
+
+        <div class="gallery-card">
+          <img src="../screenshots/all-components-overview.png" alt="All Components Overview" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Overview</span>
+            <h4 class="gallery-card-title">All Components Overview</h4>
+            <p class="gallery-card-desc">All 83 Quanifi processors placed in labelled category blocks with no connections.</p>
+            <a href="../screenshots/all-components-overview.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/circuit-builders.png" alt="Circuit Builders" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Builders</span>
+            <h4 class="gallery-card-title">Circuit Builders</h4>
+            <p class="gallery-card-desc">26 modular processors across Qiskit, Cirq, Qrisp, pyQuil, and PennyLane.</p>
+            <a href="../screenshots/circuit-builders.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/algorithms-all-in-one-solvers.png" alt="Algorithms & Solvers" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Solvers</span>
+            <h4 class="gallery-card-title">Algorithms & Solvers</h4>
+            <p class="gallery-card-desc">18 all-in-one quantum algorithms: Grover, QAOA, VQE, QPE, Deutsch-Jozsa, Bernstein-Vazirani.</p>
+            <a href="../screenshots/algorithms-all-in-one-solvers.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/differential-mutation-testing-infrastructure.png" alt="Differential & Mutation Testing" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Testing</span>
+            <h4 class="gallery-card-title">Differential & Mutation Testing</h4>
+            <p class="gallery-card-desc">11 testing processors: mutators, assertions, distribution oracles, and consensus verification.</p>
+            <a href="../screenshots/differential-mutation-testing-infrastructure.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/simulators.png" alt="Quantum Simulators" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Simulators</span>
+            <h4 class="gallery-card-title">Quantum Simulators</h4>
+            <p class="gallery-card-desc">9 simulator backends including Aer, Statevector, Cirq, Qrisp, Braket, and PyQVM.</p>
+            <a href="../screenshots/simulators.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/hamiltonians-problem-encoders.png" alt="Hamiltonians & Problem Encoders" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Encoders</span>
+            <h4 class="gallery-card-title">Hamiltonians & Problem Encoders</h4>
+            <p class="gallery-card-desc">6 combinatorial optimization encoders: MaxCut, MaxClique, MIS, Portfolio, Molecule.</p>
+            <a href="../screenshots/hamiltonians-problem-encoders.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/hardware-batch-lane.png" alt="Hardware Batch Lane" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Hardware</span>
+            <h4 class="gallery-card-title">Hardware Batch Lane</h4>
+            <p class="gallery-card-desc">5 batch execution poller and submitter processors for remote QPU platforms.</p>
+            <a href="../screenshots/hardware-batch-lane.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/hardware-execution.png" alt="Hardware Direct Execution" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Hardware</span>
+            <h4 class="gallery-card-title">Hardware Direct Execution</h4>
+            <p class="gallery-card-desc">2 direct cloud submission processors for IBM Quantum and IQM hardware.</p>
+            <a href="../screenshots/hardware-execution.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/pennylane-qml-lane.png" alt="PennyLane QML Lane" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">QML</span>
+            <h4 class="gallery-card-title">PennyLane QML Lane</h4>
+            <p class="gallery-card-desc">3 quantum machine learning components: Feature Embedding, Variational Classifier, Ansatz.</p>
+            <a href="../screenshots/pennylane-qml-lane.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/reporting-utility.png" alt="Reporting & Unitary Utilities" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Utilities</span>
+            <h4 class="gallery-card-title">Reporting & Unitary Utilities</h4>
+            <p class="gallery-card-desc">3 monitoring and verification utilities for NiFi FlowFiles.</p>
+            <a href="../screenshots/reporting-utility.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/portfolio-optimization-qaoa-mean-variance-objective-with-xy-mixer-selects-optimal-2-assets-out-of-3-under-risk-return-trade-off-and-budget-k.png" alt="Portfolio QAOA Optimization" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Flows</span>
+            <h4 class="gallery-card-title">Portfolio QAOA Optimization</h4>
+            <p class="gallery-card-desc">Mean-variance portfolio selection flow with XY mixer selecting 2 optimal assets out of 3.</p>
+            <a href="../screenshots/portfolio-optimization-qaoa-mean-variance-objective-with-xy-mixer-selects-optimal-2-assets-out-of-3-under-risk-return-trade-off-and-budget-k.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/maximum-clique-qaoa-encodes-graph-complement-into-cost-hamiltonian-finds-maximum-clique-on-4-node-graph-via-qaoa-with-standard-rx-mixer.png" alt="Maximum Clique QAOA" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Flows</span>
+            <h4 class="gallery-card-title">Maximum Clique QAOA</h4>
+            <p class="gallery-card-desc">Graph complement encoding into cost Hamiltonian solved via QAOA with standard RX mixer.</p>
+            <a href="../screenshots/maximum-clique-qaoa-encodes-graph-complement-into-cost-hamiltonian-finds-maximum-clique-on-4-node-graph-via-qaoa-with-standard-rx-mixer.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/maximum-independent-set-qaoa-graph-vertex-independence-optimization-finds-mis-on-3-node-path-graph-via-qaoa-with-edge-conflict-penalties.png" alt="Maximum Independent Set QAOA" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Flows</span>
+            <h4 class="gallery-card-title">Maximum Independent Set QAOA</h4>
+            <p class="gallery-card-desc">Graph vertex independence optimization on 3-node path graph via QAOA with penalty terms.</p>
+            <a href="../screenshots/maximum-independent-set-qaoa-graph-vertex-independence-optimization-finds-mis-on-3-node-path-graph-via-qaoa-with-edge-conflict-penalties.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/molecular-vqe-with-qccsd-unitary-coupled-cluster-with-hartree-fock-state-solves-ground-state-energy-of-4-qubit-hamiltonian-via-qccsd-ansatz-and-vqe.png" alt="Molecular VQE (UCCSD)" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Flows</span>
+            <h4 class="gallery-card-title">Molecular VQE (UCCSD)</h4>
+            <p class="gallery-card-desc">Ground state energy calculation of 4-qubit molecular Hamiltonian using QCCSD ansatz and VQE.</p>
+            <a href="../screenshots/molecular-vqe-with-qccsd-unitary-coupled-cluster-with-hartree-fock-state-solves-ground-state-energy-of-4-qubit-hamiltonian-via-qccsd-ansatz-and-vqe.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/swap-test-measures-quantum-state-overlap-via-ancilla-fredkin-gate-computes-fidelity-between-0-and-0-states-with-1024-measurement-shots.png" alt="Swap Test State Overlap" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Flows</span>
+            <h4 class="gallery-card-title">Swap Test State Overlap</h4>
+            <p class="gallery-card-desc">Quantum state fidelity verification using Fredkin gate ancilla and 1024 measurement shots.</p>
+            <a href="../screenshots/swap-test-measures-quantum-state-overlap-via-ancilla-fredkin-gate-computes-fidelity-between-0-and-0-states-with-1024-measurement-shots.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/deutsch-jozsa-algorithm-distinguishes-constant-from-balanced-boolean-functions-single-query-evaluation-of-balanced-boolean-oracle-over-3-qubits.png" alt="Deutsch-Jozsa Algorithm Flow" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Flows</span>
+            <h4 class="gallery-card-title">Deutsch-Jozsa Algorithm Flow</h4>
+            <p class="gallery-card-desc">Single-query evaluation of 3-qubit balanced boolean oracle vs constant function.</p>
+            <a href="../screenshots/deutsch-jozsa-algorithm-distinguishes-constant-from-balanced-boolean-functions-single-query-evaluation-of-balanced-boolean-oracle-over-3-qubits.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        
+        <div class="gallery-card">
+          <img src="../screenshots/bernstein-vazirani-algorithm-recovers-hidden-bitstring-s-in-o-1-queries-recovers-secret-s-1011-using-phase-kickback-and-hadamard-transform.png" alt="Bernstein-Vazirani Flow" loading="lazy">
+          <div class="gallery-card-body">
+            <span class="card-badge">Flows</span>
+            <h4 class="gallery-card-title">Bernstein-Vazirani Flow</h4>
+            <p class="gallery-card-desc">O(1) recovery of secret bitstring s='1011' using phase kickback and Hadamard transforms.</p>
+            <a href="../screenshots/bernstein-vazirani-algorithm-recovers-hidden-bitstring-s-in-o-1-queries-recovers-secret-s-1011-using-phase-kickback-and-hadamard-transform.png" target="_blank" class="card-link">View Full Resolution &rarr;</a>
+          </div>
+        </div>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

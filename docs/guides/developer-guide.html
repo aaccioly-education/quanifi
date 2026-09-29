@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Guide — Quanifi Framework</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="active">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li class="active"><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="developer-guide.html">Guides</a> <span class="sep">&rsaquo;</span> <a href="developer-guide.html">Developer Guide</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="quanifi-developer-guide">Quanifi — Developer Guide</h1>
+<p>This guide covers everything needed to clone, test, and extend Quanifi — from setting up the Python environment to loading the demo canvas in Apache NiFi.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-prerequisites">Prerequisites</a></li>
+<li><a href="#2-clone-and-python-environment">Clone and Python Environment</a></li>
+<li><a href="#3-running-the-test-suite">Running the Test Suite</a></li>
+<li><a href="#4-nifi-installation">NiFi Installation</a></li>
+<li><a href="#5-configuring-nifi-for-quanifi">Configuring NiFi for Quanifi</a></li>
+<li><a href="#6-loading-the-demo-flow">Loading the Demo Flow</a></li>
+<li><a href="#7-updating-absolute-paths-after-import">Updating Absolute Paths After Import</a></li>
+<li><a href="#8-starting-and-accessing-nifi">Starting and Accessing NiFi</a></li>
+<li><a href="#9-creating-a-new-processor">Creating a New Processor</a></li>
+<li><a href="#10-project-structure">Project Structure</a></li>
+</ol>
+<hr />
+<h2 id="1-prerequisites">1. Prerequisites</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>3.10+</td>
+<td>Must be available before NiFi starts</td>
+</tr>
+<tr>
+<td>Apache NiFi</td>
+<td>2.9.0</td>
+<td>Exact version required — Python processor API changed in 2.x</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>21+</td>
+<td>Required to run NiFi (NiFi bundles its own in recent builds)</td>
+</tr>
+<tr>
+<td>git</td>
+<td>any</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>For running tests outside NiFi, you only need Python ≥ 3.10.</p>
+<hr />
+<h2 id="2-clone-and-python-environment">2. Clone and Python Environment</h2>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ramalhoneilson/Quanifi.git
+<span class="nb">cd</span><span class="w"> </span>Quanifi
+</code></pre></div>
+
+<p>Create a virtual environment and install all framework dependencies. NiFi will be pointed at this same environment so processors share one set of packages:</p>
+<div class="codehilite"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+
+.venv/bin/pip<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;qiskit&gt;=2.0.0&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;qiskit-aer&gt;=0.13.0&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>qiskit-qasm3-import<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;cirq&gt;=1.0.0&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ply<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>qrisp<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>matplotlib<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>pylatexenc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>pytest
+</code></pre></div>
+
+<p>Or with <a href="https://github.com/astral-sh/uv">uv</a> (faster):</p>
+<div class="codehilite"><pre><span></span><code>uv<span class="w"> </span>venv<span class="w"> </span>.venv
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--python<span class="w"> </span>.venv/bin/python<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;qiskit&gt;=2.0.0&quot;</span><span class="w"> </span><span class="s2">&quot;qiskit-aer&gt;=0.13.0&quot;</span><span class="w"> </span>qiskit-qasm3-import<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;cirq&gt;=1.0.0&quot;</span><span class="w"> </span>ply<span class="w"> </span>qrisp<span class="w"> </span>matplotlib<span class="w"> </span>pylatexenc<span class="w"> </span>pytest
+</code></pre></div>
+
+<blockquote>
+<p><strong>Note:</strong> NiFi creates its own per-processor venvs using the packages declared in <code>ProcessorDetails.dependencies</code>. Pointing <code>nifi.python.command</code> to <code>.venv/bin/python3</code> (see §5) lets NiFi reuse the pre-installed packages, which avoids redundant downloads and makes first-use startup near-instant.</p>
+</blockquote>
+<hr />
+<h2 id="3-running-the-test-suite">3. Running the Test Suite</h2>
+<p>Tests live in <code>tests/</code> and use pytest. They run entirely outside NiFi — no JVM, no running server.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Fast suite: 236 tests, ~5s (skips real Qrisp simulator, incl. Qrisp VQE)</span>
+.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not slow&quot;</span>
+
+<span class="c1"># Full suite: 266 tests, ~5s</span>
+.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest
+
+<span class="c1"># Single file</span>
+.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_cirq.py<span class="w"> </span>-v
+
+<span class="c1"># Single test</span>
+.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_integration.py::TestCrossFramework::test_qiskit_circuit_to_cirq_simulator<span class="w"> </span>-v
+</code></pre></div>
+
+<h3 id="test-markers">Test markers</h3>
+<table>
+<thead>
+<tr>
+<th>Marker</th>
+<th>Description</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>(none)</em></td>
+<td>Unit + integration tests, Qiskit + Cirq only</td>
+<td>Every commit</td>
+</tr>
+<tr>
+<td><code>slow</code></td>
+<td>Tests that run the real Qrisp simulator</td>
+<td>Before merging Qrisp-related changes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-the-tests-cover">What the tests cover</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Processors under test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_qiskit.py</code></td>
+<td><code>QiskitHadamardTransform</code>, <code>QiskitStatePreparation</code>, <code>QiskitGroverCircuit</code>, <code>QiskitQFTCircuit</code>, <code>QiskitPhaseEstimation</code>, <code>QiskitAerSimulator</code>, <code>QiskitGroverSearch</code></td>
+</tr>
+<tr>
+<td><code>test_cirq.py</code></td>
+<td><code>CirqHadamardTransform</code>, <code>CirqPhaseOracle</code>, <code>CirqGroverOperator</code>, <code>CirqGroverCircuit</code>, <code>CirqSimulator</code></td>
+</tr>
+<tr>
+<td><code>test_cirq_qft_qpe.py</code></td>
+<td><code>CirqQFTCircuit</code>, <code>CirqPhaseEstimation</code></td>
+</tr>
+<tr>
+<td><code>test_qrisp.py</code></td>
+<td><code>QrispSimulator</code>, <code>QrispGroverSearch</code></td>
+</tr>
+<tr>
+<td><code>test_integration.py</code></td>
+<td>Full pipelines — Qiskit-only, Cirq-only, and all cross-framework combinations</td>
+</tr>
+<tr>
+<td><code>test_reporting.py</code></td>
+<td><code>QiskitCircuitReport</code>, <code>QuantumDistributionComparison</code>, <code>QiskitStatevectorSimulator</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-the-test-harness-works">How the test harness works</h3>
+<p>Because <code>nifiapi.*</code> is a JVM-backed package that only exists inside a running NiFi process, <code>tests/conftest.py</code> installs lightweight stubs into <code>sys.modules</code> before any processor is imported. Every test then instantiates the processor class directly, creates a <code>MockContext</code> and <code>MockFlowFile</code>, calls <code>processor.transform(ctx, ff)</code>, and asserts on the returned <code>FlowFileTransformResult</code>.</p>
+<hr />
+<h2 id="4-nifi-installation">4. NiFi Installation</h2>
+<p>Download the NiFi 2.9.0 binary from the Apache archive:</p>
+<div class="codehilite"><pre><span></span><code>https://archive.apache.org/dist/nifi/2.9.0/nifi-2.9.0-bin.zip
+</code></pre></div>
+
+<p>Extract it:</p>
+<div class="codehilite"><pre><span></span><code>unzip<span class="w"> </span>nifi-2.9.0-bin.zip<span class="w"> </span>-d<span class="w"> </span>~/
+<span class="c1"># Result: ~/nifi-2.9.0/</span>
+</code></pre></div>
+
+<p>No further installation steps are needed. NiFi runs in-place from the extracted directory.</p>
+<blockquote>
+<p><strong>Java:</strong> NiFi 2.9.0 ships with an embedded JDK on macOS and Linux. If yours does not, install Java 21 first (<code>brew install openjdk@21</code> on macOS).</p>
+</blockquote>
+<hr />
+<h2 id="5-configuring-nifi-for-quanifi">5. Configuring NiFi for Quanifi</h2>
+<p>Edit <code>$NIFI_HOME/conf/nifi.properties</code>. Two values must be set; everything else can stay at its default:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Point NiFi at the Python interpreter that has the framework packages installed.</span>
+<span class="c1"># Replace &lt;path-to-quanifi&gt; with the absolute path where you cloned this repo.</span>
+<span class="na">nifi.python.command</span><span class="o">=</span><span class="s">&lt;path-to-quanifi&gt;/.venv/bin/python3</span>
+
+<span class="c1"># Register the quanifi processor directory as a named extension source.</span>
+<span class="c1"># NiFi polls this directory for new/changed .py files.</span>
+<span class="na">nifi.python.extensions.source.directory.quanifi</span><span class="o">=</span><span class="s">&lt;path-to-quanifi&gt;/nifi_extensions</span>
+</code></pre></div>
+
+<p><strong>Example</strong> (replace <code>/Users/yourname/projects/quanifi</code> with your actual path):</p>
+<div class="codehilite"><pre><span></span><code><span class="na">nifi.python.command</span><span class="o">=</span><span class="s">/Users/yourname/projects/quanifi/.venv/bin/python3</span>
+<span class="na">nifi.python.extensions.source.directory.quanifi</span><span class="o">=</span><span class="s">/Users/yourname/projects/quanifi/nifi_extensions</span>
+</code></pre></div>
+
+<p>The key on the left of the <code>=</code> can be anything after the last <code>.</code> — NiFi scans all properties whose name starts with <code>nifi.python.extensions.source.directory</code>. Using a named suffix (<code>quanifi</code>) instead of <code>default</code> lets you add other extension directories alongside it.</p>
+<p>No other properties need to change for a local single-user development setup. NiFi defaults to HTTPS on port 8443 and generates a self-signed certificate on first start.</p>
+<hr />
+<h2 id="6-loading-the-demo-flow">6. Loading the Demo Flow</h2>
+<p><code>flow.json.gz</code> in the root of this repository is an export of the full NiFi canvas with all demo pipelines pre-wired and configured. Loading it gives you:</p>
+<table>
+<thead>
+<tr>
+<th>Pipeline</th>
+<th>Processors</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSV demo</td>
+<td><code>GetFile → SplitRecord → UpdateAttribute → PutFile</code></td>
+</tr>
+<tr>
+<td>Grover (Qiskit, split)</td>
+<td><code>GenerateFlowFile → QiskitGroverCircuit → QiskitAerSimulator → QiskitCircuitReport</code></td>
+</tr>
+<tr>
+<td>Grover (Qrisp)</td>
+<td><code>GenerateFlowFile → QrispGroverSearch → QiskitCircuitReport</code></td>
+</tr>
+<tr>
+<td>Grover cross-compare</td>
+<td>Both Grover pipelines feed <code>QuantumDistributionComparison</code></td>
+</tr>
+<tr>
+<td>Grover all-in-one</td>
+<td><code>GenerateFlowFile → QiskitGroverSearch → QiskitAerSimulator → QiskitCircuitReport</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>To load the flow:</strong></p>
+<ol>
+<li>
+<p>Stop NiFi if it is running:
+   <code>bash
+   $NIFI_HOME/bin/nifi.sh stop</code></p>
+</li>
+<li>
+<p>Back up the existing flow file (optional but recommended):
+   <code>bash
+   cp $NIFI_HOME/conf/flow.json.gz $NIFI_HOME/conf/flow.json.gz.bak</code></p>
+</li>
+<li>
+<p>Copy the repo's flow file into NiFi's <code>conf/</code> directory:
+   <code>bash
+   cp &lt;path-to-quanifi&gt;/flow.json.gz $NIFI_HOME/conf/flow.json.gz</code></p>
+</li>
+<li>
+<p>Start NiFi:
+   <code>bash
+   $NIFI_HOME/bin/nifi.sh start</code></p>
+</li>
+<li>
+<p>Proceed to §7 to update the machine-specific paths before running any processors.</p>
+</li>
+</ol>
+<hr />
+<h2 id="7-updating-absolute-paths-after-import">7. Updating Absolute Paths After Import</h2>
+<p>The flow was exported from a specific machine. Several processor properties contain absolute paths that must be updated to match your environment. After loading and starting NiFi, open the canvas and update the following:</p>
+<table>
+<thead>
+<tr>
+<th>Processor</th>
+<th>Property</th>
+<th>What to set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GetFile</code></td>
+<td>Input Directory</td>
+<td>Absolute path to <code>&lt;quanifi&gt;/demo/input/</code></td>
+</tr>
+<tr>
+<td><code>PutFile</code> (CSV output)</td>
+<td>Directory</td>
+<td>Absolute path to <code>&lt;quanifi&gt;/demo/output/</code></td>
+</tr>
+<tr>
+<td><code>PutFile</code> (processed)</td>
+<td>Directory</td>
+<td>Absolute path to <code>&lt;quanifi&gt;/demo/processed/</code></td>
+</tr>
+<tr>
+<td><code>QiskitCircuitReport</code> × 3</td>
+<td>Reports Directory</td>
+<td>Absolute path to <code>&lt;quanifi&gt;/reports/</code></td>
+</tr>
+<tr>
+<td><code>QuantumDistributionComparison</code></td>
+<td>Reports Directory</td>
+<td>Absolute path to <code>&lt;quanifi&gt;/reports/</code></td>
+</tr>
+<tr>
+<td><code>QuantumDistributionComparison</code></td>
+<td>State Directory</td>
+<td>Absolute path to <code>&lt;quanifi&gt;/reports/tmp/quanifi_compare_state/</code> (created automatically)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How to edit a property in NiFi:</strong>
+1. Right-click the processor on the canvas → <strong>Configure</strong>.
+2. Select the <strong>Properties</strong> tab.
+3. Click the value field of the property you want to change, type the new path, click <strong>OK</strong>.
+4. Click <strong>Apply</strong>.</p>
+<hr />
+<h2 id="8-starting-and-accessing-nifi">8. Starting and Accessing NiFi</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Start</span>
+<span class="nv">$NIFI_HOME</span>/bin/nifi.sh<span class="w"> </span>start
+
+<span class="c1"># Check status (shows PID when running)</span>
+<span class="nv">$NIFI_HOME</span>/bin/nifi.sh<span class="w"> </span>status
+
+<span class="c1"># Stop</span>
+<span class="nv">$NIFI_HOME</span>/bin/nifi.sh<span class="w"> </span>stop
+</code></pre></div>
+
+<p>NiFi takes 30–60 seconds to start. Once ready, open:</p>
+<div class="codehilite"><pre><span></span><code>https://localhost:8443/nifi
+</code></pre></div>
+
+<p>Your browser will warn about a self-signed certificate — accept the exception and continue.</p>
+<p><strong>First-time login:</strong> NiFi generates a random username and password on first start and prints them to the application log:</p>
+<div class="codehilite"><pre><span></span><code>grep<span class="w"> </span><span class="s2">&quot;Generated Username\|Generated Password&quot;</span><span class="w"> </span><span class="nv">$NIFI_HOME</span>/logs/nifi-app.log
+</code></pre></div>
+
+<p>To set a known username and password instead, run:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">$NIFI_HOME</span>/bin/nifi.sh<span class="w"> </span>set-single-user-credentials<span class="w"> </span>&lt;username&gt;<span class="w"> </span>&lt;password&gt;
+</code></pre></div>
+
+<p>Then restart NiFi.</p>
+<h3 id="verifying-processor-discovery">Verifying processor discovery</h3>
+<p>After starting, navigate to a blank area of the canvas, click <strong>+</strong> (Add Processor), and search for <code>Qiskit</code> or <code>Cirq</code>. All processors from <code>nifi_extensions/</code> should appear. If they don't:</p>
+<ol>
+<li>Confirm <code>nifi.python.extensions.source.directory.quanifi</code> points to the correct directory.</li>
+<li>Check <code>$NIFI_HOME/logs/nifi-app.log</code> for Python import errors.</li>
+<li>Confirm <code>.venv/bin/python3</code> has all required packages (<code>python3 -c "import qiskit, cirq, qrisp"</code>).</li>
+</ol>
+<h3 id="processor-first-use-delay">Processor first-use delay</h3>
+<p>The first time you drag a processor onto the canvas, NiFi creates an isolated venv for it and runs <code>pip install</code> for the packages listed in <code>ProcessorDetails.dependencies</code>. The processor shows <strong>Initializing</strong> for 20–60 seconds. Subsequent restarts reuse the cached venv.</p>
+<p>If you point <code>nifi.python.command</code> at the pre-populated <code>.venv</code> (as recommended in §5), the install step resolves almost immediately because the packages are already present.</p>
+<hr />
+<h2 id="9-creating-a-new-processor">9. Creating a New Processor</h2>
+<p>See <a href="creating-processors.html">CREATING_PROCESSORS.md</a> for the full skeleton, pitfall list, and available validators.</p>
+<p>Quick checklist:
+1. Create <code>nifi_extensions/MyProcessor.py</code> — file name must match the class name exactly.
+2. Check syntax before touching NiFi: <code>python3 -c "import ast; ast.parse(open('nifi_extensions/MyProcessor.py').read()); print('OK')"</code>.
+3. Run the test suite: <code>.venv/bin/python -m pytest -m "not slow"</code>.
+4. Restart NiFi — it picks up the new file on start.
+5. If you changed <code>PropertyDescriptor</code> definitions in an existing processor: delete <code>$NIFI_HOME/work/python/extensions/&lt;ProcessorName&gt;/</code> before restarting so NiFi rebuilds the venv with the new property metadata.</p>
+<hr />
+<h2 id="10-project-structure">10. Project Structure</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">quanifi</span><span class="o">/</span>
+<span class="err">│</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">nifi_extensions</span><span class="o">/</span><span class="w">          </span><span class="c1"># All NiFi Python processors (one class per file)</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Qiskit</span><span class="o">*.</span><span class="n">py</span><span class="w">            </span><span class="c1"># Qiskit circuit builders, simulators, report</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Cirq</span><span class="o">*.</span><span class="n">py</span><span class="w">              </span><span class="c1"># Cirq circuit builders and simulator</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Qrisp</span><span class="o">*.</span><span class="n">py</span><span class="w">             </span><span class="c1"># Qrisp all-in-one search and simulator</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Quantum</span><span class="o">*.</span><span class="n">py</span><span class="w">           </span><span class="c1"># Framework-agnostic: QuantumDistributionComparison</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">reporting</span><span class="o">.</span><span class="n">py</span><span class="w">          </span><span class="c1"># Shared HTML report helpers (not a processor)</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">QuanifiReport</span><span class="o">.</span><span class="n">py</span><span class="w">      </span><span class="c1"># Re-export shim for reporting.py</span>
+<span class="err">│</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">tests</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">conftest</span><span class="o">.</span><span class="n">py</span><span class="w">           </span><span class="c1"># nifiapi stubs, MockContext, MockFlowFile</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">test_qiskit</span><span class="o">.</span><span class="n">py</span><span class="w">        </span><span class="c1"># Qiskit processor unit tests</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">test_cirq</span><span class="o">.</span><span class="n">py</span><span class="w">          </span><span class="c1"># Cirq processor unit tests</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">test_qrisp</span><span class="o">.</span><span class="n">py</span><span class="w">         </span><span class="c1"># Qrisp processor tests (marked slow)</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">test_integration</span><span class="o">.</span><span class="n">py</span><span class="w">   </span><span class="c1"># End-to-end pipeline + cross-framework tests</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">test_reporting</span><span class="o">.</span><span class="n">py</span><span class="w">     </span><span class="c1"># HTML report processor tests</span>
+<span class="err">│</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">demo</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">input</span><span class="o">/</span><span class="n">team</span><span class="o">.</span><span class="n">csv</span><span class="w">        </span><span class="c1"># Sample CSV for the classic data-pipeline demo</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">output</span><span class="o">/</span><span class="w">               </span><span class="c1"># Populated by NiFi&#39;s PutFile processor</span>
+<span class="err">│</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">reports</span><span class="o">/</span><span class="w">                  </span><span class="c1"># HTML reports written at runtime by NiFi processors</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">tmp</span><span class="o">/</span><span class="w">                  </span><span class="c1"># Transient state files (QuantumDistributionComparison)</span>
+<span class="err">│</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">flow</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">gz</span><span class="w">              </span><span class="c1"># Exported NiFi canvas — load into $NIFI_HOME/conf/ (see §6)</span>
+<span class="err">│</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">README</span><span class="o">.</span><span class="n">md</span><span class="w">                 </span><span class="c1"># Processor API reference and example pipelines</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">DEVELOPER_GUIDE</span><span class="o">.</span><span class="n">md</span><span class="w">        </span><span class="c1"># This file</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">CREATING_PROCESSORS</span><span class="o">.</span><span class="n">md</span><span class="w">    </span><span class="c1"># Processor skeleton, validators, pitfall list</span>
+<span class="err">└──</span><span class="w"> </span><span class="n">pyproject</span><span class="o">.</span><span class="n">toml</span><span class="w">            </span><span class="c1"># Python project metadata; dev deps (pytest)</span>
+</code></pre></div>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pyQuil Components & Rigetti QVM Integration</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/quanifi-logo.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
+  <div class="top-header-block">
+    <div class="wrapper">
+      <div class="top-affiliation">
+        <span class="badge">USP</span>
+        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
+      </div>
+      <div class="top-links">
+        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="branding-group">
+        <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
+        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
+        <img src="../assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
+      </a>
+      <div class="header-actions">
+        <a href="../components.html" class="btn-each btn-primary">Processors</a>
+        <a href="../guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
+        <a href="../tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <nav id="site-navigation" role="navigation">
+    <div class="nav-wrapper">
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul class="main-menu">
+        <li class=""><a href="../index.html">Overview</a></li>
+        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class="active">
+          <a href="../guides/developer-guide.html">Guides &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/creating-processors.html">Creating Processors</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
+            <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
+            <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
+            <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="../tutorials/index.html">Tutorials &#9662;</a>
+          <ul class="dropdown-menu">
+            <li><a href="../tutorials/index.html">Curriculum Overview</a></li>
+            <li><a href="../tutorials/01_introduction_to_quanifi.html">01. Intro to Quanifi</a></li>
+            <li><a href="../tutorials/02_deutsch_jozsa.html">02. Deutsch-Jozsa Algorithm</a></li>
+            <li><a href="../tutorials/03_bernstein_vazirani.html">03. Bernstein-Vazirani Algorithm</a></li>
+            <li><a href="../tutorials/04_grover_search.html">04. Grover Search Algorithm</a></li>
+            <li><a href="../tutorials/05_portfolio_optimization_qaoa.html">05. QAOA Portfolio Optimization</a></li>
+            <li><a href="../tutorials/06_disconnected_graph_decomposition.html">06. Graph Decomposition</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="../screenshots/index.html">Canvas Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="content-wrapper">
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+        </div>
+    
+        <h3 class="widget-title">Core Reference</h3>
+        <ul class="widget-menu">
+        <li><a href="../index.html"><span>Documentation Hub</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Framework Guides</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/developer-guide.html"><span>Developer Guide</span></a></li>
+<li><a href="../guides/creating-processors.html"><span>Creating Processors</span></a></li>
+<li><a href="../guides/nifi-flow-configuration-guide.html"><span>NiFi Flow Configuration</span></a></li>
+<li class="active"><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
+<li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
+<li><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
+<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Testing & Mutation</h3>
+        <ul class="widget-menu">
+        <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
+<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
+<li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+        <h3 class="widget-title">Interactive Tutorials</h3>
+        <ul class="widget-menu">
+        <li><a href="../tutorials/index.html"><span>Tutorials Curriculum</span><span class="badge-count">Overview</span></a></li>
+<li><a href="../tutorials/01_introduction_to_quanifi.html"><span>01. Intro to Quanifi</span><span class="badge-count">Module 1</span></a></li>
+<li><a href="../tutorials/02_deutsch_jozsa.html"><span>02. Deutsch-Jozsa</span><span class="badge-count">Module 2</span></a></li>
+<li><a href="../tutorials/03_bernstein_vazirani.html"><span>03. Bernstein-Vazirani</span><span class="badge-count">Module 3</span></a></li>
+<li><a href="../tutorials/04_grover_search.html"><span>04. Grover Search</span><span class="badge-count">Module 4</span></a></li>
+<li><a href="../tutorials/05_portfolio_optimization_qaoa.html"><span>05. Portfolio QAOA</span><span class="badge-count">Module 5</span></a></li>
+<li><a href="../tutorials/06_disconnected_graph_decomposition.html"><span>06. Graph Decomposition</span><span class="badge-count">Module 6</span></a></li>
+</ul><div style='margin-bottom: 20px;'></div>
+
+      </div>
+    </aside>
+    
+
+    <main class="main-content">
+      <nav class="breadcrumbs">
+        <a href="../index.html">Home</a> <span class="sep">&rsaquo;</span> <a href="developer-guide.html">Guides</a> <span class="sep">&rsaquo;</span> <a href="pyquil-components.html">pyQuil Components</a>
+      </nav>
+
+      
+
+      <article>
+        <h1 id="pyquil-components">pyQuil components</h1>
+<p>Quanifi provides <strong>ten pyQuil processors</strong>: the existing Grover circuit builder
+and simulator, plus eight components for composition, variational algorithms,
+and the quantum Fourier transform. Install the whole <code>nifi_extensions/</code> directory,
+including its lowercase helper modules; copying a single processor file is not
+sufficient.</p>
+<h2 id="run-the-examples">Run the examples</h2>
+<p>From the framework root:</p>
+<div class="codehilite"><pre><span></span><code>uv<span class="w"> </span>sync<span class="w"> </span>--frozen<span class="w"> </span>--extra<span class="w"> </span>dev<span class="w"> </span>--extra<span class="w"> </span>iqm<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12
+.venv/bin/python<span class="w"> </span>tools/build_pyquil_examples.py<span class="w"> </span>--run
+</code></pre></div>
+
+<p>Open <a href="https://github.com/saeg/quanifi/tree/main/demo/pyquil/index.html">the illustrated canvas</a> for three flows,
+settings, recorded local outputs, and reports. The generator executes the real
+processors with the test harness's NiFi API stubs; it does not contact a provider
+or a running NiFi instance. Python 3.12 is used because some pinned dependencies
+in the full framework lockfile do not have Python 3.14 wheels.</p>
+<h3 id="import-into-nifi">Import into NiFi</h3>
+<ol>
+<li>Install the updated extension directory in NiFi's configured Python extension
+   source directory, including <code>pyquil_components.py</code>, <code>pyquil_processor.py</code>,
+   <code>quil_qasm.py</code> and <code>pauli_dsl.py</code>.</li>
+<li>Wait for the new processor types to appear. NiFi installs dependencies from
+   each processor's <code>ProcessorDetails.dependencies</code> in its own environment.
+   The repository <code>.venv</code> and <code>uv.lock</code> do not configure those environments.</li>
+<li>Import <a href="https://github.com/saeg/quanifi/tree/main/demo/pyquil/pyquil-examples.json">pyquil-examples.json</a> as a
+   process group using NiFi's flow upload/import action. This is a versioned flow
+   snapshot, <strong>not</strong> a replacement for <code>conf/flow.json.gz</code>.</li>
+<li>The snapshot targets the <code>nifi-standard-nar</code> <strong>2.9.0</strong> bundle. For another NiFi
+   version, regenerate, for example:
+   <code>python tools/build_pyquil_examples.py --nifi-version 2.11.0 --run</code>.
+   Use the project <code>.venv/bin/python</code> for this command.</li>
+<li>All processors import stopped (<code>ENABLED</code> in NiFi's flow schema). Set each
+   report's <strong>Reports Directory</strong> to a writable directory; the default is
+   <code>reports/pyquil</code>, relative to the NiFi worker's current working directory.</li>
+<li>Start the downstream processors, then select <strong>Run Once</strong> on each
+   <code>GenerateFlowFile</code> trigger. Starting the triggers normally produces a new
+   example every minute. Failure connections lead to funnels for inspection;
+   their contents are not discarded. Inspect the queued FlowFile's <code>*.error</code>
+   attribute to diagnose a failed step.</li>
+</ol>
+<p>The optional <code>iqm</code> extra is needed for the full framework test suite, including
+its existing IQM tests; pyQuil examples alone do not require it.</p>
+<p>The saved local results validate processor execution and configuration. They do
+not establish that a particular live NiFi installation has loaded the extensions
+or successfully imported the flow.</p>
+<h2 id="composition">Composition</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">flowchart</span><span class="w"> </span><span class="n">LR</span>
+<span class="w">  </span><span class="n">A</span><span class="p">[</span><span class="n">PyquilPhaseOracle</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">PyquilGroverOperator</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">PyquilSimulator</span><span class="p">]</span>
+<span class="w">  </span><span class="n">H</span><span class="p">[</span><span class="n">Hamiltonian</span><span class="w"> </span><span class="n">producer</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="n">PyquilAnsatz</span><span class="o">:</span><span class="w"> </span><span class="n">attach</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E</span><span class="p">[</span><span class="n">PyquilVQE</span><span class="p">]</span>
+<span class="w">  </span><span class="n">H</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">PyquilQAOA</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">K</span><span class="p">[</span><span class="n">Any</span><span class="w"> </span><span class="n">simulator</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">L</span><span class="p">[</span><span class="n">QuantumQAOAEvaluator</span><span class="p">]</span>
+<span class="w">  </span><span class="n">H</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">G</span><span class="p">[</span><span class="n">PyquilQAOACircuit</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">I</span><span class="p">[</span><span class="n">PyquilExpectation</span><span class="p">]</span>
+<span class="w">  </span><span class="n">G</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">K</span>
+</code></pre></div>
+
+<p>Grover has three quantum stages: mark a state, prepare/amplify it, and sample it.
+The trigger and report are ordinary workflow plumbing. The oracle is an
+<strong>unmeasured phase-flip circuit</strong>, with no uniform-state preparation. Supplying a
+complete Grover circuit to <code>PyquilGroverOperator</code> does not represent the same
+algorithm.</p>
+<p>VQE separates the Hamiltonian, trial-state recipe (ansatz), and solver. The
+classical optimization loop stays in the solver so its state is scoped to one
+FlowFile. It calls the same native builder exposed by <code>PyquilAnsatz</code> and the
+same expectation function exposed by <code>PyquilExpectation</code>. Unlike QAOA below,
+<code>PyquilVQE</code> still samples its own final counts (see "Output metadata").</p>
+<p>QAOA similarly shares its native construction between <code>PyquilQAOACircuit</code> and
+<code>PyquilQAOA</code> (both call <code>pyquil_components.qaoa</code>, via <code>pyquil_processor.qaoa_export</code>).
+Both are <strong>train/build-only</strong>: they emit the bound circuit as portable
+OpenQASM 2.0 and never sample. Use <code>PyquilQAOACircuit</code> to sweep explicit
+angles with data-driven tests, compare engines, or evaluate an observable;
+use <code>PyquilQAOA</code> to optimize angles. Either way, connect the output to any
+counts-emitting simulator (<code>PyquilSimulator</code> or any other framework's), then
+<code>QuantumQAOAEvaluator</code> to compute the sample-dependent QAOA metrics — see the
+<a href="qaoa-components.html">QAOA components guide</a> for the full chain, property
+tables and the N×M example. Existing producers such as <code>QiskitHamiltonian</code> or
+<code>CirqHamiltonian</code> provide the framework-neutral Hamiltonian. No separate
+pyQuil Hamiltonian processor is needed.</p>
+<h2 id="processor-reference">Processor reference</h2>
+<p>All new properties support FlowFile-attribute Expression Language, for example
+<code>${grover.marked_state}</code> or <code>${qaoa.betas}</code>. Validation errors route to <code>failure</code>,
+preserve the input content, and set the indicated error attribute. Successful
+execution of an optimizer does not imply convergence; inspect <code>*.converged</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Processor</th>
+<th>Input → output</th>
+<th>Properties (defaults)</th>
+<th>Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PyquilPhaseOracle</code></td>
+<td>Trigger → oracle QASM2</td>
+<td>Marked State (<code>11</code>)</td>
+<td><code>grover.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilGroverOperator</code></td>
+<td>Oracle QASM2/3 → Grover QASM2</td>
+<td>Num Iterations (<code>1</code>)</td>
+<td><code>grover.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilGroverCircuit</code></td>
+<td>Trigger → complete Grover QASM2</td>
+<td>Marked State (<code>11</code>), Num Iterations (<code>1</code>), Output Format (<code>qasm2</code>)</td>
+<td><code>grover.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilSimulator</code></td>
+<td>Circuit QASM2/3 → counts JSON</td>
+<td>Shots (<code>1024</code>), Random Seed (unset), Noise Model (<code>none</code>), Error Probability (<code>0.01</code>)</td>
+<td><code>sim.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilAnsatz</code></td>
+<td>Trigger → bound QASM2, or Hamiltonian → Hamiltonian + recipe</td>
+<td>Output Mode (<code>circuit</code>), Num Qubits (<code>2</code>), Reps (<code>1</code>), Rotations (<code>ry_rz</code>), Entanglement (<code>linear</code>), Parameters (<code>zeros</code>)</td>
+<td><code>ansatz.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilExpectation</code></td>
+<td>Circuit QASM2/3 + Hamiltonian property → expectation JSON</td>
+<td>Hamiltonian (<code>${hamiltonian.json:replaceEmpty('Z0')}</code>)</td>
+<td><code>expectation.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilVQE</code></td>
+<td>Hamiltonian + pyQuil recipe → counts JSON + VQE attributes</td>
+<td>Solver properties below</td>
+<td><code>vqe.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilQAOACircuit</code></td>
+<td>Diagonal Hamiltonian → bound QASM2 + builder attributes</td>
+<td>Layers (<code>1</code>), Betas (<code>0.39269908169872414</code>), Gammas (<code>0.7853981633974483</code>)</td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilQAOA</code></td>
+<td>Diagonal Hamiltonian → trained, bound QASM2 + training attributes (<code>qaoa.optimal_parameters</code>, <code>qaoa.optimal_value</code>, …)</td>
+<td>Layers (<code>2</code>), Optimizer/Max Iterations/Initial Parameters/Random Seed — see the <a href="qaoa-components.html">QAOA components guide</a></td>
+<td><code>qaoa.error</code></td>
+</tr>
+<tr>
+<td><code>PyquilQFT</code></td>
+<td>Trigger or circuit QASM2/3 → QFT QASM2</td>
+<td>Input Mode (<code>new</code>), Num Qubits (<code>2</code>), Inverse (<code>false</code>), Include Swaps (<code>true</code>)</td>
+<td><code>qft.error</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="common-solver-properties-pyquilvqe">Common solver properties (<code>PyquilVQE</code>)</h3>
+<p>These are <code>PyquilVQE</code>'s own properties; it is the only pyQuil solver that still
+samples its own final counts. <code>PyquilQAOA</code> shares the same optimizer mechanics
+(<code>minimize_energy</code> in <code>pyquil_processor.py</code>) but a different property set — no
+<code>Shots</code> (it trains only, and never samples), <code>Layers</code> instead of an ansatz
+recipe, and <code>Random Seed</code> is unset by default, not <code>42</code>. See the
+<a href="qaoa-components.html">QAOA components guide</a> for <code>PyquilQAOA</code>'s exact properties.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Optimizer</td>
+<td><code>COBYLA</code></td>
+<td><code>COBYLA</code>, <code>POWELL</code>, or <code>L_BFGS_B</code> (finite-difference gradients)</td>
+</tr>
+<tr>
+<td>Max Iterations</td>
+<td><code>100</code></td>
+<td>1–10000. COBYLA uses an evaluation budget; other methods use an iteration budget. SciPy may raise a too-small COBYLA budget to at least <code>number of parameters + 2</code>.</td>
+</tr>
+<tr>
+<td>Shots</td>
+<td><code>1024</code></td>
+<td>1–1000000, only for final sampling; does not affect exact-energy optimization</td>
+</tr>
+<tr>
+<td>Initial Parameters</td>
+<td><code>random</code></td>
+<td><code>random</code>, <code>zeros</code>, or a JSON/comma-separated list of finite angles</td>
+</tr>
+<tr>
+<td>Random Seed</td>
+<td><code>42</code></td>
+<td>Integer 0–4294967295 for initial parameters and final sampling</td>
+</tr>
+</tbody>
+</table>
+<p>A finite result with exhausted iteration budget routes to <code>success</code> with
+<code>vqe.converged=false</code> or <code>qaoa.converged=false</code>, the optimizer message, and actual
+function evaluation count. This allows a downstream router to decide whether to
+accept the approximate result. These are local minimizers; a converged result
+need not be the global ground energy.</p>
+<h3 id="ansatz-recipe-and-angles">Ansatz recipe and angles</h3>
+<p><code>Output Mode=attach</code> requires Hamiltonian content and
+<code>hamiltonian.format=sparse_pauli_op_json</code>. It preserves the content, obtains the
+width from the Hamiltonian, and writes a versioned recipe in
+<code>ansatz.pyquil_json</code> with <code>ansatz.format=pyquil_recipe_json</code>. <code>Num Qubits</code> and
+<code>Parameters</code> are ignored in this mode. The recipe is a small declarative JSON
+object, not executable code or a pickled Python object.</p>
+<p><code>Output Mode=circuit</code> uses <code>Num Qubits</code> and binds <code>Parameters</code>; <code>zeros</code> means
+all angles are zero. The <strong>bound</strong> circuit has <code>circuit.num_parameters=0</code> while
+<code>ansatz.num_parameters</code> describes the reusable recipe's parameter count.</p>
+<p>Each of <code>Reps</code> layers has rotations followed by CNOT entanglement; a final rotation
+layer follows. <code>Reps=0</code> is allowed. With <code>n</code> qubits and <code>r</code> repetitions there are
+<code>n*(r+1)</code> parameters for <code>ry</code>, or <code>2*n*(r+1)</code> for <code>ry_rz</code>. Parameters run in layer
+order, then qubit order, then RY followed by RZ. Entanglement is <code>linear</code>, <code>full</code>
+(all index pairs in increasing order), or <code>none</code>. The same order applies to VQE
+initial/optimal parameter lists.</p>
+<h3 id="hamiltonians-and-expectations">Hamiltonians and expectations</h3>
+<p>The shared Hamiltonian content uses <strong>MSB-first Pauli labels</strong>, as other Quanifi
+Hamiltonian producers do:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;num_qubits&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="nt">&quot;terms&quot;</span><span class="p">:[[</span><span class="s2">&quot;IZ&quot;</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],[</span><span class="s2">&quot;XX&quot;</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]]}</span>
+</code></pre></div>
+
+<p><code>IZ</code> means Z on <strong>qubit 0</strong>, and <code>XX</code> means X on both qubits. Labels must match
+the register width. Coefficients must be finite and real; nonzero imaginary
+parts are rejected. Identity terms contribute to energy, even when omitted from
+QAOA's circuit because they contribute only global phase. Widths must match;
+<code>PyquilExpectation</code> does not silently drop idle qubits or truncate observables.</p>
+<p><code>PyquilExpectation.Hamiltonian</code> also accepts the existing indexed DSL, for example
+<code>Z0 + 0.5 X0 X1</code>, and the DSL's JSON term form. Decimal notation and term syntax
+follow <code>pauli_dsl.py</code>. Duplicate factors on the same qubit are rejected. A
+QAOA circuit carries its cost in <code>hamiltonian.json</code>, which the default property
+reads. An ordinary circuit without that attribute defaults to <code>Z0</code>.</p>
+<p>Example output:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;expectation&quot;</span><span class="p">:</span><span class="mf">-0.5</span><span class="p">,</span><span class="nt">&quot;num_qubits&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;exact_statevector&quot;</span><span class="p">,</span><span class="nt">&quot;framework&quot;</span><span class="p">:</span><span class="s2">&quot;pyquil&quot;</span><span class="p">}</span>
+</code></pre></div>
+
+<p>The same value is in <code>expectation.value</code>; this output is not a shot-count
+histogram and should not be fed to a distribution-comparison oracle.</p>
+<h3 id="qaoa-convention">QAOA convention</h3>
+<p>The objective is <strong>minimized</strong>. Each layer applies <code>exp(-i gamma H)</code> followed by
+<code>exp(-i beta sum(X))</code> (RX angle <code>2*beta</code> on each qubit), starting from a uniform
+superposition. Only I/Z Hamiltonians are supported. For maximum-cut, minimize
+the negative cut: <code>-0.5 + 0.5 Z0 Z1</code> for one unweighted edge.</p>
+<p><code>Betas</code> and <code>Gammas</code> each contain <code>Layers</code> finite angles. Solver parameter order
+is all betas followed by all gammas. The default circuit angles are an example
+setting, not a promise of optimality for an arbitrary cost.</p>
+<p><code>qaoa.optimal_value</code> is <code>PyquilQAOA</code>'s own exact expectation at its optimized
+parameters (<code>energy_method=exact_statevector</code>) — it comes straight from the
+solver, no simulator needed. Everything <strong>sample-dependent</strong> —
+<code>qaoa.best_measurement</code>, <code>qaoa.best_value</code> (the lowest-cost <strong>sampled</strong>
+bitstring, which can differ from the most frequent result, <code>sim.top_result</code>),
+<code>qaoa.sampled_expectation</code>, <code>qaoa.exact_minimum</code>/<code>exact_maximum</code>,
+<code>qaoa.approximation_ratio</code>, <code>qaoa.expectation_ratio</code> and <code>qaoa.optimal_probability</code>
+— comes from <code>QuantumQAOAEvaluator</code>, computed from whichever simulator's counts
+you connect downstream, not from <code>PyquilQAOA</code>/<code>PyquilQAOACircuit</code> themselves.
+<code>qaoa.exact_minimum</code>/<code>exact_maximum</code> are the evaluator's own enumerated
+classical reference; <code>approximation_ratio = (Emax - Ebest)/(Emax - Emin)</code>, or 1
+for a constant cost. None of this is a claim of quantum advantage.</p>
+<h3 id="qft-convention">QFT convention</h3>
+<p>With swaps, forward QFT has matrix
+<code>F[y,x] = exp(2*pi*i*x*y/2**n)/sqrt(2**n)</code> for integers written with qubit 0 on the
+left. <code>Input Mode=append</code> places it after the incoming circuit and derives the
+width from that circuit. <code>Inverse=true</code> inverts the <strong>entire selected forward
+circuit</strong>; with swaps, this means swaps appear first. Disabling swaps leaves
+bit-reversed forward output. Inverting that same no-swap circuit still undoes it.</p>
+<h2 id="output-metadata-and-interoperability">Output metadata and interoperability</h2>
+<p>Circuit builders emit unmeasured OpenQASM 2.0 content, a matching
+<code>circuit.qasm2</code> attribute, metrics and <code>builder.framework=pyquil</code>. The Grover
+legacy component preserves its existing <code>builder.component=PyquilGrover</code> and
+<code>circuit.bit_order=canonical</code> alias. New components use <code>q0_left</code> explicitly.
+All displayed/sample bitstrings put qubit 0 on the left.</p>
+<p><code>PyquilVQE</code> emits <strong>counts in content</strong>; the optimized unmeasured circuit is
+stored in <code>circuit.qasm2</code>. To execute it on a different engine, use NiFi
+<code>ReplaceText</code> (Entire text, Always Replace) with replacement <code>${circuit.qasm2}</code>
+and retain <code>circuit.format=qasm2</code>. Do not send the counts content directly to a
+simulator. <code>PyquilVQE</code> also emits <code>report.type=simulation</code> for <code>QuanifiReport</code>,
+<code>sim.*</code>, <code>run.seed</code>, and <code>vqe.*</code>: <code>framework</code>, <code>optimal_value</code>,
+<code>optimal_parameters</code>, <code>cost_function_evals</code>, <code>max_iterations</code>, <code>converged</code>,
+<code>optimizer_message</code>, <code>optimizer</code>, <code>num_qubits</code>, <code>shots</code>,
+<code>energy_method=exact_statevector</code>.</p>
+<p><code>PyquilQAOA</code> and <code>PyquilQAOACircuit</code> are different: <strong>content is the qasm2
+circuit itself</strong>, not counts, and there is nothing to <code>ReplaceText</code> — connect
+their <code>success</code> relationship directly to any counts simulator. They emit
+<code>report.type=circuit</code>, no <code>sim.*</code> keys, and <code>qaoa.*</code>: <code>framework</code>,
+<code>layers</code>, <code>betas</code>, <code>gammas</code> (builder attributes, both processors), plus
+(<code>PyquilQAOA</code> only) <code>optimal_parameters</code>, <code>optimal_value</code>,
+<code>energy_method=exact_statevector</code>, <code>cost_function_evals</code>, <code>max_iterations</code>,
+<code>converged</code>, <code>optimizer_message</code>, <code>optimizer</code>, <code>seed</code>. The sample-dependent
+<code>qaoa.best_measurement</code>/<code>best_value</code>/<code>approximation_ratio</code>/etc. are not present
+until <code>QuantumQAOAEvaluator</code> runs downstream of a simulator — see the
+<a href="qaoa-components.html">QAOA components guide</a>.</p>
+<p>QASM import uses Qiskit solely to parse/rebase gates. Circuit construction and
+state evolution use pyQuil. No <code>get_qc</code>, remote <code>WavefunctionSimulator</code>, quilc
+server, QVM server, or hardware account is required. Only the existing
+<code>PyquilSimulator</code> supports post-gate noise; the new variational solvers and
+expectation evaluator are ideal statevector computations. Their final histograms
+sample the optimized pyQuil wavefunction with a seeded NumPy generator.</p>
+<h2 id="limits-and-validation">Limits and validation</h2>
+<ul>
+<li>Grover: 1–8 qubits, 0–100 iterations; the ancilla-free phase decomposition has
+  exponential gate cost. Zero iterations produce only the uniform state.</li>
+<li>Existing <code>PyquilSimulator</code>: up to 16 ideal or 8 noisy qubits and 1–1000000 shots.
+  Density-matrix simulation grows as 4**n; use small circuits/shot budgets.</li>
+<li>New general components/local exact simulation: 1–16 qubits, at most 16
+  ansatz repetitions or QAOA layers; at most 4096 Hamiltonian terms. These are
+  guardrails, not performance promises. Statevector cost grows exponentially.</li>
+<li>QASM interchange accepts unitary gate circuits; final measurements are removed
+  before fresh execution. Mid-circuit measurements, resets and classical control
+  are not supported. Gate modifiers and unbound/nonfinite gate angles are
+  rejected by the exporter. SWAP exports as three CNOTs for strict QASM2 readers.</li>
+<li>Local seed reproducibility is verified with the project's pinned versions.
+  Library upgrades can change optimizer trajectories or sampled counts.</li>
+</ul>
+<h2 id="validation-and-continuation">Validation and continuation</h2>
+<div class="codehilite"><pre><span></span><code>.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_pyquil.py<span class="w"> </span>tests/test_pyquil_components.py<span class="w"> </span>tests/test_pyquil_processors.py<span class="w"> </span>tests/test_pyquil_examples.py<span class="w"> </span>-q
+.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q<span class="w"> </span>--tb<span class="o">=</span>short
+</code></pre></div>
+
+<p>The tests compare phase flips, Fourier matrices and cost evolution with analytical
+or independently constructed references, verify solver ground energies and
+exported optimal circuits, test malformed inputs and EL, and exercise the same
+configuration used by the example canvas.</p>
+<p>API reference: <a href="https://pyquil-docs.rigetti.com/en/stable/apidocs/pyquil.simulation.html">pyQuil local simulation documentation</a>.
+The implementation was also checked against installed pyQuil 4.18.0.</p>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer (EACH USP Aesthetic) -->
+  <footer id="colophon" class="site-footer" role="contentinfo">
+    <div class="footer-wrapper">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h3>Quanifi Project</h3>
+          <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
+          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Institutional</h3>
+          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
+          Universidade de São Paulo<br>
+          Rua Arlindo Béttio, 1000<br>
+          Ermelino Matarazzo, São Paulo - SP<br>
+          CEP: 03828-000</p>
+          <ul>
+            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
+            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
+            <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
+            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
+            <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
+            <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Source &amp; Licensing</h3>
+          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <ul>
+            <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
+            <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wrapper">
+        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

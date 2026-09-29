@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <defs>
+    <linearGradient id="qGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#01a1c0" />
+      <stop offset="100%" stop-color="#00778f" />
+    </linearGradient>
+    <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fa9e2c" />
+      <stop offset="100%" stop-color="#f57c00" />
+    </linearGradient>
+  </defs>
+
+  <!-- Quantum / NiFi Flow Icon -->
+  <g transform="translate(6, 6)">
+    <!-- Outer Glow / Halo -->
+    <circle cx="24" cy="24" r="23" fill="#eef8fa" stroke="#01a1c0" stroke-width="1.5" stroke-dasharray="3 3"/>
+    
+    <!-- Central Q Sphere -->
+    <circle cx="24" cy="24" r="15" fill="url(#qGrad)"/>
+    
+    <!-- Orbital Rings (representing quantum state / NiFi flow) -->
+    <ellipse cx="24" cy="24" rx="20" ry="7" fill="none" stroke="url(#orbitGrad)" stroke-width="2.5" transform="rotate(-30 24 24)"/>
+    <ellipse cx="24" cy="24" rx="20" ry="7" fill="none" stroke="#fa9e2c" stroke-width="1.5" stroke-dasharray="2 2" transform="rotate(45 24 24)"/>
+    
+    <!-- Q Tail / Arrow -->
+    <path d="M 28 28 L 39 39 M 35 39 L 39 39 L 39 35" fill="none" stroke="#fa9e2c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Core Qubit Point -->
+    <circle cx="24" cy="24" r="3.5" fill="#ffffff"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="64" y="32" font-family="'Roboto', -apple-system, sans-serif" font-size="25" font-weight="800" letter-spacing="-0.5" fill="#01a1c0">QUANI<tspan fill="#fa9e2c">FI</tspan></text>
+  <text x="65" y="46" font-family="'Roboto', -apple-system, sans-serif" font-size="9.5" font-weight="500" letter-spacing="0.5" fill="#5471b5" text-transform="uppercase">Visual Quantum Engineering</text>
+</svg>
