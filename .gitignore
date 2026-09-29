@@ -75,6 +75,9 @@ token_*iqm*.txt
 # Local Django development database
 db.sqlite3
 
+# collectstatic output (STATIC_ROOT); regenerate with `manage.py collectstatic`
+var/
+
 # Terraform local state and per-environment values
 **/.terraform/
 *.tfstate
