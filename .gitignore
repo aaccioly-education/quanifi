@@ -110,7 +110,6 @@ token_iqm.txt
 *token*IQM*.txt
 
 # Runtime coordination only; the file contains no campaign evidence.
-experiments/results/generation2/.window-runner.lock
 
 # Open Quantum SDK service-account key (secret; path only in .env)
 sdk-key-openquantum*.json

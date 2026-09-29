@@ -35,7 +35,7 @@ on an Apple Silicon Mac using Docker Desktop. They are reference measurements, n
 ## Quick start
 
 ```bash
-git clone <this repo> quanifi
+git clone https://github.com/saeg/quanifi.git quanifi
 cd quanifi
 docker compose up
 ```

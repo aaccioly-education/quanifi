@@ -29,6 +29,16 @@
 </header>
 
 <main class="container">
+  <aside class="callout">
+    <p><strong>Setup required:</strong> These tutorials describe separately configured
+    example flows. The Docker quick start loads only the Qiskit Grover flow;
+    the groups shown here are not preinstalled. Enable the processors needed by
+    the tutorial and construct its flow before following the canvas steps.
+    See the <a href="../docs/guides/DOCKER_QUICKSTART.md">Docker guide</a>
+    for processor selection and first-run setup. URLs below use the default Docker
+    port; use your configured address and credentials for other installations.</p>
+  </aside>
+
 
   <h1>Module 3: The Bernstein-Vazirani Algorithm</h1>
   <p class="lead">
@@ -183,7 +193,7 @@
 
     <h3>Executing the Pipeline:</h3>
     <ol>
-      <li>Log in to NiFi (<a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a>).</li>
+      <li>Log in to NiFi (<a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a>).</li>
       <li>Navigate to <code>Qrisp Components &amp; Textbook Algorithms</code>.</li>
       <li>Right-click <strong><code>BV — Trigger</code></strong> and select <strong>Run Once</strong>.</li>
       <li>In ~2 seconds, the FlowFile traverses through <code>Qrisp Bernstein-Vazirani</code> into <code>BV — Report</code>.</li>
@@ -244,7 +254,7 @@
     </p>
     <p><strong>Your Task:</strong></p>
     <ol>
-      <li>In the NiFi canvas (<a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a>), stop <strong><code>Qrisp Bernstein-Vazirani</code></strong>.</li>
+      <li>In the NiFi canvas (<a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a>), stop <strong><code>Qrisp Bernstein-Vazirani</code></strong>.</li>
       <li>Configure it and set <strong>Secret Bitstring</strong> to the asymmetric, non-palindromic string <code>1100</code>. Apply changes and restart the processor.</li>
       <li>Trigger the flow: right-click <strong><code>BV — Trigger</code></strong> and choose <strong>Run Once</strong>.</li>
       <li>Inspect the report card in <code>reports/qrisp-bernstein-vazirani.html</code>.</li>

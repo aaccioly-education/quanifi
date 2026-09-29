@@ -29,6 +29,16 @@
 </header>
 
 <main class="container">
+  <aside class="callout">
+    <p><strong>Setup required:</strong> These tutorials describe separately configured
+    example flows. The Docker quick start loads only the Qiskit Grover flow;
+    the groups shown here are not preinstalled. Enable the processors needed by
+    the tutorial and construct its flow before following the canvas steps.
+    See the <a href="../docs/guides/DOCKER_QUICKSTART.md">Docker guide</a>
+    for processor selection and first-run setup. URLs below use the default Docker
+    port; use your configured address and credentials for other installations.</p>
+  </aside>
+
 
   <h1>Module 5: Variational Optimization &amp; The Constrained XY Mixer (QAOA)</h1>
   <p class="lead">
@@ -262,7 +272,7 @@
     </p>
     <p><strong>Your Task:</strong></p>
     <ol>
-      <li>In the NiFi canvas (<a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a>), stop <strong><code>Portfolio Encoder</code></strong>.</li>
+      <li>In the NiFi canvas (<a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a>), stop <strong><code>Portfolio Encoder</code></strong>.</li>
       <li>Configure it and change the <strong>Risk Factor</strong> property from <code>0.5</code> to a high risk aversion of <code>5.0</code>. Apply changes and restart the processor.</li>
       <li>Trigger the pipeline: right-click <strong><code>Portfolio — Trigger</code></strong> and choose <strong>Run Once</strong>.</li>
       <li>Inspect the newly appended report card in <code>reports/qrisp-qaoa-portfolio.html</code>.</li>

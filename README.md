@@ -9,7 +9,7 @@ Inspire. Processors exchange circuits through a shared FlowFile attribute
 contract and, where supported, OpenQASM 2.0.
 
 This repository contains framework code, tests, examples, and user-facing
-documentation. Research campaigns, paper-specific analysis, raw experimental
+documentation. Research campaigns, study-specific analysis, raw experimental
 results, and internal development material are maintained separately.
 
 ## Quick start (Docker)
@@ -21,7 +21,7 @@ results, and internal development material are maintained separately.
 > processors through `.env`. [Enable additional processors](docs/guides/DOCKER_QUICKSTART.md#adding-processors-to-the-image).
 
 ```bash
-git clone <this repo> quanifi
+git clone https://github.com/saeg/quanifi.git quanifi
 cd quanifi
 docker compose up
 ```
@@ -58,7 +58,7 @@ configuration, connecting reports to the browser, and troubleshooting.
 Full interactive documentation, processor guides, and tutorials are published at:
 **[https://saeg.github.io/quanifi/](https://saeg.github.io/quanifi/)**
 
-- **[Component Catalogue](https://saeg.github.io/quanifi/components.html)** — 69+ processors across Qiskit, Cirq, Qrisp, PennyLane, and pyQuil
+- **[Component Catalogue](https://saeg.github.io/quanifi/components.html)** — available processors across Qiskit, Cirq, Qrisp, PennyLane, and pyQuil
 - **[Flow Configuration Guide](https://saeg.github.io/quanifi/guides/nifi-flow-configuration-guide.html)** — processor properties, contracts, and canvas design
 - **[Developer Guide](https://saeg.github.io/quanifi/guides/developer-guide.html)** — setup, development workflow, and testing
 - **[Interactive Tutorials](https://saeg.github.io/quanifi/tutorials/index.html)** — step-by-step algorithms (Deutsch-Jozsa, Grover, QAOA, etc.)

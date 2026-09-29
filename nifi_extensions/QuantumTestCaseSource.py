@@ -35,7 +35,7 @@ import arithmetic_spec as aspec
 # Each operator mutates one attribute of a test-case row *before* it is fanned
 # out to the framework branches, so the branch reading ${grover.marked_state}
 # never knows it is running a mutant.  Detection is by cross-framework
-# consensus downstream (see MUTATION_TESTING.md §3).
+# consensus downstream .
 #
 # An operator is `(target_attribute, fn)` where ``fn(value, rng) -> new_value``
 # returns the mutated string, or ``None`` if the mutation is inapplicable to
@@ -264,7 +264,7 @@ class QuantumTestCaseSource(FlowFileTransform):
     ``mut.base_case_id`` so a downstream consensus oracle can score them and so
     control dissents (a real framework discrepancy, never a kill) can be excluded
     from the survival rate. With no operators configured the output is byte-for-
-    byte the legacy behaviour. See MUTATION_TESTING.md.
+    byte the legacy behaviour.
     """
 
     class Java:

@@ -13,7 +13,7 @@
 > *oracle sensitivity*, not mutation testing in the classical sense. Stage 8
 > mutates the *circuit itself* on one branch (Layer A) — that is **mutation
 > testing proper**, and it evaluates the differential harness via the
-> reference-free DISAGREE path. See MUTATION_TESTING.md §0/§2.
+> reference-free DISAGREE path.
 
 All property values that start with `${…}` are NiFi Expression Language; they
 read a FlowFile attribute that `EvaluateJsonPath` hoisted from the test-case row.
@@ -376,7 +376,7 @@ mutants (same `mut.seed` per mutant).
 ### 7a. DISAGREE (single-branch dissent) — and the masquerading-fault demo
 
 Whole-case mutation produces FAIL, not DISAGREE. To see a **single-branch
-dissent** (and demonstrate the dissertation's control-row safeguard), deliberately
+dissent** (and demonstrate control-row handling), deliberately
 break one branch so it dissents on *every* row:
 
 - On **CirqGroverCircuit**, set `Marked State` to the literal `00` (ignore the
@@ -469,7 +469,7 @@ The mutator reads `circuit.format` and supports `qasm2`/`qasm3` only —
 > just before measurement doesn't change the measured distribution — an
 > **equivalent mutant**; argmax voting can't kill it. That's the survival-rate
 > signal QMutBench is built around, and the motivation for the statistical
-> (distribution-level) kill criterion in MUTATION_TESTING.md §7 step 5.
+> (distribution-level) comparison of control and mutant outputs.
 
 ---
 
@@ -490,6 +490,4 @@ The mutator reads `circuit.format` and supports `qasm2`/`qasm3` only —
 
 ## Cross-references
 
-- Pipeline design, decisions, and verdict semantics: `MUTATION_TESTING.md`.
-- The control-row safeguard rationale: `DISSERTATION.md`.
 - The EL attribute contract these branches rely on: `DATA_DRIVEN_TESTING.md`.

@@ -11,7 +11,7 @@
 # see <https://www.gnu.org/licenses/>. Commercial licensing is also available:
 # see COMMERCIAL.md at the repository root.
 
-"""Fail-closed IBM quota reservation for the Generation-2 hardware campaign.
+"""Fail-closed IBM quota reservation for hardware campaigns.
 
 The IBM Open Plan reports account usage separately from a job's provider-side
 usage estimate.  Immediately before a submission we need both: the live account

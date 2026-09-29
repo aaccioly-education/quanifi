@@ -29,6 +29,16 @@
 </header>
 
 <main class="container">
+  <aside class="callout">
+    <p><strong>Setup required:</strong> These tutorials describe separately configured
+    example flows. The Docker quick start loads only the Qiskit Grover flow;
+    the groups shown here are not preinstalled. Enable the processors needed by
+    the tutorial and construct its flow before following the canvas steps.
+    See the <a href="../docs/guides/DOCKER_QUICKSTART.md">Docker guide</a>
+    for processor selection and first-run setup. URLs below use the default Docker
+    port; use your configured address and credentials for other installations.</p>
+  </aside>
+
 
   <h1>Module 2: The Deutsch-Jozsa Algorithm</h1>
   <p class="lead">
@@ -197,7 +207,7 @@
 
     <h3>Triggering the Flow:</h3>
     <ol>
-      <li>Open NiFi at <a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a> and enter the <code>Qrisp Components &amp; Textbook Algorithms</code> group.</li>
+      <li>Open NiFi at <a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a> and enter the <code>Qrisp Components &amp; Textbook Algorithms</code> group.</li>
       <li>Right-click on <strong><code>DJ — Trigger</code></strong> and click <strong>Run Once</strong> (or start and immediately stop it).</li>
       <li>Watch the FlowFile move across the queue into <code>Qrisp Deutsch-Jozsa</code> and then into <code>DJ — Report</code>. In ~2 seconds, all queues return to 0.</li>
     </ol>
@@ -258,7 +268,7 @@
     </p>
     <p><strong>Your Task:</strong></p>
     <ol>
-      <li>In the NiFi canvas (<a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a>), right-click on <strong><code>Qrisp Deutsch-Jozsa</code></strong> and click <strong>Stop</strong>.</li>
+      <li>In the NiFi canvas (<a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a>), right-click on <strong><code>Qrisp Deutsch-Jozsa</code></strong> and click <strong>Stop</strong>.</li>
       <li>Right-click it again, select <strong>Configure</strong>, and switch to the <strong>PROPERTIES</strong> tab.</li>
       <li>Change the <strong>Function Type</strong> property from <code>balanced</code> to <code>constant_zero</code>. Click <strong>Apply</strong>.</li>
       <li>Right-click the processor and click <strong>Start</strong> (it should show a green play icon).</li>

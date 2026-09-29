@@ -29,6 +29,16 @@
 </header>
 
 <main class="container">
+  <aside class="callout">
+    <p><strong>Setup required:</strong> These tutorials describe separately configured
+    example flows. The Docker quick start loads only the Qiskit Grover flow;
+    the groups shown here are not preinstalled. Enable the processors needed by
+    the tutorial and construct its flow before following the canvas steps.
+    See the <a href="../docs/guides/DOCKER_QUICKSTART.md">Docker guide</a>
+    for processor selection and first-run setup. URLs below use the default Docker
+    port; use your configured address and credentials for other installations.</p>
+  </aside>
+
 
   <section class="hero">
     <h1>Visual Quantum Software Engineering</h1>
@@ -150,16 +160,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><strong>NiFi 2.11 (Textbook & Qrisp)</strong></td>
-          <td><a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a></td>
-          <td><code>admin</code> / <code>quanifiadmin123</code></td>
-          <td>Hosts textbook quantum algorithms (Deutsch-Jozsa, Bernstein-Vazirani, Grover, QAOA, VQE).</td>
-        </tr>
-        <tr>
-          <td><strong>NiFi 2.9 (Hardware Campaign)</strong></td>
+          <td><strong>Docker quick start</strong></td>
           <td><a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a></td>
-          <td>Single user authorizer</td>
-          <td>Hosts generation-2 multi-backend hardware campaigns (IBM Heron, IQM).</td>
+          <td><code>admin</code> / <code>quanifi-demo-password</code></td>
+          <td>Starts a simple Qiskit Grover flow. Enable additional processors as described in the Docker guide.</td>
         </tr>
       </tbody>
     </table>

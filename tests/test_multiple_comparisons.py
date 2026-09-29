@@ -71,7 +71,7 @@ class TestHolm:
         assert holm([], 0.05) == []
 
     def test_uses_le_not_lt(self):
-        """Holm's boundary is <=, matching the paper's numbers -- do not
+        """Holm's boundary is <=, matching the study's numbers -- do not
         unify this with uncorrected()'s strict <."""
         assert holm([0.025, 0.05], 0.05) == [True, True]
         assert uncorrected([0.025, 0.05], 0.05) == [True, False]

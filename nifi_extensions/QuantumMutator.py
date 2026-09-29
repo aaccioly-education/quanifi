@@ -29,7 +29,7 @@ from nifiapi.__jvm__ import JvmHolder
 # QuantumTestCaseSource (which corrupt the test-case row that all K branches
 # read), these mutate the program artifact itself — the circuit — which is
 # what makes the survival rate a mutation-testing metric in the classical
-# sense (see MUTATION_TESTING.md §2 Layer A).
+# sense .
 #
 # Each operator is ``fn(circuit, rng, eps) -> outcome dict | None``.  ``None``
 # means the operator is inapplicable to this circuit (e.g. rotation.perturb on
@@ -367,8 +367,7 @@ def _derive_seed(base_seed, salt):
 
 class QuantumMutator(FlowFileTransform):
     """
-    Layer-A gate-level circuit mutator (the Muskit/QMutBench port — see
-    MUTATION_TESTING.md §2).  Sits *between a circuit builder and a simulator*
+    Layer-A gate-level circuit mutator inspired by Muskit and QMutBench.  Sits *between a circuit builder and a simulator*
     on **one** framework branch, reads the circuit from the FlowFile content
     (qasm2 or qasm3, per the ``circuit.format`` attribute), applies one
     syntactic mutation, and emits the mutant circuit in the same format::
@@ -380,7 +379,7 @@ class QuantumMutator(FlowFileTransform):
     Because only one branch runs the mutant, the K-1 unmutated branches form a
     reference-free jury: a detected mutant surfaces as a single-branch
     **DISAGREE** at the oracle (killed), no ``test.expected`` needed.  This is
-    the single-branch injection mode of MUTATION_TESTING.md §3 — it evaluates
+    single-branch injection: it evaluates
     the differential harness itself.
 
     **Pass-through gating** (so paired control/mutant runs work from one
@@ -393,8 +392,7 @@ class QuantumMutator(FlowFileTransform):
     each case duplicated as ``{"mut.applied": "false"}`` / ``{"mut.applied":
     "true"}`` rows and hoist ``mut.applied`` in EvaluateJsonPath.
 
-    Mutants carry the full ``mut.*`` bookkeeping contract (MUTATION_TESTING.md
-    §4) including the Layer-A characteristic-vector fields ``mut.gate`` /
+    Mutants carry the full ``mut.*`` bookkeeping contract, including the Layer-A characteristic-vector fields ``mut.gate`` /
     ``mut.position`` / ``mut.position_interval`` (QMutBench decile bins) /
     ``mut.original_format``, and the stale ``circuit.*`` metrics from the
     builder (depth, gate_count, ...) are recomputed for the mutant.

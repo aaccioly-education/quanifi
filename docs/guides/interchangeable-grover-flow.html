@@ -18,7 +18,7 @@
         <img src="../assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
       </a>
       <div class="header-actions">
-        <a href="../components.html" class="btn-action btn-primary">Processors (69+)</a>
+        <a href="../components.html" class="btn-action btn-primary">Processors</a>
         <a href="../guides/nifi-flow-configuration-guide.html" class="btn-action btn-warning">Flow Guide</a>
         <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-github" title="View Source on GitHub">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
@@ -43,7 +43,7 @@
       <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
       <ul class="main-menu">
         <li class=""><a href="../index.html">Overview</a></li>
-        <li class=""><a href="../components.html">Components (69+)</a></li>
+        <li class=""><a href="../components.html">Components</a></li>
         <li class="active">
           <a href="../guides/developer-guide.html">Guides &#9662;</a>
           <ul class="dropdown-menu">
@@ -53,14 +53,12 @@
             <li><a href="../guides/pyquil-components.html">pyQuil Components</a></li>
             <li><a href="../guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
             <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
-            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
           </ul>
         </li>
         <li class="">
           <a href="../guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
           <ul class="dropdown-menu">
             <li><a href="../guides/data-driven-testing.html">Data-Driven Testing</a></li>
-            <li><a href="../guides/mutation-testing.html">Mutation Testing</a></li>
             <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
           </ul>
         </li>
@@ -105,7 +103,7 @@
         <h3 class="widget-title">Core Reference</h3>
         <ul class="widget-menu">
         <li><a href="../index.html"><span>Documentation Hub</span></a></li>
-<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">69+</span></a></li>
+<li><a href="../components.html"><span>Component Catalogue</span><span class="badge-count">all</span></a></li>
 <li><a href="../screenshots/index.html"><span>Screenshots Gallery</span><span class="badge-count">18</span></a></li>
 </ul><div style='margin-bottom: 20px;'></div>
 
@@ -117,13 +115,11 @@
 <li><a href="../guides/pyquil-components.html"><span>pyQuil Components</span><span class="badge-count">Rigetti</span></a></li>
 <li><a href="../guides/qaoa-components.html"><span>QAOA Components & Matrix</span><span class="badge-count">N×M</span></a></li>
 <li class="active"><a href="../guides/interchangeable-grover-flow.html"><span>Interchangeable Grover</span></a></li>
-<li><a href="../guides/demo-runbook.html"><span>Demo Runbook</span><span class="badge-count">Safe</span></a></li>
 </ul><div style='margin-bottom: 20px;'></div>
 
         <h3 class="widget-title">Testing & Mutation</h3>
         <ul class="widget-menu">
         <li><a href="../guides/data-driven-testing.html"><span>Data-Driven Testing</span></a></li>
-<li><a href="../guides/mutation-testing.html"><span>Mutation Testing</span></a></li>
 <li><a href="../guides/mutation-canvas-testing.html"><span>Mutation Canvas Testing</span><span class="badge-count">Layer A/B</span></a></li>
 </ul><div style='margin-bottom: 20px;'></div>
 
@@ -326,6 +322,25 @@ Cirq.</p>
 <p>Again expect the <code>110</code> peak with <code>sim.top_result = 110</code>, now with
 <code>sim.framework = cirq</code> in the report header.</p>
 <hr />
+<h2 id="qrisp-builder-and-the-33-matrix">Qrisp builder and the 3×3 matrix</h2>
+<p><code>QrispGroverCircuit</code> (0.1.0) is Qrisp's row of this builder matrix: the same
+<code>Marked State</code> / <code>Num Iterations</code> / <code>Output Format</code> properties as the other
+three builders, qasm2 output only. It is built from Qrisp's <code>tag_state</code> phase
+oracle and <code>grovers_alg</code> diffuser rather than a hand-written oracle circuit.</p>
+<p>The one thing to know before touching it: <strong>Qrisp's <code>tag_state</code> reads a
+binary string little-endian</strong> — its rightmost character is qubit 0 — while
+every builder in this matrix types <code>Marked State</code> q0-left (qubit 0 is the
+leftmost character), so the processor tags the <em>reversed</em> string internally.
+Without that reversal, all three simulators would return the bit-reversed
+state for whatever target you typed. This is purely internal to the
+processor; <code>Marked State</code> behaves identically to the Qiskit, Cirq and
+PennyLane builders from the outside.</p>
+<p>This builder is the Qrisp row of the Docker quickstart's baked canvas — three
+builders (Qiskit, Cirq, Qrisp) times three simulators (Aer, Cirq, Qrisp) with
+a K=9 <code>QuantumConsensusOracle</code> vote and a <code>QuanifiReport</code> at the end. See
+<a href="docker-quickstart.html"><code>docs/guides/DOCKER_QUICKSTART.md</code></a> to run it with only
+Docker Desktop and <code>git</code> installed, or <code>tools/build_grover_examples.py --run</code>
+to run the same matrix headlessly against a local <code>.venv</code>.</p>
 <h2 id="differential-testing-in-one-canvas">Differential testing in one canvas</h2>
 <p>Run Flows A–C side by side into <strong>separate</strong> <code>QuanifiReport</code> flow names, or
 fan one <code>GenerateFlowFile</code> into all three chains and feed the simulator
@@ -353,7 +368,7 @@ emit canonical-order keys, the distributions are directly comparable
   The <code>circuit.error</code> attribute on the failed FlowFile names the cause.</li>
 <li><strong>Peak at the bit-reversed target</strong> — you are running a pre-normalisation
   processor build; restart NiFi so the current <code>nifi_extensions/</code> code loads,
-  and re-generate stale report cards (<code>just clean-reports</code>).</li>
+  and write new report cards to a separate Reports Directory.</li>
 <li><strong>Circuit Diagram shows only the small oracle, not the full Grover circuit</strong>
   (Flow B) — same cause: an older build of <code>QiskitGroverOperator</code> that didn't
   blank the upstream Cirq SVG. Restart NiFi; no venv wipe needed.</li>
@@ -389,10 +404,9 @@ emit canonical-order keys, the distributions are directly comparable
         <div class="footer-col">
           <h3>Documentation</h3>
           <ul>
-            <li><a href="../components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="../components.html">Component Catalogue</a></li>
             <li><a href="../guides/developer-guide.html">Developer Guide</a></li>
             <li><a href="../guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
-            <li><a href="../guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
             <li><a href="../tutorials/index.html">Interactive Learning Curriculum</a></li>
             <li><a href="../screenshots/index.html">Canvas Screenshots Gallery</a></li>
           </ul>
@@ -405,7 +419,6 @@ emit canonical-order keys, the distributions are directly comparable
             <li><a href="../guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
             <li><a href="../guides/data-driven-testing.html">Data-Driven Differential Testing</a></li>
             <li><a href="../guides/mutation-canvas-testing.html">Canvas Testing (Layers A/B)</a></li>
-            <li><a href="../guides/demo-runbook.html">Demo Runbook</a></li>
           </ul>
         </div>
         <div class="footer-col">

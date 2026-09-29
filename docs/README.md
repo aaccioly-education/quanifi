@@ -24,8 +24,6 @@ in separate repositories.
 - [QAOA components, N×M flow and example canvases](guides/QAOA_COMPONENTS.md)
 - [Interchangeable Grover components](guides/INTERCHANGEABLE_GROVER_FLOW.md)
 - [Data-driven testing](guides/DATA_DRIVEN_TESTING.md)
-- [Mutation testing](guides/MUTATION_TESTING.md)
 - [Mutation testing on the canvas](guides/MUTATION_CANVAS_TESTING.md)
-- [Demo runbook](guides/DEMO_RUNBOOK.md)
 
 The introductory HTML examples are under [`../guides/`](../guides/).

@@ -46,7 +46,7 @@ _EXTRA_CSS = """\
 #
 # On a QPU the oracle's decision threshold cannot be a constant. Measured null
 # floors for the same GHZ-16 circuit at 662 shots: 0.020 on Aer, 0.3309 on
-# ibm_kingston, 0.4115 on iqm_emerald -- against the 0.1 the manuscript used for
+# ibm_kingston, 0.4115 on iqm_emerald -- against the 0.1 the reference configuration used for
 # noiseless simulators. A fixed 0.1 flags all three *correct* implementations as
 # defective on both devices.
 #
@@ -488,7 +488,7 @@ class QuantumCalibratedOracle(FlowFileTransform):
       <tr><td>Calibrated threshold</td><td class='metric-val'>{threshold:.4f}</td>
           <td>from {reps} replicates ({pairs} pairs) in this job</td></tr>
       <tr><td>Null median</td><td class='metric-val'>{nullmed:.4f}</td>
-          <td>device noise floor; the manuscript's fixed value is 0.1</td></tr>
+          <td>device noise floor; the fixed reference value is 0.1</td></tr>
       <tr><td>Significance level</td><td class='metric-val'>{alpha:g}</td>
           <td>chi-squared gate; both gates must fire</td></tr>
       <tr><td>Mutation score</td><td class='metric-val'>{killed}/{total}</td>

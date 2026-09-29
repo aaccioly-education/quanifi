@@ -77,8 +77,8 @@ historical precedence exactly — every existing canvas keeps working untouched.
 | `inline-arithmetic-json` | the `Arithmetic Cases` property | a readable demonstration — the cases are on the processor |
 | `flowfile-content` | the incoming FlowFile | a reviewed, version-controlled file, fetched with a stock `FetchFile` |
 
-The manifest is deliberately compact
-(`experiments/test_cases/arithmetic_campaign1_boundary2.v1.json`):
+For example, save the following manifest as `arithmetic-cases.json` and load
+it through FetchFile, or paste it into the Arithmetic Cases property:
 
 ```json
 {
@@ -179,8 +179,7 @@ GenerateFlowFile                 # any trigger; content ignored
 ```
 
 Each framework branch sets its properties to `${grover.*}` EL, so all three run
-the *same* case. `QuantumMutator` (built — the Layer-A gate-level mutator, see
-MUTATION_TESTING.md §2) placed between one branch's builder and simulator makes
+the *same* case. `QuantumMutator`, the gate-level mutator, placed between one branch's builder and simulator makes
 that branch the dissenter the oracle should flag.
 
 ### Equivalence partitions worth seeding

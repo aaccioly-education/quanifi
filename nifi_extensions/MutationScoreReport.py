@@ -43,7 +43,7 @@ def _score(records):
 
     Controls (``applied=False``) are EXCLUDED from the survival rate by
     construction — a dissenting control is not a kill but a real cross-framework
-    discrepancy, reported separately (see MUTATION_TESTING.md §3 / DISSERTATION.md).
+    discrepancy, reported separately .
     """
     by_op = {}
     controls_total = 0
@@ -104,8 +104,7 @@ class MutationScoreReport(FlowFileTransform):
     Kill rule: ``PASS`` -> survived, anything else -> killed (the mutated branch
     dissented). **Controls (``mut.applied=false``) are excluded from the survival
     rate**; a dissenting control is surfaced separately as a real cross-framework
-    discrepancy to investigate, never counted as a kill. See MUTATION_TESTING.md
-    and DISSERTATION.md for the rationale.
+    discrepancy to investigate, never counted as a kill.
 
     Verdicts are deduplicated by case id within a run, so reprocessing a FlowFile
     does not double-count.

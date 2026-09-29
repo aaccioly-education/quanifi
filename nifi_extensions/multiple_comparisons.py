@@ -40,7 +40,7 @@ def holm(pvals, alpha):
     """Holm-Bonferroni step-down; returns reject decisions in input order.
 
     Uses <=, not <, matching the reference implementation this was copied
-    from (experiments/version_matrix_study.py) -- the paper's numbers depend
+    from (experiments/version_matrix_study.py) -- the study's numbers depend
     on that boundary behaviour, so it is preserved verbatim rather than
     unified with ``uncorrected``'s strict <.
     """

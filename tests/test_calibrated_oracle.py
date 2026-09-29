@@ -74,7 +74,7 @@ class TestFixedThresholdWouldFail:
         attrs = result_to_flowfile(result).getAttributes()
         assert result.relationship == "pass"
         assert attrs["oracle.false_alarms"] == "0"
-        # the whole point: the floor is well above the manuscript's constant
+        # the whole point: the floor is well above the fixed reference threshold
         assert float(attrs["oracle.threshold"]) > 0.1
         assert float(attrs["oracle.null_median"]) > 0.1
 

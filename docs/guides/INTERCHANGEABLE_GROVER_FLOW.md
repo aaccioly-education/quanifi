@@ -177,7 +177,7 @@ emit canonical-order keys, the distributions are directly comparable
   The `circuit.error` attribute on the failed FlowFile names the cause.
 - **Peak at the bit-reversed target** — you are running a pre-normalisation
   processor build; restart NiFi so the current `nifi_extensions/` code loads,
-  and re-generate stale report cards (`just clean-reports`).
+  and write new report cards to a separate Reports Directory.
 - **Circuit Diagram shows only the small oracle, not the full Grover circuit**
   (Flow B) — same cause: an older build of `QiskitGroverOperator` that didn't
   blank the upstream Cirq SVG. Restart NiFi; no venv wipe needed.

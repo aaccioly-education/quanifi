@@ -218,7 +218,7 @@ class QuantumDistributionOracle(FlowFileTransform):
     degenerate or multi-peaked -- GHZ, W states, uniform superpositions, or any
     distribution with no meaningful single winner. For single-answer algorithms
     (Grover, phase estimation) QuantumConsensusOracle's top-1 vote remains the
-    more interpretable choice; both are kept so the paper can compare them.
+    more interpretable choice; both are kept so the study can compare them.
 
     Collection model
     ----------------

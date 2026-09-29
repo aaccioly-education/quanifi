@@ -20,20 +20,19 @@ dependencies = [
     "openfermionpyscf>=0.5",
     "scipy>=1.14",
     "matplotlib>=3.9",
-    "markitdown[all]",
-    "markitdown-mcp",
     "django>=5.2,<5.3",
     "gunicorn>=23,<24",
     "psycopg[binary]>=3.2,<3.3",
     "whitenoise>=6.9,<7",
-    "openquantum-sdk", # exploratory Open Quantum (Rigetti) side-study; see generation2/openquantum.py
+    "openquantum-sdk", # Open Quantum execution support
     "pyquil>=4.18", # pyQuil component family (local circuits, PyQVM and variational solvers)
     "qiskit-quantuminspire>=0.18.2",
     "quantuminspire>=4.0.0",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0"]
+dev = ["pytest>=8.0", "ruff>=0.11", "black>=25.1"]
+docs = ["Markdown>=3.7", "Pygments>=2.19"]
 # Not a default dependency: iqm-client pulls a large tree that would constrain
 # the pinned qiskit/cirq versions. NiFi installs it per-processor from
 # QrispIQMDevice.ProcessorDetails.dependencies; this extra is for local runs.
@@ -49,18 +48,21 @@ override-dependencies = [
     "jaxlib==0.10.2",
 ]
 
-[project.scripts]
-quanifi = "generation2.cli:main"
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src", "generation2"]
+packages = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = [
     "slow: tests that run real Qrisp optimisation or long PyQVM sampling (deselect with '-m not slow')",
 ]
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E9", "F63", "F7", "F82"]

@@ -32,9 +32,7 @@ PAGES_MAP = [
     ("guides/QAOA_COMPONENTS.md", "guides/qaoa-components.html", "QAOA Components & N×M Cross-Framework Flow", "guides", [("Home", "../index.html"), ("Guides", "developer-guide.html"), ("QAOA Components", "qaoa-components.html")]),
     ("guides/INTERCHANGEABLE_GROVER_FLOW.md", "guides/interchangeable-grover-flow.html", "Interchangeable Grover Canvas Guide", "guides", [("Home", "../index.html"), ("Guides", "developer-guide.html"), ("Interchangeable Grover", "interchangeable-grover-flow.html")]),
     ("guides/DATA_DRIVEN_TESTING.md", "guides/data-driven-testing.html", "Data-Driven Differential Testing", "testing", [("Home", "../index.html"), ("Testing", "data-driven-testing.html"), ("Data-Driven Testing", "data-driven-testing.html")]),
-    ("guides/MUTATION_TESTING.md", "guides/mutation-testing.html", "Mutation Testing for Quantum Computing Flows", "testing", [("Home", "../index.html"), ("Testing", "data-driven-testing.html"), ("Mutation Testing", "mutation-testing.html")]),
     ("guides/MUTATION_CANVAS_TESTING.md", "guides/mutation-canvas-testing.html", "Mutation Canvas Testing Guide (Layers A & B)", "testing", [("Home", "../index.html"), ("Testing", "data-driven-testing.html"), ("Canvas Testing", "mutation-canvas-testing.html")]),
-    ("guides/DEMO_RUNBOOK.md", "guides/demo-runbook.html", "Demo Runbook — Arithmetic Experiment Safely", "guides", [("Home", "../index.html"), ("Guides", "developer-guide.html"), ("Demo Runbook", "demo-runbook.html")]),
 ]
 
 LINK_REPLACEMENTS = [
@@ -56,16 +54,12 @@ LINK_REPLACEMENTS = [
     (r'INTERCHANGEABLE_GROVER_FLOW\.md', 'interchangeable-grover-flow.html'),
     (r'guides/DATA_DRIVEN_TESTING\.md', 'guides/data-driven-testing.html'),
     (r'DATA_DRIVEN_TESTING\.md', 'data-driven-testing.html'),
-    (r'guides/MUTATION_TESTING\.md', 'guides/mutation-testing.html'),
-    (r'MUTATION_TESTING\.md', 'mutation-testing.html'),
     (r'guides/MUTATION_CANVAS_TESTING\.md', 'guides/mutation-canvas-testing.html'),
     (r'MUTATION_CANVAS_TESTING\.md', 'mutation-canvas-testing.html'),
-    (r'guides/DEMO_RUNBOOK\.md', 'guides/demo-runbook.html'),
-    (r'DEMO_RUNBOOK\.md', 'demo-runbook.html'),
     (r'screenshots/README\.md', 'screenshots/index.html'),
     (r'\.\./README\.md', '../index.html'),
     (r'README\.md', 'index.html'),
-    (r'\.\./guides/', '../tutorials/'),
+    (r'\.\./guides/', 'tutorials/index.html'),
 ]
 
 SCREENSHOT_INFO = [
@@ -94,21 +88,24 @@ def get_rel_root(target_path):
     return "../" * depth if depth > 0 else "./"
 
 def fix_links(html_content, current_rel_path):
-    for pattern, repl in LINK_REPLACEMENTS:
-        html_content = re.sub(r'href=[\"\']' + pattern + r'([\#\"][^\"]*)?[\"\']', 
-                              lambda m: f'href="{repl}{m.group(1) if m.group(1) and m.group(1) != "\"" else ""}"', 
-                              html_content)
-    # Fix links to repo files outside docs
-    html_content = re.sub(r'href=[\"\'](\.\./)+(nifi_extensions|tests|tools|demo|experiments)/([^\"\#]*)([\#\"][^\"]*)?[\"\']',
-                          r'href="https://github.com/saeg/quanifi/tree/main/\2/\3\4"',
-                          html_content)
-    return html_content
+    def replace_link(match):
+        target, separator, fragment = match.group(2).partition("#")
+        for pattern, replacement in LINK_REPLACEMENTS:
+            if re.fullmatch(pattern, target):
+                target = replacement
+                break
+        external = re.fullmatch(r"(?:\.\./)+(nifi_extensions|tests|tools|demo|experiments)/(.*)", target)
+        if external:
+            target = "https://github.com/saeg/quanifi/tree/main/" + external.group(1) + "/" + external.group(2)
+        return 'href="' + target + (separator + fragment if separator else "") + '"'
+    return re.sub(r"href=([\"'])(.*?)\1", replace_link, html_content)
+
 
 def build_sidebar(active_target_path, rel_root):
     items = [
         # (label, rel_url, group, badge)
         ("Documentation Hub", f"{rel_root}index.html", "Core Reference", ""),
-        ("Component Catalogue", f"{rel_root}components.html", "Core Reference", "69+"),
+        ("Component Catalogue", f"{rel_root}components.html", "Core Reference", "all"),
         ("Screenshots Gallery", f"{rel_root}screenshots/index.html", "Core Reference", "18"),
         
         ("Developer Guide", f"{rel_root}guides/developer-guide.html", "Framework Guides", ""),
@@ -117,10 +114,8 @@ def build_sidebar(active_target_path, rel_root):
         ("pyQuil Components", f"{rel_root}guides/pyquil-components.html", "Framework Guides", "Rigetti"),
         ("QAOA Components & Matrix", f"{rel_root}guides/qaoa-components.html", "Framework Guides", "N×M"),
         ("Interchangeable Grover", f"{rel_root}guides/interchangeable-grover-flow.html", "Framework Guides", ""),
-        ("Demo Runbook", f"{rel_root}guides/demo-runbook.html", "Framework Guides", "Safe"),
 
         ("Data-Driven Testing", f"{rel_root}guides/data-driven-testing.html", "Testing & Mutation", ""),
-        ("Mutation Testing", f"{rel_root}guides/mutation-testing.html", "Testing & Mutation", ""),
         ("Mutation Canvas Testing", f"{rel_root}guides/mutation-canvas-testing.html", "Testing & Mutation", "Layer A/B"),
 
         ("Tutorials Curriculum", f"{rel_root}tutorials/index.html", "Interactive Tutorials", "Overview"),
@@ -196,7 +191,7 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
             Quanifi combines enterprise dataflow orchestration with quantum programming frameworks (Qiskit, Cirq, Qrisp, PennyLane, and pyQuil), allowing quantum circuits, oracles, Hamiltonians, and measurements to flow through reusable visual pipelines.
           </p>
           <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="{rel_root}components.html" class="btn-action btn-warning" style="color: #fff;">Explore 69+ Processors &rarr;</a>
+            <a href="{rel_root}components.html" class="btn-action btn-warning" style="color: #fff;">Explore all Processors &rarr;</a>
             <a href="{rel_root}guides/developer-guide.html" class="btn-action btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">Developer Guide</a>
             <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">GitHub Repository</a>
             <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener" class="btn-action btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">AGPL-3.0 License</a>
@@ -206,8 +201,8 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
         <div class="cards-grid">
           <div class="card">
             <span class="card-badge">Catalogue</span>
-            <h3 class="card-title">69+ Quantum Processors</h3>
-            <p class="card-desc">Circuit builders, unitary compilers, simulators, exact expectation evaluators, and cloud hardware pollers for 5 quantum frameworks.</p>
+            <h3 class="card-title">Quantum Processors</h3>
+            <p class="card-desc">Circuit builders, unitary compilers, simulators, exact expectation evaluators, and cloud hardware pollers across supported quantum frameworks.</p>
             <a href="{rel_root}components.html" class="card-link">View Component Catalogue &rarr;</a>
           </div>
           <div class="card">
@@ -220,7 +215,7 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
             <span class="card-badge">Testing</span>
             <h3 class="card-title">Mutation & Differential Testing</h3>
             <p class="card-desc">Quantum-aware mutation operators, consensus oracles, and automated differential testing across heterogeneous quantum backends.</p>
-            <a href="{rel_root}guides/mutation-testing.html" class="card-link">Explore Testing Pipeline &rarr;</a>
+            <a href="{rel_root}guides/mutation-canvas-testing.html" class="card-link">Explore Testing Pipeline &rarr;</a>
           </div>
           <div class="card">
             <span class="card-badge">Optimization</span>
@@ -263,7 +258,7 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
         <img src="{rel_root}assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
       </a>
       <div class="header-actions">
-        <a href="{rel_root}components.html" class="btn-action btn-primary">Processors (69+)</a>
+        <a href="{rel_root}components.html" class="btn-action btn-primary">Processors</a>
         <a href="{rel_root}guides/nifi-flow-configuration-guide.html" class="btn-action btn-warning">Flow Guide</a>
         <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-github" title="View Source on GitHub">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
@@ -288,7 +283,7 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
       <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
       <ul class="main-menu">
         <li class="{'active' if active_tab == 'home' else ''}"><a href="{rel_root}index.html">Overview</a></li>
-        <li class="{'active' if active_tab == 'components' else ''}"><a href="{rel_root}components.html">Components (69+)</a></li>
+        <li class="{'active' if active_tab == 'components' else ''}"><a href="{rel_root}components.html">Components</a></li>
         <li class="{'active' if active_tab == 'guides' else ''}">
           <a href="{rel_root}guides/developer-guide.html">Guides &#9662;</a>
           <ul class="dropdown-menu">
@@ -298,14 +293,12 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
             <li><a href="{rel_root}guides/pyquil-components.html">pyQuil Components</a></li>
             <li><a href="{rel_root}guides/qaoa-components.html">QAOA Components &amp; Matrix</a></li>
             <li><a href="{rel_root}guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
-            <li><a href="{rel_root}guides/demo-runbook.html">Demo Runbook</a></li>
           </ul>
         </li>
         <li class="{'active' if active_tab == 'testing' else ''}">
           <a href="{rel_root}guides/data-driven-testing.html">Testing &amp; Mutation &#9662;</a>
           <ul class="dropdown-menu">
             <li><a href="{rel_root}guides/data-driven-testing.html">Data-Driven Testing</a></li>
-            <li><a href="{rel_root}guides/mutation-testing.html">Mutation Testing</a></li>
             <li><a href="{rel_root}guides/mutation-canvas-testing.html">Canvas Testing Guide (Layers A/B)</a></li>
           </ul>
         </li>
@@ -363,10 +356,9 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
         <div class="footer-col">
           <h3>Documentation</h3>
           <ul>
-            <li><a href="{rel_root}components.html">Component Catalogue (69+ Processors)</a></li>
+            <li><a href="{rel_root}components.html">Component Catalogue</a></li>
             <li><a href="{rel_root}guides/developer-guide.html">Developer Guide</a></li>
             <li><a href="{rel_root}guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>
-            <li><a href="{rel_root}guides/mutation-testing.html">Mutation Testing Pipeline</a></li>
             <li><a href="{rel_root}tutorials/index.html">Interactive Learning Curriculum</a></li>
             <li><a href="{rel_root}screenshots/index.html">Canvas Screenshots Gallery</a></li>
           </ul>
@@ -379,7 +371,6 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
             <li><a href="{rel_root}guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
             <li><a href="{rel_root}guides/data-driven-testing.html">Data-Driven Differential Testing</a></li>
             <li><a href="{rel_root}guides/mutation-canvas-testing.html">Canvas Testing (Layers A/B)</a></li>
-            <li><a href="{rel_root}guides/demo-runbook.html">Demo Runbook</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -520,6 +511,9 @@ def convert_tutorials():
             body_m = re.search(r'<body[^>]*>(.*?)</body>', raw_html, re.DOTALL | re.IGNORECASE)
             content = body_m.group(1) if body_m else raw_html
 
+        content = content.replace("../docs/guides/QAOA_COMPONENTS.md", "../guides/qaoa-components.html")
+        content = content.replace("../docs/guides/DOCKER_QUICKSTART.md", "../guides/docker-quickstart.html")
+
         # Fix relative image paths: img/ -> tutorials/img/ or img/
         # Inside tutorials/, img/ works directly!
         
@@ -538,6 +532,8 @@ def convert_tutorials():
         print(f"Created docs/tutorials/{src_path.name}")
 
 def main():
+    from generate_component_catalogue import generate
+    generate()
     print("Starting Quanifi Documentation Site Generator...")
     md = markdown.Markdown(extensions=['tables', 'fenced_code', 'toc', 'codehilite'])
 

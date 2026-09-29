@@ -29,6 +29,16 @@
 </header>
 
 <main class="container">
+  <aside class="callout">
+    <p><strong>Setup required:</strong> These tutorials describe separately configured
+    example flows. The Docker quick start loads only the Qiskit Grover flow;
+    the groups shown here are not preinstalled. Enable the processors needed by
+    the tutorial and construct its flow before following the canvas steps.
+    See the <a href="../docs/guides/DOCKER_QUICKSTART.md">Docker guide</a>
+    for processor selection and first-run setup. URLs below use the default Docker
+    port; use your configured address and credentials for other installations.</p>
+  </aside>
+
 
   <h1>Module 1: Introduction to Quanifi</h1>
   <p class="lead">
@@ -212,10 +222,10 @@
     </p>
     <ol>
       <li>
-        Open your browser and navigate to <a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a>.
+        Open your browser and navigate to <a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a>.
       </li>
       <li>
-        Log in with Username: <code>admin</code>, Password: <code>quanifiadmin123</code>.
+        Log in with Username: <code>admin</code>, Password: <code>quanifi-demo-password</code>.
       </li>
       <li>
         Double-click on the process group named <strong><code>Qrisp Components &amp; Textbook Algorithms</code></strong>.
@@ -247,7 +257,7 @@
     </p>
     <p><strong>Tasks:</strong></p>
     <ol>
-      <li>In the NiFi canvas (<a href="https://localhost:8446/nifi" target="_blank">https://localhost:8446/nifi</a>), locate the <strong><code>DJ — Trigger</code></strong> processor.</li>
+      <li>In the NiFi canvas (<a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a>), locate the <strong><code>DJ — Trigger</code></strong> processor.</li>
       <li>Right-click on <strong><code>DJ — Trigger</code></strong> and select <strong>Configure</strong> (or double click it).</li>
       <li>Go to the <strong>PROPERTIES</strong> tab. What is the value of <strong>Batch Size</strong>?</li>
       <li>Next, look at the terminal processor in that pipeline: <strong><code>DJ — Report</code></strong>. What is the property value for <strong>Flow Name</strong>?</li>

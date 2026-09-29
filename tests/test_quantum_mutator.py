@@ -1,6 +1,6 @@
 """
 Tests for the Layer-A gate-level circuit mutator (QuantumMutator) — the
-Muskit/QMutBench port of MUTATION_TESTING.md §2. Covers the operator cores,
+Gate-level mutation testing. Covers the operator cores,
 the pass-through gating that keeps controls and Layer-B mutants unmutated,
 the mut.* / circuit.* attribute contract, seed reproducibility, and the
 failure paths (missing/unsupported format, unknown operator, no applicable

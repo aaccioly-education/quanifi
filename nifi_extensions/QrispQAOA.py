@@ -123,20 +123,11 @@ class QrispQAOA(FlowFileTransform):
         # the pre-0.2.0 mirror-training bug).
         energies = qc.energy_vector(terms, n)
 
-        # Sorted-order summation plus rounding to 12 decimals: measured
-        # (scripts in the M5g session scratchpad) that Qrisp's exact-
-        # probability backend differs by up to 2.22e-16 (1 ulp) between
-        # separately-compiled circuits at the *same* theta, on 24/300 random
-        # theta points. That 1-ulp jitter is invisible on its own, but
-        # scipy's Fortran-backed COBYLA/POWELL amplify it over ~100
-        # iterations into macroscopic (0.06-0.2 rad) parameter drift on a
-        # large fraction of back-to-back in-process runs (the M5f finding).
-        # Iterating in sorted-key order alone does not remove the drift (it
-        # is genuine floating-point non-associativity, not dict-ordering
-        # noise); rounding the returned energy to 12 decimals does: 40
-        # seeded COBYLA repeats, each after an unrelated run, gave exactly
-        # 0.0 parameter drift. Qrisp already rounds probabilities to 5
-        # decimals, so this loses no real resolution.
+        # Sort terms and round the objective to suppress floating-point jitter
+        # between independently compiled circuits. Derivative-free optimizers
+        # can amplify tiny objective differences into divergent parameter paths.
+        # Twelve decimal places retain more precision than Qrisp's measured
+        # probabilities. Seed reproducibility is checked in tests/test_seeds.py.
         def cl_cost_function(res):
             return round(
                 float(
