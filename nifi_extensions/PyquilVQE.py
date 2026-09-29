@@ -1,3 +1,16 @@
+# Quanifi — quantum-computing components for Apache NiFi
+# Copyright (C) 2026 Neilson Ramalho
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Affero General Public License, version 3, as published by
+# the Free Software Foundation. This program is distributed WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+#
+# You should have received a copy of the license along with this program; if not,
+# see <https://www.gnu.org/licenses/>. Commercial licensing is also available:
+# see COMMERCIAL.md at the repository root.
+
 """Minimize a Hermitian Hamiltonian using a recipe from PyquilAnsatz (attach mode), native pyQuil exact local expectations and SciPy. Reads neutral Hamiltonian content; emits final counts, vqe.* results and the optimized qasm2 in circuit.qasm2. No Forest server or hardware calls."""
 
 import os

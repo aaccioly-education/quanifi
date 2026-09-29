@@ -1,3 +1,16 @@
+# Quanifi — quantum-computing components for Apache NiFi
+# Copyright (C) 2026 Neilson Ramalho
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Affero General Public License, version 3, as published by
+# the Free Software Foundation. This program is distributed WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+#
+# You should have received a copy of the license along with this program; if not,
+# see <https://www.gnu.org/licenses/>. Commercial licensing is also available:
+# see COMMERCIAL.md at the repository root.
+
 """Trains a p-layer QAOA ansatz using ``qiskit_algorithms.QAOA`` and emits
 the trained, bound circuit as portable OpenQASM 2.0 (the same construction as
 ``QiskitQAOACircuit``, via ``qiskit_qaoa.export``), plus
