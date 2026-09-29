@@ -1,6 +1,6 @@
 /* ==========================================================================
    Quanifi Documentation Stylesheet
-   Adopted look and feel from EACH-USP (Escola de Artes, Ciências e Humanidades da USP)
+   Modern, responsive quantum software engineering portal
    Colors: Primary Cyan #01a1c0, Signature Amber #fa9e2c, Typography: Roboto
    ========================================================================== */
 
@@ -54,59 +54,8 @@ body {
 }
 
 /* ==========================================================================
-   Header & Institutional Banner (EACH-USP Style)
+   Header & Action Bar
    ========================================================================== */
-
-/* Top bar */
-.top-header-block {
-  background: var(--dark-header);
-  color: #c9d4de;
-  font-size: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.top-header-block .wrapper {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 6px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.top-header-block a {
-  color: #c9d4de;
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
-.top-header-block a:hover {
-  color: var(--accent);
-}
-
-.top-affiliation {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.top-affiliation .badge {
-  background: var(--primary);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 1px 6px;
-  border-radius: var(--radius-sm);
-  text-transform: uppercase;
-}
-
-.top-links {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
 
 /* Main Site Header */
 .site-header {
@@ -117,7 +66,7 @@ body {
 .header-container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 16px 20px;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,7 +77,7 @@ body {
 .branding-group {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   text-decoration: none;
 }
 
@@ -136,10 +85,11 @@ body {
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-/* EACH 3D-style Action Buttons */
-.btn-each {
+/* Action Buttons */
+.btn-action, .btn-each {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -157,7 +107,7 @@ body {
   border: none;
 }
 
-.btn-each:active {
+.btn-action:active, .btn-each:active {
   transform: translateY(1px);
   box-shadow: 0 1px 0 rgba(0,0,0,0.15);
 }
@@ -182,6 +132,30 @@ body {
   color: #ffffff;
 }
 
+.btn-github {
+  background-color: #24292f;
+  color: #ffffff;
+  border: 1px solid #24292f;
+}
+
+.btn-github:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.btn-license {
+  background-color: #f8fafc;
+  color: #334155;
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.btn-license:hover {
+  background-color: #e2e8f0;
+  color: var(--primary-dark);
+  border-color: var(--border-dark);
+}
+
 .btn-outline {
   background-color: transparent;
   color: var(--text-main);
@@ -195,7 +169,7 @@ body {
 }
 
 /* ==========================================================================
-   Navigation Bar (Signature EACH-USP Blue & Orange Line)
+   Navigation Bar (Signature Blue & Orange Accent Line)
    ========================================================================== */
 
 #site-navigation {
@@ -216,6 +190,34 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+
+.nav-extra {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-extra-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: all 0.15s ease;
+}
+
+.nav-extra-link:hover {
+  background: rgba(0, 0, 0, 0.32);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 
 .main-menu {
   list-style: none;
@@ -326,7 +328,7 @@ body {
 }
 
 /* ==========================================================================
-   Sidebar & Widget Styling (EACH Style)
+   Sidebar & Widget Styling
    ========================================================================== */
 
 .sidebar {
@@ -345,7 +347,7 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
-/* EACH Signature Widget Title with Orange Underline */
+/* Widget Title with Orange Accent Underline */
 .widget-title {
   margin: 0 0 16px 0;
   padding-bottom: 8px;
@@ -557,7 +559,7 @@ hr {
 }
 
 /* ==========================================================================
-   TablePress Style Tables (EACH USP Aesthetic)
+   Responsive Tables
    ========================================================================== */
 
 .table-responsive {
@@ -872,7 +874,7 @@ code {
 }
 
 /* ==========================================================================
-   Footer (EACH-USP Characteristic Teal & Gold)
+   Footer
    ========================================================================== */
 
 .site-footer {

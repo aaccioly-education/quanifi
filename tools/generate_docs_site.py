@@ -3,8 +3,7 @@
 generate_docs_site.py
 
 Static site generator for Quanifi documentation.
-Adopts the look and feel from EACH-USP (Escola de Artes, Ciências e Humanidades da USP).
-Builds full HTML pages in docs/ for GitHub Pages deployment in the saeg/quanifi repository.
+Builds responsive, accessible HTML pages in docs/ for GitHub Pages deployment.
 """
 
 import os
@@ -186,7 +185,7 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
         hero_html = f"""
         <div style="background: linear-gradient(135deg, #01a1c0 0%, #00778f 100%); color: #fff; padding: 32px 36px; border-radius: var(--radius-sm); margin-bottom: 30px; border-bottom: 4px solid var(--accent); box-shadow: var(--shadow-md);">
           <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px;">
-            <span style="background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 3px; text-transform: uppercase;">EACH-USP • SAEG</span>
+            <span style="background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 3px; text-transform: uppercase;">Apache NiFi &bull; Quantum Computing</span>
             <span style="font-size: 13px; color: #d0f0f7;">Open Source Framework v0.2.0</span>
           </div>
           <h1 style="font-size: 2.3rem; font-weight: 800; color: #fff; margin: 0 0 14px 0; line-height: 1.2;">Visual Quantum Software Engineering with Apache NiFi</h1>
@@ -194,10 +193,10 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
             Quanifi combines enterprise dataflow orchestration with quantum programming frameworks (Qiskit, Cirq, Qrisp, PennyLane, and pyQuil), allowing quantum circuits, oracles, Hamiltonians, and measurements to flow through reusable visual pipelines.
           </p>
           <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="{rel_root}components.html" class="btn-each btn-warning" style="color: #fff;">Explore 69+ Processors &rarr;</a>
-            <a href="{rel_root}guides/developer-guide.html" class="btn-each btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">Developer Guide</a>
-            <a href="{rel_root}tutorials/index.html" class="btn-each btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">Interactive Tutorials</a>
-            <a href="{rel_root}screenshots/index.html" class="btn-each btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">Canvas Gallery</a>
+            <a href="{rel_root}components.html" class="btn-action btn-warning" style="color: #fff;">Explore 69+ Processors &rarr;</a>
+            <a href="{rel_root}guides/developer-guide.html" class="btn-action btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">Developer Guide</a>
+            <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">GitHub Repository</a>
+            <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener" class="btn-action btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">AGPL-3.0 License</a>
           </div>
         </div>
 
@@ -254,38 +253,33 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
 </head>
 <body>
 
-  <!-- Top Institutional Bar (EACH-USP & SAEG) -->
-  <div class="top-header-block">
-    <div class="wrapper">
-      <div class="top-affiliation">
-        <span class="badge">USP</span>
-        <span>Universidade de São Paulo &bull; Escola de Artes, Ciências e Humanidades (EACH-USP) &bull; SAEG Research Group</span>
-      </div>
-      <div class="top-links">
-        <a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal EACH</a>
-        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub Repository</a>
-        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">AGPL-3.0 License</a>
-      </div>
-    </div>
-  </div>
-
   <!-- Main Site Header -->
   <header class="site-header">
     <div class="header-container">
       <a href="{rel_root}index.html" class="branding-group">
         <img src="{rel_root}assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
-        <div style="border-left: 1px solid var(--border-medium); height: 42px; margin: 0 4px;"></div>
-        <img src="{rel_root}assets/img/each-logo.svg" alt="EACH USP SAEG" height="46">
       </a>
       <div class="header-actions">
-        <a href="{rel_root}components.html" class="btn-each btn-primary">Processors</a>
-        <a href="{rel_root}guides/nifi-flow-configuration-guide.html" class="btn-each btn-warning">Flow Guide</a>
-        <a href="{rel_root}tutorials/index.html" class="btn-each btn-outline">Tutorials</a>
+        <a href="{rel_root}components.html" class="btn-action btn-primary">Processors (69+)</a>
+        <a href="{rel_root}guides/nifi-flow-configuration-guide.html" class="btn-action btn-warning">Flow Guide</a>
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-github" title="View Source on GitHub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener" class="btn-action btn-license" title="GNU AGPL-3.0 License">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"></path>
+          </svg>
+          AGPL-3.0
+        </a>
       </div>
     </div>
   </header>
 
-  <!-- Navigation Bar (Signature EACH Blue & Gold Line) -->
+  <!-- Navigation Bar (Signature Blue & Gold Line) -->
   <nav id="site-navigation" role="navigation">
     <div class="nav-wrapper">
       <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
@@ -326,6 +320,14 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
         </li>
         <li class="{'active' if active_tab == 'gallery' else ''}"><a href="{rel_root}screenshots/index.html">Canvas Gallery</a></li>
       </ul>
+      <div class="nav-extra">
+        <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="nav-extra-link" title="GitHub Repository">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
     </div>
   </nav>
 
@@ -346,26 +348,14 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
     </main>
   </div>
 
-  <!-- Footer (EACH USP Aesthetic) -->
+  <!-- Footer -->
   <footer id="colophon" class="site-footer" role="contentinfo">
     <div class="footer-wrapper">
       <div class="footer-columns">
         <div class="footer-col">
           <h3>Quanifi Project</h3>
           <p>Visual Quantum Software Engineering with Apache NiFi. Composing, testing, executing and verifying quantum algorithms as enterprise dataflows.</p>
-          <p>Developed at <strong>Universidade de São Paulo (USP)</strong> within the <strong>SAEG</strong> research group.</p>
-        </div>
-        <div class="footer-col">
-          <h3>Institutional</h3>
-          <p><strong>Escola de Artes, Ciências e Humanidades (EACH)</strong><br>
-          Universidade de São Paulo<br>
-          Rua Arlindo Béttio, 1000<br>
-          Ermelino Matarazzo, São Paulo - SP<br>
-          CEP: 03828-000</p>
-          <ul>
-            <li><a href="https://www5.each.usp.br/" target="_blank" rel="noopener">Portal Oficial EACH-USP</a></li>
-            <li><a href="https://www.usp.br/" target="_blank" rel="noopener">Portal Universidade de São Paulo</a></li>
-          </ul>
+          <p>Compatible with Qiskit, Cirq, Qrisp, pyQuil, and PennyLane across local simulators and quantum cloud hardware.</p>
         </div>
         <div class="footer-col">
           <h3>Documentation</h3>
@@ -379,19 +369,32 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
           </ul>
         </div>
         <div class="footer-col">
-          <h3>Source &amp; Licensing</h3>
-          <p>Available under the GNU Affero General Public License v3.0 (AGPL-3.0) with commercial licensing options.</p>
+          <h3>Quantum Ecosystem</h3>
+          <ul>
+            <li><a href="{rel_root}guides/qaoa-components.html">QAOA Cross-Framework Matrix</a></li>
+            <li><a href="{rel_root}guides/pyquil-components.html">Rigetti pyQuil Integration</a></li>
+            <li><a href="{rel_root}guides/interchangeable-grover-flow.html">Interchangeable Grover Flow</a></li>
+            <li><a href="{rel_root}guides/data-driven-testing.html">Data-Driven Differential Testing</a></li>
+            <li><a href="{rel_root}guides/mutation-canvas-testing.html">Canvas Testing (Layers A/B)</a></li>
+            <li><a href="{rel_root}guides/demo-runbook.html">Demo Runbook</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Code &amp; Licenses</h3>
+          <p>Free and open source quantum orchestration under the GNU AGPL-3.0, with commercial licensing available.</p>
           <ul>
             <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
             <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
-            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">GNU AGPL-3.0 License</a></li>
+            <li><a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial License Terms</a></li>
+            <li><a href="https://github.com/saeg/quanifi/releases" target="_blank" rel="noopener">Release Notes</a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-wrapper">
-        <p>Copyright &copy; 2026 Escola de Artes, Ciências e Humanidades &mdash; Universidade de São Paulo (EACH-USP) | SAEG. All rights reserved.</p>
+        <p>Quanifi Documentation &bull; Dual-licensed under <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">GNU AGPL-3.0</a> and <a href="https://github.com/saeg/quanifi/blob/main/COMMERCIAL.md" target="_blank" rel="noopener">Commercial Terms</a> &bull; Source code hosted on <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub</a></p>
       </div>
     </div>
   </footer>
@@ -517,7 +520,7 @@ def convert_tutorials():
         # Fix relative image paths: img/ -> tutorials/img/ or img/
         # Inside tutorials/, img/ works directly!
         
-        # Wrap in our EACH USP layout
+        # Wrap in our layout
         final_html = render_page(
             page_title,
             content,
