@@ -64,11 +64,6 @@ sets itself):
 
 ## 2a. Arithmetic case manifests (`Case Input Mode`)
 
-> Building a hardware campaign on one of these? Read
-> [ARITHMETIC_CASE_MANIFESTS.md](ARITHMETIC_CASE_MANIFESTS.md) as well — it
-> covers the committed Campaign 1 manifest, the group builder flags, and the
-> deployment steps that keep a live armed group undisturbed.
-
 `Arithmetic Suite` states a **rule** for picking operand pairs, so the canvas
 shows `boundary:2` and not the seven pairs it selects. For a campaign whose
 inputs a reader has to be able to check, `Case Input Mode` adds two modes that

@@ -19,7 +19,7 @@ one structurally rather than by remembering to be careful.
 ## 1. Build it (do this a day early, not on the day)
 
 NiFi must be stopped, and it needs a restart afterwards. Restarts on this
-instance have wedged before (see the handover), so leave time.
+instance have wedged before, so leave time.
 
 ```bash
 just nifi-stop

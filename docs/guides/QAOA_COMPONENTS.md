@@ -288,7 +288,7 @@ Its unique ground state is `001` (E=-1.4); every one of the 35 cells reaches
 row's qubit indices and shows it still reports `best_measurement="001"`
 while its Hellinger distance to the reference jumps past 0.3).
 
-Thresholds, measured on the pinned environment (`docs/development/QAOA_SIMULATOR_EXTRACTION_PLAN.md`'s progress log has full per-cell numbers):
+Thresholds, measured on the pinned environment:
 
 - The 6 seedable engines (Aer, Cirq, Qrisp, PennyLane, Q#) at 4096 shots,
   `Random Seed=11`: worst measured Hellinger distance to the exact
@@ -469,8 +469,5 @@ If you have flows or scripts built against the pre-0.2.0 solvers:
 .venv/bin/python -m pytest -q --tb=short
 ```
 
-Exact test counts, per-milestone verification and every measured number
-referenced above are recorded in
-[`../development/QAOA_SIMULATOR_EXTRACTION_PLAN.md`](../development/QAOA_SIMULATOR_EXTRACTION_PLAN.md)'s
-progress log, which is the authoritative implementation record for this
-extraction (spec, milestones, and every verification command actually run).
+The numbers referenced above are reproduced by the test suite, which is the
+authoritative record for this extraction.

@@ -2,7 +2,7 @@
 
 This directory contains documentation for users and framework contributors.
 Research plans, experiment protocols and generated study reports are maintained
-in separate repositories. Framework implementation handoffs are under `development/`.
+in separate repositories.
 
 ## Reference
 

@@ -35,8 +35,8 @@ For running tests outside NiFi, you only need Python ≥ 3.10.
 ## 2. Clone and Python Environment
 
 ```bash
-git clone https://github.com/ramalhoneilson/quanifi.git
-cd quanifi
+git clone https://github.com/ramalhoneilson/Quanifi.git
+cd Quanifi
 ```
 
 Create a virtual environment and install all framework dependencies. NiFi will be pointed at this same environment so processors share one set of packages:

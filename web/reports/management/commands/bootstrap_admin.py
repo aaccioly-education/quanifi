@@ -17,6 +17,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         email = settings.ADMIN_EMAIL
+        if not email:
+            raise CommandError("QUANIFI_ADMIN_EMAIL is required")
         password = os.getenv("QUANIFI_ADMIN_PASSWORD")
         if not password:
             raise CommandError("QUANIFI_ADMIN_PASSWORD is required")

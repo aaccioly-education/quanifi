@@ -111,7 +111,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "reports:list"
 LOGOUT_REDIRECT_URL = "login"
-ADMIN_EMAIL = os.getenv("QUANIFI_ADMIN_EMAIL", "admin@example.com").lower()
+ADMIN_EMAIL = os.getenv("QUANIFI_ADMIN_EMAIL", "").strip().lower()
 REPORT_INGESTION_TOKEN = os.getenv("REPORT_INGESTION_TOKEN", "")
 DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.getenv("DJANGO_MAX_UPLOAD_BYTES", str(16 * 1024 * 1024)))
 

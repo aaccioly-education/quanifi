@@ -279,8 +279,5 @@ or independently constructed references, verify solver ground energies and
 exported optimal circuits, test malformed inputs and EL, and exercise the same
 configuration used by the example canvas.
 
-[Implementation milestones and handoff notes](../development/PYQUIL_IMPLEMENTATION_HANDOFF.md)
-record exact progress and verification commands.
-
 API reference: [pyQuil local simulation documentation](https://pyquil-docs.rigetti.com/en/stable/apidocs/pyquil.simulation.html).
 The implementation was also checked against installed pyQuil 4.18.0.
