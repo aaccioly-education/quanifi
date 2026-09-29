@@ -138,3 +138,24 @@ class TestQrispGroverSearch:
     def test_explicit_iterations(self):
         r = self._run("11", iterations=1)
         assert r.relationship == "success"
+
+    @pytest.mark.parametrize('target,iterations', [('10', 1), ('01', 1), ('110', 2), ('011', 0)])
+    def test_measurements_and_export_agree_in_q0_left_order(self, target, iterations):
+        """Check physical qubit order, not just relabelled measurement keys."""
+        from qiskit import qasm3
+        from qiskit.quantum_info import Statevector
+
+        result = self._run(target, iterations=iterations, shots=4096)
+        assert result.relationship == 'success'
+        circuit = qasm3.loads(result.attributes['circuit.qasm3'])
+        exact = {key[::-1]: value for key, value in
+                 Statevector(circuit).probabilities_dict().items()}
+        measured = json.loads(result.contents)
+        assert max(exact, key=exact.get) == target
+        assert max(measured, key=measured.get) == target
+        assert result.attributes['sim.top_result'] == target
+        assert result.attributes['sim.bit_order'] == 'q0_left'
+        assert result.attributes['circuit.bit_order'] == 'q0_left'
+        assert sum(measured.values()) == pytest.approx(1.0, abs=0.002)
+        assert max(abs(measured.get(key, 0) - exact.get(key, 0))
+                   for key in set(measured) | set(exact)) < 0.06

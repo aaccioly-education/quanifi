@@ -57,7 +57,7 @@ class QrispGroverSearch(FlowFileTransform):
             name="Marked State",
             description=(
                 "Target bitstring Grover will search for, e.g. '110'. "
-                "Length determines the number of qubits."
+                "Length determines the number of qubits; qubit 0 is the leftmost character."
             ),
             required=True,
             default_value="11",
@@ -137,7 +137,8 @@ class QrispGroverSearch(FlowFileTransform):
         qv = QuantumVariable(n)
 
         def oracle(qv):
-            tag_state({qv: target}, binary_values=True)
+            # tag_state(binary_values=True) reads its input q0-right.
+            tag_state({qv: target[::-1]}, binary_values=True)
 
         # Suppress Qrisp's tqdm progress bar: NiFi's py4j bridge uses stdout, so
         # anything printed there corrupts the channel ("null response" crash).
@@ -150,9 +151,8 @@ class QrispGroverSearch(FlowFileTransform):
                 grovers_alg(qv, oracle, iterations=num_iterations)
             results = qv.get_measurement(shots=shots)
         elapsed = time.time() - t0
-        # Canonical bit order: qubit 0 = leftmost char. Qrisp decodes a raw
-        # QuantumVariable little-endian (qv[0] = rightmost char), so reverse.
-        results = {k[::-1]: v for k, v in results.items()}
+        # QuantumVariable.decoder already returns q0-left measurement labels.
+        # Keep them unchanged so the results agree with the exported circuit.
         sorted_results = dict(
             sorted(results.items(), key=lambda x: x[1], reverse=True)
         )
@@ -175,6 +175,7 @@ class QrispGroverSearch(FlowFileTransform):
 
         attrs = {
             "circuit.marked_state":  target,
+            "circuit.bit_order":     "q0_left",
             "circuit.num_qubits":    str(n),
             "circuit.num_iterations": str(num_iterations if num_iterations else "auto"),
             "sim.shots":             str(shots),
