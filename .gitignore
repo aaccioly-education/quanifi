@@ -86,7 +86,6 @@ db.sqlite3
 # Large HTML guides (binary-ish, not source)
 "NiFi Developer's Guide.html"
 "NiFi Python Developer's Guide.html"
-.agent/settings.local.json
 reports/tmp/*
 reports/*.json
 reports-archive/
@@ -100,6 +99,12 @@ docs/screenshots/*.chrome-profile/
 # credential in a git repo, and the same goes for the files it is read from.
 ibm_api_key.txt
 token_iqm.txt
+
+# Personal IQM token exports. The existing token_* rules are prefix-anchored and
+# do not catch a file named <person>.token.iqm.txt, so match the token anywhere
+# in the name.
+*token*iqm*.txt
+*token*IQM*.txt
 
 # Runtime coordination only; the file contains no campaign evidence.
 experiments/results/generation2/.window-runner.lock
