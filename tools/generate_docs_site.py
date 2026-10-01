@@ -108,6 +108,7 @@ def build_sidebar(active_target_path, rel_root):
         ("Documentation Hub", f"{rel_root}index.html", "Core Reference", ""),
         ("Component Catalogue", f"{rel_root}components.html", "Core Reference", "all"),
         ("Screenshots Gallery", f"{rel_root}screenshots/index.html", "Core Reference", "18"),
+        ("Research Citation", f"{rel_root}index.html#citation", "Core Reference", "arXiv"),
         
         ("Developer Guide", f"{rel_root}guides/developer-guide.html", "Framework Guides", ""),
         ("Creating Processors", f"{rel_root}guides/creating-processors.html", "Framework Guides", ""),
@@ -289,6 +290,38 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
             <a href="{rel_root}screenshots/index.html" class="card-link">Browse Canvas Gallery &rarr;</a>
           </div>
         </div>
+
+        <section id="citation" class="citation-section">
+          <div class="citation-header">
+            <h2>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary); vertical-align: text-bottom; margin-right: 6px;">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              Citing Quanifi in Academic Research
+            </h2>
+            <a href="https://arxiv.org/abs/2609.33255" target="_blank" rel="noopener" class="citation-badge" title="Open arXiv preprint">
+              <span>arXiv:2609.33255 [quant-ph]</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+          </div>
+          <div class="citation-text">
+            <p><strong>NxM-Version Programming for Quantum Software: High-Level Components across Frameworks and Engines</strong><br>
+            Neilson Carlos Leite Ramalho, Higor Amario de Souza, Anthony Accioly, Valter Vieira de Camargo, and Marcos Lordello Chaim (2026).
+            <em>arXiv preprint arXiv:2609.33255 [quant-ph]</em>.</p>
+          </div>
+          <div class="citation-bibtex-block">
+            <pre><code>@misc{{ramalho2026nxmversionprogrammingquantumsoftware,
+      title={{NxM-Version Programming for Quantum Software: High-Level Components across Frameworks and Engines}}, 
+      author={{Neilson Carlos Leite Ramalho and Higor Amario de Souza and Anthony Accioly and Valter Vieira de Camargo and Marcos Lordello Chaim}},
+      year={{2026}},
+      eprint={{2609.33255}},
+      archivePrefix={{arXiv}},
+      primaryClass={{quant-ph}},
+      url={{https://arxiv.org/abs/2609.33255}}, 
+}}</code></pre>
+          </div>
+        </section>
         """
 
     full_html = f"""<!DOCTYPE html>
@@ -313,6 +346,13 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
       <div class="header-actions">
         <a href="{rel_root}tutorials/01_introduction_to_quanifi.html" class="btn-action btn-warning">Getting Started</a>
         <a href="{rel_root}components.html" class="btn-action btn-primary">Processors</a>
+        <a href="{rel_root}index.html#citation" class="btn-action btn-outline" title="Cite this research paper">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          Cite
+        </a>
         <a href="{rel_root}guides/nifi-flow-configuration-guide.html" class="btn-action btn-outline">Flow Guide</a>
         <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-github" title="View Source on GitHub">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
@@ -433,6 +473,8 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
           <h3>Code &amp; Licenses</h3>
           <p>Free and open source quantum orchestration under the GNU AGPL-3.0, with commercial licensing available.</p>
           <ul>
+            <li><a href="{rel_root}index.html#citation">Research Citation (BibTeX)</a></li>
+            <li><a href="https://arxiv.org/abs/2609.33255" target="_blank" rel="noopener">arXiv:2609.33255 [quant-ph]</a></li>
             <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
             <li><a href="https://github.com/saeg/quanifi/issues" target="_blank" rel="noopener">Issue Tracker</a></li>
             <li><a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener">GNU AGPL-3.0 License</a></li>

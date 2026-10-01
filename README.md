@@ -100,6 +100,26 @@ simulator. See the [QAOA components guide](docs/guides/QAOA_COMPONENTS.md)
 for the chain, property tables, attribute contracts and the 0.1.0→0.2.0
 migration notes.
 
+## Citation
+
+If you use Quanifi or its high-level components in your academic work or research, please cite our paper:
+
+> Neilson Carlos Leite Ramalho, Higor Amario de Souza, Anthony Accioly, Valter Vieira de Camargo, and Marcos Lordello Chaim. (2026). *NxM-Version Programming for Quantum Software: High-Level Components across Frameworks and Engines*. arXiv:2609.33255 [quant-ph]. <https://arxiv.org/abs/2609.33255>
+
+BibTeX entry:
+
+```bibtex
+@misc{ramalho2026nxmversionprogrammingquantumsoftware,
+      title={NxM-Version Programming for Quantum Software: High-Level Components across Frameworks and Engines}, 
+      author={Neilson Carlos Leite Ramalho and Higor Amario de Souza and Anthony Accioly and Valter Vieira de Camargo and Marcos Lordello Chaim},
+      year={2026},
+      eprint={2609.33255},
+      archivePrefix={arXiv},
+      primaryClass={quant-ph},
+      url={https://arxiv.org/abs/2609.33255}, 
+}
+```
+
 ## License
 
 Quanifi is free software under the [GNU Affero General Public License v3](LICENSE).

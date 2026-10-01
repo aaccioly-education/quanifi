@@ -826,6 +826,89 @@ code {
 }
 
 /* ==========================================================================
+   Citation Section
+   ========================================================================== */
+
+.citation-section {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 26px 30px;
+  margin: 36px 0 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.citation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.citation-header h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0;
+  border-left: none;
+  padding-left: 0;
+}
+
+.citation-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #b31b1b;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.citation-badge:hover {
+  opacity: 0.9;
+  color: #ffffff;
+}
+
+.citation-text {
+  font-size: 14px;
+  color: var(--text-main);
+  line-height: 1.6;
+  background: var(--bg-page);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+}
+
+.citation-text p {
+  margin: 0;
+}
+
+.citation-bibtex-block {
+  margin: 0;
+}
+
+.citation-bibtex-block pre {
+  margin: 0;
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  padding: 16px 18px;
+  border-radius: var(--radius-sm);
+  line-height: 1.5;
+  position: relative;
+  overflow-x: auto;
+}
+
+/* ==========================================================================
    Cards Grid (Dashboard / Hub / Screenshots)
    ========================================================================== */
 

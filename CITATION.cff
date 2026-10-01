@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use Quanifi in your research, please cite it using the following metadata."
+title: "NxM-Version Programming for Quantum Software: High-Level Components across Frameworks and Engines"
+authors:
+  - family-names: "Ramalho"
+    given-names: "Neilson Carlos Leite"
+  - family-names: "Souza"
+    given-names: "Higor Amario de"
+  - family-names: "Accioly"
+    given-names: "Anthony"
+  - family-names: "Camargo"
+    given-names: "Valter Vieira de"
+  - family-names: "Chaim"
+    given-names: "Marcos Lordello"
+year: 2026
+url: "https://arxiv.org/abs/2609.33255"
+identifiers:
+  - type: other
+    value: "arXiv:2609.33255"
+    description: "The arXiv preprint"
+keywords:
+  - "quantum software engineering"
+  - "Apache NiFi"
+  - "N-version programming"
+  - "quantum computing"
+  - "differential testing"
