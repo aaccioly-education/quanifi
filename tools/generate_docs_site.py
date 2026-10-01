@@ -104,6 +104,7 @@ def fix_links(html_content, current_rel_path):
 def build_sidebar(active_target_path, rel_root):
     items = [
         # (label, rel_url, group, badge)
+        ("Getting Started", f"{rel_root}tutorials/01_introduction_to_quanifi.html", "Core Reference", "Start"),
         ("Documentation Hub", f"{rel_root}index.html", "Core Reference", ""),
         ("Component Catalogue", f"{rel_root}components.html", "Core Reference", "all"),
         ("Screenshots Gallery", f"{rel_root}screenshots/index.html", "Core Reference", "18"),
@@ -181,21 +182,73 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
     hero_html = ""
     if is_home:
         hero_html = f"""
-        <div style="background: linear-gradient(135deg, #01a1c0 0%, #00778f 100%); color: #fff; padding: 32px 36px; border-radius: var(--radius-sm); margin-bottom: 30px; border-bottom: 4px solid var(--accent); box-shadow: var(--shadow-md);">
+        <div style="background: linear-gradient(135deg, #01a1c0 0%, #00778f 100%); color: #fff; padding: 36px 38px; border-radius: var(--radius-sm); margin-bottom: 28px; border-bottom: 4px solid var(--accent); box-shadow: var(--shadow-md);">
           <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px;">
             <span style="background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 3px; text-transform: uppercase;">Apache NiFi &bull; Quantum Computing</span>
             <span style="font-size: 13px; color: #d0f0f7;">Open Source Framework v0.2.0</span>
           </div>
           <h1 style="font-size: 2.3rem; font-weight: 800; color: #fff; margin: 0 0 14px 0; line-height: 1.2;">Visual Quantum Software Engineering with Apache NiFi</h1>
-          <p style="font-size: 1.15rem; color: #e6f7fa; line-height: 1.6; margin: 0 0 22px 0; max-width: 850px;">
+          <p style="font-size: 1.15rem; color: #e6f7fa; line-height: 1.6; margin: 0 0 24px 0; max-width: 860px;">
             Quanifi combines enterprise dataflow orchestration with quantum programming frameworks (Qiskit, Cirq, Qrisp, PennyLane, and pyQuil), allowing quantum circuits, oracles, Hamiltonians, and measurements to flow through reusable visual pipelines.
           </p>
-          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="{rel_root}components.html" class="btn-action btn-warning" style="color: #fff;">Explore all Processors &rarr;</a>
-            <a href="{rel_root}guides/developer-guide.html" class="btn-action btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">Developer Guide</a>
-            <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">GitHub Repository</a>
-            <a href="https://github.com/saeg/quanifi/blob/main/LICENSE" target="_blank" rel="noopener" class="btn-action btn-outline" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">AGPL-3.0 License</a>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+            <a href="{rel_root}tutorials/01_introduction_to_quanifi.html" class="btn-action btn-warning" style="color: #fff; font-weight: 800; font-size: 14.5px; padding: 10px 22px; box-shadow: 0 3px 8px rgba(0,0,0,0.25);">🚀 Getting Started: Beginner Guide &rarr;</a>
+            <a href="#getting-started" class="btn-action btn-outline" style="background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.4); font-weight: 600;">4-Step Quickstart &darr;</a>
+            <a href="{rel_root}components.html" class="btn-action btn-outline" style="background: rgba(255,255,255,0.14); color: #fff; border-color: rgba(255,255,255,0.3);">Explore Processors</a>
+            <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-outline" style="background: rgba(255,255,255,0.14); color: #fff; border-color: rgba(255,255,255,0.3);">GitHub</a>
           </div>
+        </div>
+
+        <section id="getting-started" class="getting-started-section">
+          <div class="getting-started-header">
+            <div class="getting-started-title-group">
+              <span class="step-badge accent" style="margin-bottom: 8px;">New to Quanifi? Start Here</span>
+              <h2>Getting Started: From Zero to Your First Quantum Flow</h2>
+              <p>Follow this 4-step beginner roadmap to master visual quantum computing, from core mental models to running your first dataflow pipeline.</p>
+            </div>
+            <div>
+              <a href="{rel_root}tutorials/01_introduction_to_quanifi.html" class="btn-action btn-primary" style="font-size: 13px; padding: 9px 18px; font-weight: 700;">Open Module 1 Tutorial &rarr;</a>
+            </div>
+          </div>
+
+          <div class="steps-grid">
+            <div class="step-card">
+              <span class="step-badge">Step 1 &bull; Mental Model</span>
+              <h3>1. The Visual Quantum Paradigm</h3>
+              <p>Understand how Apache NiFi represents quantum algorithms as streaming FlowFiles. Learn how quantum circuits, Hamiltonians, and statevectors flow across processors without vendor lock-in.</p>
+              <a href="{rel_root}tutorials/01_introduction_to_quanifi.html" class="card-link">Read Intro to Quanifi &rarr;</a>
+            </div>
+
+            <div class="step-card">
+              <span class="step-badge">Step 2 &bull; Environment</span>
+              <h3>2. Setup in 60 Seconds</h3>
+              <p>Set up Python 3.12 with <code>uv</code> and run the test suite, or spin up the ready-to-run Apache NiFi Docker container with pre-configured quantum processors.</p>
+              <div class="step-code">uv sync --frozen --extra dev --python 3.12<br>just test</div>
+              <div style="display: flex; gap: 12px; margin-top: auto; flex-wrap: wrap;">
+                <a href="{rel_root}guides/developer-guide.html" class="card-link">Developer Guide &rarr;</a>
+                <a href="{rel_root}guides/docker-quickstart.html" class="card-link" style="color: var(--accent);">Docker Guide &rarr;</a>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <span class="step-badge">Step 3 &bull; Execution</span>
+              <h3>3. Run Your First Flow</h3>
+              <p>Import an example process group onto the NiFi canvas. Connect builder and simulator processors, inspect FlowFile wire attributes, and trigger execution with interactive "Run Once".</p>
+              <a href="{rel_root}guides/nifi-flow-configuration-guide.html" class="card-link">Flow Configuration Guide &rarr;</a>
+            </div>
+
+            <div class="step-card">
+              <span class="step-badge">Step 4 &bull; Curriculum</span>
+              <h3>4. Interactive Algorithms</h3>
+              <p>Master 6 hands-on algorithm modules: Deutsch-Jozsa, Bernstein-Vazirani, Grover's search, QAOA portfolio optimization, and graph decomposition with full canvas templates.</p>
+              <a href="{rel_root}tutorials/index.html" class="card-link">Start 6-Module Curriculum &rarr;</a>
+            </div>
+          </div>
+        </section>
+
+        <div style="margin: 36px 0 16px 0; border-top: 1px solid var(--border-light); padding-top: 24px;">
+          <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--primary-dark); margin: 0 0 6px 0;">Documentation &amp; Ecosystem Highlights</h2>
+          <p style="color: var(--text-muted); font-size: 14px; margin: 0 0 18px 0;">Browse comprehensive processor specifications, mutation testing architecture, cross-framework optimization, and visual canvas galleries.</p>
         </div>
 
         <div class="cards-grid">
@@ -258,8 +311,9 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
         <img src="{rel_root}assets/img/quanifi-logo.svg" alt="Quanifi" height="52">
       </a>
       <div class="header-actions">
+        <a href="{rel_root}tutorials/01_introduction_to_quanifi.html" class="btn-action btn-warning">Getting Started</a>
         <a href="{rel_root}components.html" class="btn-action btn-primary">Processors</a>
-        <a href="{rel_root}guides/nifi-flow-configuration-guide.html" class="btn-action btn-warning">Flow Guide</a>
+        <a href="{rel_root}guides/nifi-flow-configuration-guide.html" class="btn-action btn-outline">Flow Guide</a>
         <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="btn-action btn-github" title="View Source on GitHub">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -283,6 +337,7 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
       <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
       <ul class="main-menu">
         <li class="{'active' if active_tab == 'home' else ''}"><a href="{rel_root}index.html">Overview</a></li>
+        <li class="{'active' if active_tab == 'tutorials' and '01_intro' in target_rel_path else ''}"><a href="{rel_root}tutorials/01_introduction_to_quanifi.html" style="color: #ffd27d;"><span style="color: var(--accent); font-size: 10px;">&#9658;</span> Getting Started</a></li>
         <li class="{'active' if active_tab == 'components' else ''}"><a href="{rel_root}components.html">Components</a></li>
         <li class="{'active' if active_tab == 'guides' else ''}">
           <a href="{rel_root}guides/developer-guide.html">Guides &#9662;</a>
@@ -356,6 +411,7 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
         <div class="footer-col">
           <h3>Documentation</h3>
           <ul>
+            <li><a href="{rel_root}tutorials/01_introduction_to_quanifi.html">Getting Started Guide</a></li>
             <li><a href="{rel_root}components.html">Component Catalogue</a></li>
             <li><a href="{rel_root}guides/developer-guide.html">Developer Guide</a></li>
             <li><a href="{rel_root}guides/nifi-flow-configuration-guide.html">NiFi Flow Configuration</a></li>

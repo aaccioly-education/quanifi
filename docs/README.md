@@ -10,6 +10,15 @@ This directory contains documentation for users and framework contributors.
 Research plans, experiment protocols and generated study reports are maintained
 in separate repositories.
 
+## Beginner Roadmap
+
+If you are new to Quanifi, follow this 4-step pathway:
+
+1. **[Module 1: Introduction to Quanifi](tutorials/01_introduction_to_quanifi.html)** — Understand the visual quantum software engineering paradigm and FlowFile dataflow model.
+2. **[Developer Guide](guides/DEVELOPER_GUIDE.md)** or **[Docker Quickstart](guides/DOCKER_QUICKSTART.md)** — Set up your Python 3.12 environment with `uv` or launch the pre-packaged NiFi container.
+3. **[Configuring flows on the NiFi canvas](guides/NIFI_FLOW_CONFIGURATION_GUIDE.md)** — Import and execute your first quantum flow using interactive "Run Once".
+4. **[Interactive Tutorials Curriculum](tutorials/index.html)** — Work through 6 step-by-step quantum algorithm modules (Deutsch-Jozsa, Bernstein-Vazirani, Grover, QAOA, Graph Decomposition).
+
 ## Reference
 
 - [Component catalogue](COMPONENTS.md)
