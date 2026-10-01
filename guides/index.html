@@ -29,15 +29,19 @@
 </header>
 
 <main class="container">
-  <aside class="callout">
-    <p><strong>Setup required:</strong> These tutorials describe separately configured
-    example flows. The Docker quick start loads only the Qiskit Grover flow;
-    the groups shown here are not preinstalled. Enable the processors needed by
-    the tutorial and construct its flow before following the canvas steps.
-    See the <a href="../docs/guides/DOCKER_QUICKSTART.md">Docker guide</a>
-    for processor selection and first-run setup. URLs below use the default Docker
-    port; use your configured address and credentials for other installations.</p>
-  </aside>
+  <div class="docker-prereq-banner">
+    <div class="banner-title">
+      <span>🐳</span> Quickstart: Launching Apache NiFi with Docker
+    </div>
+    <p>
+      To follow along and execute any of these interactive tutorials, start the Quanifi NiFi container from your terminal:
+    </p>
+    <pre><code>docker compose up -d</code></pre>
+    <p>
+      Wait ~30–60 seconds for NiFi to become healthy (check with <code>docker compose ps</code>). Then open <a href="https://localhost:8443/nifi" target="_blank" rel="noopener"><strong>https://localhost:8443/nifi</strong></a> in your browser (Username: <code>admin</code>, Password: <code>quanifi-demo-password</code>).
+      For custom processor selections and production options, see the <a href="../guides/docker-quickstart.html">Docker Quickstart Guide</a>.
+    </p>
+  </div>
 
 
   <section class="hero">
@@ -142,8 +146,11 @@
       Here is a snapshot of the live Quanifi process group containing decoupled quantum algorithm pipelines running side-by-side in NiFi:
     </p>
     <div class="diagram-container">
-      <img src="img/overview.png" alt="Quanifi Canvas Overview" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
-      <div class="diagram-caption">Figure 1: Decoupled quantum algorithmic pipelines on the Apache NiFi canvas.</div>
+      <img src="img/overview.png" alt="Quanifi Canvas Overview" loading="lazy">
+      <div class="diagram-caption">
+        Figure 1: Decoupled quantum algorithmic pipelines on the Apache NiFi canvas.
+        <span class="zoom-hint">🔍 Click image to enlarge in lightbox</span>
+      </div>
     </div>
   </section>
 

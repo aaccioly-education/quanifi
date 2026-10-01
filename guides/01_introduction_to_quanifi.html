@@ -29,15 +29,19 @@
 </header>
 
 <main class="container">
-  <aside class="callout">
-    <p><strong>Setup required:</strong> These tutorials describe separately configured
-    example flows. The Docker quick start loads only the Qiskit Grover flow;
-    the groups shown here are not preinstalled. Enable the processors needed by
-    the tutorial and construct its flow before following the canvas steps.
-    See the <a href="../docs/guides/DOCKER_QUICKSTART.md">Docker guide</a>
-    for processor selection and first-run setup. URLs below use the default Docker
-    port; use your configured address and credentials for other installations.</p>
-  </aside>
+  <div class="docker-prereq-banner">
+    <div class="banner-title">
+      <span>🐳</span> Quickstart: Launching Apache NiFi with Docker
+    </div>
+    <p>
+      To follow the interactive canvas steps in this tutorial, start the Quanifi Docker container from your repository root:
+    </p>
+    <pre><code>docker compose up -d</code></pre>
+    <p>
+      Wait ~30–60 seconds for NiFi to report healthy (verify with <code>docker compose ps</code>). Then open <a href="https://localhost:8443/nifi" target="_blank" rel="noopener"><strong>https://localhost:8443/nifi</strong></a> in your browser (accept the self-signed TLS certificate) and log in with Username: <code>admin</code>, Password: <code>quanifi-demo-password</code>.
+      For custom processor bundles and detailed options, see the <a href="../guides/docker-quickstart.html">Docker Quickstart Guide</a>.
+    </p>
+  </div>
 
 
   <h1>Module 1: Introduction to Quanifi</h1>
@@ -222,19 +226,25 @@
     </p>
     <ol>
       <li>
-        Open your browser and navigate to <a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a>.
+        <strong>Ensure Docker is running:</strong> Run <code>docker compose up -d</code> in your terminal and verify health with <code>docker compose ps</code>.
       </li>
       <li>
-        Log in with Username: <code>admin</code>, Password: <code>quanifi-demo-password</code>.
+        <strong>Open NiFi in your browser:</strong> Navigate to <a href="https://localhost:8443/nifi" target="_blank" rel="noopener">https://localhost:8443/nifi</a> (accept the self-signed TLS certificate).
       </li>
       <li>
-        Double-click on the process group named <strong><code>Qrisp Components &amp; Textbook Algorithms</code></strong>.
+        <strong>Log in with credentials:</strong> Username: <code>admin</code>, Password: <code>quanifi-demo-password</code>.
+      </li>
+      <li>
+        <strong>Open a process group:</strong> Double-click on the process group named <strong><code>Qrisp Components &amp; Textbook Algorithms</code></strong>.
       </li>
     </ol>
 
     <div class="diagram-container">
-      <img src="img/overview.png" alt="Process Group Canvas View" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
-      <div class="diagram-caption">Figure 1.2: Navigating inside the Qrisp Components Process Group.</div>
+      <img src="img/overview.png" alt="Process Group Canvas View" loading="lazy">
+      <div class="diagram-caption">
+        Figure 1.2: Navigating inside the Qrisp Components Process Group.
+        <span class="zoom-hint">🔍 Click image to enlarge in lightbox</span>
+      </div>
     </div>
 
     <p>

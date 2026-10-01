@@ -23,6 +23,10 @@
   --border-light: #e2e8f0;
   --border-medium: #cbd5e1;
   --border-dark: #94a3b8;
+  --border: #e2e8f0;
+  --surface: #ffffff;
+  --text: #2b353e;
+  --secondary: #5e6d77;
   --code-bg: #1e293b;
   --code-text: #f1f5f9;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
@@ -31,6 +35,14 @@
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 10px;
+  --accent-purple: #8b5cf6;
+  --accent-purple-bg: #f5f3ff;
+  --accent-green: #10b981;
+  --accent-green-bg: #ecfdf5;
+  --accent-amber: #f59e0b;
+  --accent-amber-bg: #fffbeb;
+  --accent-rose: #f43f5e;
+  --accent-rose-bg: #fff1f2;
 }
 
 *, *::before, *::after {
@@ -1230,3 +1242,400 @@ code {
     padding: 24px 20px;
   }
 }
+
+/* ==========================================================================
+   Interactive Tutorials & Canvas Documentation Styles
+   Fixes broken bullet points, steps layout, callouts, and canvas diagrams
+   ========================================================================== */
+
+/* Tutorial Callout Variations */
+.callout {
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  margin: 24px 0;
+  border-left: 4px solid var(--primary);
+  background: var(--primary-light);
+  color: #075985;
+}
+
+.callout p {
+  margin: 0 0 8px 0;
+}
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+.callout-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.callout.software-analogy {
+  background: var(--accent-purple-bg);
+  border-left-color: var(--accent-purple);
+  color: #4c1d95;
+}
+.callout.software-analogy .callout-title {
+  color: #5b21b6;
+}
+
+.callout.tip {
+  background: var(--accent-green-bg);
+  border-left-color: var(--accent-green);
+  color: #064e3b;
+}
+.callout.tip .callout-title {
+  color: #047857;
+}
+
+.callout.note {
+  background: var(--primary-light);
+  border-left-color: var(--primary);
+  color: #075985;
+}
+.callout.note .callout-title {
+  color: #007a93;
+}
+
+.callout.warning {
+  background: var(--accent-amber-bg);
+  border-left-color: var(--accent-amber);
+  color: #78350f;
+}
+.callout.warning .callout-title {
+  color: #b45309;
+}
+
+/* Docker Quickstart / Prerequisites Banner */
+.docker-prereq-banner {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-left: 4px solid #16a34a;
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  margin: 24px 0;
+  color: #14532d;
+}
+
+.docker-prereq-banner .banner-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #15803d;
+}
+
+.docker-prereq-banner code {
+  background: #dcfce7;
+  color: #14532d;
+  font-weight: 600;
+}
+
+.docker-prereq-banner pre {
+  margin: 10px 0;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+/* Step Lists & Tutorial Components: Explicit override to eliminate stray bullets */
+.main-content .step-list,
+.step-list,
+ol.step-list,
+ul.step-list {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  padding-left: 0 !important;
+  margin: 24px 0 !important;
+}
+
+.main-content .step-item,
+.step-item,
+ol.step-list > li,
+ul.step-list > li {
+  display: flex !important;
+  gap: 18px !important;
+  margin-bottom: 24px !important;
+  list-style: none !important;
+  list-style-type: none !important;
+  align-items: flex-start !important;
+}
+
+.main-content .step-item::marker,
+.step-item::marker,
+ol.step-list > li::marker,
+ul.step-list > li::marker {
+  display: none !important;
+  content: "" !important;
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #ffffff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1;
+  box-shadow: 0 2px 5px rgba(1, 161, 192, 0.35);
+  margin-top: 2px;
+}
+
+.step-body {
+  flex: 1;
+}
+
+.step-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+  color: var(--dark-header);
+}
+
+.step-body p {
+  margin-bottom: 12px;
+}
+.step-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure nested lists inside step-body have normal bullets */
+.step-body ul {
+  list-style-type: disc !important;
+  padding-left: 20px !important;
+  margin: 10px 0 !important;
+}
+.step-body ol {
+  list-style-type: decimal !important;
+  padding-left: 20px !important;
+  margin: 10px 0 !important;
+}
+.step-body li {
+  display: list-item !important;
+  margin-bottom: 6px !important;
+}
+
+/* Tutorial Data Tables */
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+}
+
+table.data-table th, table.data-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14.5px;
+}
+
+table.data-table th {
+  background: #f8fafc;
+  font-weight: 700;
+  color: var(--dark-header);
+}
+
+table.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Diagrams, Canvas Viewers & Zoom Lightbox */
+.diagram-container {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  margin: 28px 0;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.diagram-container svg {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+.diagram-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  cursor: zoom-in;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-block;
+}
+
+.diagram-container img:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Scrollable container for ultra-wide canvas pipelines (like 1999px pipelines) */
+.canvas-scroll-container {
+  overflow-x: auto;
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin: 14px 0;
+  text-align: left;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.canvas-scroll-container img {
+  min-width: 950px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.diagram-caption {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.diagram-caption .zoom-hint {
+  font-style: normal;
+  font-size: 0.8rem;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Interactive Exercise Boxes */
+.exercise-box {
+  background: var(--bg-surface);
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin: 40px 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.exercise-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.exercise-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: var(--dark-header);
+}
+
+details.solution-accordion {
+  margin-top: 20px;
+  background: #f8fafc;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+details.solution-accordion summary {
+  padding: 14px 18px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  cursor: pointer;
+  user-select: none;
+  background: #f1f5f9;
+  outline: none;
+  transition: background 0.15s ease;
+}
+
+details.solution-accordion summary:hover {
+  background: #e2e8f0;
+  color: var(--primary);
+}
+
+details.solution-accordion .solution-content {
+  padding: 20px;
+  border-top: 1px solid var(--border-medium);
+  background: var(--bg-surface);
+}
+
+details.solution-accordion .solution-content h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: var(--dark-header);
+}
+
+/* Guide Pagination Navigation */
+.guide-nav-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.guide-nav-button {
+  display: inline-flex;
+  flex-direction: column;
+  text-decoration: none;
+  padding: 12px 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s ease;
+}
+
+.guide-nav-button:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.guide-nav-button .nav-sub {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.guide-nav-button .nav-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+

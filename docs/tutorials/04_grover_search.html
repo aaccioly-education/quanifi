@@ -140,15 +140,19 @@
 
       <article>
         
-  <aside class="callout">
-    <p><strong>Setup required:</strong> These tutorials describe separately configured
-    example flows. The Docker quick start loads only the Qiskit Grover flow;
-    the groups shown here are not preinstalled. Enable the processors needed by
-    the tutorial and construct its flow before following the canvas steps.
-    See the <a href="../guides/docker-quickstart.html">Docker guide</a>
-    for processor selection and first-run setup. URLs below use the default Docker
-    port; use your configured address and credentials for other installations.</p>
-  </aside>
+  <div class="docker-prereq-banner">
+    <div class="banner-title">
+      <span>🐳</span> Preloaded Docker Demo: Qiskit Grover Search
+    </div>
+    <p>
+      The Qiskit Grover Search flow is <strong>preloaded automatically</strong> into the default Quanifi Docker container canvas! To start it:
+    </p>
+    <pre><code>docker compose up -d</code></pre>
+    <p>
+      Wait ~30–60 seconds for NiFi to report healthy (<code>docker compose ps</code>). Then open <a href="https://localhost:8443/nifi" target="_blank" rel="noopener"><strong>https://localhost:8443/nifi</strong></a> (Username: <code>admin</code>, Password: <code>quanifi-demo-password</code>). Right-click <strong>Quanifi quickstart — Qiskit Grover</strong> on the canvas and choose <strong>Start</strong> to run the entire demo pipeline!
+      For custom processor bundles and detailed options, see the <a href="../guides/docker-quickstart.html">Docker Quickstart Guide</a>.
+    </p>
+  </div>
 
 
   <h1>Module 4: Grover's Search Algorithm</h1>
@@ -331,7 +335,15 @@
         <text x="645" y="65" text-anchor="middle" font-weight="bold" font-size="13" fill="#0f172a">Grover — Report</text>
         <text x="645" y="90" text-anchor="middle" font-size="11" fill="#64748b">QuanifiReport</text>
       </svg>
-      <div class="diagram-caption">Figure 4.2: Decoupled Grover Search execution and reporting pipeline.</div>
+      <div class="diagram-caption">Figure 4.2: Decoupled Grover Search execution and reporting pipeline topology.</div>
+    </div>
+
+    <div class="diagram-container">
+      <img src="img/grover_search_canvas.png" alt="Grover and Quantum Solvers on NiFi Canvas" loading="lazy">
+      <div class="diagram-caption">
+        Figure 4.3: Grover Search and algorithm solver components on the Apache NiFi canvas.
+        <span class="zoom-hint">🔍 Click image to enlarge in lightbox</span>
+      </div>
     </div>
 
     <h3>Configuring <code>QiskitGroverSearch</code>:</h3>

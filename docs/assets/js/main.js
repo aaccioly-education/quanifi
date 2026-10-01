@@ -76,13 +76,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const modal = document.createElement('div');
   modal.className = 'lightbox-modal';
   modal.innerHTML = `
-    <span class="lightbox-close">&times;</span>
-    <img class="lightbox-content" src="" alt="Enlarged Canvas View">
+    <span class="lightbox-close" title="Close (Esc)">&times;</span>
+    <div style="display: flex; flex-direction: column; align-items: center; max-width: 96vw; max-height: 94vh;">
+      <img class="lightbox-content" src="" alt="Enlarged Canvas View">
+      <div style="margin-top: 12px; display: flex; gap: 14px; align-items: center;">
+        <a class="lightbox-full-link" href="" target="_blank" rel="noopener" style="color: #ffffff; background: #01a1c0; padding: 6px 16px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.4); display: inline-flex; align-items: center; gap: 6px;">
+          <span>🔍 View Full Resolution Image</span>
+          <span>&nearr;</span>
+        </a>
+      </div>
+    </div>
   `;
   document.body.appendChild(modal);
 
   const modalImg = modal.querySelector('.lightbox-content');
   const modalClose = modal.querySelector('.lightbox-close');
+  const fullLink = modal.querySelector('.lightbox-full-link');
 
   modalClose.addEventListener('click', () => {
     modal.classList.remove('active');
@@ -94,10 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      modal.classList.remove('active');
+    }
+  });
+
   document.querySelectorAll('.gallery-card img, .main-content img').forEach(img => {
     img.style.cursor = 'zoom-in';
     img.addEventListener('click', () => {
       modalImg.src = img.src;
+      if (fullLink) fullLink.href = img.src;
       modal.classList.add('active');
     });
   });

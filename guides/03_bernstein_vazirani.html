@@ -29,15 +29,19 @@
 </header>
 
 <main class="container">
-  <aside class="callout">
-    <p><strong>Setup required:</strong> These tutorials describe separately configured
-    example flows. The Docker quick start loads only the Qiskit Grover flow;
-    the groups shown here are not preinstalled. Enable the processors needed by
-    the tutorial and construct its flow before following the canvas steps.
-    See the <a href="../docs/guides/DOCKER_QUICKSTART.md">Docker guide</a>
-    for processor selection and first-run setup. URLs below use the default Docker
-    port; use your configured address and credentials for other installations.</p>
-  </aside>
+  <div class="docker-prereq-banner">
+    <div class="banner-title">
+      <span>🐳</span> Quickstart: Launching Apache NiFi with Docker
+    </div>
+    <p>
+      To follow the interactive canvas steps in this tutorial, ensure the Quanifi NiFi container is started:
+    </p>
+    <pre><code>docker compose up -d</code></pre>
+    <p>
+      Check container health using <code>docker compose ps</code>. Then open <a href="https://localhost:8443/nifi" target="_blank" rel="noopener"><strong>https://localhost:8443/nifi</strong></a> in your browser (accept the self-signed TLS certificate) and log in with Username: <code>admin</code>, Password: <code>quanifi-demo-password</code>.
+      For full configuration details, see the <a href="../guides/docker-quickstart.html">Docker Quickstart Guide</a>.
+    </p>
+  </div>
 
 
   <h1>Module 3: The Bernstein-Vazirani Algorithm</h1>
@@ -180,8 +184,13 @@
     </p>
 
     <div class="diagram-container">
-      <img src="img/bernstein_vazirani_canvas.png" alt="Bernstein-Vazirani Canvas Pipeline" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
-      <div class="diagram-caption">Figure 3.2: Bernstein-Vazirani pipeline on the NiFi canvas.</div>
+      <div class="canvas-scroll-container">
+        <img src="img/bernstein_vazirani_canvas.png" alt="Bernstein-Vazirani Canvas Pipeline" loading="lazy">
+      </div>
+      <div class="diagram-caption">
+        Figure 3.2: Bernstein-Vazirani pipeline on the NiFi canvas.
+        <span class="zoom-hint">↔ Scroll horizontally to inspect processors &bull; Click to enlarge</span>
+      </div>
     </div>
 
     <h3>Pipeline Nodes:</h3>
@@ -193,7 +202,8 @@
 
     <h3>Executing the Pipeline:</h3>
     <ol>
-      <li>Log in to NiFi (<a href="https://localhost:8443/nifi" target="_blank">https://localhost:8443/nifi</a>).</li>
+      <li>Make sure Docker is running (<code>docker compose up -d</code>).</li>
+      <li>Log in to NiFi (<a href="https://localhost:8443/nifi" target="_blank" rel="noopener">https://localhost:8443/nifi</a>).</li>
       <li>Navigate to <code>Qrisp Components &amp; Textbook Algorithms</code>.</li>
       <li>Right-click <strong><code>BV — Trigger</code></strong> and select <strong>Run Once</strong>.</li>
       <li>In ~2 seconds, the FlowFile traverses through <code>Qrisp Bernstein-Vazirani</code> into <code>BV — Report</code>.</li>

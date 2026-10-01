@@ -140,15 +140,19 @@
 
       <article>
         
-  <aside class="callout">
-    <p><strong>Setup required:</strong> These tutorials describe separately configured
-    example flows. The Docker quick start loads only the Qiskit Grover flow;
-    the groups shown here are not preinstalled. Enable the processors needed by
-    the tutorial and construct its flow before following the canvas steps.
-    See the <a href="../guides/docker-quickstart.html">Docker guide</a>
-    for processor selection and first-run setup. URLs below use the default Docker
-    port; use your configured address and credentials for other installations.</p>
-  </aside>
+  <div class="docker-prereq-banner">
+    <div class="banner-title">
+      <span>🐳</span> Quickstart: Launching Apache NiFi with Docker
+    </div>
+    <p>
+      To inspect and run the Portfolio QAOA optimization dataflow on the live canvas, start the Quanifi NiFi container:
+    </p>
+    <pre><code>docker compose up -d</code></pre>
+    <p>
+      Verify health status with <code>docker compose ps</code>. Then open <a href="https://localhost:8443/nifi" target="_blank" rel="noopener"><strong>https://localhost:8443/nifi</strong></a> in your browser (Username: <code>admin</code>, Password: <code>quanifi-demo-password</code>).
+      The corresponding template JSON is available in <code>demo/qaoa/lanes/qrisp-qaoa.json</code>. For all runtime options, see the <a href="../guides/docker-quickstart.html">Docker Quickstart Guide</a>.
+    </p>
+  </div>
 
 
   <h1>Module 5: Variational Optimization &amp; The Constrained XY Mixer (QAOA)</h1>
@@ -254,8 +258,11 @@
     </p>
 
     <div class="diagram-container">
-      <img src="img/portfolio_qaoa_canvas.png" alt="Portfolio QAOA Canvas Pipeline" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
-      <div class="diagram-caption">Figure 5.1: Decoupled Portfolio Rebalancing QAOA pipeline on the NiFi canvas. This screenshot predates the 0.2.0 QAOA extraction below: it shows <code>QrispQAOA</code> sampling and reporting directly. Since 0.2.0, <code>QrispQAOA</code> trains only and emits a circuit; a simulator and <code>QuantumQAOAEvaluator</code> now sit between it and the report, per the 6-stage pipeline described next.</div>
+      <img src="img/portfolio_qaoa_canvas.png" alt="Portfolio QAOA Canvas Pipeline" loading="lazy">
+      <div class="diagram-caption">
+        Figure 5.1: Decoupled Portfolio Rebalancing QAOA pipeline on the NiFi canvas.
+        <span class="zoom-hint">🔍 Click image to enlarge in lightbox</span>
+      </div>
     </div>
 
     <h3>The 6 Decoupled Stages:</h3>

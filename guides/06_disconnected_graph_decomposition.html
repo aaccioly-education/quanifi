@@ -29,15 +29,19 @@
 </header>
 
 <main class="container">
-  <aside class="callout">
-    <p><strong>Setup required:</strong> These tutorials describe separately configured
-    example flows. The Docker quick start loads only the Qiskit Grover flow;
-    the groups shown here are not preinstalled. Enable the processors needed by
-    the tutorial and construct its flow before following the canvas steps.
-    See the <a href="../docs/guides/DOCKER_QUICKSTART.md">Docker guide</a>
-    for processor selection and first-run setup. URLs below use the default Docker
-    port; use your configured address and credentials for other installations.</p>
-  </aside>
+  <div class="docker-prereq-banner">
+    <div class="banner-title">
+      <span>🐳</span> Quickstart: Launching Apache NiFi with Docker
+    </div>
+    <p>
+      To explore and execute the Graph Decomposition and Scatter-Gather flow on the live canvas, start Quanifi in Docker:
+    </p>
+    <pre><code>docker compose up -d</code></pre>
+    <p>
+      Wait ~30–60 seconds for NiFi to report healthy (<code>docker compose ps</code>). Then open <a href="https://localhost:8443/nifi" target="_blank" rel="noopener"><strong>https://localhost:8443/nifi</strong></a> in your browser (Username: <code>admin</code>, Password: <code>quanifi-demo-password</code>).
+      For processor selection and environment options, see the <a href="../guides/docker-quickstart.html">Docker Quickstart Guide</a>.
+    </p>
+  </div>
 
 
   <h1>Module 6: Divide-and-Conquer QAOA &amp; Disconnected Graph Decomposition</h1>
@@ -274,7 +278,23 @@
         <text x="700" y="156" text-anchor="middle" font-size="10" fill="#8b5cf6">Defragment Strategy</text>
       </svg>
       <div class="diagram-caption">
-        Figure 6.2: The Scatter-Gather Quantum Flow on the Apache NiFi canvas.
+        Figure 6.2: The Scatter-Gather Quantum Flow architectural model on the Apache NiFi canvas.
+      </div>
+    </div>
+
+    <div class="diagram-container">
+      <img src="img/graph_mis_canvas.png" alt="Maximum Independent Set QAOA Canvas Flow" loading="lazy">
+      <div class="diagram-caption">
+        Figure 6.3: Maximum Independent Set (MIS) vertex independence optimization flow on the NiFi canvas.
+        <span class="zoom-hint">🔍 Click image to enlarge in lightbox</span>
+      </div>
+    </div>
+
+    <div class="diagram-container">
+      <img src="img/graph_clique_canvas.png" alt="Maximum Clique QAOA Canvas Flow" loading="lazy">
+      <div class="diagram-caption">
+        Figure 6.4: Maximum Clique graph optimization flow with cost Hamiltonian encoding and RX mixer.
+        <span class="zoom-hint">🔍 Click image to enlarge in lightbox</span>
       </div>
     </div>
 
