@@ -27,3 +27,7 @@ grover-examples:
 
 quickstart-smoke:
     {{python}} tools/quickstart_smoke.py
+
+publish-reports:
+    {{python}} manage.py publish_report_files
+

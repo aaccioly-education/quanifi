@@ -10,12 +10,15 @@
     header { align-items: center; background: #fff; border-bottom: 1px solid #d0d7de; display: flex; gap: 1.5rem; padding: 1rem 2rem; }
     nav { display: flex; gap: 1rem; }
     header form { margin-left: auto; }
-    main { margin: 2rem auto; max-width: 1100px; padding: 0 1rem; }
+    main { margin: 2rem auto; max-width: 1200px; padding: 0 1rem; }
     a { color: #0969da; }
     .card { background: #fff; border: 1px solid #d0d7de; border-radius: 8px; margin-bottom: 1rem; padding: 1rem; }
     .muted { color: #656d76; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border-bottom: 1px solid #d0d7de; padding: .6rem; text-align: left; vertical-align: top; }
+    table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+    th, td { border-bottom: 1px solid #d0d7de; padding: 6px 10px; text-align: left; vertical-align: top; }
+    th { color: #656d76; font-weight: 600; }
+    td:first-child { color: #656d76; }
+    td:last-child { color: #1f2328; }
     pre { background: #161b22; color: #f0f6fc; overflow: auto; padding: 1rem; white-space: pre-wrap; }
     input, select, button { font: inherit; padding: .5rem; }
     .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
@@ -28,6 +31,89 @@
     .table-wrap { overflow-x: auto; }
     .pagination { align-items: center; display: flex; gap: .75rem; justify-content: center; margin: 1rem 0 2rem; }
     .pagination a { background: #fff; border: 1px solid #d0d7de; border-radius: 6px; padding: .4rem .7rem; text-decoration: none; }
+
+    /* --- Quantum Report Cards (matching local Quanifi reports) --- */
+    .run-card {
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .run-header {
+      background: #eaeef2;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #d0d7de;
+    }
+    .run-title { color: #0969da; font-weight: 600; font-size: 0.95rem; }
+    .run-time  { color: #8c959f; font-size: 0.82rem; font-family: monospace; }
+    .run-body { display: flex; flex-wrap: wrap; }
+    .run-footer { display: flex; flex-wrap: wrap; gap: 16px; border-top: 1px solid #d0d7de; padding: 16px; }
+    .run-footer .panel { flex: 1 1 340px; min-width: 240px; }
+    .panel { padding: 16px; flex: 1; min-width: 0; }
+    .panel + .panel { border-left: 1px solid #d0d7de; }
+    .code-block {
+      background: #ffffff;
+      border: 1px solid #d8dee4;
+      border-radius: 6px;
+      padding: 14px;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.8rem;
+      color: #24292f;
+      margin: 0;
+      overflow-x: auto;
+      white-space: pre;
+      line-height: 1.65;
+    }
+    .bar-chart { display: flex; flex-direction: column; gap: 8px; }
+    .bar-row   { display: flex; align-items: center; gap: 10px; }
+    .bar-label { font-family: monospace; color: #656d76; width: 56px; text-align: right;
+                 flex-shrink: 0; font-size: 0.82rem; }
+    .bar-track { flex: 1; background: #d0d7de; border-radius: 4px; height: 18px; overflow: hidden; }
+    .bar-count { font-family: monospace; color: #656d76; font-size: 0.78rem;
+                 width: 110px; flex-shrink: 0; }
+    .bar-fill   { background: #0969da; height: 100%; border-radius: 4px; }
+    .bar-fill-a { background: #0969da; height: 100%; border-radius: 4px; }
+    .bar-fill-b { background: #1a7f37; height: 100%; border-radius: 4px; }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: monospace;
+    }
+    .badge-agree  { background: #dafbe1; color: #1a7f37; }
+    .badge-differ { background: #ffebe9; color: #cf222e; }
+    .badge-noise  { background: #fff8c5; color: #9a6700; }
+    .metric-val   { color: #1f2328 !important; }
+    .tag-a { color: #0969da; }
+    .tag-b { color: #1a7f37; }
+    .sv-table th, .sv-table td { padding: 5px 8px; }
+    .sv-table td { color: #1f2328; }
+    .sv-state { font-family: monospace; color: #656d76 !important; }
+    .sv-prob  { width: 160px; }
+    .sv-bar-row { display: flex; align-items: center; gap: 8px; }
+    .sv-bar-track { flex: 1; background: #d0d7de; border-radius: 3px; height: 12px; overflow: hidden; }
+    .sv-bar-fill  { background: #0969da; height: 100%; border-radius: 3px; }
+    .sv-pct    { font-family: monospace; font-size: 0.78rem; color: #656d76;
+                 width: 46px; text-align: right; flex-shrink: 0; }
+    .sv-amp    { font-family: monospace; font-size: 0.82rem; color: #1f2328 !important; }
+    .sv-phase  { font-family: monospace; font-size: 0.82rem; font-weight: 600; }
+    .note      { color: #8c959f; font-size: 0.78rem; margin-top: 10px; }
+    .svg-scroll { overflow-x: auto; max-width: 100%; }
+    .svg-scroll svg { display: block; max-width: 100%; height: auto; }
+    .assert-table td, .assert-table th { padding: 4px 12px; text-align: left; }
+    .assert-table th { color: #8b949e; }
+    .val-killed   { color: #3fb950; font-family: monospace; }
+    .val-survived { color: #f85149; font-family: monospace; }
+    .big-stat { font-size: 2.4rem; font-weight: 700; color: #1f2328; }
+    .big-label { display: block; font-size: 0.85rem; color: #8b949e; font-weight: 400; }
+    .sub-stat { color: #8b949e; font-size: 0.9rem; margin-top: 6px; }
+    .control-warn { color: #e3b341; }
   </style>
 </head>
 <body>

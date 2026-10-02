@@ -15,7 +15,9 @@ class IngestionTests(TestCase):
 
     def test_token_is_required(self):
         response = self.client.post(
-            self.endpoint, data=json.dumps({"flow_name": "grover"}), content_type="application/json"
+            self.endpoint,
+            data=json.dumps({"flow_name": "grover"}),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 401)
 
@@ -66,9 +68,15 @@ class IngestionTests(TestCase):
             "content_type": "application/json",
             "HTTP_AUTHORIZATION": "Bearer test-ingestion-token",
         }
-        self.assertEqual(self.client.post(endpoint, data=json.dumps(document), **kwargs).status_code, 201)
+        self.assertEqual(
+            self.client.post(endpoint, data=json.dumps(document), **kwargs).status_code,
+            201,
+        )
         document["content"] = "<h1>Second version</h1>"
-        self.assertEqual(self.client.post(endpoint, data=json.dumps(document), **kwargs).status_code, 200)
+        self.assertEqual(
+            self.client.post(endpoint, data=json.dumps(document), **kwargs).status_code,
+            200,
+        )
         self.assertEqual(PublishedDocument.objects.count(), 1)
         self.assertIn("Second", PublishedDocument.objects.get().content)
 
@@ -85,7 +93,9 @@ class AuthenticationTests(TestCase):
         self.assertIn("/accounts/login/", response.url)
 
     def test_authenticated_user_can_view_reports(self):
-        user = get_user_model().objects.create_user("viewer@example.com", password="safe-test-pass")
+        user = get_user_model().objects.create_user(
+            "viewer@example.com", password="safe-test-pass"
+        )
         self.client.force_login(user)
         response = self.client.get(reverse("reports:list"))
         self.assertEqual(response.status_code, 200)
@@ -105,7 +115,9 @@ class AuthenticationTests(TestCase):
                 for number in range(21)
             ]
         )
-        user = get_user_model().objects.create_user("table@example.com", password="safe-test-pass")
+        user = get_user_model().objects.create_user(
+            "table@example.com", password="safe-test-pass"
+        )
         self.client.force_login(user)
         first_page = self.client.get(reverse("reports:list"))
         self.assertContains(first_page, "Page 1 of 2")
@@ -128,7 +140,9 @@ class AuthenticationTests(TestCase):
         )
         url = reverse("reports:document_content", args=(document.kind, document.slug))
         self.assertEqual(self.client.get(url).status_code, 302)
-        user = get_user_model().objects.create_user("viewer@example.com", password="safe-test-pass")
+        user = get_user_model().objects.create_user(
+            "viewer@example.com", password="safe-test-pass"
+        )
         self.client.force_login(user)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -179,3 +193,112 @@ class BootstrapAdminTests(TestCase):
         user.refresh_from_db()
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.check_password("replacement-pass"))
+
+
+@override_settings(REPORT_INGESTION_TOKEN="test-ingestion-token")
+class VisualReportTests(TestCase):
+    def test_ingests_and_renders_card_html(self):
+        card_snippet = '<section class="run-card"><header class="run-header"><span class="run-title">Pre-rendered Grover</span></header></section>'
+        response = self.client.post(
+            "/api/v1/report-runs/",
+            data=json.dumps(
+                {
+                    "flow_name": "qiskit-grover",
+                    "report_type": "simulation",
+                    "attributes": {
+                        "sim.framework": "qiskit",
+                        "circuit.marked_state": "10",
+                    },
+                    "payload": {"10": 1024},
+                    "card_html": card_snippet,
+                }
+            ),
+            content_type="application/json",
+            HTTP_AUTHORIZATION="Bearer test-ingestion-token",
+            HTTP_IDEMPOTENCY_KEY="card-run-1",
+        )
+        self.assertEqual(response.status_code, 201)
+        run = ReportRun.objects.get(idempotency_key="card-run-1")
+        self.assertEqual(run.card_html, card_snippet)
+        self.assertEqual(run.rendered_card, card_snippet)
+
+    def test_dynamic_fallback_rendering(self):
+        report = Report.objects.create(
+            flow_name="dynamic-grover", report_type="simulation"
+        )
+        run = ReportRun.objects.create(
+            report=report,
+            idempotency_key="dynamic-run-1",
+            attributes={
+                "circuit.marked_state": "11",
+                "circuit.num_qubits": "2",
+                "circuit.depth": "13",
+                "circuit.qasm2": 'OPENQASM 2.0;\ninclude "qelib1.inc";\nqreg q[2];\nh q[0];\n',
+                "circuit.svg": '<svg width="200" height="60"><rect width="200" height="60"/></svg>',
+                "sim.framework": "qiskit",
+                "sim.simulator": "QiskitAerSimulator",
+            },
+            payload={"11": 900, "00": 124},
+            card_html="",
+        )
+        card_html = run.rendered_card
+        self.assertIn("run-card", card_html)
+        self.assertIn("run-header", card_html)
+        self.assertIn("target |11&#x27E9;", card_html)
+        self.assertIn("2 qubits", card_html)
+        self.assertIn("depth 13", card_html)
+        self.assertIn("bar-chart", card_html)
+        self.assertIn("bar-track", card_html)
+        self.assertIn("bar-fill", card_html)
+        self.assertIn("|11&#x27E9;", card_html)
+        self.assertIn("svg-scroll", card_html)
+        self.assertIn("OpenQASM 2", card_html)
+
+    def test_report_detail_and_run_detail_views_render_visual_cards(self):
+        report = Report.objects.create(flow_name="view-flow", report_type="simulation")
+        run = ReportRun.objects.create(
+            report=report,
+            idempotency_key="view-run-1",
+            attributes={"circuit.marked_state": "01", "circuit.num_qubits": "2"},
+            payload={"01": 500, "10": 10},
+            card_html="",
+        )
+        user = get_user_model().objects.create_user(
+            "viewer2@example.com", password="safe-test-pass"
+        )
+        self.client.force_login(user)
+
+        # Check report detail
+        resp_report = self.client.get(reverse("reports:detail", args=[report.pk]))
+        self.assertEqual(resp_report.status_code, 200)
+        self.assertContains(resp_report, "run-card")
+        self.assertContains(resp_report, "target |01&#x27E9;")
+        self.assertContains(resp_report, "bar-chart")
+
+        # Check run detail
+        resp_run = self.client.get(reverse("reports:run_detail", args=[run.pk]))
+        self.assertEqual(resp_run.status_code, 200)
+        self.assertContains(resp_run, "run-card")
+        self.assertContains(resp_run, "target |01&#x27E9;")
+        self.assertContains(resp_run, "bar-chart")
+        self.assertContains(resp_run, "Developer & Raw Inspection")
+
+    def test_publish_report_files_command(self):
+        import tempfile
+        from pathlib import Path
+        from django.core.management import call_command
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = Path(tmpdir)
+            sample_html = (
+                "<!DOCTYPE html><html><head><title>Quanifi &mdash; test-flow</title></head>"
+                "<body><section class='run-card'>test content</section></body></html>"
+            )
+            (tmppath / "test-flow.html").write_text(sample_html, encoding="utf-8")
+            call_command("publish_report_files", reports_dir=str(tmppath))
+
+            doc = PublishedDocument.objects.get(slug="test-flow")
+            self.assertEqual(doc.kind, PublishedDocument.Kind.REPORT)
+            self.assertEqual(doc.title, "test-flow")
+            self.assertIn("test content", doc.content)
+            self.assertEqual(doc.content_type, "text/html")

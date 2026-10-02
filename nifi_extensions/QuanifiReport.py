@@ -313,7 +313,7 @@ class QuanifiReport(FlowFileTransform):
         return f"sha256:{digest.hexdigest()}"
 
     def _submit_web_report(self, api_url, api_token, timeout, flow_name,
-                           report_type, attrs, content, raw):
+                           report_type, attrs, content, raw, card_html=""):
         if not api_url or not api_token:
             raise ValueError("Reports API URL and Reports API Token are required")
         payload = {
@@ -322,6 +322,8 @@ class QuanifiReport(FlowFileTransform):
             "attributes": attrs,
             "status": "completed",
         }
+        if card_html:
+            payload["card_html"] = card_html
         source_timestamp = (
             attrs.get("report.triggered_at")
             or attrs.get("run.started_at")
@@ -375,37 +377,6 @@ class QuanifiReport(FlowFileTransform):
                 attributes={"report.error": f"Unsupported Output Mode: {output_mode}"},
             )
 
-        web_attributes = {}
-        if mode in {"web api", "both"}:
-            api_url = context.getProperty(self.api_url).getValue()
-            api_token = context.getProperty(self.api_token).getValue()
-            try:
-                timeout = int(context.getProperty(self.api_timeout).getValue())
-                result, key = self._submit_web_report(
-                    api_url, api_token, timeout, flow_name, report_type,
-                    attrs, content, raw,
-                )
-                web_attributes = {
-                    "report.web_run_id": result["id"],
-                    "report.idempotency_key": key,
-                }
-            except Exception as exc:
-                self.logger.error(f"QuanifiReport: web submission failed: {exc}")
-                return FlowFileTransformResult(
-                    relationship="failure",
-                    attributes={"report.error": f"Web submission failed: {exc}"},
-                )
-
-        if mode == "web api":
-            return FlowFileTransformResult(
-                relationship="success",
-                attributes={
-                    "report.flow_name": flow_name,
-                    "report.type": report_type or "_default",
-                    **web_attributes,
-                },
-            )
-
         sections    = _SECTION_REGISTRY.get(report_type, _SECTION_REGISTRY["_default"])
         data        = {"content": content, "attrs": attrs, "raw": raw}
 
@@ -456,6 +427,37 @@ class QuanifiReport(FlowFileTransform):
             f'  {footer_section}\n'
             f'</section>'
         )
+
+        web_attributes = {}
+        if mode in {"web api", "both"}:
+            api_url = context.getProperty(self.api_url).getValue()
+            api_token = context.getProperty(self.api_token).getValue()
+            try:
+                timeout = int(context.getProperty(self.api_timeout).getValue())
+                result, key = self._submit_web_report(
+                    api_url, api_token, timeout, flow_name, report_type,
+                    attrs, content, raw, card_html=card,
+                )
+                web_attributes = {
+                    "report.web_run_id": result["id"],
+                    "report.idempotency_key": key,
+                }
+            except Exception as exc:
+                self.logger.error(f"QuanifiReport: web submission failed: {exc}")
+                return FlowFileTransformResult(
+                    relationship="failure",
+                    attributes={"report.error": f"Web submission failed: {exc}"},
+                )
+
+        if mode == "web api":
+            return FlowFileTransformResult(
+                relationship="success",
+                attributes={
+                    "report.flow_name": flow_name,
+                    "report.type": report_type or "_default",
+                    **web_attributes,
+                },
+            )
 
         output_path = os.path.join(reports_dir, f"{flow_name}.html")
         os.makedirs(reports_dir, exist_ok=True)

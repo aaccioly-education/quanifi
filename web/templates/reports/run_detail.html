@@ -2,14 +2,35 @@
 {% block title %}{{ run.report.flow_name }} run · Quanifi{% endblock %}
 {% block content %}
 <p><a href="{% url 'reports:detail' run.report.pk %}">← {{ run.report.flow_name }}</a></p>
-<h1>Report run</h1>
-<div class="card metadata">
-  <div><span class="muted">Triggered</span><strong>{{ run.source_timestamp|default:"Not recorded" }}</strong></div>
-  <div><span class="muted">Received</span><strong>{{ run.created_at }}</strong></div>
-  <div><span class="muted">Status</span><strong>{{ run.status }}</strong></div>
-  <div><span class="muted">Type</span><strong>{{ run.report.report_type }}</strong></div>
+<div class="title-row">
+  <h1>Run Details</h1>
+  <span class="pill">{{ run.status }}</span>
 </div>
-<section class="card"><h2>Attributes</h2><pre>{{ run.attributes|pprint }}</pre></section>
-{% if run.payload != None %}<section class="card"><h2>Payload</h2><pre>{{ run.payload|pprint }}</pre></section>{% endif %}
-{% if run.raw_payload %}<section class="card"><h2>Raw payload</h2><pre>{{ run.raw_payload }}</pre></section>{% endif %}
+
+<div class="card metadata" style="margin-bottom: 1.5rem;">
+  <div><span class="muted">Triggered</span><strong>{{ run.source_timestamp|default:"Not recorded" }}</strong></div>
+  <div><span class="muted">Received</span><strong>{{ run.created_at|date:"Y-m-d H:i:s" }}</strong></div>
+  <div><span class="muted">Flow</span><strong>{{ run.report.flow_name }}</strong></div>
+  <div><span class="muted">Type</span><strong>{{ run.report.report_type }}</strong></div>
+  <div><span class="muted">Framework</span><strong>{{ run.framework }}</strong></div>
+  <div><span class="muted">Backend</span><strong>{{ run.backend }}</strong></div>
+</div>
+
+{{ run.rendered_card|safe }}
+
+<details class="card" style="margin-top: 1.5rem;">
+  <summary style="cursor: pointer; font-weight: 600; color: #0969da;">Developer & Raw Inspection</summary>
+  <div style="margin-top: 1rem;">
+    <h3>Attributes</h3>
+    <pre>{{ run.attributes|pprint }}</pre>
+    {% if run.payload != None %}
+      <h3>Payload</h3>
+      <pre>{{ run.payload|pprint }}</pre>
+    {% endif %}
+    {% if run.raw_payload %}
+      <h3>Raw payload</h3>
+      <pre>{{ run.raw_payload }}</pre>
+    {% endif %}
+  </div>
+</details>
 {% endblock %}

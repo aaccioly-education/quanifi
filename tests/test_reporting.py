@@ -342,6 +342,8 @@ class TestQuanifiReportWebOutput:
         submitted = json.loads(captured["request"].data)
         assert submitted["payload"] == {"11": 256}
         assert submitted["attributes"]["sim.framework"] == "qiskit"
+        assert "card_html" in submitted
+        assert "run-card" in submitted["card_html"]
 
     def test_web_api_failure_routes_to_failure(self, tmp_path, monkeypatch):
         def fail(*args, **kwargs):

@@ -1,24 +1,38 @@
 {% extends "base.html" %}
 {% block title %}{{ report.flow_name }} · Quanifi{% endblock %}
 {% block content %}
-<h1>{{ report.flow_name }}</h1>
-<p class="muted">{{ report.report_type }}</p>
-<div class="card">
-  <table>
-    <thead><tr><th>Triggered</th><th>Received</th><th>Status</th><th>Framework / backend</th><th>Run</th></tr></thead>
-    <tbody>
-    {% for run in report.runs.all %}
-      <tr>
-        <td>{{ run.source_timestamp|default:"Not recorded" }}</td>
-        <td>{{ run.created_at }}</td>
-        <td>{{ run.status }}</td>
-        <td>{{ run.framework }} / {{ run.backend }}</td>
-        <td><a href="{% url 'reports:run_detail' run.pk %}">View</a></td>
-      </tr>
-    {% empty %}
-      <tr><td colspan="5">No runs.</td></tr>
-    {% endfor %}
-    </tbody>
-  </table>
+<p><a href="{% url 'reports:list' %}">← Reports</a></p>
+<div class="title-row">
+  <h1>&#x269B; {{ report.flow_name }}</h1>
+  <span class="pill">{{ report.report_type }}</span>
 </div>
+
+<details class="card" style="margin-bottom: 2rem;" open>
+  <summary style="cursor: pointer; font-weight: 600; color: #0969da;">Run History ({{ report.runs.count }})</summary>
+  <div class="table-wrap" style="margin-top: 0.75rem;">
+    <table>
+      <thead><tr><th>Triggered</th><th>Received</th><th>Status</th><th>Framework / backend</th><th>Run</th></tr></thead>
+      <tbody>
+      {% for run in runs %}
+        <tr>
+          <td>{{ run.source_timestamp|default:"Not recorded" }}</td>
+          <td>{{ run.created_at|date:"Y-m-d H:i:s" }}</td>
+          <td>{{ run.status }}</td>
+          <td>{{ run.framework }} / {{ run.backend }}</td>
+          <td><a href="{% url 'reports:run_detail' run.pk %}">View Single Run</a></td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="5">No runs.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<h2 style="margin-bottom: 1.5rem;">Report Output</h2>
+{% for run in runs %}
+  {{ run.rendered_card|safe }}
+{% empty %}
+  <div class="card muted">No runs recorded for this flow yet.</div>
+{% endfor %}
 {% endblock %}

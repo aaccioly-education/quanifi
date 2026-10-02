@@ -2,7 +2,15 @@
 {% block title %}{{ document.title }} · Quanifi{% endblock %}
 {% block content %}
 <p><a href="{% if document.kind == 'guide' %}{% url 'reports:guide_list' %}{% else %}{% url 'reports:list' %}{% endif %}">← {{ document.get_kind_display }}s</a></p>
-<div class="title-row"><h1>{{ document.title }}</h1><span class="pill">{{ document.content_type }}</span></div>
+<div class="title-row">
+  <h1>{{ document.title }}</h1>
+  <div>
+    {% if document.content_type == 'text/html' %}
+      <a href="{% url 'reports:document_content' document.kind document.slug %}" target="_blank" rel="noopener" class="pill" style="text-decoration:none; margin-right: 0.5rem;">Open standalone ↗</a>
+    {% endif %}
+    <span class="pill">{{ document.content_type }}</span>
+  </div>
+</div>
 <section class="card metadata">
   <div><span class="muted">Triggered</span><strong>{{ document.triggered_at|default:"Not recorded" }}</strong></div>
   <div><span class="muted">Generated</span><strong>{{ document.generated_at|default:"Unknown" }}</strong></div>

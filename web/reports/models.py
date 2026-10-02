@@ -29,6 +29,7 @@ class ReportRun(models.Model):
     attributes = models.JSONField(default=dict)
     payload = models.JSONField(null=True, blank=True)
     raw_payload = models.TextField(blank=True)
+    card_html = models.TextField(blank=True, default="")
     status = models.CharField(max_length=40, default="completed")
     source_timestamp = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -41,7 +42,11 @@ class ReportRun(models.Model):
 
     @property
     def framework(self):
-        return self.attributes.get("sim.framework") or self.attributes.get("framework") or "—"
+        return (
+            self.attributes.get("sim.framework")
+            or self.attributes.get("framework")
+            or "—"
+        )
 
     @property
     def backend(self):
@@ -51,6 +56,14 @@ class ReportRun(models.Model):
             or self.attributes.get("backend")
             or "—"
         )
+
+    @property
+    def rendered_card(self):
+        if self.card_html:
+            return self.card_html
+        from .renderer import render_run_card
+
+        return render_run_card(self)
 
 
 class PublishedDocument(models.Model):
@@ -74,7 +87,9 @@ class PublishedDocument(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=("kind", "slug"), name="unique_document_kind_slug")
+            models.UniqueConstraint(
+                fields=("kind", "slug"), name="unique_document_kind_slug"
+            )
         ]
         ordering = ("-generated_at", "-updated_at", "title")
 

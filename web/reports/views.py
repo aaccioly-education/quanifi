@@ -26,7 +26,9 @@ def report_list(request):
     reports = Report.objects.annotate(
         run_count=Count("runs"), last_received=Max("runs__created_at")
     ).order_by("flow_name", "report_type")
-    published_reports = PublishedDocument.objects.filter(kind=PublishedDocument.Kind.REPORT)
+    published_reports = PublishedDocument.objects.filter(
+        kind=PublishedDocument.Kind.REPORT
+    )
     query = request.GET.get("q", "").strip()
     report_type = request.GET.get("type", "").strip()
     if query:
@@ -53,7 +55,10 @@ def report_list(request):
 @login_required
 def report_detail(request, pk):
     report = get_object_or_404(Report, pk=pk)
-    return render(request, "reports/report_detail.html", {"report": report})
+    runs = report.runs.all()
+    return render(
+        request, "reports/report_detail.html", {"report": report, "runs": runs}
+    )
 
 
 @login_required
@@ -80,7 +85,9 @@ def document_detail(request, kind, slug):
 @login_required
 def document_content(request, kind, slug):
     document = get_object_or_404(PublishedDocument, kind=kind, slug=slug)
-    response = HttpResponse(document.content, content_type=f"{document.content_type}; charset=utf-8")
+    response = HttpResponse(
+        document.content, content_type=f"{document.content_type}; charset=utf-8"
+    )
     response.headers["Content-Security-Policy"] = (
         "sandbox; default-src 'none'; img-src data:; style-src 'unsafe-inline'; font-src data:"
     )
@@ -120,6 +127,8 @@ def ingest_report_run(request):
     if not key:
         key = str(uuid.uuid4())
 
+    card_html = str(data.get("card_html") or data.get("html") or "")
+
     with transaction.atomic():
         report, _ = Report.objects.get_or_create(
             flow_name=flow_name[:255], report_type=report_type
@@ -131,10 +140,14 @@ def ingest_report_run(request):
                 "attributes": attributes,
                 "payload": data.get("payload") if "payload" in data else None,
                 "raw_payload": str(data.get("raw_payload") or ""),
+                "card_html": card_html,
                 "status": str(data.get("status") or "completed")[:40],
                 "source_timestamp": parse_datetime(str(data.get("timestamp") or "")),
             },
         )
+        if not created and card_html and not run.card_html:
+            run.card_html = card_html
+            run.save(update_fields=["card_html"])
 
     return JsonResponse(
         {"id": str(run.id), "created": created, "report_id": report.id},
@@ -159,7 +172,9 @@ def publish_document(request):
     title = str(data.get("title", "")).strip()[:255]
     content = data.get("content")
     if not slug or not title or not isinstance(content, str):
-        return JsonResponse({"error": "slug, title, and string content are required"}, status=400)
+        return JsonResponse(
+            {"error": "slug, title, and string content are required"}, status=400
+        )
     metadata = data.get("metadata") or {}
     if not isinstance(metadata, dict):
         return JsonResponse({"error": "metadata must be an object"}, status=400)

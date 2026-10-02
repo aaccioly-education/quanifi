@@ -105,6 +105,8 @@ services:
       start_period: 30s
     ports:
       - "127.0.0.1:${QUANIFI_WEB_PORT:-8080}:8080"
+    volumes:
+      - ${QUANIFI_REPORTS_DIR:-./reports}:/app/reports:ro
 
 volumes:
   nifi-conf:
