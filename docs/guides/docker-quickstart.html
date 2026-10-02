@@ -428,16 +428,19 @@ those services.</p>
 administrator bootstrap automatically on start. Open
 <a href="http://localhost:8080/">http://localhost:8080/</a>, log in with <code>QUANIFI_ADMIN_EMAIL</code> /
 <code>QUANIFI_ADMIN_PASSWORD</code> (defaults above).</p>
-<p>QuanifiReport is <strong>not</strong> wired to the web profile by default: its <code>Reports
-API Token</code> property is <em>sensitive</em>, so NiFi will not let it be baked into the
-committed <code>flow.json.gz</code> in plain text. To wire a QuanifiReport instance on
-the canvas to the browser manually, set on that processor:</p>
+<p>QuanifiReport is <strong>not</strong> wired to the web profile by default: it ships with
+<code>Output Mode</code> = <code>Local HTML</code>, and its <code>Reports API Token</code> property is
+<em>sensitive</em>, so NiFi will not let a token be baked into the committed
+<code>flow.json.gz</code> in plain text. <code>Reports API URL</code> and <code>Reports API Token</code> now
+default to the working Compose values (<code>http://web:8080/api/v1/report-runs/</code>
+and <code>local-ingestion-token</code>, the default of <code>REPORT_INGESTION_TOKEN</code>), so to
+wire a QuanifiReport instance on the canvas to the browser you only need to
+set on that processor:</p>
 <ul>
 <li><code>Output Mode</code> = <code>Both</code> (or <code>Web API</code> to skip the local HTML file)</li>
-<li><code>Reports API URL</code> = <code>http://web:8080/api/v1/report-runs/</code></li>
-<li><code>Reports API Token</code> = the value of <code>REPORT_INGESTION_TOKEN</code> (default
-  <code>local-ingestion-token</code>)</li>
 </ul>
+<p>For non-local use, override <code>Reports API URL</code> and <code>Reports API Token</code> (and set
+a matching <code>REPORT_INGESTION_TOKEN</code> for the <code>web</code> service).</p>
 <p>Both services share the Compose project's network, and <code>web</code> is already in
 <code>DJANGO_ALLOWED_HOSTS</code>.</p>
 <p>For live-reloading development on the report browser's own code (not part of

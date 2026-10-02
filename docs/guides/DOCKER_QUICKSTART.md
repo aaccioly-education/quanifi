@@ -238,15 +238,19 @@ administrator bootstrap automatically on start. Open
 <http://localhost:8080/>, log in with `QUANIFI_ADMIN_EMAIL` /
 `QUANIFI_ADMIN_PASSWORD` (defaults above).
 
-QuanifiReport is **not** wired to the web profile by default: its `Reports
-API Token` property is *sensitive*, so NiFi will not let it be baked into the
-committed `flow.json.gz` in plain text. To wire a QuanifiReport instance on
-the canvas to the browser manually, set on that processor:
+QuanifiReport is **not** wired to the web profile by default: it ships with
+`Output Mode` = `Local HTML`, and its `Reports API Token` property is
+*sensitive*, so NiFi will not let a token be baked into the committed
+`flow.json.gz` in plain text. `Reports API URL` and `Reports API Token` now
+default to the working Compose values (`http://web:8080/api/v1/report-runs/`
+and `local-ingestion-token`, the default of `REPORT_INGESTION_TOKEN`), so to
+wire a QuanifiReport instance on the canvas to the browser you only need to
+set on that processor:
 
 - `Output Mode` = `Both` (or `Web API` to skip the local HTML file)
-- `Reports API URL` = `http://web:8080/api/v1/report-runs/`
-- `Reports API Token` = the value of `REPORT_INGESTION_TOKEN` (default
-  `local-ingestion-token`)
+
+For non-local use, override `Reports API URL` and `Reports API Token` (and set
+a matching `REPORT_INGESTION_TOKEN` for the `web` service).
 
 Both services share the Compose project's network, and `web` is already in
 `DJANGO_ALLOWED_HOSTS`.

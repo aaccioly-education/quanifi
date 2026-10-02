@@ -251,22 +251,29 @@ class QuanifiReport(FlowFileTransform):
             ),
             required=True,
             default_value="Local HTML",
-            validators=[StandardValidators.NON_EMPTY_VALIDATOR],
+            allowable_values=["Local HTML", "Web API", "Both"],
         )
         self.api_url = PropertyDescriptor(
             name="Reports API URL",
             description=(
-                "Full Django ingestion endpoint, for example "
+                "Full Django ingestion endpoint. The default is the Docker Compose "
+                "endpoint of the bundled report browser, reachable from the nifi "
+                "container. Replace it for a remote deployment, for example "
                 "https://reports.example/api/v1/report-runs/."
             ),
             required=False,
-            default_value="",
+            default_value="http://web:8080/api/v1/report-runs/",
         )
         self.api_token = PropertyDescriptor(
             name="Reports API Token",
-            description="Bearer token used only for authenticated report ingestion.",
+            description=(
+                "Bearer token used only for authenticated report ingestion. The "
+                "default matches the Docker Compose default for "
+                "REPORT_INGESTION_TOKEN and must be changed for any non-local "
+                "deployment."
+            ),
             required=False,
-            default_value="",
+            default_value="local-ingestion-token",
             sensitive=True,
         )
         self.api_timeout = PropertyDescriptor(
