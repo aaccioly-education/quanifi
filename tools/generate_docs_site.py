@@ -108,6 +108,7 @@ def build_sidebar(active_target_path, rel_root):
         ("Documentation Hub", f"{rel_root}index.html", "Core Reference", ""),
         ("Component Catalogue", f"{rel_root}components.html", "Core Reference", "all"),
         ("Screenshots Gallery", f"{rel_root}screenshots/index.html", "Core Reference", "18"),
+        ("Research Team", f"{rel_root}team.html", "Core Reference", "Team"),
         ("Research Citation", f"{rel_root}index.html#citation", "Core Reference", "arXiv"),
         
         ("Developer Guide", f"{rel_root}guides/developer-guide.html", "Framework Guides", ""),
@@ -385,6 +386,7 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
           </ul>
         </li>
         <li class="{'active' if active_tab == 'gallery' else ''}"><a href="{rel_root}screenshots/index.html">Canvas Gallery</a></li>
+        <li class="{'active' if active_tab == 'team' else ''}"><a href="{rel_root}team.html">Team</a></li>
       </ul>
       <div class="nav-extra">
         <a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener" class="nav-extra-link" title="GitHub Repository">
@@ -455,6 +457,7 @@ def render_page(title, content_html, rel_root, active_tab, breadcrumbs, target_r
           <h3>Code &amp; Licenses</h3>
           <p>Free and open source quantum orchestration under the GNU AGPL-3.0, with commercial licensing available.</p>
           <ul>
+            <li><a href="{rel_root}team.html">Research Team</a></li>
             <li><a href="{rel_root}index.html#citation">Research Citation (BibTeX)</a></li>
             <li><a href="https://arxiv.org/abs/2609.33255" target="_blank" rel="noopener">arXiv:2609.33255 [quant-ph]</a></li>
             <li><a href="https://github.com/saeg/quanifi" target="_blank" rel="noopener">GitHub: saeg/quanifi</a></li>
