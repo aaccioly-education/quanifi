@@ -1820,4 +1820,23 @@ details.solution-accordion .solution-content h4 {
   line-height: 1.4;
 }
 
+/* Team page: restore mobile stacking */
+@media (max-width: 992px) {
+  .content-wrapper.team-page-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .team-page-wrapper .main-content {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .team-card {
+    flex: 1 1 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+
 
