@@ -16,6 +16,7 @@ EXPECTED_ALLOW_LINES = [
     "nifi_extensions/*.py",
     "tools/_harness.py",
     "tools/build_grover_examples.py",
+    "tools/canvas_spacing.py",
     "tools/nifi_ready.py",
     "tools/quickstart_smoke.py",
     "tests/*.py",

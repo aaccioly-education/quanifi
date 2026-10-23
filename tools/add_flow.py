@@ -15,9 +15,15 @@ import argparse
 import gzip
 import json
 import shutil
+import sys
 import uuid
 from pathlib import Path
 from datetime import datetime
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from canvas_spacing import (  # noqa: E402
+    MIN_GAP_Y, PITCH, PROCESSOR_SIZE, snap_up, spacing_violations,
+)
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -146,13 +152,15 @@ def make_label(text, x, y, width, height, group_id, style=None):
 # Chain builder
 # ---------------------------------------------------------------------------
 
-def add_chain(flow_path, chain_spec, start_x, start_y, h_gap=536.0):
+def add_chain(flow_path, chain_spec, start_x, start_y, h_gap=PITCH[0]):
     """
     chain_spec: list of dicts, each with keys:
         name, type, bundle, properties,
         auto_terminate (list), scheduling_period (str, optional),
         outgoing_relationship (str) — relationship to connect to next step
     """
+    if h_gap < PITCH[0]:
+        raise ValueError(f"h_gap {h_gap:g} is below the canvas spacing pitch {PITCH[0]}")
     path = Path(flow_path)
 
     # Backup
@@ -196,8 +204,8 @@ def add_chain(flow_path, chain_spec, start_x, start_y, h_gap=536.0):
     label = make_label(
         label_text,
         x      = start_x,
-        y      = start_y - 60,
-        width  = h_gap * (len(chain_spec) - 1) + 380,
+        y      = start_y - snap_up(40 + MIN_GAP_Y),
+        width  = h_gap * (len(chain_spec) - 1) + PROCESSOR_SIZE[0],
         height = 40,
         group_id = group_id,
     )
@@ -205,6 +213,10 @@ def add_chain(flow_path, chain_spec, start_x, start_y, h_gap=536.0):
     root["processors"].extend(processors)
     root["connections"].extend(connections)
     root["labels"].append(label)
+
+    new_ids = {c["identifier"] for c in processors + connections + [label]}
+    for problem in spacing_violations({"rootGroup": root}, only=new_ids):
+        print(f"WARNING: {problem}")
 
     with gzip.open(path, "wb") as f:
         f.write(json.dumps(flow, indent=2).encode("utf-8"))
@@ -269,7 +281,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("--x", type=float, default=456.0,  help="Start X position")
     parser.add_argument("--y", type=float, default=200.0,  help="Start Y position")
-    parser.add_argument("--gap", type=float, default=536.0, help="Horizontal gap between processors")
+    parser.add_argument("--gap", type=float, default=PITCH[0], help="Horizontal gap between processors")
     args = parser.parse_args()
 
     add_chain(args.conf, QISKIT_GROVER_CHAIN, start_x=args.x, start_y=args.y, h_gap=args.gap)

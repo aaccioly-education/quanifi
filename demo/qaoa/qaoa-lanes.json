@@ -19,7 +19,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 90
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -58,8 +58,8 @@
         "type": "MaxCutProblem",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 90
+          "x": 680,
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -98,8 +98,8 @@
         "type": "QiskitQAOA",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 90
+          "x": 1360,
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -141,8 +141,8 @@
         "type": "CirqSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 90
+          "x": 2040,
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -185,8 +185,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 90
+          "x": 2720,
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -224,8 +224,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 90
+          "x": 3400,
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -270,7 +270,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 590
+          "y": 960
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -309,8 +309,8 @@
         "type": "QuboToHamiltonian",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 590
+          "x": 680,
+          "y": 960
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -348,8 +348,8 @@
         "type": "CirqQAOA",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 590
+          "x": 1360,
+          "y": 960
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -391,8 +391,8 @@
         "type": "QrispSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 590
+          "x": 2040,
+          "y": 960
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -431,8 +431,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 590
+          "x": 2720,
+          "y": 960
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -470,8 +470,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 590
+          "x": 3400,
+          "y": 960
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -516,7 +516,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 1090
+          "y": 1688
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -555,8 +555,8 @@
         "type": "MaxIndependentSetProblem",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 1090
+          "x": 680,
+          "y": 1688
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -596,8 +596,8 @@
         "type": "PennylaneQAOA",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 1090
+          "x": 1360,
+          "y": 1688
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -639,8 +639,8 @@
         "type": "QSharpSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 1090
+          "x": 2040,
+          "y": 1688
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -685,8 +685,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 1090
+          "x": 2720,
+          "y": 1688
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -724,8 +724,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 1090
+          "x": 3400,
+          "y": 1688
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -770,7 +770,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 1590
+          "y": 2416
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -809,8 +809,8 @@
         "type": "PortfolioRebalancingProblem",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 1590
+          "x": 680,
+          "y": 2416
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -852,8 +852,8 @@
         "type": "QrispQAOA",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 1590
+          "x": 1360,
+          "y": 2416
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -896,8 +896,8 @@
         "type": "PennylaneSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 1590
+          "x": 2040,
+          "y": 2416
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -936,8 +936,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 1590
+          "x": 2720,
+          "y": 2416
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -975,8 +975,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 1590
+          "x": 3400,
+          "y": 2416
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1021,7 +1021,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 2090
+          "y": 3144
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1060,8 +1060,8 @@
         "type": "QiskitHamiltonian",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 2090
+          "x": 680,
+          "y": 3144
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1100,8 +1100,8 @@
         "type": "PyquilQAOA",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 2090
+          "x": 1360,
+          "y": 3144
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1143,8 +1143,8 @@
         "type": "PyquilSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 2090
+          "x": 2040,
+          "y": 3144
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1185,8 +1185,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 2090
+          "x": 2720,
+          "y": 3144
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1224,8 +1224,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 2090
+          "x": 3400,
+          "y": 3144
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1270,7 +1270,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 2590
+          "y": 3872
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1309,8 +1309,8 @@
         "type": "QiskitHamiltonian",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 2590
+          "x": 680,
+          "y": 3872
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1349,8 +1349,8 @@
         "type": "QiskitQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 2590
+          "x": 1360,
+          "y": 3872
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1390,8 +1390,8 @@
         "type": "QiskitAerSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 2590
+          "x": 2040,
+          "y": 3872
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1438,8 +1438,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 2590
+          "x": 2720,
+          "y": 3872
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1477,8 +1477,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 2590
+          "x": 3400,
+          "y": 3872
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1523,7 +1523,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 3090
+          "y": 4600
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1562,8 +1562,8 @@
         "type": "CirqHamiltonian",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 3090
+          "x": 680,
+          "y": 4600
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1602,8 +1602,8 @@
         "type": "CirqQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 3090
+          "x": 1360,
+          "y": 4600
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1643,8 +1643,8 @@
         "type": "QSharpSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 3090
+          "x": 2040,
+          "y": 4600
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1689,8 +1689,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 3090
+          "x": 2720,
+          "y": 4600
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1728,8 +1728,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 3090
+          "x": 3400,
+          "y": 4600
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1774,7 +1774,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 3590
+          "y": 5328
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1813,8 +1813,8 @@
         "type": "MaxCutProblem",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 3590
+          "x": 680,
+          "y": 5328
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1853,8 +1853,8 @@
         "type": "PennylaneQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 3590
+          "x": 1360,
+          "y": 5328
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1894,8 +1894,8 @@
         "type": "QiskitAerSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 3590
+          "x": 2040,
+          "y": 5328
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1942,8 +1942,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 3590
+          "x": 2720,
+          "y": 5328
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -1981,8 +1981,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 3590
+          "x": 3400,
+          "y": 5328
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2027,7 +2027,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 4090
+          "y": 6056
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2066,8 +2066,8 @@
         "type": "QrispHamiltonian",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 4090
+          "x": 680,
+          "y": 6056
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2106,8 +2106,8 @@
         "type": "QrispQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 4090
+          "x": 1360,
+          "y": 6056
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2148,8 +2148,8 @@
         "type": "CirqSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 4090
+          "x": 2040,
+          "y": 6056
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2192,8 +2192,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 4090
+          "x": 2720,
+          "y": 6056
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2231,8 +2231,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 4090
+          "x": 3400,
+          "y": 6056
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2277,7 +2277,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 4590
+          "y": 6784
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2316,8 +2316,8 @@
         "type": "MaxCliqueProblem",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 4590
+          "x": 680,
+          "y": 6784
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2357,8 +2357,8 @@
         "type": "PyquilQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 4590
+          "x": 1360,
+          "y": 6784
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2398,8 +2398,8 @@
         "type": "QrispSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 4590
+          "x": 2040,
+          "y": 6784
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2438,8 +2438,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 4590
+          "x": 2720,
+          "y": 6784
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2477,8 +2477,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 4590
+          "x": 3400,
+          "y": 6784
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -5828,7 +5828,7 @@
           "y": 0
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "QiskitQAOA \u2014 triangle MaxCut \u2014 Train QiskitQAOA on the default triangle MaxCut Hamiltonian, sample the trained circuit on CirqSimulator, then score it.",
         "style": {
@@ -5843,10 +5843,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 500
+          "y": 728
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "CirqQAOA \u2014 QUBO default \u2014 Train CirqQAOA on the default QUBO-derived Hamiltonian, sample on QrispSimulator, then score it.",
         "style": {
@@ -5861,10 +5861,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 1000
+          "y": 1456
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "PennylaneQAOA \u2014 Max Independent Set (3-node path) \u2014 Train PennylaneQAOA on a 3-node path-graph Max Independent Set Hamiltonian, sample on QSharpSimulator, then score it.",
         "style": {
@@ -5879,10 +5879,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 1500
+          "y": 2184
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "QrispQAOA \u2014 portfolio rebalancing (XY mixer) \u2014 Train QrispQAOA with the Hamming-weight-preserving XY mixer on the default portfolio rebalancing Hamiltonian, sample on PennylaneSimulator, then score it.",
         "style": {
@@ -5897,10 +5897,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 2000
+          "y": 2912
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "PyquilQAOA \u2014 two-node cut \u2014 Train PyquilQAOA on -1/2 + 1/2 Z0 Z1 (cut states 01 and 10 have energy -1), sample on PyquilSimulator, then score it.",
         "style": {
@@ -5915,10 +5915,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 2500
+          "y": 3640
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "QiskitQAOACircuit \u2014 fixed N\u00d7M angles \u2014 Build the bound QiskitQAOACircuit at the N\u00d7M matrix's fixed angles, sample on QiskitAerSimulator, then score it.",
         "style": {
@@ -5933,10 +5933,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 3000
+          "y": 4368
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "CirqQAOACircuit \u2014 fixed N\u00d7M angles \u2014 Build the bound CirqQAOACircuit at the N\u00d7M matrix's fixed angles, sample on QSharpSimulator, then score it.",
         "style": {
@@ -5951,10 +5951,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 3500
+          "y": 5096
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "PennylaneQAOACircuit \u2014 triangle MaxCut, default angles \u2014 Build the bound PennylaneQAOACircuit at its default single-layer angles on the triangle MaxCut Hamiltonian, sample on QiskitAerSimulator, then score it.",
         "style": {
@@ -5969,10 +5969,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 4000
+          "y": 5824
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "QrispQAOACircuit \u2014 fixed N\u00d7M angles \u2014 Build the bound QrispQAOACircuit (RX mixer) at the N\u00d7M matrix's fixed angles, sample on CirqSimulator, then score it.",
         "style": {
@@ -5987,10 +5987,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 4500
+          "y": 6552
         },
         "zIndex": 0,
-        "width": 2760,
+        "width": 3752,
         "height": 65,
         "label": "PyquilQAOACircuit \u2014 Max Clique, default angles \u2014 Build the bound PyquilQAOACircuit at its default single-layer angles on the 4-node Max Clique Hamiltonian, sample on QrispSimulator, then score it.",
         "style": {
@@ -6007,8 +6007,8 @@
         "componentType": "FUNNEL",
         "name": "QiskitQAOA \u2014 triangle MaxCut failures",
         "position": {
-          "x": 2820,
-          "y": 310
+          "x": 2192,
+          "y": 520
         }
       },
       {
@@ -6018,8 +6018,8 @@
         "componentType": "FUNNEL",
         "name": "CirqQAOA \u2014 QUBO default failures",
         "position": {
-          "x": 2820,
-          "y": 810
+          "x": 2192,
+          "y": 1248
         }
       },
       {
@@ -6029,8 +6029,8 @@
         "componentType": "FUNNEL",
         "name": "PennylaneQAOA \u2014 Max Independent Set (3-node path) failures",
         "position": {
-          "x": 2820,
-          "y": 1310
+          "x": 2192,
+          "y": 1976
         }
       },
       {
@@ -6040,8 +6040,8 @@
         "componentType": "FUNNEL",
         "name": "QrispQAOA \u2014 portfolio rebalancing (XY mixer) failures",
         "position": {
-          "x": 2820,
-          "y": 1810
+          "x": 2192,
+          "y": 2704
         }
       },
       {
@@ -6051,8 +6051,8 @@
         "componentType": "FUNNEL",
         "name": "PyquilQAOA \u2014 two-node cut failures",
         "position": {
-          "x": 2820,
-          "y": 2310
+          "x": 2192,
+          "y": 3432
         }
       },
       {
@@ -6062,8 +6062,8 @@
         "componentType": "FUNNEL",
         "name": "QiskitQAOACircuit \u2014 fixed N\u00d7M angles failures",
         "position": {
-          "x": 2820,
-          "y": 2810
+          "x": 2192,
+          "y": 4160
         }
       },
       {
@@ -6073,8 +6073,8 @@
         "componentType": "FUNNEL",
         "name": "CirqQAOACircuit \u2014 fixed N\u00d7M angles failures",
         "position": {
-          "x": 2820,
-          "y": 3310
+          "x": 2192,
+          "y": 4888
         }
       },
       {
@@ -6084,8 +6084,8 @@
         "componentType": "FUNNEL",
         "name": "PennylaneQAOACircuit \u2014 triangle MaxCut, default angles failures",
         "position": {
-          "x": 2820,
-          "y": 3810
+          "x": 2192,
+          "y": 5616
         }
       },
       {
@@ -6095,8 +6095,8 @@
         "componentType": "FUNNEL",
         "name": "QrispQAOACircuit \u2014 fixed N\u00d7M angles failures",
         "position": {
-          "x": 2820,
-          "y": 4310
+          "x": 2192,
+          "y": 6344
         }
       },
       {
@@ -6106,8 +6106,8 @@
         "componentType": "FUNNEL",
         "name": "PyquilQAOACircuit \u2014 Max Clique, default angles failures",
         "position": {
-          "x": 2820,
-          "y": 4810
+          "x": 2192,
+          "y": 7072
         }
       }
     ],

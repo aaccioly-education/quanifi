@@ -10,7 +10,11 @@ import gzip
 import json
 import uuid
 import argparse
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from canvas_spacing import PITCH, spacing_violations  # noqa: E402
 
 FLOW = None
 GROUP = "22f0b342-2baf-3551-b141-115bd78a1933"
@@ -100,33 +104,33 @@ def main(flow):
 
     ham = base_proc("QiskitHamiltonian", "QiskitHamiltonian", PY_BUNDLE,
                     {"Hamiltonian": HAM, "Num Qubits": "0"}, ["original", "failure"])
-    ham["position"] = {"x": 840.0, "y": Y}
+    ham["position"] = {"x": 880.0, "y": Y}
 
     ans = base_proc("QiskitAnsatz", "QiskitAnsatz", PY_BUNDLE,
                     {"Ansatz Type": "efficient_su2", "Reps": "2",
                      "Entanglement": "full", "Num Qubits": "2"}, ["original", "failure"])
-    ans["position"] = {"x": 1480.0, "y": Y}
+    ans["position"] = {"x": 1560.0, "y": Y}
 
     vqe = base_proc("QiskitVQE", "QiskitVQE", PY_BUNDLE,
                     {"Hamiltonian": HAM, "Ansatz Type": "efficient_su2", "Reps": "2",
                      "Entanglement": "full", "Optimizer": "COBYLA", "Max Iterations": "100",
                      "Shots": "1024", "Initial Parameters": "random"}, ["original", "failure"])
-    vqe["position"] = {"x": 2120.0, "y": Y}
+    vqe["position"] = {"x": 2240.0, "y": Y}
 
     rep = base_proc("QuanifiReport", "QuanifiReport", PY_BUNDLE,
                     {"Flow Name": "qiskit-vqe-decomposed", "Reports Directory": REPORTS_DIR},
                     ["success", "failure"])
-    rep["position"] = {"x": 2760.0, "y": Y}
+    rep["position"] = {"x": 2920.0, "y": Y}
 
     procs = [start, ham, ans, vqe, rep]
     conns = [conn(start, ham), conn(ham, ans), conn(ans, vqe), conn(vqe, rep)]
 
-    header = label(80, 4500, 3000, 90,
+    header = label(80, 4376, 3000, 90,
                    "⬡  VARIATIONAL EXAMPLES  ⬡  —  Decomposed VQE: "
                    "Hamiltonian → Ansatz → Solver → Report",
                    {"background-color": "#880e4f", "border-color": "#ec407a",
                     "font-color": "#ffffff", "font-size": "16px"})
-    sub = label(80, 4610, 3000, 70,
+    sub = label(80, 4488, 3000, 70,
                 "12  QiskitHamiltonian → QiskitAnsatz → QiskitVQE → QuanifiReport "
                 "— variational ground-state energy of Z 0 + Z 1 + 0.5 X 0 X 1. "
                 "Start StartVQE to run (first run pip-installs qiskit-algorithms, ~30s).",
@@ -147,6 +151,10 @@ def main(flow):
     if dupes:
         print("ABORT: duplicate identifiers:", dupes)
         return 2
+
+    new_ids = {c["identifier"] for c in procs + conns + [header, sub]}
+    for problem in spacing_violations({"rootGroup": rg}, only=new_ids):
+        print(f"WARNING: {problem}")
 
     with gzip.open(flow, "wt", encoding="utf-8") as f:
         json.dump(d, f)

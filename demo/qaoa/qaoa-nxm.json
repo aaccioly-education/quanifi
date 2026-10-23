@@ -19,7 +19,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 90
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -58,8 +58,8 @@
         "type": "QiskitHamiltonian",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 90
+          "x": 680,
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -98,8 +98,8 @@
         "type": "QiskitQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 90
+          "x": 1360,
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -139,8 +139,8 @@
         "type": "CirqQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 310
+          "x": 1360,
+          "y": 520
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -180,8 +180,8 @@
         "type": "PennylaneQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 530
+          "x": 1360,
+          "y": 808
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -221,8 +221,8 @@
         "type": "QrispQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 750
+          "x": 1360,
+          "y": 1096
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -263,8 +263,8 @@
         "type": "PyquilQAOACircuit",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 970
+          "x": 1360,
+          "y": 1384
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -304,8 +304,8 @@
         "type": "QiskitAerSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 90
+          "x": 2040,
+          "y": 232
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -352,8 +352,8 @@
         "type": "CirqSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 310
+          "x": 2040,
+          "y": 520
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -396,8 +396,8 @@
         "type": "QrispSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 530
+          "x": 2040,
+          "y": 808
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -436,8 +436,8 @@
         "type": "PennylaneSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 750
+          "x": 2040,
+          "y": 1096
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -476,8 +476,8 @@
         "type": "BraketSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 970
+          "x": 2040,
+          "y": 1384
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -517,8 +517,8 @@
         "type": "QSharpSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 1190
+          "x": 2040,
+          "y": 1672
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -563,8 +563,8 @@
         "type": "PyquilSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 1410
+          "x": 2040,
+          "y": 1960
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -605,8 +605,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 750
+          "x": 2720,
+          "y": 1096
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -644,8 +644,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 750
+          "x": 3400,
+          "y": 1096
         },
         "comments": "Local QAOA example; start downstream processors, then Run Once the trigger.",
         "bundle": {
@@ -2807,7 +2807,7 @@
           "y": 0
         },
         "zIndex": 0,
-        "width": 2350,
+        "width": 3752,
         "height": 65,
         "label": "QAOA N\u00d7M \u2014 5 builders \u00d7 7 engines: does every construction and every counts engine agree with the exact distribution?",
         "style": {
@@ -2824,8 +2824,8 @@
         "componentType": "FUNNEL",
         "name": "QAOA N\u00d7M failures",
         "position": {
-          "x": 940,
-          "y": 1710
+          "x": 1512,
+          "y": 2248
         }
       }
     ],

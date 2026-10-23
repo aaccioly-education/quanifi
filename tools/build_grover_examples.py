@@ -22,6 +22,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
+from canvas_spacing import FUNNEL_SIZE, PITCH, PROCESSOR_SIZE, centered, grid_xy, stack  # noqa: E402
+
 NAMESPACE = "https://quanifi.local/grover-examples/"
 SHOTS = "1024"
 SEED = "11"
@@ -203,8 +205,10 @@ def simple_snapshot(nifi_version="2.9.0"):
          "Open reports/quickstart/qiskit-grover.html on your host to see the result."),
     ]
     last = len(specs) - 1
+    row_y = stack([110])[1]
     for i, (name, kind, props, comment) in enumerate(specs):
-        proc = node("simple/" + kind, name, kind, props, gid, 0, 130 + i * 210,
+        px, py = grid_xy(i, 0, origin=(0, row_y))
+        proc = node("simple/" + kind, name, kind, props, gid, px, py,
                     nifi_version, schedule="1 day" if i == 0 else "0 sec",
                     auto_terminated=() if i == 0 else
                     (("original", "success") if i == last else ("original",)))
@@ -217,7 +221,9 @@ def simple_snapshot(nifi_version="2.9.0"):
     funnel = {"identifier": uid("simple/failure"),
               "instanceIdentifier": uid("simple/failure/instance"),
               "groupIdentifier": gid, "componentType": "FUNNEL",
-              "name": "Failures (inspect the queue)", "position": {"x": 580, "y": 550}}
+              "name": "Failures (inspect the queue)",
+              "position": {"x": centered(grid_xy(2, 0)[0], PROCESSOR_SIZE[0], FUNNEL_SIZE[0]),
+                           "y": row_y + PITCH[1]}}
     group["funnels"] = [funnel]
     for proc in procs[1:]:
         group["connections"].append(connection("simple/failure/" + proc["type"], proc,

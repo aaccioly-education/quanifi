@@ -81,6 +81,9 @@ sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "experiments"))
 
 from add_flow import make_processor, make_label  # noqa: E402
+from canvas_spacing import (  # noqa: E402
+    MIN_GAP_Y, PITCH, PROCESSOR_SIZE, snap_up,
+)
 
 GROUP_NAME = "AllComponents"
 GROUP_COMMENT = (
@@ -101,8 +104,8 @@ NOT_RUNNING = "ENABLED"
 # "original" alongside success/failure.
 DEFAULT_RELATIONSHIPS = ("success", "failure", "original")
 
-COL_W, ROW_H = 430.0, 190.0
-BLOCK_GAP = 180.0
+COL_W, ROW_H = PITCH
+BLOCK_GAP = 344.0
 ROWS_PER_COL = 10
 LABEL_H = 44.0
 
@@ -260,11 +263,10 @@ def build_group(group_id, processors):
     for category in ordered:
         members = sorted(by_category[category], key=lambda p: p["name"])
         columns = (len(members) + ROWS_PER_COL - 1) // ROWS_PER_COL
-        width = columns * COL_W
 
         labels.append(make_label(
             "%s  (%d)" % (category, len(members)),
-            x, 0.0, width - 30.0, LABEL_H, group_id))
+            x, 0.0, (columns - 1) * COL_W + PROCESSOR_SIZE[0], LABEL_H, group_id))
 
         for index, proc in enumerate(members):
             col, row = divmod(index, ROWS_PER_COL)
@@ -276,12 +278,12 @@ def build_group(group_id, processors):
                         "version": proc["version"]},
                 properties=proc["properties"],
                 x=x + col * COL_W,
-                y=LABEL_H + 36.0 + row * ROW_H,
+                y=snap_up(LABEL_H + MIN_GAP_Y) + row * ROW_H,
                 group_id=group_id,
                 scheduled_state=NOT_RUNNING,
                 auto_terminate=proc["relationships"],
             ))
-        x += width + BLOCK_GAP
+        x += columns * COL_W + BLOCK_GAP
     return nodes, labels
 
 

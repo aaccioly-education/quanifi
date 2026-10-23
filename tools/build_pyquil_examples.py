@@ -15,6 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
+from canvas_spacing import FUNNEL_SIZE, PITCH, PROCESSOR_SIZE, centered, stack  # noqa: E402
+
 PIPELINES = [
     (
         "grover",
@@ -189,8 +191,8 @@ def snapshot(nifi_version="2.9.0"):
         "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
         "executionEngine": "INHERITED",
     }
-    for row, (key, title, description, steps) in enumerate(PIPELINES):
-        y = row * 500
+    y = 0
+    for key, title, description, steps in PIPELINES:
         specs = (
             [
                 (
@@ -214,12 +216,16 @@ def snapshot(nifi_version="2.9.0"):
                 )
             ]
         )
+        label_y, proc_y, funnel_y, next_y = stack(
+            [65, PROCESSOR_SIZE[1], FUNNEL_SIZE[1]], origin=y
+        )
+        y = next_y
         nodes = []
         for i, (kind, props) in enumerate(specs):
             name = f"Start {title}" if i == 0 else kind
             nodes.append(
                 node(
-                    f"{key}/{i}", name, kind, props, gid, i * 470, y + 90, nifi_version
+                    f"{key}/{i}", name, kind, props, gid, i * PITCH[0], proc_y, nifi_version
                 )
             )
         nodes[-1]["autoTerminatedRelationships"].append("success")
@@ -234,7 +240,12 @@ def snapshot(nifi_version="2.9.0"):
             "groupIdentifier": gid,
             "componentType": "FUNNEL",
             "name": f"{title} failures",
-            "position": {"x": 940, "y": y + 310},
+            "position": {
+                "x": centered(
+                    (len(specs) // 2) * PITCH[0], PROCESSOR_SIZE[0], FUNNEL_SIZE[0]
+                ),
+                "y": funnel_y,
+            },
         }
         group["funnels"].append(funnel)
         group["connections"].extend(
@@ -247,9 +258,9 @@ def snapshot(nifi_version="2.9.0"):
                 "instanceIdentifier": uid(key + "/label/instance"),
                 "groupIdentifier": gid,
                 "componentType": "LABEL",
-                "position": {"x": 0, "y": y},
+                "position": {"x": 0, "y": label_y},
                 "zIndex": 0,
-                "width": 2200,
+                "width": (len(specs) - 1) * PITCH[0] + PROCESSOR_SIZE[0],
                 "height": 65,
                 "label": title + " — " + description,
                 "style": {"background-color": "#eaf2ff", "font-size": "18px"},

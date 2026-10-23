@@ -42,9 +42,13 @@ import argparse
 import gzip
 import json
 import shutil
+import sys
 import uuid
 from pathlib import Path
 from datetime import datetime
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from canvas_spacing import spacing_violations  # noqa: E402
 
 NIFI_BUNDLE   = {"group": "org.apache.nifi", "artifact": "nifi-standard-nar", "version": "2.9.0"}
 PYTHON_BUNDLE = {"group": "org.apache.nifi", "artifact": "python-extensions",  "version": "0.1.0"}
@@ -162,13 +166,13 @@ def build(flow_path, replace=False):
 
     # ── Layout constants ────────────────────────────────────────────────────
     X0  = 200.0   # left edge
-    GAP = 560.0   # horizontal gap between processors
+    GAP = 680.0   # horizontal pitch between processors
 
     # Row Y positions
-    Y_TOP    = 5300.0   # front-end shared row
-    Y_QISKIT = 5080.0   # Qiskit branch (above centre)
-    Y_CIRQ   = 5520.0   # Cirq branch   (below centre)
-    Y_MID    = 5300.0   # assertion + comparison row (re-merges)
+    Y_QISKIT = 5240.0   # Qiskit branch (above centre)
+    Y_TOP    = 5528.0   # front-end shared row
+    Y_CIRQ   = 5816.0   # Cirq branch   (below centre)
+    Y_MID    = 5528.0   # assertion + comparison row (re-merges)
 
     # X columns
     X_GEN    = X0
@@ -430,31 +434,35 @@ def build(flow_path, replace=False):
         label(
             "⬡  DATA-DRIVEN DIFFERENTIAL TESTING  "
             "—  test table drives both frameworks; assertion checks Hellinger + ground truth",
-            X0 - 60, Y_TOP - 320, 5400, 80, gid, MARK_STYLE),
+            140.0, 5000.0, X_RPT + 352 - 140, 80, gid, MARK_STYLE),
         label(
             "FRONT-END:  GenerateFlowFile fires → QuantumTestCaseSource expands the "
             "3-row partition table → SplitJson makes one FlowFile per case → "
             "EvaluateJsonPath hoists each field into FlowFile attributes. "
             "NiFi then CLONES the FlowFile to both framework branches.",
-            X0 - 40, Y_TOP + 150, 2600, 130, gid, NOTE_STYLE),
+            X0, 6104.0, 2392, 130, gid, NOTE_STYLE),
         label(
             "FRAMEWORK BRANCHES:  Both read ${grover.marked_state} and "
             "${grover.num_iterations} from attributes — identical params, different "
             "framework. UpdateAttribute stamps compare.label = ${test.run_id}-${test.case_id} "
             "so the downstream comparison pairs results by case, not by arrival order.",
-            X0 + 3.5 * GAP, Y_TOP + 360, 2400, 130, gid, NOTE_STYLE),
+            X_CIRC, 6104.0, 1712, 130, gid, NOTE_STYLE),
         label(
             "ASSERTION LAYER:  QuantumDistributionComparison pairs the two framework "
             "results for each case (keyed by compare.label). Computes Hellinger / TV / "
             "Fidelity. QuantumAssertion applies (1) H ≤ 0.10 differential check and "
             "(2) top_result == test.expected ground-truth check. Verdict: PASS / FAIL / "
             "DISAGREE. Routes to separate pass / fail HTML reports.",
-            X0 + 6.5 * GAP, Y_TOP + 260, 2000, 160, gid, NOTE_STYLE),
+            X_CMP, 6104.0, 1712, 160, gid, NOTE_STYLE),
     ]
 
     root["processors"].extend(procs)
     root["connections"].extend(conns)
     root["labels"].extend(labels)
+
+    new_ids = {c["identifier"] for c in procs + conns + labels}
+    for problem in spacing_violations({"rootGroup": root}, only=new_ids):
+        print(f"WARNING: {problem}")
 
     with gzip.open(path, "wb") as f:
         f.write(json.dumps(flow, indent=2).encode("utf-8"))

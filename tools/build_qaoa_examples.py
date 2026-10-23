@@ -28,6 +28,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
+from canvas_spacing import FUNNEL_SIZE, PITCH, PROCESSOR_SIZE, centered, stack  # noqa: E402
+
 # The N×M matrix instance (matches tests/qaoa_reference.py's H_NXM /
 # NXM_LAYERS / NXM_BETAS / NXM_GAMMAS exactly; kept as local literals here
 # so building the snapshots never depends on the tests/ tree -- only
@@ -358,9 +360,10 @@ def _empty_group(gid, name, comments, nifi_version=None):
 
 
 def lanes_snapshot(nifi_version="2.9.0"):
-    """One lane per QAOA processor (5 solvers + 5 builders); 10 rows of
-    500 px, each with its own failure funnel and title label, same layout
-    as build_pyquil_examples.py's snapshot()."""
+    """One lane per QAOA processor (5 solvers + 5 builders); 10 lanes
+    stacked 728 px apart, each with its own title label and a failure funnel
+    under the middle column, same layout as build_pyquil_examples.py's
+    snapshot()."""
     gid = uid("lanes/group")
     group = _empty_group(
         gid,
@@ -370,8 +373,8 @@ def lanes_snapshot(nifi_version="2.9.0"):
         "downstream processors, then Run Once each trigger. Failure funnels retain "
         "failed FlowFiles.",
     )
-    for row, (key, title, description, steps) in enumerate(LANES):
-        y = row * 500
+    y = 0
+    for key, title, description, steps in LANES:
         specs = (
             [
                 (
@@ -395,6 +398,10 @@ def lanes_snapshot(nifi_version="2.9.0"):
                 )
             ]
         )
+        label_y, proc_y, funnel_y, next_y = stack(
+            [65, PROCESSOR_SIZE[1], FUNNEL_SIZE[1]], origin=y
+        )
+        y = next_y
         nodes = []
         for i, (kind, props) in enumerate(specs):
             name = f"Start {title}" if i == 0 else kind
@@ -405,8 +412,8 @@ def lanes_snapshot(nifi_version="2.9.0"):
                     kind,
                     props,
                     gid,
-                    i * 470,
-                    y + 90,
+                    i * PITCH[0],
+                    proc_y,
                     nifi_version,
                 )
             )
@@ -422,7 +429,12 @@ def lanes_snapshot(nifi_version="2.9.0"):
             "groupIdentifier": gid,
             "componentType": "FUNNEL",
             "name": f"{title} failures",
-            "position": {"x": len(specs) * 470, "y": y + 310},
+            "position": {
+                "x": centered(
+                    (len(specs) // 2) * PITCH[0], PROCESSOR_SIZE[0], FUNNEL_SIZE[0]
+                ),
+                "y": funnel_y,
+            },
         }
         group["funnels"].append(funnel)
         group["connections"].extend(
@@ -435,9 +447,9 @@ def lanes_snapshot(nifi_version="2.9.0"):
                 "instanceIdentifier": uid(f"lanes/{key}/label/instance"),
                 "groupIdentifier": gid,
                 "componentType": "LABEL",
-                "position": {"x": 0, "y": y},
+                "position": {"x": 0, "y": label_y},
                 "zIndex": 0,
-                "width": len(specs) * 470 - 60,
+                "width": (len(specs) - 1) * PITCH[0] + PROCESSOR_SIZE[0],
                 "height": 65,
                 "label": title + " — " + description,
                 "style": {"background-color": "#eaf2ff", "font-size": "18px"},
@@ -456,8 +468,8 @@ def nxm_snapshot(nifi_version="2.9.0"):
     """5 fixed-angle builders x 7 counts engines: one shared Hamiltonian
     fans out to the 5 builders, every builder fans out to all 7 engines,
     and every engine feeds one shared QuantumQAOAEvaluator -> QuanifiReport.
-    Columns at x = 0 (trigger), 470 (Hamiltonian), 940 (builders, y step
-    220), 1410 (engines, y step 220), 1880 (evaluator), 2350 (report); one
+    Columns at x = 0 (trigger), 680 (Hamiltonian), 1360 (builders, y step
+    288), 2040 (engines, y step 288), 2720 (evaluator), 3400 (report); one
     failure funnel below; one title label at the top.
     """
     gid = uid("nxm/group")
@@ -470,8 +482,8 @@ def nxm_snapshot(nifi_version="2.9.0"):
         "The single failure funnel retains failed FlowFiles from any of the 15 "
         "non-trigger processors.",
     )
-    y0 = 90
-    step = 220
+    y0 = stack([65])[1]
+    step = PITCH[1]
 
     trigger = node(
         "nxm/trigger",
@@ -494,7 +506,7 @@ def nxm_snapshot(nifi_version="2.9.0"):
         "QiskitHamiltonian",
         {"Hamiltonian": H_NXM, "Num Qubits": "3"},
         gid,
-        470,
+        PITCH[0],
         y0,
         nifi_version,
     )
@@ -513,7 +525,7 @@ def nxm_snapshot(nifi_version="2.9.0"):
                 "Gammas": NXM_GAMMAS_STR,
             },
             gid,
-            940,
+            2 * PITCH[0],
             y0 + i * step,
             nifi_version,
         )
@@ -529,7 +541,7 @@ def nxm_snapshot(nifi_version="2.9.0"):
             name,
             props,
             gid,
-            1410,
+            3 * PITCH[0],
             y0 + i * step,
             nifi_version,
         )
@@ -542,14 +554,14 @@ def nxm_snapshot(nifi_version="2.9.0"):
                 connection(f"nxm/edge/{b['type']}/{e['type']}", b, e, gid)
             )
 
-    mid_y = y0 + (len(ENGINES) - 1) * step // 2
+    mid_y = y0 + ((len(ENGINES) - 1) // 2) * step
     evaluator = node(
         "nxm/evaluator",
         "QuantumQAOAEvaluator",
         "QuantumQAOAEvaluator",
         {},
         gid,
-        1880,
+        4 * PITCH[0],
         mid_y,
         nifi_version,
     )
@@ -563,7 +575,7 @@ def nxm_snapshot(nifi_version="2.9.0"):
         "QuanifiReport",
         {"Flow Name": "qaoa-nxm", "Reports Directory": "reports/qaoa"},
         gid,
-        2350,
+        5 * PITCH[0],
         mid_y,
         nifi_version,
     )
@@ -577,7 +589,10 @@ def nxm_snapshot(nifi_version="2.9.0"):
         "groupIdentifier": gid,
         "componentType": "FUNNEL",
         "name": "QAOA N×M failures",
-        "position": {"x": 940, "y": y0 + len(ENGINES) * step + 80},
+        "position": {
+            "x": centered(2 * PITCH[0], PROCESSOR_SIZE[0], FUNNEL_SIZE[0]),
+            "y": y0 + len(ENGINES) * step,
+        },
     }
     non_trigger = [ham] + builder_nodes + engine_nodes + [evaluator, report]
     connections.extend(
@@ -596,7 +611,7 @@ def nxm_snapshot(nifi_version="2.9.0"):
             "componentType": "LABEL",
             "position": {"x": 0, "y": 0},
             "zIndex": 0,
-            "width": 2350,
+            "width": 5 * PITCH[0] + PROCESSOR_SIZE[0],
             "height": 65,
             "label": "QAOA N×M — 5 builders × 7 engines: does every construction "
             "and every counts engine agree with the exact distribution?",

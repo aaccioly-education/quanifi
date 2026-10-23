@@ -560,8 +560,8 @@ def add_qrisp_components_group(flow_path: Path, nifi_version: str = "2.11.0", sc
 
     start_x = 100.0
     start_y = 120.0
-    row_height = 260.0
-    col_width = 440.0
+    row_height = 504.0
+    col_width = 680.0
 
     z_index = 0
     for row_idx, pipeline in enumerate(pipelines):
@@ -573,8 +573,8 @@ def add_qrisp_components_group(flow_path: Path, nifi_version: str = "2.11.0", sc
         lbl = make_label(
             text=label_text,
             x=start_x,
-            y=cur_y - 65.0,
-            width=len(steps) * col_width - 60.0,
+            y=cur_y - 216.0,
+            width=(len(steps) - 1) * col_width + 352.0,
             height=50.0,
             group_id=group_inst_id,
             style=pipeline.get("style", {}),

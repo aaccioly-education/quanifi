@@ -19,7 +19,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 130
+          "y": 272
         },
         "comments": "Right-click and Run Once to send one input. Start the other four processors first.",
         "bundle": {
@@ -58,8 +58,8 @@
         "type": "QiskitPhaseOracle",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 0,
-          "y": 340
+          "x": 680,
+          "y": 272
         },
         "comments": "Mark the target 10 with a -1 phase on two qubits. Change Marked State here.",
         "bundle": {
@@ -99,8 +99,8 @@
         "type": "QiskitGroverOperator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 0,
-          "y": 550
+          "x": 1360,
+          "y": 272
         },
         "comments": "Prepare the uniform superposition and apply one Grover iteration (oracle + diffuser).",
         "bundle": {
@@ -140,8 +140,8 @@
         "type": "QiskitAerSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 0,
-          "y": 760
+          "x": 2040,
+          "y": 272
         },
         "comments": "Run the circuit on the local Qiskit Aer simulator with 1024 shots.",
         "bundle": {
@@ -188,8 +188,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 0,
-          "y": 970
+          "x": 2720,
+          "y": 272
         },
         "comments": "Open reports/quickstart/qiskit-grover.html on your host to see the result.",
         "bundle": {
@@ -519,8 +519,8 @@
         "componentType": "FUNNEL",
         "name": "Failures (inspect the queue)",
         "position": {
-          "x": 580,
-          "y": 550
+          "x": 1512,
+          "y": 560
         }
       }
     ],

@@ -19,7 +19,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 90
+          "y": 232
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -58,8 +58,8 @@
         "type": "PyquilPhaseOracle",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 90
+          "x": 680,
+          "y": 232
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -97,8 +97,8 @@
         "type": "PyquilGroverOperator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 90
+          "x": 1360,
+          "y": 232
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -136,8 +136,8 @@
         "type": "PyquilSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 90
+          "x": 2040,
+          "y": 232
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -178,8 +178,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 90
+          "x": 2720,
+          "y": 232
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -224,7 +224,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 590
+          "y": 960
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -263,8 +263,8 @@
         "type": "QiskitHamiltonian",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 590
+          "x": 680,
+          "y": 960
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -303,8 +303,8 @@
         "type": "PyquilAnsatz",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 590
+          "x": 1360,
+          "y": 960
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -347,8 +347,8 @@
         "type": "PyquilVQE",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 590
+          "x": 2040,
+          "y": 960
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -390,8 +390,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 590
+          "x": 2720,
+          "y": 960
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -436,7 +436,7 @@
         "componentType": "PROCESSOR",
         "position": {
           "x": 0,
-          "y": 1090
+          "y": 1688
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -475,8 +475,8 @@
         "type": "QiskitHamiltonian",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 470,
-          "y": 1090
+          "x": 680,
+          "y": 1688
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -515,8 +515,8 @@
         "type": "PyquilQAOA",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 940,
-          "y": 1090
+          "x": 1360,
+          "y": 1688
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -558,8 +558,8 @@
         "type": "PyquilSimulator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1410,
-          "y": 1090
+          "x": 2040,
+          "y": 1688
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -600,8 +600,8 @@
         "type": "QuantumQAOAEvaluator",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 1880,
-          "y": 1090
+          "x": 2720,
+          "y": 1688
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -639,8 +639,8 @@
         "type": "QuanifiReport",
         "componentType": "PROCESSOR",
         "position": {
-          "x": 2350,
-          "y": 1090
+          "x": 3400,
+          "y": 1688
         },
         "comments": "Local pyQuil example; run the trigger once.",
         "bundle": {
@@ -1548,7 +1548,7 @@
           "y": 0
         },
         "zIndex": 0,
-        "width": 2200,
+        "width": 3072,
         "height": 65,
         "label": "Modular Grover \u2014 Oracle \u2192 amplification \u2192 measurement. Target 10 has probability 1.",
         "style": {
@@ -1563,10 +1563,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 500
+          "y": 728
         },
         "zIndex": 0,
-        "width": 2200,
+        "width": 3072,
         "height": 65,
         "label": "Variational eigensolver \u2014 Hamiltonian \u2192 reusable trial state \u2192 optimization. Ground energy \u2212\u221a1.25 \u2248 \u22121.118034.",
         "style": {
@@ -1581,10 +1581,10 @@
         "componentType": "LABEL",
         "position": {
           "x": 0,
-          "y": 1000
+          "y": 1456
         },
         "zIndex": 0,
-        "width": 2200,
+        "width": 3752,
         "height": 65,
         "label": "QAOA for a two-node cut \u2014 Minimize \u2212\u00bd + \u00bd Z0 Z1, sample the trained circuit, then score it. The two cut states 01 and 10 have energy \u22121.",
         "style": {
@@ -1601,8 +1601,8 @@
         "componentType": "FUNNEL",
         "name": "Modular Grover failures",
         "position": {
-          "x": 940,
-          "y": 310
+          "x": 1512,
+          "y": 520
         }
       },
       {
@@ -1612,8 +1612,8 @@
         "componentType": "FUNNEL",
         "name": "Variational eigensolver failures",
         "position": {
-          "x": 940,
-          "y": 810
+          "x": 1512,
+          "y": 1248
         }
       },
       {
@@ -1623,8 +1623,8 @@
         "componentType": "FUNNEL",
         "name": "QAOA for a two-node cut failures",
         "position": {
-          "x": 940,
-          "y": 1310
+          "x": 2192,
+          "y": 1976
         }
       }
     ],
