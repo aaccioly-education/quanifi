@@ -144,7 +144,7 @@ Add class names to <code>docker/processors.txt</code> and run <code>docker compo
 source files. Shared helper modules are excluded. Regenerate it with <code>just docs</code>.
 For FlowFile attributes and processor construction, see
 <a href="guides/creating-processors.html">Creating processors</a>.</p>
-<p>The current source tree contains <strong>114 processors</strong>.</p>
+<p>The current source tree contains <strong>115 processors</strong>.</p>
 <h2 id="algorithms-all-in-one-solvers">Algorithms (all-in-one solvers)</h2>
 <table>
 <thead>
@@ -234,6 +234,11 @@ For FlowFile attributes and processor construction, see
 <td><code>QrispQAOA</code></td>
 <td>Trains a p-layer QAOA ansatz using Qrisp's QAOAProblem.optimization_routine (exact, Qrisp-rounded probabilities) and emits the trained, bound circuit as portable OpenQASM 2.0 (same construction as QrispQAOACircuit) with qaoa.optimal_parameters (betas then gammas). It does not sample: connect any counts simulator, then QuantumQAOAEvaluator.</td>
 <td><a href="https://github.com/saeg/quanifi/tree/main/nifi_extensions/QrispQAOA.py">Source</a></td>
+</tr>
+<tr>
+<td><code>QrispQIRO</code></td>
+<td>Quantum-Informed Recursive Optimization (QIRO) for Maximum Independent Set using Qrisp's own QIRO components: train a QAOA, fix or remove vertices from the strongest correlation, shrink the graph and repeat. Emits the final stage's trained circuit as portable OpenQASM 2.0 plus a qiro.* step trace. It does not sample: connect any counts simulator, then QuantumQAOAEvaluator.</td>
+<td><a href="https://github.com/saeg/quanifi/tree/main/nifi_extensions/QrispQIRO.py">Source</a></td>
 </tr>
 <tr>
 <td><code>QrispShor</code></td>

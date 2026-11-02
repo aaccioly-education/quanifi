@@ -1,4 +1,4 @@
-# All 28 Qrisp Processors
+# All 29 Qrisp Processors
 QrispAmplitudeAmplification
 QrispAmplitudeEstimation
 QrispAnsatz
@@ -17,6 +17,7 @@ QrispQAOA
 QrispQAOACircuit
 QrispQCCSDAnsatz
 QrispQFTCircuit
+QrispQIRO
 QrispQuantumArithmetic
 QrispShor
 QrispSimulator
