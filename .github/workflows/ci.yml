@@ -57,11 +57,4 @@ jobs:
         run: uv sync --extra dev
 
       - name: Run Pytest
-        # One BLAS/OpenMP thread: multi-threaded reductions in Qrisp's
-        # statevector backend make seeded QrispQAOA runs drift between runs
-        # (see test_seeds.py::test_qaoa_same_seed_identical_end_to_end).
-        env:
-          OMP_NUM_THREADS: "1"
-          OPENBLAS_NUM_THREADS: "1"
-          MKL_NUM_THREADS: "1"
         run: uv run pytest -m "not slow" --tb=short
