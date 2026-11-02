@@ -106,6 +106,7 @@ _SECTION_REGISTRY = {
         ("footer", "derived_result"),
         ("footer", "counts_chart"),
         ("footer", "vqe_attrs"),
+        ("footer", "qiro_steps"),
         ("footer", "qaoa_attrs"),
         ("footer", "ae_attrs"),
         ("footer", "noise_model"),
@@ -299,7 +300,7 @@ class QuanifiReport(FlowFileTransform):
 
     # Footer sections that take a full row of their own (their tables are too
     # wide to share a 340px flex slot with a neighbour).
-    _WIDE_SECTIONS = {"qaoa_attrs", "vqe_attrs", "ae_attrs", "train_attrs"}
+    _WIDE_SECTIONS = {"qaoa_attrs", "vqe_attrs", "ae_attrs", "train_attrs", "qiro_steps"}
 
     @staticmethod
     def _idempotency_key(flow_name, attrs, raw):
@@ -850,6 +851,69 @@ class QuanifiReport(FlowFileTransform):
             f"<table><tr><th>Key</th><th>Value</th></tr>{trs}</table>"
             f"{caption}"
         )
+
+    def _render_qiro_steps(self, data):
+        """QIRO reduction trace (QrispQIRO): the inline step-by-step graph
+        SVG, a compact step table and the fixed/excluded summary. Returns
+        nothing unless ``qiro.steps`` is present, so non-QIRO reports are
+        unchanged."""
+        attrs = data["attrs"]
+        raw = attrs.get("qiro.steps")
+        if not raw:
+            return None
+        try:
+            steps = json.loads(raw)
+        except ValueError:
+            return None
+        if not isinstance(steps, list):
+            return None
+
+        def fmt_item(step):
+            item = step.get("item")
+            if step.get("kind") == "edge" and isinstance(item, list) and len(item) == 2:
+                return "edge ({},{})".format(item[0], item[1])
+            return "vertex {}".format(item)
+
+        rows = "".join(
+            "<tr><td>{}</td><td>{}</td><td>{:+.3f}</td><td>{}</td></tr>".format(
+                html_lib.escape(str(s.get("step", ""))),
+                html_lib.escape(fmt_item(s)),
+                float(s.get("correlation", 0.0)),
+                html_lib.escape(str(s.get("action", ""))),
+            )
+            for s in steps
+        )
+        table = (
+            "<table><tr><th>Step</th><th>Item</th><th>Correlation</th>"
+            "<th>Action</th></tr>{}</table>".format(rows)
+            if rows
+            else "<p class='note'>No reduction steps (plain QAOA).</p>"
+        )
+
+        def jlist(key):
+            try:
+                value = json.loads(attrs.get(key) or "[]")
+            except ValueError:
+                value = []
+            return ", ".join(str(v) for v in value) if value else "none"
+
+        svg = attrs.get("qiro.trace_svg", "")
+        diagram = f'<div class="svg-scroll">{svg}</div>' if svg else ""
+        summary = (
+            "<p><b>Fixed into the set:</b> {} &nbsp; <b>Removed:</b> {} &nbsp; "
+            "<b>Still open:</b> {}</p>".format(
+                html_lib.escape(jlist("qiro.fixed_in_set")),
+                html_lib.escape(jlist("qiro.excluded")),
+                html_lib.escape(jlist("qiro.remaining_nodes")),
+            )
+        )
+        note = (
+            "<p class='note'>QIRO trains a QAOA, fixes or removes vertices from the "
+            "strongest correlation, then re-trains on the smaller graph. "
+            "Correlation is &lt;Z<sub>i</sub>&gt; (vertex) or "
+            "&lt;Z<sub>i</sub>Z<sub>j</sub>&gt; (edge).</p>"
+        )
+        return f"<h3>QIRO Steps</h3>{diagram}{table}{summary}{note}"
 
     def _render_loss_curve(self, data):
         """Inline-SVG loss curve for training runs (report.type=training).

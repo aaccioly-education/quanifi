@@ -48,7 +48,7 @@ def generate():
         elif re.search(r"Classifier|Dataset|FeatureEmbedding", name):
             category = "PennyLane QML lane"
         elif re.search(
-            r"VQE|QAOA$|GroverSearch|Shor|AmplitudeEstimation|DeutschJozsa|BernsteinVazirani|SwapTest",
+            r"VQE|QAOA$|QIRO$|GroverSearch|Shor|AmplitudeEstimation|DeutschJozsa|BernsteinVazirani|SwapTest",
             name,
         ):
             category = "Algorithms (all-in-one solvers)"

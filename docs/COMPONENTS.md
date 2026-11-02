@@ -9,7 +9,7 @@ source files. Shared helper modules are excluded. Regenerate it with `just docs`
 For FlowFile attributes and processor construction, see
 [Creating processors](guides/CREATING_PROCESSORS.md).
 
-The current source tree contains **114 processors**.
+The current source tree contains **115 processors**.
 
 ## Algorithms (all-in-one solvers)
 
@@ -31,6 +31,7 @@ The current source tree contains **114 processors**.
 | `QrispDeutschJozsa` | Executes the Deutsch-Jozsa algorithm using Qrisp. Determines whether a boolean oracle is constant or balanced in a single evaluation. Emits dj.verdict ('constant' or 'balanced') and measurement distributions. | [Source](../nifi_extensions/QrispDeutschJozsa.py) |
 | `QrispGroverSearch` | Runs Grover's search algorithm using the Qrisp framework. Accepts a target bitstring, builds a phase oracle with tag_state(), runs grovers_alg(), and outputs the measurement probability distribution as JSON with sim.* and circuit.* attributes compatible with QuanifiReport. | [Source](../nifi_extensions/QrispGroverSearch.py) |
 | `QrispQAOA` | Trains a p-layer QAOA ansatz using Qrisp's QAOAProblem.optimization_routine (exact, Qrisp-rounded probabilities) and emits the trained, bound circuit as portable OpenQASM 2.0 (same construction as QrispQAOACircuit) with qaoa.optimal_parameters (betas then gammas). It does not sample: connect any counts simulator, then QuantumQAOAEvaluator. | [Source](../nifi_extensions/QrispQAOA.py) |
+| `QrispQIRO` | Quantum-Informed Recursive Optimization (QIRO) for Maximum Independent Set using Qrisp's own QIRO components: train a QAOA, fix or remove vertices from the strongest correlation, shrink the graph and repeat. Emits the final stage's trained circuit as portable OpenQASM 2.0 plus a qiro.* step trace. It does not sample: connect any counts simulator, then QuantumQAOAEvaluator. | [Source](../nifi_extensions/QrispQIRO.py) |
 | `QrispShor` | Runs Shor's factoring algorithm using Qrisp's native shors_alg. Configure Number To Factor (small odd composites, e.g. 15 or 21); emits shor.factor_1 / shor.factor_2. Educational scale: the local statevector simulator limits N to small numbers. | [Source](../nifi_extensions/QrispShor.py) |
 | `QrispSwapTest` | Executes the SWAP test using Qrisp to measure quantum state fidelity / overlap \|<a\|b>\|^2. Emits swap_test.overlap, ancilla measurement probabilities, and canonical simulation results. | [Source](../nifi_extensions/QrispSwapTest.py) |
 | `QrispVQE` | Variational Quantum Eigensolver using Qrisp's VQEProblem. Reads a Hamiltonian (content) and an ansatz spec (ansatz.format=qrisp_spec), trains the ansatz with the chosen optimizer, and emits vqe.* results, the optimal-state probability distribution as JSON, and report.type=simulation. Strict solver - requires both upstream stages. | [Source](../nifi_extensions/QrispVQE.py) |
