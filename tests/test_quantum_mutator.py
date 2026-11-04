@@ -123,9 +123,19 @@ class TestOperatorCores:
         getattr(qc, name)(0)
         out = _GATE_MUTATION_OPERATORS["rotation.perturb"](
             qc, random.Random(0), -0.125)
-        assert out is not None and out["gate"] == "p"
+        assert out is not None and out["gate"] == "u1"
         assert qc.data[0].operation.params[0] == pytest.approx(angle - 0.125)
         assert out["original"].startswith(name + "=")
+
+    def test_perturb_t_gate_exports_u1_not_p(self):
+        from qiskit import qasm2
+        qc = _parse_qasm2("OPENQASM 2.0;\ninclude \"qelib1.inc\";\n"
+                          "qreg q[1];\ncreg c[1];\nh q[0];\nt q[0];\nmeasure q[0] -> c[0];\n")
+        out = _GATE_MUTATION_OPERATORS["rotation.perturb"](qc, random.Random(0), 0.1)
+        assert out is not None and out["gate"] == "u1"
+        text = qasm2.dumps(qc)
+        assert "u1(" in text
+        assert not any(line.startswith("p(") for line in text.splitlines())
 
     def test_perturb_rotation_inapplicable_without_params(self):
         qc = _parse_qasm2(_grover_qasm2())

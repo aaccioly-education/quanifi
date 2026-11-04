@@ -251,12 +251,14 @@ def _mut_perturb_rotation(circuit, rng, eps):
     QASM readers preserve some common phase rotations as named gates with no
     numeric ``params``. Treating those gates as their canonical angles keeps
     this fault model representation-independent: for example ``t`` becomes
-    ``p(pi/4 + eps)``. This is required by PennyLane's SemiAdder, whose phase
+    ``u1(pi/4 + eps)``. This is required by PennyLane's SemiAdder, whose phase
     rotations are exported as T/S gates rather than parameterised P gates.
+    U1Gate is used instead of PhaseGate because Qiskit exports PhaseGate as
+    `p`, which the standard OpenQASM 2.0 qelib1.inc does not define.
     """
     import numbers
     from qiskit.circuit import CircuitInstruction
-    from qiskit.circuit.library import PhaseGate
+    from qiskit.circuit.library import U1Gate
 
     fixed_angles = {
         "t": math.pi / 4,
@@ -287,7 +289,7 @@ def _mut_perturb_rotation(circuit, rng, eps):
         original_repr = repr(original)
     else:
         original = fixed_angle
-        op = PhaseGate(original + eps)
+        op = U1Gate(original + eps)
         original_repr = "%s=%r" % (old.operation.name, original)
     circuit.data[di] = CircuitInstruction(op, old.qubits, old.clbits)
     return {
