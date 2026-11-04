@@ -29,7 +29,7 @@ from nifiapi.__jvm__ import JvmHolder
 
 import batch_prep
 from batch_prep import persist_manifest
-from QuantumSuccessProbabilityOracle import required_shots
+from shot_planning import required_shots
 from ibm_quota import quota_guard
 
 #: Submit modes. `preflight` does everything except contact the run endpoint.

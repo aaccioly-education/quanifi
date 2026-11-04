@@ -26,7 +26,7 @@ from nifiapi.__jvm__ import JvmHolder
 
 import batch_prep
 from batch_prep import persist_manifest
-from QuantumSuccessProbabilityOracle import required_shots
+from shot_planning import required_shots
 
 #: Submit modes. See QuantumIBMBatchSubmitter for why preflight is the default.
 PREFLIGHT, ARMED = "preflight", "armed"
