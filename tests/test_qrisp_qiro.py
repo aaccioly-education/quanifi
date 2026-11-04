@@ -4,6 +4,7 @@ simulator -> QuantumQAOAEvaluator -> QuanifiReport)."""
 
 import json
 import math
+import re
 
 import networkx as nx
 import numpy as np
@@ -99,6 +100,54 @@ class TestGraph:
         assert "Edges" in r.attributes["qaoa.error"]
 
 
+FLOAT_TOL = 1e-2
+_DECIMAL = re.compile(r"(-?\d+\.\d+(?:[eE][-+]?\d+)?)")
+
+
+def _is_float(x):
+    return isinstance(x, float) and not isinstance(x, bool)
+
+
+def _compare_json(x, y, path):
+    if isinstance(x, dict) and isinstance(y, dict):
+        assert x.keys() == y.keys(), f"{path}: keys differ"
+        for key in x:
+            _compare_json(x[key], y[key], f"{path}.{key}")
+    elif isinstance(x, list) and isinstance(y, list):
+        assert len(x) == len(y), f"{path}: list lengths differ"
+        for i, (xi, yi) in enumerate(zip(x, y)):
+            _compare_json(xi, yi, f"{path}[{i}]")
+    elif _is_float(x) or _is_float(y):
+        numbers = (int, float)
+        assert isinstance(x, numbers) and isinstance(y, numbers), (
+            f"{path}: {x!r} != {y!r}"
+        )
+        assert not isinstance(x, bool) and not isinstance(y, bool), f"{path}: bool"
+        assert abs(x - y) <= FLOAT_TOL, f"{path}: {x!r} vs {y!r}"
+    else:
+        assert type(x) is type(y) and x == y, f"{path}: {x!r} != {y!r}"
+
+
+def assert_same_up_to_float_jitter(x, y, path):
+    """Discrete content must match exactly, decimal numbers within FLOAT_TOL."""
+    try:
+        jx, jy = json.loads(x), json.loads(y)
+    except ValueError:
+        pass
+    else:
+        _compare_json(jx, jy, path)
+        return
+    px, py = _DECIMAL.split(x), _DECIMAL.split(y)
+    assert len(px) == len(py), f"{path}: different count of decimal numbers"
+    for i, (sx, sy) in enumerate(zip(px, py)):
+        if i % 2 == 0:
+            assert sx == sy, f"{path}: text differs: {sx!r} != {sy!r}"
+        else:
+            assert abs(float(sx) - float(sy)) <= FLOAT_TOL, (
+                f"{path}: {sx} vs {sy}"
+            )
+
+
 class TestReproducibility:
     def test_same_seed_identical_output_with_perturbed_global_rng(self):
         np.random.seed(1)
@@ -107,11 +156,21 @@ class TestReproducibility:
         np.random.rand(1234)  # consume global RNG state between the runs
         b = run_qiro()
         assert a.relationship == b.relationship == "success"
-        assert a.contents == b.contents
+        # Qrisp simulates in single precision, so two compiles of the same
+        # circuit differ by about 1e-6 and COBYLA can drift a little from that.
+        # CI once showed a correlation of -0.7404 against -0.7411 with all
+        # actions and vertices identical. So decisions must match exactly and
+        # floats only within a tolerance, like QrispQAOA in test_seeds.py.
+        assert_same_up_to_float_jitter(
+            a.contents.decode(), b.contents.decode(), "contents"
+        )
         volatile = {"qaoa.elapsed_seconds", "perf.elapsed_seconds"}
+        assert a.attributes.keys() == b.attributes.keys()
         for k in a.attributes:
             if k not in volatile:
-                assert a.attributes[k] == b.attributes[k], k
+                assert_same_up_to_float_jitter(
+                    a.attributes[k], b.attributes[k], k
+                )
 
     def test_different_seed_changes_the_angles(self, solved):
         other = run_qiro(**{"Random Seed": "12"})

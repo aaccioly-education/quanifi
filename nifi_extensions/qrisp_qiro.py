@@ -165,7 +165,8 @@ def describe(item, sign, before, after_nodes, before_solutions, after_solutions)
 # is not deterministic). COBYLA turns that jitter into diverging parameter
 # paths, so the optimizer's objective and the reported correlations are
 # rounded to 4 decimals, far above the jitter and far below any decision that
-# matters here.
+# matters here. Rounding makes divergence rare but not impossible, so the
+# reproducibility test compares floats within a tolerance.
 COST_DECIMALS = 4
 REPORT_DECIMALS = 4
 
