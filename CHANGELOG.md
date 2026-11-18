@@ -7,16 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-18
+
+### Changed
+- CI: publish the NiFi image to `ghcr.io/saeg/quanifi-nifi` on version tags; image content unchanged from 0.2.0.
+
+## [0.2.0] - 2026-10-08
+
 ### Added
 - **Qrisp QIRO (`QrispQIRO`)**: Quantum-Informed Recursive Optimization (Finzgar et al., PRX Quantum 5, 020327) for Maximum Independent Set, as a train-only solver with the `QrispQAOA` contract (`MaxIndependentSetProblem -> QrispQIRO -> <counts simulator> -> QuantumQAOAEvaluator -> QuanifiReport`).
   - Uses Qrisp's own QIRO components unmodified (`create_max_indep_replacement_routine`, `create_max_indep_cost_operator_reduced`, `qiro_rx_mixer`, `qiro_init_function`); the `run_qiro` loop is re-implemented only to seed every stage from a local NumPy generator, use exact probabilities, and record a step trace.
   - Emits the final stage's trained circuit as portable OpenQASM 2.0 over all n qubits, keeps `hamiltonian.json` as the original problem, and adds `qiro.*` attributes (step trace, fixed/removed vertices, stage costs, `qiro.trace_svg`).
   - Logic lives in `nifi_extensions/qrisp_qiro.py`; added to `docker/processors-qrisp.txt` (now 29 processors).
 - **QuanifiReport**: `QIRO Steps` section (trace SVG, step table, fixed/removed summary), rendered only when `qiro.steps` is present.
-
-## [0.2.0] - 2026-10-08
-
-### Added
 - **Qrisp Phase Oracle (`QrispPhaseOracle`)**:
   - Implements phase oracle construction using Qrisp's `tag_state` with canonical `q0_left` bit ordering.
   - Supports both standalone mode (synthesizing a fresh marking oracle) and compose mode (appending the oracle to an upstream circuit).

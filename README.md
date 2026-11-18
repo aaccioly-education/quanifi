@@ -26,6 +26,12 @@ cd quanifi
 docker compose up
 ```
 
+Prefer a prebuilt image? Multi-arch (`linux/amd64`, `linux/arm64`) images are published to GHCR:
+
+```bash
+docker pull ghcr.io/saeg/quanifi-nifi:0.2.1
+```
+
 Wait for `(healthy)` in `docker compose ps`, then open
 <https://localhost:8443/nifi> and accept the self-signed certificate.
 Use these default credentials on your first login:
