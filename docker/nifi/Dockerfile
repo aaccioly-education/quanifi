@@ -12,6 +12,9 @@ ARG UV_IMAGE=ghcr.io/astral-sh/uv:0.11.11
 
 FROM ${UV_IMAGE} AS uv
 
+FROM scratch AS buildctx
+COPY pyproject.toml uv.lock docker/nifi/quanifi_build.py /ctx/
+
 FROM ${NIFI_IMAGE} AS select
 ARG QUANIFI_PROCESSORS=docker/processors.txt
 ARG QUANIFI_CANVAS=demo/grover/qiskit-grover.json
@@ -33,9 +36,7 @@ USER nifi
 WORKDIR /opt/nifi/quanifi-tests
 COPY --from=select --chown=nifi:nifi /out/manifest.json .quanifi-manifest.json
 RUN --mount=type=bind,from=uv,source=/uv,target=/usr/local/bin/uv \
-    --mount=type=bind,source=pyproject.toml,target=/tmp/quanifi-build/pyproject.toml \
-    --mount=type=bind,source=uv.lock,target=/tmp/quanifi-build/uv.lock \
-    --mount=type=bind,source=docker/nifi/quanifi_build.py,target=/tmp/quanifi-build/quanifi_build.py \
+    --mount=type=bind,from=buildctx,source=/ctx,target=/tmp/quanifi-build \
     python3 /tmp/quanifi-build/quanifi_build.py testenv --manifest .quanifi-manifest.json \
         --project /tmp/quanifi-build --venv /opt/nifi/quanifi-tests/.venv --python /usr/bin/python3 \
         --uv /usr/local/bin/uv --extra "pytest>=8.0"
@@ -57,9 +58,7 @@ COPY --from=select /out/manifest.json /opt/quanifi/manifest.json
 RUN install -d -o nifi -g nifi /opt/nifi/nifi-current/reports
 USER nifi
 RUN --mount=type=bind,from=uv,source=/uv,target=/usr/local/bin/uv \
-    --mount=type=bind,source=pyproject.toml,target=/tmp/quanifi-build/pyproject.toml \
-    --mount=type=bind,source=uv.lock,target=/tmp/quanifi-build/uv.lock \
-    --mount=type=bind,source=docker/nifi/quanifi_build.py,target=/tmp/quanifi-build/quanifi_build.py \
+    --mount=type=bind,from=buildctx,source=/ctx,target=/tmp/quanifi-build \
     python3 /tmp/quanifi-build/quanifi_build.py prebake --manifest /opt/quanifi/manifest.json \
         --project /tmp/quanifi-build --work-dir /opt/nifi/nifi-current/work/python \
         --python /usr/bin/python3 --uv /usr/local/bin/uv --enabled "${QUANIFI_PREBAKE}"
